@@ -290,8 +290,7 @@ const AIChatWidget = () => {
             });
           }
         } catch {
-          textBuffer = line + "\n" + textBuffer;
-          break;
+          // Skip malformed chunks instead of re-buffering (prevents infinite loop)
         }
       }
     }
