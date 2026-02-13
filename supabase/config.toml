@@ -1,0 +1,23 @@
+project_id = "iqugsxeejieneyksfbza"
+
+[functions.generate-project-content]
+verify_jwt = false
+
+[functions.refine-content]
+verify_jwt = false
+
+[functions.save-chat-inquiry]
+verify_jwt = false
+
+[functions.chat]
+verify_jwt = false
+
+[functions.generate-design]
+verify_jwt = false
+
+
+[functions.image-proxy]
+verify_jwt = false
+
+[functions.search-images]
+verify_jwt = false

@@ -1,0 +1,110 @@
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
+import { resolveImageUrl, fallbackGalleryItems } from "@/lib/gallery-assets";
+import BottomInvitation from "@/components/BottomInvitation";
+
+interface GalleryItem {
+  id: string;
+  src: string;
+  alt: string;
+}
+
+const Gallery = () => {
+  // Fetch gallery items from database
+  const { data: dbItems, isLoading, isError } = useQuery({
+    queryKey: ["gallery-items"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("gallery_items")
+        .select("*")
+        .eq("is_active", true)
+        .order("display_order", { ascending: true });
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Convert database items to gallery format or use fallbacks
+  const galleryItems: GalleryItem[] = !isError && dbItems && dbItems.filter(item => item.type === "image").length > 0
+    ? dbItems
+        .filter(item => item.type === "image")
+        .map((item) => ({
+          id: item.id,
+          src: resolveImageUrl(item.image_url),
+          alt: item.alt_text || "Gallery image",
+        }))
+    : fallbackGalleryItems;
+
+  return (
+    <div className="min-h-screen bg-background">
+      <SEO
+        title="Gallery | Gold Coast Home Renovation Inspiration"
+        description="Get inspired by our Gold Coast renovation gallery. Browse beautiful kitchen, bathroom, and living space transformations by Concept Design Construct."
+        url="/gallery"
+      />
+      <Header />
+      
+      {/* Main content */}
+      <main className="pt-24 md:pt-32 pb-16 md:pb-24">
+        <div className="container-wide">
+          {/* Title */}
+          <div className="text-center mb-12 md:mb-16 max-w-2xl mx-auto">
+            <h1 className="font-serif italic text-4xl md:text-5xl lg:text-6xl text-primary mb-6">
+              Gallery
+            </h1>
+            <p className="text-foreground/70 text-lg md:text-xl leading-relaxed mb-3">
+              Inspiration for your next renovation.
+            </p>
+            <p className="text-foreground/50 text-sm md:text-base">
+              Browse our collection of completed projects across the Gold Coast.
+            </p>
+          </div>
+
+          {/* Simple Grid */}
+          {isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6 max-w-[1600px] mx-auto animate-pulse">
+              {Array.from({ length: 9 }).map((_, index) => (
+                <div key={index} className="relative overflow-hidden aspect-[1/1.2] sm:aspect-[1/1.5] bg-muted">
+                  <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background/30" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6 max-w-[1600px] mx-auto">
+              {galleryItems.map((item) => (
+                <div 
+                  key={item.id} 
+                  className="group relative overflow-hidden aspect-[1/1.2] sm:aspect-[1/1.5]"
+                >
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  
+                  {/* Subtle overlay gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20 pointer-events-none" />
+                </div>
+              ))}
+            </div>
+          )}
+
+          <BottomInvitation
+            title="Like what you see?"
+            description="Let's talk about bringing your vision to life."
+            className="mt-16 md:mt-24 mb-0"
+          />
+        </div>
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Gallery;
