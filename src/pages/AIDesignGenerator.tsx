@@ -34,7 +34,15 @@ const ChatMessage = ({
     {role === "assistant" && (
       <div className="h-9 w-9 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 overflow-hidden border border-border">
         {avatarSrc ? (
-          <img src={avatarSrc} alt="" className="h-full w-full object-contain p-1" />
+          <img
+            src={avatarSrc}
+            alt=""
+            width={36}
+            height={36}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-contain p-1"
+          />
         ) : (
           <span className="text-[11px] font-semibold">CDC</span>
         )}
@@ -147,7 +155,15 @@ const HistoryPreview = ({
             afterLabel="After"
           />
         ) : (
-          <img src={afterImage} alt="AI-generated renovation result" className="w-full h-auto rounded-lg" />
+          <img
+            src={afterImage}
+            alt="AI-generated renovation result"
+            width={1200}
+            height={900}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-auto rounded-lg"
+          />
         )}
       </div>
       <div className="px-5 pb-5">
@@ -399,6 +415,10 @@ const buildPreferenceSentence = (
               <img
                 src={item.beforeImage}
                 alt="Uploaded room photo for renovation preview"
+                width={1200}
+                height={900}
+                loading="lazy"
+                decoding="async"
                 className="w-full max-w-[260px] sm:max-w-[320px] rounded-xl border border-border"
               />
             </div>
@@ -691,6 +711,10 @@ const buildPreferenceSentence = (
             <img
               src={uploadedImage}
               alt="Uploaded room photo"
+              width={1200}
+              height={900}
+              loading="lazy"
+              decoding="async"
               className="w-full max-w-[260px] sm:max-w-[320px] rounded-xl border border-border"
             />
           </div>
@@ -1135,7 +1159,15 @@ const buildPreferenceSentence = (
                   afterLabel="After"
                 />
               ) : (
-                <img src={generatedImage} alt="AI-generated renovation preview" className="w-full h-auto rounded-lg" />
+                <img
+                  src={generatedImage}
+                  alt="AI-generated renovation preview"
+                  width={1200}
+                  height={900}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-auto rounded-lg"
+                />
               )}
             </div>
           </div>
@@ -1145,7 +1177,15 @@ const buildPreferenceSentence = (
               className="relative rounded-xl cursor-pointer overflow-hidden group border border-border"
               onClick={() => fileInputRef.current?.click()}
             >
-              <img src={uploadedImage} alt="Uploaded room photo preview" className="w-full h-auto" />
+              <img
+                src={uploadedImage}
+                alt="Uploaded room photo preview"
+                width={1200}
+                height={900}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-auto"
+              />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
                 <span className="text-white text-sm font-medium bg-black/60 px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                   Change Image
@@ -1190,7 +1230,15 @@ const buildPreferenceSentence = (
                   <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                     <div className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full bg-primary/10 text-primary text-xs font-semibold flex items-center justify-center overflow-hidden border border-border shrink-0">
                       {logoSrc ? (
-                        <img src={logoSrc} alt="" className="h-full w-full object-contain p-1" />
+                        <img
+                          src={logoSrc}
+                          alt=""
+                          width={36}
+                          height={36}
+                          loading="lazy"
+                          decoding="async"
+                          className="h-full w-full object-contain p-1"
+                        />
                       ) : (
                         <span>CDC</span>
                       )}

@@ -5,6 +5,7 @@ import SEO from "@/components/SEO";
 import { generateAboutPageSchema } from "@/lib/structured-data";
 import ProjectsTeaser from "@/components/ProjectsTeaser";
 import BottomInvitation from "@/components/BottomInvitation";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const AboutUs = () => {
   const heroImage = "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/licensed-builders-on-site-gold-coast.webp";
@@ -47,7 +48,16 @@ const AboutUs = () => {
               </p>
             </div>
             <div className="aspect-[4/5] overflow-hidden">
-              <img src={heroImage} alt="Our team at work" className="w-full h-full object-cover" />
+              <ResponsiveImage
+                src={heroImage}
+                alt="Our team at work"
+                width={1200}
+                height={1500}
+                sizes="(min-width: 1024px) 40vw, 100vw"
+                loading="eager"
+                priority
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>
@@ -107,7 +117,15 @@ const AboutUs = () => {
       {/* 4. THE TEAM - Full width image with dark overlay (no red) */}
       <section className="relative min-h-[70vh] flex items-center">
         <div className="absolute inset-0">
-          <img src={teamImage} alt="Our team" className="w-full h-full object-cover" />
+          <ResponsiveImage
+            src={teamImage}
+            alt="Our team"
+            width={1200}
+            height={900}
+            sizes="100vw"
+            loading="lazy"
+            className="w-full h-full object-cover"
+          />
           <div className="absolute inset-0 bg-black/60" />
         </div>
         <div className="container-wide relative z-10">

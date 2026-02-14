@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 interface ImageSliderProps {
   images: string[];
@@ -70,11 +71,15 @@ const ImageSlider = ({ images, projectName }: ImageSliderProps) => {
             key={`${image}-${index}`}
             className="flex-shrink-0 h-full w-[80vw] md:w-[50vw] lg:w-[35vw]"
           >
-            <img
+            <ResponsiveImage
               src={image}
               alt={`${projectName} ${(index % images.length) + 1}`}
+              width={1600}
+              height={900}
+              sizes="(min-width: 1024px) 35vw, (min-width: 768px) 50vw, 80vw"
               className="w-full h-full object-cover"
-              loading={index < images.length ? "eager" : "lazy"}
+              loading={index < 2 ? "eager" : "lazy"}
+              priority={index === 0}
             />
           </div>
         ))}

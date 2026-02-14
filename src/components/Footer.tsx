@@ -2,6 +2,7 @@ import { useResolvedAsset } from "@/hooks/useSiteAssets";
 import masterBuildersLogo from "@/assets/master-builders.png";
 import qbccLogo from "@/assets/qbcc.png";
 import { Instagram } from "lucide-react";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -31,7 +32,15 @@ const Footer = () => {
         <div className="flex flex-col gap-6 md:gap-8 md:flex-row md:justify-between">
           {/* Logo & tagline */}
           <div className="flex flex-col shrink-0">
-            <img src={logo} alt="" className="h-auto w-20 md:w-28" />
+            <ResponsiveImage
+              src={logo}
+              alt=""
+              width={701}
+              height={131}
+              sizes="(min-width: 768px) 112px, 80px"
+              loading="lazy"
+              className="h-auto w-20 md:w-28"
+            />
             <span className="text-xs md:text-h4 uppercase tracking-widest text-primary mt-2">
               Gold Coast Renovations
             </span>
@@ -71,8 +80,24 @@ const Footer = () => {
               </a>
             </div>
             <div className="flex items-center gap-4 md:gap-5 flex-wrap md:justify-end">
-              <img src={qbccLogo} alt="" className="h-10 md:h-16 w-auto" />
-              <img src={masterBuildersLogo} alt="" className="h-10 md:h-16 w-auto" />
+              <ResponsiveImage
+                src={qbccLogo}
+                alt=""
+                width={1080}
+                height={1080}
+                sizes="(min-width: 768px) 64px, 40px"
+                loading="lazy"
+                className="h-10 md:h-16 w-auto"
+              />
+              <ResponsiveImage
+                src={masterBuildersLogo}
+                alt=""
+                width={1080}
+                height={1080}
+                sizes="(min-width: 768px) 64px, 40px"
+                loading="lazy"
+                className="h-10 md:h-16 w-auto"
+              />
               <span className="sr-only">QBCC licensed builder and Master Builders Australia member</span>
             </div>
           </div>

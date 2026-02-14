@@ -120,6 +120,10 @@ const ImageComparisonSlider = ({
         <img
           src={beforeImage}
           alt={beforeLabel}
+          width={1200}
+          height={900}
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-contain"
           draggable={false}
         />
@@ -133,6 +137,10 @@ const ImageComparisonSlider = ({
         <img
           src={afterImage}
           alt={afterLabel}
+          width={1200}
+          height={900}
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-contain"
           draggable={false}
         />

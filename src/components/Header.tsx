@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useResolvedAsset } from "@/hooks/useSiteAssets";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const SCROLL_THRESHOLD = 10; // Minimum scroll distance to trigger hide/show
 
@@ -96,7 +97,16 @@ const Header = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center" aria-label="Concept Design Construct home">
           {logoSrc ? (
-            <img src={logoSrc} alt="" className="h-auto w-36 md:w-48" />
+            <ResponsiveImage
+              src={logoSrc}
+              alt="Concept Design Construct"
+              width={701}
+              height={131}
+              sizes="(min-width: 768px) 192px, 144px"
+              loading="eager"
+              priority
+              className="h-auto w-36 md:w-48"
+            />
           ) : (
             <div className="h-10 md:h-12 w-36 md:w-48 bg-muted animate-pulse" />
           )}

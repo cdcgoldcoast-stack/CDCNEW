@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useSiteAssets } from "@/hooks/useSiteAssets";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const LifestyleSection = () => {
   const [activeIndex, setActiveIndex] = useState(2); // Start with center image active
@@ -86,10 +87,19 @@ const LifestyleSection = () => {
               transition={{ duration: 0.4, delay: index * 0.05 }}
               className="relative w-[260px] h-48 flex-shrink-0 rounded-lg overflow-hidden"
             >
-              <div 
-                className="absolute inset-0 bg-cover bg-center bg-muted"
-                style={{ backgroundImage: shouldLoadImages && benefit.image ? `url(${benefit.image})` : "none" }}
-              />
+              {shouldLoadImages && benefit.image ? (
+                <ResponsiveImage
+                  src={benefit.image}
+                  alt=""
+                  width={1200}
+                  height={800}
+                  sizes="260px"
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover bg-muted"
+                />
+              ) : (
+                <div className="absolute inset-0 bg-muted" />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-4">
                 <h3 className="text-background text-sm font-medium italic mb-1">
@@ -115,13 +125,22 @@ const LifestyleSection = () => {
             onClick={() => setActiveIndex(index)}
           >
             {/* Background image - only set when URL is ready */}
-            <div 
-              className="absolute inset-0 bg-cover bg-center bg-muted transition-transform duration-700"
-              style={{ 
-                backgroundImage: shouldLoadImages && benefit.image ? `url(${benefit.image})` : "none",
-                transform: activeIndex === index ? "scale(1)" : "scale(1.1)"
-              }}
-            />
+            {shouldLoadImages && benefit.image ? (
+              <ResponsiveImage
+                src={benefit.image}
+                alt=""
+                width={1200}
+                height={800}
+                sizes={`${activeIndex === index ? "48vw" : "12vw"}`}
+                loading={index === activeIndex ? "eager" : "lazy"}
+                className="absolute inset-0 w-full h-full object-cover bg-muted transition-transform duration-700"
+                style={{
+                  transform: activeIndex === index ? "scale(1)" : "scale(1.1)",
+                }}
+              />
+            ) : (
+              <div className="absolute inset-0 bg-muted" />
+            )}
             {/* Dark overlay for collapsed panels */}
             <div 
               className={`absolute inset-0 bg-black/40 transition-opacity duration-500 ${

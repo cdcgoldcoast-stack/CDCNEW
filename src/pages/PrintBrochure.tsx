@@ -3,10 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Download, Printer, Eye, EyeOff } from "lucide-react";
 import html2canvas from "html2canvas";
 import logoImage from "@/assets/logo.webp";
-import serviceKitchen from "@/assets/service-kitchen.jpg";
-import serviceBathroom from "@/assets/service-bathroom.jpg";
-import serviceLiving from "@/assets/service-living.jpg";
-import serviceWholeHome from "@/assets/service-whole-home.jpg";
+import serviceKitchen from "@/assets/service-kitchen.webp";
+import serviceBathroom from "@/assets/service-bathroom.webp";
+import serviceLiving from "@/assets/service-living.webp";
+import serviceWholeHome from "@/assets/service-whole-home.webp";
 import heroBg from "@/assets/hero-bg.webp";
 import SEO from "@/components/SEO";
 

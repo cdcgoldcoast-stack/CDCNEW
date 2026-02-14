@@ -13,6 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import SEO from "@/components/SEO";
 import { generateContactPageSchema } from "@/lib/structured-data";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const renovationOptions = [
   { id: "bathroom", label: "Bathroom" },
@@ -305,7 +306,15 @@ const GetQuote = () => {
                             Before
                           </span>
                         </div>
-                        <img src={renovationBeforeImage} alt="Example room before renovation planning" className="h-full w-full object-cover" />
+                        <ResponsiveImage
+                          src={renovationBeforeImage}
+                          alt="Example room before renovation planning"
+                          width={1200}
+                          height={900}
+                          sizes="(min-width: 1024px) 24vw, 45vw"
+                          loading="eager"
+                          className="h-full w-full object-cover"
+                        />
                       </div>
                       <div className="relative rounded-xl overflow-hidden border border-white/20 h-36 lg:h-40 xl:h-44">
                         <div className="absolute top-2 left-2 right-2 z-10 flex items-center justify-between">
@@ -316,7 +325,15 @@ const GetQuote = () => {
                             After
                           </span>
                         </div>
-                        <img src={renovationAfterImage} alt="Example room after renovation concept" className="h-full w-full object-cover" />
+                        <ResponsiveImage
+                          src={renovationAfterImage}
+                          alt="Example room after renovation concept"
+                          width={1200}
+                          height={900}
+                          sizes="(min-width: 1024px) 24vw, 45vw"
+                          loading="eager"
+                          className="h-full w-full object-cover"
+                        />
                       </div>
                     </div>
 

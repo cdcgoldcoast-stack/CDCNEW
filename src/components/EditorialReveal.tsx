@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import { useSiteAssets } from "@/hooks/useSiteAssets";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const EditorialReveal = () => {
   const [opacity, setOpacity] = useState(1);
@@ -141,9 +142,12 @@ const EditorialReveal = () => {
           {mobileImages.slice(0, 3).map((img, i) => (
             <div key={i} className="aspect-[2/3] overflow-hidden bg-muted">
               {img.src && (
-                <img
-                  src={shouldLoadImages ? img.src : undefined}
+                <ResponsiveImage
+                  src={shouldLoadImages ? img.src : null}
                   alt=""
+                  width={800}
+                  height={1200}
+                  sizes="33vw"
                   className={`w-full h-full object-cover ${img.objPos}`}
                   loading="lazy"
                   decoding="async"
@@ -155,9 +159,12 @@ const EditorialReveal = () => {
           {mobileImages.slice(3, 6).map((img, i) => (
             <div key={i + 3} className="aspect-[2/3] overflow-hidden bg-muted">
               {img.src && (
-                <img
-                  src={shouldLoadImages ? img.src : undefined}
+                <ResponsiveImage
+                  src={shouldLoadImages ? img.src : null}
                   alt=""
+                  width={800}
+                  height={1200}
+                  sizes="33vw"
                   className={`w-full h-full object-cover ${img.objPos}`}
                   loading="lazy"
                   decoding="async"

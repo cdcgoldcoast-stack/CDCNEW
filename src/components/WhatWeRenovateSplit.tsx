@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useSiteAssets } from "@/hooks/useSiteAssets";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const WhatWeRenovateSplit = () => {
   const { assets } = useSiteAssets();
@@ -80,11 +81,20 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
     >
       {/* Image panel */}
       <div className="relative w-full md:w-1/2 h-[50vh] md:h-full">
-        {/* Background image - only set when URL is ready */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-muted"
-          style={{ backgroundImage: service.bgImage ? `url(${service.bgImage})` : "none" }}
-        />
+        {service.bgImage ? (
+          <ResponsiveImage
+            src={service.bgImage}
+            alt=""
+            width={1200}
+            height={900}
+            sizes="(min-width: 768px) 50vw, 100vw"
+            loading={index === 0 ? "eager" : "lazy"}
+            priority={index === 0}
+            className="absolute inset-0 w-full h-full object-cover bg-muted"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-muted" />
+        )}
 
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/30" />
@@ -97,13 +107,21 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
             whileHover={{ scale: 1.03 }}
           >
             {service.image && (
-              <motion.img
-                src={service.image}
-                alt=""
-                className="w-full h-full object-cover"
+              <motion.div
+                className="w-full h-full"
                 whileHover={{ scale: 1.08 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-              />
+              >
+                <ResponsiveImage
+                  src={service.image}
+                  alt=""
+                  width={800}
+                  height={1200}
+                  sizes="(min-width: 1024px) 22vw, (min-width: 640px) 48vw, 55vw"
+                  loading={index <= 1 ? "eager" : "lazy"}
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
             )}
           </motion.div>
         </div>

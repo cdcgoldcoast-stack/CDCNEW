@@ -4,6 +4,7 @@ import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { useSiteAssets } from "@/hooks/useSiteAssets";
 import WhatWeRenovateSplit from "@/components/WhatWeRenovateSplit";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const Services = () => {
   const { assets } = useSiteAssets();
@@ -40,7 +41,16 @@ const Services = () => {
             </div>
             <div className="aspect-[4/5] overflow-hidden bg-muted">
               {heroImage && (
-                <img src={heroImage} alt="Gold Coast home renovation" className="w-full h-full object-cover" />
+                <ResponsiveImage
+                  src={heroImage}
+                  alt="Gold Coast home renovation"
+                  width={1200}
+                  height={1500}
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  loading="eager"
+                  priority
+                  className="w-full h-full object-cover"
+                />
               )}
             </div>
           </div>

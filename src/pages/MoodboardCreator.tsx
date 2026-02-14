@@ -1019,8 +1019,11 @@ const MoodboardCreator = () => {
                   <img
                     src={image.thumbnailUrl}
                     alt={image.alt}
+                    width={800}
+                    height={600}
                     className="w-full h-full object-cover transition-transform group-hover:scale-105 pointer-events-none"
                     loading="lazy"
+                    decoding="async"
                     onError={(e) => {
                       e.currentTarget.src = "/placeholder.svg";
                     }}
@@ -1326,11 +1329,15 @@ const MoodboardCreator = () => {
             <img
               src={content.imageUrl}
               alt={content.imageAlt || "Moodboard image"}
+              width={1200}
+              height={900}
               data-export-url={content.exportUrl || content.imageUrl}
               className={cn(
                 "w-full h-full object-cover",
                 currentStep === "photos" && (isMobile ? "cursor-pointer" : "cursor-grab active:cursor-grabbing")
               )}
+              loading="lazy"
+              decoding="async"
               draggable={false}
             />
             {currentStep === "photos" && (

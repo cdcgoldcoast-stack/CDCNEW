@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const renovationAfterImage =
   "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/RenovationAI.webp";
@@ -90,7 +91,15 @@ const AIDesignIntro = () => {
                   Before
                 </div>
               </div>
-              <img src={renovationBeforeImage} alt="Example room before AI renovation styling" className="h-full w-full object-cover" />
+              <ResponsiveImage
+                src={renovationBeforeImage}
+                alt="Example room before AI renovation styling"
+                width={1200}
+                height={900}
+                sizes="(min-width: 1024px) 24vw, 50vw"
+                loading="eager"
+                className="h-full w-full object-cover"
+              />
             </div>
             <div className="rounded-2xl overflow-hidden border border-primary-foreground/20 relative bg-primary-foreground/5">
               <div className="absolute top-3 left-3 right-3 z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 sm:gap-2">
@@ -101,7 +110,15 @@ const AIDesignIntro = () => {
                   After
                 </div>
               </div>
-              <img src={renovationAfterImage} alt="Example room after AI renovation styling" className="h-full w-full object-cover" />
+              <ResponsiveImage
+                src={renovationAfterImage}
+                alt="Example room after AI renovation styling"
+                width={1200}
+                height={900}
+                sizes="(min-width: 1024px) 24vw, 50vw"
+                loading="eager"
+                className="h-full w-full object-cover"
+              />
             </div>
           </div>
         </div>

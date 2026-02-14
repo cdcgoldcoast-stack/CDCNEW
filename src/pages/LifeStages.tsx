@@ -2,10 +2,10 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import lifestageGrowing from "@/assets/lifestage-growing.jpg";
-import lifestageForever from "@/assets/lifestage-forever.jpg";
-import lifestageFuture from "@/assets/lifestage-future.jpg";
-import lifestageWellness from "@/assets/lifestage-wellness.jpg";
+import lifestageGrowing from "@/assets/lifestage-growing.webp";
+import lifestageForever from "@/assets/lifestage-forever.webp";
+import lifestageFuture from "@/assets/lifestage-future.webp";
+import lifestageWellness from "@/assets/lifestage-wellness.webp";
 import { Link } from "react-router-dom";
 import {
   Accordion,
@@ -16,6 +16,7 @@ import {
 import SEO from "@/components/SEO";
 import { generateFAQSchema } from "@/lib/structured-data";
 import LifestyleSection from "@/components/LifestyleSection";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const LifeStagesPage = () => {
   const heroRef = useRef<HTMLElement>(null);
@@ -140,9 +141,15 @@ const LifeStagesPage = () => {
           className="absolute inset-0"
           style={{ y: heroY, scale: heroScale }}
         >
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${lifestageForever})` }}
+          <ResponsiveImage
+            src={lifestageForever}
+            alt=""
+            width={800}
+            height={533}
+            sizes="100vw"
+            loading="eager"
+            priority
+            className="absolute inset-0 w-full h-full object-cover"
           />
         </motion.div>
         <motion.div 
@@ -261,6 +268,10 @@ const LifeStagesPage = () => {
               <motion.img 
                 src={stage.image} 
                 alt={stage.title}
+                width={800}
+                height={533}
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover"
                 whileHover={{ scale: 1.03 }}
                 transition={{ duration: 0.6 }}

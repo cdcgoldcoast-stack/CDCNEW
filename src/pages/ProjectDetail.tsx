@@ -11,6 +11,7 @@ import SuggestedProjects from "@/components/SuggestedProjects";
 import BottomInvitation from "@/components/BottomInvitation";
 import { slugMatches } from "@/lib/slug";
 import NotFound from "@/pages/NotFound";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const ProjectDetail = () => {
   const { slug } = useParams<{ slug?: string }>();
@@ -148,10 +149,14 @@ const ProjectDetail = () => {
             </div>
             <div>
               {project.featuredImages[0] && (
-                <img
+                <ResponsiveImage
                   src={project.featuredImages[0]}
                   alt={`${project.name} detail`}
+                  width={1200}
+                  height={900}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
                   className="w-full aspect-[4/3] object-cover"
+                  loading="lazy"
                 />
               )}
             </div>
@@ -173,10 +178,14 @@ const ProjectDetail = () => {
             </div>
             <div className="lg:order-1">
               {project.featuredImages[1] && (
-                <img
+                <ResponsiveImage
                   src={project.featuredImages[1]}
                   alt={`${project.name} challenge`}
+                  width={1200}
+                  height={900}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
                   className="w-full aspect-[4/3] object-cover"
+                  loading="lazy"
                 />
               )}
             </div>
@@ -200,11 +209,15 @@ const ProjectDetail = () => {
           {project.featuredImages.length > 2 && (
             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
               {project.featuredImages.slice(2, 5).map((img, index) => (
-                <img
+                <ResponsiveImage
                   key={index}
                   src={img}
                   alt={`${project.name} detail ${index + 3}`}
+                  width={1200}
+                  height={900}
+                  sizes="(min-width: 768px) 33vw, 100vw"
                   className="w-full aspect-[4/3] object-cover"
+                  loading="lazy"
                 />
               ))}
             </div>

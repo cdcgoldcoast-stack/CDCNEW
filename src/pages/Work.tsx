@@ -5,6 +5,7 @@ import { fetchProjects, Project } from "@/data/projects";
 import SEO from "@/components/SEO";
 import { generateItemListSchema } from "@/lib/structured-data";
 import BottomInvitation from "@/components/BottomInvitation";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 const Work = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -79,9 +80,12 @@ const Work = () => {
                 to={`/projects/${project.slug}`}
                 className="group relative overflow-hidden aspect-[1/1.2] sm:aspect-[1/1.5]"
               >
-                <img
+                <ResponsiveImage
                   src={project.image}
                   alt={`${project.name} - ${project.category} renovation in ${project.location}, Gold Coast`}
+                  width={800}
+                  height={1200}
+                  sizes="(min-width: 1024px) 32vw, (min-width: 640px) 48vw, 100vw"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="lazy"
                 />

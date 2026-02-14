@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import { resolveImageUrl, fallbackGalleryItems } from "@/lib/gallery-assets";
 import BottomInvitation from "@/components/BottomInvitation";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 interface GalleryItem {
   id: string;
@@ -89,9 +90,12 @@ const Gallery = () => {
                   key={item.id} 
                   className="group relative overflow-hidden aspect-[1/1.2] sm:aspect-[1/1.5]"
                 >
-                  <img
+                  <ResponsiveImage
                     src={item.src}
                     alt={item.alt}
+                    width={800}
+                    height={1200}
+                    sizes="(min-width: 1024px) 32vw, (min-width: 640px) 48vw, 100vw"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
                   />

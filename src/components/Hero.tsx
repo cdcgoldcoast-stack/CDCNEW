@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { useResolvedAsset } from "@/hooks/useSiteAssets";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 interface HeroProps {
   preloaderComplete?: boolean;
@@ -62,13 +63,16 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
           style={{ y: imageY }}
         >
           {heroImage ? (
-            <img
+            <ResponsiveImage
               src={heroImage}
               alt=""
               className="absolute inset-0 w-full h-full object-cover bg-muted"
+              width={1200}
+              height={800}
+              sizes="100vw"
               loading="eager"
               decoding="async"
-              fetchPriority="high"
+              priority
             />
           ) : (
             <div className="absolute inset-0 bg-muted" />
@@ -223,10 +227,13 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
             style={{ y: imageY }}
           >
             {heroImage ? (
-              <img
+              <ResponsiveImage
                 src={heroImage}
                 alt=""
                 className="w-full max-w-[600px] h-[65vh] max-h-[680px] object-cover bg-muted"
+                width={1200}
+                height={800}
+                sizes="(min-width: 768px) 50vw, 100vw"
                 loading="eager"
                 decoding="async"
               />

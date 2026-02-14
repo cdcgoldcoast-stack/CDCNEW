@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Project, fetchProjects } from "@/data/projects";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 interface SuggestedProjectsProps {
   currentProjectId: string;
@@ -98,10 +99,14 @@ const SuggestedProjects = ({ currentProjectId }: SuggestedProjectsProps) => {
               className="group block"
             >
               <div className="relative aspect-[3/4] overflow-hidden mb-4">
-                <img
+                <ResponsiveImage
                   src={project.image}
                   alt=""
+                  width={800}
+                  height={1067}
+                  sizes="(min-width: 1024px) 24vw, 48vw"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
                 />
               </div>
               <span className="text-[10px] md:text-xs uppercase tracking-wider text-primary block mb-2">

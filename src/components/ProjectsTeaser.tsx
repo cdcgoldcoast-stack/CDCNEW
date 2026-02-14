@@ -2,13 +2,22 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Pause, Play } from "lucide-react";
 import { fetchProjects, Project } from "@/data/projects";
+import ResponsiveImage from "@/components/ResponsiveImage";
 const ProjectCard = ({
   project
 }: {
   project: Project;
 }) => <Link to={`/projects/${project.slug}`} className="group flex-shrink-0 w-[240px] sm:w-[280px] md:w-[320px] cursor-pointer">
     <div className="relative aspect-[2/3] overflow-hidden">
-      <img src={project.image} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+      <ResponsiveImage
+        src={project.image}
+        alt=""
+        width={800}
+        height={1200}
+        sizes="(min-width: 1024px) 320px, (min-width: 640px) 280px, 240px"
+        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        loading="lazy"
+      />
 
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-media-overlay/70 pointer-events-none" />
 
