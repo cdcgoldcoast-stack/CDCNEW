@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import {
+  assessSuspiciousTraffic,
   buildCorsHeaders,
   createServiceClient,
   enforceRateLimit,
@@ -24,6 +25,8 @@ function getAspectRatio(width: number, height: number): string {
 const DAILY_LIMIT = Number(Deno.env.get("DESIGN_DAILY_LIMIT") ?? "8");
 const BURST_LIMIT = Number(Deno.env.get("DESIGN_BURST_LIMIT") ?? "4");
 const BURST_WINDOW_SECONDS = Number(Deno.env.get("DESIGN_BURST_WINDOW_SECONDS") ?? "900");
+const SUSPICIOUS_LIMIT = Number(Deno.env.get("DESIGN_SUSPICIOUS_LIMIT") ?? "2");
+const SUSPICIOUS_WINDOW_SECONDS = Number(Deno.env.get("DESIGN_SUSPICIOUS_WINDOW_SECONDS") ?? "3600");
 
 interface GenerateDesignRequest {
   imageBase64?: string;
@@ -217,6 +220,36 @@ serve(async (req) => {
   try {
     const clientHash = await getClientHash(req);
     console.log("Client hash prefix:", clientHash.slice(0, 12));
+    const suspiciousTraffic = assessSuspiciousTraffic(req);
+
+    if (suspiciousTraffic.isSuspicious) {
+      console.warn("Suspicious generate-design traffic detected", {
+        score: suspiciousTraffic.score,
+        reasons: suspiciousTraffic.reasons,
+        clientHashPrefix: clientHash.slice(0, 12),
+      });
+
+      const suspiciousRateLimit = await enforceRateLimit({
+        req,
+        endpoint: "generate-design-suspicious",
+        limit: SUSPICIOUS_LIMIT,
+        windowSeconds: SUSPICIOUS_WINDOW_SECONDS,
+        clientHash,
+      });
+
+      if (!suspiciousRateLimit.allowed) {
+        return jsonResponse(
+          req,
+          429,
+          {
+            error: "Suspicious traffic limit reached. Please wait and try again later.",
+            remaining: suspiciousRateLimit.remaining,
+            resetAt: suspiciousRateLimit.resetAt,
+          },
+          { "Retry-After": String(SUSPICIOUS_WINDOW_SECONDS) },
+        );
+      }
+    }
 
     try {
       const burstRateLimit = await enforceRateLimit({

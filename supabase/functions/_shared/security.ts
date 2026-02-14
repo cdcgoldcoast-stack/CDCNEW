@@ -250,6 +250,60 @@ export async function getClientHash(req: Request): Promise<string> {
   return sha256Hex(`${salt}|${ip}|${ua}`);
 }
 
+const AUTOMATION_USER_AGENT_PATTERN =
+  /\b(bot|crawler|spider|scrapy|curl|wget|python-requests|python-urllib|aiohttp|httpclient|go-http-client|postmanruntime|insomnia|libwww-perl|headlesschrome|phantomjs|selenium|puppeteer|playwright)\b/i;
+const BROWSER_USER_AGENT_PATTERN = /\b(chrome|safari|firefox|edg|opr|opera|mobile)\b/i;
+
+export interface SuspiciousTrafficAssessment {
+  isSuspicious: boolean;
+  score: number;
+  reasons: string[];
+}
+
+export function assessSuspiciousTraffic(req: Request): SuspiciousTrafficAssessment {
+  const reasons: string[] = [];
+  let score = 0;
+
+  const userAgent = (req.headers.get("user-agent") ?? "").trim();
+  const secChUa = req.headers.get("sec-ch-ua") ?? "";
+  const secFetchSite = req.headers.get("sec-fetch-site") ?? "";
+  const origin = req.headers.get("origin") ?? "";
+  const referer = req.headers.get("referer") ?? "";
+
+  const hasBrowserContext = Boolean(origin || referer || secChUa || secFetchSite);
+
+  if (!userAgent) {
+    score += 3;
+    reasons.push("missing_user_agent");
+  } else {
+    if (AUTOMATION_USER_AGENT_PATTERN.test(userAgent)) {
+      score += 4;
+      reasons.push("automation_user_agent");
+    }
+
+    if (/headlesschrome|phantomjs/i.test(secChUa)) {
+      score += 4;
+      reasons.push("headless_client_hint");
+    }
+
+    if (!BROWSER_USER_AGENT_PATTERN.test(userAgent) && !hasBrowserContext) {
+      score += 2;
+      reasons.push("non_browser_signature");
+    }
+  }
+
+  if (!hasBrowserContext) {
+    score += 1;
+    reasons.push("missing_browser_headers");
+  }
+
+  return {
+    isSuspicious: score >= 4,
+    score,
+    reasons,
+  };
+}
+
 export function createServiceClient() {
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
