@@ -575,7 +575,10 @@ async function verifyLayoutIntegrity(
   changeTooSubtle: boolean;
 }> {
   const inputImage = await decodeImageFromDataUrl(inputDataUrl);
-  const outputImage = await decodeImageFromUrl(outputUrl);
+  // Output is now a data URL from native Gemini API (base64 inline), not an HTTP URL
+  const outputImage = outputUrl.startsWith("data:")
+    ? await decodeImageFromDataUrl(outputUrl)
+    : await decodeImageFromUrl(outputUrl);
 
   if (!inputImage || !outputImage) {
     return { ok: true, metrics: null, reasons: [], changeTooSubtle: false };
@@ -811,19 +814,32 @@ serve(async (req) => {
         console.error("AI gateway error:", response.status, errorText);
 
         if (response.status === 429) {
-          return { error: "Rate limit exceeded. Please try again in a moment.", status: 429 };
+          return { error: `Rate limit exceeded (${response.status}). Detail: ${errorText.slice(0, 200)}`, status: 429 };
         }
         if (response.status === 402) {
           return { error: "Usage limit reached. Please add credits to continue.", status: 402 };
         }
 
-        throw new Error(`AI gateway error: ${response.status}`);
+        return { error: `AI error ${response.status}: ${errorText.slice(0, 200)}`, status: response.status };
       }
 
       const rawData = await response.json();
 
+      // Check for blocked or empty responses
+      if (!rawData.candidates || rawData.candidates.length === 0) {
+        const blockReason = rawData.promptFeedback?.blockReason || "unknown";
+        console.error("Gemini returned no candidates. Block reason:", blockReason, JSON.stringify(rawData).slice(0, 500));
+        return { error: `The AI could not process this image (blocked: ${blockReason}). Try a different photo.`, status: 422 };
+      }
+
+      const finishReason = rawData.candidates[0].finishReason;
+      if (finishReason === "SAFETY" || finishReason === "RECITATION") {
+        console.error("Gemini blocked response. Finish reason:", finishReason);
+        return { error: "The AI flagged this image. Please try a different photo.", status: 422 };
+      }
+
       // Transform native Gemini response to match expected format
-      const parts = rawData.candidates?.[0]?.content?.parts || [];
+      const parts = rawData.candidates[0]?.content?.parts || [];
       let textContent = "";
       let imageUrl = "";
 
