@@ -32,10 +32,10 @@ const Gallery = () => {
   const galleryItems: GalleryItem[] = !isError && dbItems && dbItems.filter(item => item.type === "image").length > 0
     ? dbItems
         .filter(item => item.type === "image")
-        .map((item) => ({
+        .map((item, index) => ({
           id: item.id,
           src: resolveImageUrl(item.image_url),
-          alt: item.alt_text || "Gallery image",
+          alt: item.alt_text || `Gold Coast renovation gallery image ${index + 1}`,
         }))
     : fallbackGalleryItems;
 
@@ -74,7 +74,9 @@ const Gallery = () => {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6 max-w-[1600px] mx-auto">
+            <>
+              <h2 className="sr-only">Gold Coast renovation project gallery</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6 max-w-[1600px] mx-auto">
               {galleryItems.map((item) => (
                 <div 
                   key={item.id} 
@@ -91,7 +93,8 @@ const Gallery = () => {
                   <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20 pointer-events-none" />
                 </div>
               ))}
-            </div>
+              </div>
+            </>
           )}
 
           <BottomInvitation

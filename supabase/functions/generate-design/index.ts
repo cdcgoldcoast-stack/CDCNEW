@@ -805,7 +805,6 @@ serve(async (req) => {
       return { data };
     };
 
-    let finalData: any = null;
     let generatedImageUrl: string | undefined;
     let textResponse: string | undefined;
     let layoutCheckResult: Awaited<ReturnType<typeof verifyLayoutIntegrity>> | null = null;
@@ -826,7 +825,6 @@ serve(async (req) => {
         );
       }
 
-      finalData = data;
       console.log("AI response received");
 
       textResponse = data.choices?.[0]?.message?.content;

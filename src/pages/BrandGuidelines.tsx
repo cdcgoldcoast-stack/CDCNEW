@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
 import logo from "@/assets/logo.webp";
+import SEO from "@/components/SEO";
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -12,6 +13,12 @@ const fadeIn = {
 const BrandGuidelines = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Brand Guidelines"
+        description="Internal Concept Design Construct brand guidelines."
+        url="/brand-guidelines"
+        noIndex={true}
+      />
       {/* Header */}
       <header className="py-8 md:py-12 lg:py-20 border-b border-border">
         <div className="container-wide">

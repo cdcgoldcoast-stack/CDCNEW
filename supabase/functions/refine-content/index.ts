@@ -91,7 +91,7 @@ serve(async (req) => {
         instruction = 'Improve this text.';
     }
 
-    const prompt = `You are refining copy for Flow Home Studio, a Gold Coast renovation company focused on lifestyle enhancement.
+    const prompt = `You are refining copy for Concept Design Construct, a Gold Coast renovation company focused on lifestyle enhancement.
 
 VOICE GUIDELINES:
 - Write about how the home FEELS to live in, not just how it looks

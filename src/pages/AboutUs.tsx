@@ -154,7 +154,7 @@ const AboutUs = () => {
 
       <div className="relative z-10">
         <BottomInvitation
-          title="Let's Have A Chat"
+          title="Talk Through Your Renovation"
           description="Whether you're planning a bathroom update, a kitchen makeover, or a full property renovation - we'd love to hear about it."
           className="mt-0 mb-0"
         />

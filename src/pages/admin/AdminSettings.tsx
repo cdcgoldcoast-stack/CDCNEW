@@ -69,8 +69,9 @@ const AdminSettings = () => {
 
       if (error) throw error;
       toast.success("Profile updated successfully");
-    } catch (err: any) {
-      toast.error(err.message || "Failed to update profile");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to update profile";
+      toast.error(message);
     } finally {
       setProfileLoading(false);
     }
@@ -97,8 +98,9 @@ const AdminSettings = () => {
       if (error) throw error;
       toast.success("Confirmation email sent to your new address. Please check both inboxes.");
       setNewEmail("");
-    } catch (err: any) {
-      toast.error(err.message || "Failed to update email");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to update email";
+      toast.error(message);
     } finally {
       setEmailLoading(false);
     }
@@ -128,8 +130,8 @@ const AdminSettings = () => {
       toast.success("Password updated successfully");
       setNewPassword("");
       setConfirmPassword("");
-    } catch (err: any) {
-      const msg = err.message || "Failed to update password";
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Failed to update password";
       // Provide clearer error messages for common cases
       if (msg.includes("same_password") || msg.includes("should be different")) {
         toast.error("New password must be different from your current password");

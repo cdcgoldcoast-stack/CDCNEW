@@ -31,7 +31,7 @@ const Footer = () => {
         <div className="flex flex-col gap-6 md:gap-8 md:flex-row md:justify-between">
           {/* Logo & tagline */}
           <div className="flex flex-col shrink-0">
-            <img src={logo} alt="Concept Design Construct" className="h-auto w-20 md:w-28" />
+            <img src={logo} alt="" className="h-auto w-20 md:w-28" />
             <span className="text-xs md:text-h4 uppercase tracking-widest text-primary mt-2">
               Gold Coast Renovations
             </span>
@@ -71,8 +71,9 @@ const Footer = () => {
               </a>
             </div>
             <div className="flex items-center gap-4 md:gap-5 flex-wrap md:justify-end">
-              <img src={qbccLogo} alt="QBCC Licensed Builder" className="h-10 md:h-16 w-auto" />
-              <img src={masterBuildersLogo} alt="Master Builders Australia Member" className="h-10 md:h-16 w-auto" />
+              <img src={qbccLogo} alt="" className="h-10 md:h-16 w-auto" />
+              <img src={masterBuildersLogo} alt="" className="h-10 md:h-16 w-auto" />
+              <span className="sr-only">QBCC licensed builder and Master Builders Australia member</span>
             </div>
           </div>
         </div>

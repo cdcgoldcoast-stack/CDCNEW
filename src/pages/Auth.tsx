@@ -107,11 +107,12 @@ const Auth = () => {
         toast.success("Account created! You can now log in. Note: You'll need admin access to manage projects.");
         setIsLogin(true);
       }
-    } catch (error: any) {
-      let message = error.message;
-      if (error.message.includes("Invalid login credentials")) {
+    } catch (error: unknown) {
+      const baseMessage = error instanceof Error ? error.message : "Authentication failed";
+      let message = baseMessage;
+      if (baseMessage.includes("Invalid login credentials")) {
         message = "Invalid email or password. Please try again.";
-      } else if (error.message.includes("User already registered")) {
+      } else if (baseMessage.includes("User already registered")) {
         message = "This email is already registered. Please log in instead.";
       }
       toast.error(message);
@@ -124,7 +125,7 @@ const Auth = () => {
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
       <SEO
         title="Sign In"
-        description="Sign in to access the Flow Home Studio admin panel."
+        description="Sign in to access the Concept Design Construct admin panel."
         url="/auth"
         noIndex={true}
       />
@@ -133,11 +134,11 @@ const Auth = () => {
           <h1 className="font-serif italic text-3xl text-primary mb-2">
             {isLogin ? "Welcome Back" : "Create Account"}
           </h1>
-          <p className="text-foreground/60">
+          <h2 className="text-foreground/60 text-base font-normal">
             {isLogin
               ? "Sign in to access the admin panel"
               : "Sign up to request admin access"}
-          </p>
+          </h2>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">

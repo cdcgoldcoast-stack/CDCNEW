@@ -48,6 +48,9 @@ const AIDesignIntro = () => {
               </p>
             </div>
 
+            <h2 className="text-sm tracking-[0.2em] uppercase text-primary-foreground/70">
+              How the preview process works
+            </h2>
             <div className="grid gap-4 sm:grid-cols-3">
               {steps.map((step, index) => (
                 <div key={step.title} className="bg-primary-foreground/10 border border-primary-foreground/20 rounded-2xl p-4">
@@ -87,7 +90,7 @@ const AIDesignIntro = () => {
                   Before
                 </div>
               </div>
-              <img src={renovationBeforeImage} alt="Renovation before" className="h-full w-full object-cover" />
+              <img src={renovationBeforeImage} alt="Example room before AI renovation styling" className="h-full w-full object-cover" />
             </div>
             <div className="rounded-2xl overflow-hidden border border-primary-foreground/20 relative bg-primary-foreground/5">
               <div className="absolute top-3 left-3 right-3 z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 sm:gap-2">
@@ -98,7 +101,7 @@ const AIDesignIntro = () => {
                   After
                 </div>
               </div>
-              <img src={renovationAfterImage} alt="Renovation after" className="h-full w-full object-cover" />
+              <img src={renovationAfterImage} alt="Example room after AI renovation styling" className="h-full w-full object-cover" />
             </div>
           </div>
         </div>

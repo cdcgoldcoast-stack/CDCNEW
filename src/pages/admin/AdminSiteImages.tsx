@@ -151,7 +151,7 @@ const AdminSiteImages = () => {
     },
   });
 
-  const uploadImages = async (files: FileList | File[]) => {
+  const uploadImages = useCallback(async (files: FileList | File[]) => {
     const fileArray = Array.from(files);
     const imageFiles = fileArray.filter((f) => f.type.startsWith("image/"));
 
@@ -205,7 +205,7 @@ const AdminSiteImages = () => {
     if (successCount < imageFiles.length) {
       toast.error(`${imageFiles.length - successCount} image(s) failed to upload`);
     }
-  };
+  }, [queryClient]);
 
   // Rename existing files to remove timestamps
   const renameExistingFiles = async () => {
@@ -288,7 +288,7 @@ const AdminSiteImages = () => {
     if (e.dataTransfer.files.length > 0) {
       uploadImages(e.dataTransfer.files);
     }
-  }, []);
+  }, [uploadImages]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();

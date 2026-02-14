@@ -39,6 +39,20 @@ npm run preview
 - Optimised meta tags for Gold Coast renovation keywords
 - XML sitemap and robots.txt
 - Open Graph and Twitter Card support
+- Automated SEO artifact sync before every production build:
+  - `src/generated/project-slugs.json`
+  - `public/sitemap.xml`
+
+### SEO Sync (Vercel + Supabase)
+
+`npm run build` now runs `npm run seo:sync` automatically via `prebuild`.
+
+To pull live project slugs from Supabase during build, set one of these env pairs in Vercel:
+
+- `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` (recommended)
+- `VITE_SUPABASE_URL` + `VITE_SUPABASE_ANON_KEY` (fallback)
+
+If env vars are missing, sync falls back to static project slugs and the previous generated slug cache.
 
 ## Service Areas
 

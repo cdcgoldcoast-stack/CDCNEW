@@ -111,7 +111,7 @@ const Work = () => {
         )}
 
         <BottomInvitation
-          title="Let's Have A Chat"
+          title="Plan Your Next Renovation"
           description="Whether you're planning a bathroom update, a kitchen makeover, or a full property renovation - we'd love to hear about it."
         />
       </main>

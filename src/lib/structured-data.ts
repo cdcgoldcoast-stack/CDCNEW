@@ -128,3 +128,67 @@ export const generateContactPageSchema = () => ({
     areaServed: SERVICE_AREAS.primary.map(city => ({ "@type": "City", name: city })),
   },
 });
+
+/**
+ * Generate LocalBusiness schema for homepage and global branding.
+ */
+export const generateLocalBusinessSchema = () => ({
+  "@context": "https://schema.org",
+  "@type": BUSINESS_INFO.type,
+  name: SITE_NAME,
+  description:
+    "Gold Coast renovation builders for kitchens, bathrooms, and whole homes. Design-led, QBCC licensed. Free consultation.",
+  url: PRODUCTION_DOMAIN,
+  logo: `${PRODUCTION_DOMAIN}/logo.webp`,
+  image: `${PRODUCTION_DOMAIN}/og-image.jpg`,
+  email: BUSINESS_INFO.email,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: SERVICE_AREAS.primary[0],
+    addressRegion: SERVICE_AREAS.state,
+    addressCountry: SERVICE_AREAS.country,
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: BUSINESS_INFO.geo.latitude,
+    longitude: BUSINESS_INFO.geo.longitude,
+  },
+  areaServed: [
+    ...SERVICE_AREAS.primary.map((city) => ({ "@type": "City", name: city })),
+    { "@type": "State", name: SERVICE_AREAS.state },
+  ],
+  priceRange: BUSINESS_INFO.priceRange,
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: BUSINESS_INFO.openingHours.days,
+    opens: BUSINESS_INFO.openingHours.opens,
+    closes: BUSINESS_INFO.openingHours.closes,
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Gold Coast Renovation Services",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Kitchen Renovation Gold Coast",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Bathroom Renovation Gold Coast",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Whole Home Renovation Gold Coast",
+        },
+      },
+    ],
+  },
+});

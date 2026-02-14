@@ -8,6 +8,7 @@ import serviceBathroom from "@/assets/service-bathroom.jpg";
 import serviceLiving from "@/assets/service-living.jpg";
 import serviceWholeHome from "@/assets/service-whole-home.jpg";
 import heroBg from "@/assets/hero-bg.webp";
+import SEO from "@/components/SEO";
 
 // Print dimensions in mm converted to pixels at 96 DPI for screen display
 const MM_TO_PX = 3.7795275591;
@@ -188,6 +189,12 @@ const PrintBrochure = () => {
 
   return (
     <div className="min-h-screen bg-muted p-8">
+      <SEO
+        title="Print Brochure"
+        description="Internal print brochure export tool."
+        url="/print-brochure"
+        noIndex={true}
+      />
       <div className="max-w-7xl mx-auto">
         {/* Header Controls */}
         <div className="flex items-center justify-between mb-8">
@@ -236,16 +243,16 @@ const PrintBrochure = () => {
                 
                 <SafeArea className="justify-between relative z-10">
                   <div>
-                    <img src={logoImage} alt="Concept Design Construct" className="h-8 mb-3 brightness-0 invert" />
+                    <img src={logoImage} alt="" className="h-8 mb-3 brightness-0 invert" />
                   </div>
                   
                   <div className="flex-1 flex flex-col justify-center">
                     <p className="text-[9px] uppercase tracking-[0.2em] text-white/60 mb-2">Gold Coast Renovators</p>
-                    <h1 className="text-[28px] font-serif text-white leading-[1.1] mb-3">
+                    <h2 className="text-[28px] font-serif text-white leading-[1.1] mb-3">
                       Renovations<br />
                       <span className="italic">That Flow</span><br />
                       With Your Life
-                    </h1>
+                    </h2>
                     <div className="w-12 h-[2px] bg-white/40 mb-3" />
                     <p className="text-[10px] text-white/80 leading-relaxed max-w-[90%]">
                       Expert design & build for bathrooms, kitchens, and whole-home renovations that improve how you live.
@@ -267,7 +274,7 @@ const PrintBrochure = () => {
                   <div className="mb-3">
                     <p className="text-[8px] uppercase tracking-[0.2em] text-primary/40 mb-1">The Journey</p>
                     <h2 className="text-[18px] font-serif text-primary leading-tight">
-                      One Step Away <span className="italic">From Your Dream</span>
+                      One Step Away From Your Dream
                     </h2>
                   </div>
                   
@@ -358,7 +365,7 @@ const PrintBrochure = () => {
                 <SafeArea className="justify-between">
                   <div className="mb-3">
                     <p className="text-[8px] uppercase tracking-[0.2em] text-primary/40 mb-1">Our Services</p>
-                    <h2 className="text-[16px] font-serif text-primary leading-tight">What We <span className="italic">Renovate</span></h2>
+                    <h2 className="text-[16px] font-serif text-primary leading-tight">What We Renovate</h2>
                   </div>
                   
                   <div className="grid grid-cols-2 gap-2 flex-1">
@@ -446,8 +453,7 @@ const PrintBrochure = () => {
                   <div>
                     <p className="text-[8px] uppercase tracking-[0.2em] text-white/40 mb-2">Get Started</p>
                     <h2 className="text-[18px] font-serif text-white leading-tight mb-2">
-                      Let's Talk About<br />
-                      <span className="italic">Your Space</span>
+                      Let's Talk About Your Space
                     </h2>
                     <div className="w-8 h-[1px] bg-white/30 mb-3" />
                     <p className="text-[9px] text-white/70 leading-relaxed">
@@ -468,7 +474,7 @@ const PrintBrochure = () => {
                       </div>
                       <div>
                         <p className="text-[8px] uppercase tracking-wider text-white/40 mb-1">Website</p>
-                        <p className="text-[10px] text-white/90">conceptdesignconstruct.com.au</p>
+                        <p className="text-[10px] text-white/90">cdconstruct.com.au</p>
                       </div>
                     </div>
                   </div>
@@ -480,7 +486,7 @@ const PrintBrochure = () => {
                         <p className="text-[8px] uppercase tracking-wider text-white/40 mb-0.5">Service Area</p>
                         <p className="text-[10px] text-white/80 font-serif">Gold Coast & Brisbane</p>
                       </div>
-                      <img src={logoImage} alt="Logo" className="h-6 brightness-0 invert opacity-60" />
+                      <img src={logoImage} alt="" className="h-6 brightness-0 invert opacity-60" />
                     </div>
                     <p className="text-[7px] text-white/40 text-center uppercase tracking-wider">
                       QBCC Licensed • Master Builders Member • Est. Gold Coast

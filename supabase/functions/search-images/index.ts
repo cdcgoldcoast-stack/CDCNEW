@@ -30,6 +30,50 @@ interface ImageResult {
   licenseUrl?: string;
 }
 
+interface PexelsPhoto {
+  id: number;
+  width: number;
+  height: number;
+  alt?: string;
+  photographer?: string;
+  photographer_url?: string;
+  url: string;
+  src: {
+    medium: string;
+    large2x: string;
+    original: string;
+  };
+}
+
+interface OpenverseImage {
+  id: string;
+  url: string;
+  thumbnail?: string;
+  width?: number;
+  height?: number;
+  title?: string;
+  creator?: string;
+  creator_url?: string;
+  source?: string;
+  foreign_landing_url?: string;
+  license?: string;
+  license_url?: string;
+}
+
+interface PixabayImage {
+  id: number;
+  largeImageURL: string;
+  fullHDURL?: string;
+  imageURL?: string;
+  webformatURL: string;
+  imageWidth: number;
+  imageHeight: number;
+  tags?: string;
+  user?: string;
+  user_id?: number;
+  pageURL: string;
+}
+
 function filterToAllowedHosts(results: ImageResult[]): ImageResult[] {
   return results.filter((result) => {
     try {
@@ -66,9 +110,9 @@ async function searchPexels(query: string, page: number = 1): Promise<ImageResul
       return [];
     }
 
-    const data = await response.json();
+    const data = await response.json() as { photos?: PexelsPhoto[] };
     
-    return data.photos.map((photo: any) => ({
+    return (data.photos ?? []).map((photo) => ({
       id: `pexels-${photo.id}`,
       url: photo.src.large2x,
       fullUrl: photo.src.original,
@@ -93,7 +137,7 @@ async function searchOpenverse(query: string, page: number = 1): Promise<ImageRe
       `https://api.openverse.org/v1/images/?q=${encodeURIComponent(query)}&page=${page}&page_size=15`,
       {
         headers: {
-          "User-Agent": "FlowHomeStudio/1.0 (Moodboard Creator)",
+          "User-Agent": "ConceptDesignConstruct/1.0 (Moodboard Creator)",
         },
       }
     );
@@ -103,9 +147,9 @@ async function searchOpenverse(query: string, page: number = 1): Promise<ImageRe
       return [];
     }
 
-    const data = await response.json();
+    const data = await response.json() as { results?: OpenverseImage[] };
     
-    return data.results.map((image: any) => ({
+    return (data.results ?? []).map((image) => ({
       id: `openverse-${image.id}`,
       url: image.url,
       fullUrl: image.url,
@@ -138,7 +182,7 @@ async function searchPixabay(query: string, page: number = 1): Promise<ImageResu
       `https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(query)}&page=${page}&per_page=15&image_type=photo`,
       {
         headers: {
-          "User-Agent": "FlowHomeStudio/1.0 (Moodboard Creator)",
+          "User-Agent": "ConceptDesignConstruct/1.0 (Moodboard Creator)",
         },
       }
     );
@@ -148,9 +192,9 @@ async function searchPixabay(query: string, page: number = 1): Promise<ImageResu
       return [];
     }
 
-    const data = await response.json();
+    const data = await response.json() as { hits?: PixabayImage[] };
     
-    return data.hits.map((image: any) => ({
+    return (data.hits ?? []).map((image) => ({
       id: `pixabay-${image.id}`,
       url: image.largeImageURL,
       fullUrl: image.fullHDURL || image.imageURL || image.largeImageURL,

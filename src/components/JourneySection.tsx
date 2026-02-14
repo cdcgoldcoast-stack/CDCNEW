@@ -70,7 +70,6 @@ const JourneySection = () => {
           <p className="text-primary/50 text-xs md:text-sm tracking-[0.2em] uppercase mb-4 md:mb-6">The Journey</p>
           <h2 className="font-serif text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl text-primary leading-[1.1] tracking-tight italic">
             Steps Away From Your Dream Space!
-            <br />​
           </h2>
         </motion.div>
 

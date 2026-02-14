@@ -1,8 +1,19 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import fs from "fs";
 import path from "path";
 
-const prerenderRoutes = [
+const GENERATED_PROJECT_SLUGS_PATH = path.resolve(__dirname, "src/generated/project-slugs.json");
+const FALLBACK_PROJECT_SLUGS = [
+  "coastal-modern",
+  "heritage-revival",
+  "family-hub",
+  "retreat-house",
+  "urban-oasis",
+  "sunshine-retreat",
+];
+
+const basePrerenderRoutes = [
   "/",
   "/about-us",
   "/projects",
@@ -13,9 +24,26 @@ const prerenderRoutes = [
   "/life-stages",
   "/privacy-policy",
   "/terms-conditions",
-  "/brand-guidelines",
-  "/print-brochure",
 ];
+
+function loadProjectPrerenderRoutes(): string[] {
+  try {
+    const source = fs.readFileSync(GENERATED_PROJECT_SLUGS_PATH, "utf8");
+    const parsed = JSON.parse(source) as { slugs?: string[] };
+    if (Array.isArray(parsed.slugs) && parsed.slugs.length > 0) {
+      return parsed.slugs
+        .map((slug) => `${slug}`.trim())
+        .filter(Boolean)
+        .map((slug) => `/projects/${slug}`);
+    }
+  } catch {
+    // Fall through to static fallback.
+  }
+
+  return FALLBACK_PROJECT_SLUGS.map((slug) => `/projects/${slug}`);
+}
+
+const prerenderRoutes = Array.from(new Set([...basePrerenderRoutes, ...loadProjectPrerenderRoutes()]));
 
 function prerenderPlugin() {
   let outDir: string;
@@ -36,6 +64,7 @@ function prerenderPlugin() {
       const renderer = new PuppeteerRenderer({
         headless: true,
         renderAfterDocumentEvent: "prerender-ready",
+        renderAfterTime: 10000,
       });
 
       const prerenderer = new Prerenderer({
@@ -85,6 +114,31 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return undefined;
+
+          if (id.includes("jspdf")) return "vendor-jspdf";
+          if (id.includes("html2canvas")) return "vendor-html2canvas";
+          if (id.includes("@supabase/supabase-js")) return "vendor-supabase";
+          if (id.includes("framer-motion")) return "vendor-motion";
+          if (id.includes("@radix-ui")) return "vendor-radix";
+          if (id.includes("react") || id.includes("scheduler")) return "vendor-react";
+
+          const relativePath = id.split("node_modules/")[1];
+          if (!relativePath) return "vendor-misc";
+          const segments = relativePath.split("/");
+          const packageName = segments[0]?.startsWith("@")
+            ? `${segments[0]}-${segments[1]}`
+            : segments[0];
+
+          return `vendor-${packageName.replace(/[@/]/g, "-")}`;
+        },
+      },
     },
   },
 }));

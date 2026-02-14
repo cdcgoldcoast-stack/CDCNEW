@@ -225,9 +225,10 @@ const AdminProjects = () => {
       }));
 
       toast.success("AI has generated the overview, challenge, and solution sections.");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error generating content:", error);
-      toast.error(error.message || "Failed to generate content");
+      const message = error instanceof Error ? error.message : "Failed to generate content";
+      toast.error(message);
     } finally {
       setGenerating(false);
     }
@@ -271,13 +272,14 @@ const AdminProjects = () => {
 
         toast.success(`${field.charAt(0).toUpperCase() + field.slice(1)} has been updated.`);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error refining content:", error);
       setPreviousContent((prev) => ({
         ...prev,
         [field]: null,
       }));
-      toast.error(error.message || "Failed to refine content");
+      const message = error instanceof Error ? error.message : "Failed to refine content";
+      toast.error(message);
     } finally {
       setRefining(null);
     }
@@ -573,9 +575,10 @@ const AdminProjects = () => {
 
       resetForm();
       fetchProjects();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error saving project:", error);
-      toast.error(error.message || "Failed to save project");
+      const message = error instanceof Error ? error.message : "Failed to save project";
+      toast.error(message);
     } finally {
       setSaving(false);
     }
@@ -593,8 +596,9 @@ const AdminProjects = () => {
 
       toast.success("Project deleted");
       fetchProjects();
-    } catch (error: any) {
-      toast.error(error.message || "Failed to delete project");
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Failed to delete project";
+      toast.error(message);
     }
   };
 

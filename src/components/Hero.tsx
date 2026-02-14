@@ -43,13 +43,12 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
     }
   };
 
-  const heroAlt = "Gold Coast home renovation interior";
-  
   return (
     <section 
       ref={ref} 
       className="min-h-screen relative z-20 overflow-hidden bg-background"
     >
+      <h1 className="sr-only">Gold Coast Renovations - Locally Trusted.</h1>
       {heroImage && (
         <Helmet>
           <link rel="preload" as="image" href={heroImage} />
@@ -65,7 +64,7 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
           {heroImage ? (
             <img
               src={heroImage}
-              alt={heroAlt}
+              alt=""
               className="absolute inset-0 w-full h-full object-cover bg-muted"
               loading="eager"
               decoding="async"
@@ -84,12 +83,12 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
           variants={containerVariants}
         >
           <div className="w-full">
-            <motion.h1
+            <motion.p
               className="text-primary mb-4 text-2xl sm:text-3xl leading-[1.15] font-serif"
               variants={itemVariants}
             >
               Gold Coast Renovations — Locally Trusted.
-            </motion.h1>
+            </motion.p>
 
             <motion.p
               className="text-base sm:text-lg text-primary leading-relaxed mb-4"
@@ -157,12 +156,12 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
             variants={containerVariants}
           >
             <div className="max-w-xl">
-              <motion.h1
+              <motion.p
                 className="text-primary mb-5 text-[2.5rem] lg:text-[2.8rem] leading-[1.15] font-serif"
                 variants={itemVariants}
               >
                 Gold Coast Renovations — Locally Trusted.
-              </motion.h1>
+              </motion.p>
 
               <motion.p
                 className="text-lg text-primary leading-relaxed mb-5"
@@ -226,7 +225,7 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
             {heroImage ? (
               <img
                 src={heroImage}
-                alt={heroAlt}
+                alt=""
                 className="w-full max-w-[600px] h-[65vh] max-h-[680px] object-cover bg-muted"
                 loading="eager"
                 decoding="async"

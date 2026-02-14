@@ -13,7 +13,7 @@ import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import Preloader from "@/components/Preloader";
-import { generateFAQSchema } from "@/lib/structured-data";
+import { generateFAQSchema, generateLocalBusinessSchema } from "@/lib/structured-data";
 
 // FAQ data for structured data (matches FAQSection component)
 const homepageFAQs = [
@@ -68,7 +68,7 @@ const TestHome = () => {
         title="Gold Coast Renovations | Concept Design Construct"
         description="Gold Coast renovation builders for kitchens, bathrooms, and whole homes. Design-led, QBCC licensed. Free consultation."
         url="/"
-        jsonLd={generateFAQSchema(homepageFAQs)}
+        jsonLd={[generateLocalBusinessSchema(), generateFAQSchema(homepageFAQs)]}
       />
       <Header />
       <main>

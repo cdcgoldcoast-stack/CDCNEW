@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ImageSlider from "@/components/ImageSlider";
-import { fetchProjectBySlug, fetchProjects, Project } from "@/data/projects";
+import { fetchProjects, Project } from "@/data/projects";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import SEO from "@/components/SEO";
 import { generateProjectSchema, generateBreadcrumbSchema } from "@/lib/structured-data";
 import SuggestedProjects from "@/components/SuggestedProjects";
 import BottomInvitation from "@/components/BottomInvitation";
+import { slugMatches } from "@/lib/slug";
+import NotFound from "@/pages/NotFound";
 
 const ProjectDetail = () => {
   const { slug } = useParams<{ slug?: string }>();
@@ -24,12 +26,11 @@ const ProjectDetail = () => {
         return;
       }
 
-      const [projectData, projectsData] = await Promise.all([
-        fetchProjectBySlug(slug),
-        fetchProjects(),
-      ]);
+      const projectsData = await fetchProjects();
+      const projectData =
+        projectsData.find((candidate) => candidate.slug === slug || slugMatches(slug, candidate.name)) ?? null;
 
-      setProject(projectData || null);
+      setProject(projectData);
       setAllProjects(projectsData);
       setLoading(false);
     };
@@ -67,7 +68,7 @@ const ProjectDetail = () => {
   }
 
   if (!project) {
-    return <Navigate to="/projects" replace />;
+    return <NotFound />;
   }
 
   // Get next/prev projects

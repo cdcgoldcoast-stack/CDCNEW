@@ -43,6 +43,7 @@ const GetQuote = () => {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [website, setWebsite] = useState("");
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -131,22 +132,31 @@ const GetQuote = () => {
     setSubmitting(true);
 
     try {
-      const { error } = await supabase.from("enquiries").insert({
-        full_name: formData.fullName,
-        email: formData.email,
-        phone: formData.phone,
-        suburb: formData.suburb || null,
-        postcode: formData.postcode || null,
-        renovations: formData.renovations,
-        budget: formData.budget || null,
+      const { data, error } = await supabase.functions.invoke<{
+        success?: boolean;
+        error?: string;
+      }>("save-enquiry", {
+        body: {
+          fullName: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          suburb: formData.suburb || null,
+          postcode: formData.postcode || null,
+          renovations: formData.renovations,
+          budget: formData.budget || null,
+          source: "quote-form",
+          website,
+        },
       });
 
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
 
       setSubmitted(true);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error submitting enquiry:", error);
-      toast.error("Something went wrong. Please try again later.");
+      const message = error instanceof Error ? error.message : "Something went wrong. Please try again later.";
+      toast.error(message);
     } finally {
       setSubmitting(false);
     }
@@ -177,6 +187,7 @@ const GetQuote = () => {
       <Header />
 
       <main className="flex-1 relative overflow-hidden pt-16 md:pt-20">
+        <h1 className="sr-only">Get Your Free Renovation Plan</h1>
         {/* Expanding Background Panel */}
         <motion.div
           className="absolute inset-0 bg-primary z-0"
@@ -208,9 +219,9 @@ const GetQuote = () => {
                     Thank you, we have received your details
                   </p>
                   
-                  <h1 className="font-display text-3xl lg:text-4xl xl:text-5xl text-white leading-tight italic">
+                  <h2 className="font-display text-3xl lg:text-4xl xl:text-5xl text-white leading-tight italic">
                     This Is The Beginning Of Something Thoughtful.
-                  </h1>
+                  </h2>
                   
                   <p className="text-white/80 text-lg lg:text-xl leading-relaxed max-w-xl mx-auto pt-2">
                     Not plans or drawings just yet.
@@ -277,7 +288,7 @@ const GetQuote = () => {
                     </p>
 
                     <h2 className="font-display text-3xl lg:text-4xl xl:text-[2.75rem] text-white leading-[1.1] mb-4">
-                      Get Your Free<br />Renovation Plan
+                      Get Your Free Renovation Plan
                     </h2>
                     <p className="text-white/75 text-[15px] leading-relaxed mb-6 max-w-sm">
                       We're here to listen, understand your needs, and see if we're the right fit for each other.
@@ -294,7 +305,7 @@ const GetQuote = () => {
                             Before
                           </span>
                         </div>
-                        <img src={renovationBeforeImage} alt="Renovation before" className="h-full w-full object-cover" />
+                        <img src={renovationBeforeImage} alt="Example room before renovation planning" className="h-full w-full object-cover" />
                       </div>
                       <div className="relative rounded-xl overflow-hidden border border-white/20 h-36 lg:h-40 xl:h-44">
                         <div className="absolute top-2 left-2 right-2 z-10 flex items-center justify-between">
@@ -305,7 +316,7 @@ const GetQuote = () => {
                             After
                           </span>
                         </div>
-                        <img src={renovationAfterImage} alt="Renovation after" className="h-full w-full object-cover" />
+                        <img src={renovationAfterImage} alt="Example room after renovation concept" className="h-full w-full object-cover" />
                       </div>
                     </div>
 
@@ -391,9 +402,9 @@ const GetQuote = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
                   >
-                    <p className="text-muted-foreground text-xs tracking-widest uppercase mb-5">
+                    <h2 className="text-muted-foreground text-xs tracking-widest uppercase mb-5">
                       Here's what happens next
-                    </p>
+                    </h2>
 
                     <div className="space-y-4 mb-8">
                       {[
@@ -516,6 +527,18 @@ const GetQuote = () => {
                     nextStep();
                   }
                 }}>
+                  <div className="hidden" aria-hidden="true">
+                    <Label htmlFor="website">Website</Label>
+                    <Input
+                      id="website"
+                      name="website"
+                      type="text"
+                      value={website}
+                      onChange={(event) => setWebsite(event.target.value)}
+                      autoComplete="off"
+                      tabIndex={-1}
+                    />
+                  </div>
                   <AnimatePresence mode="wait">
                     {/* Step 2: Personal Details */}
                     {currentStep === 2 && (

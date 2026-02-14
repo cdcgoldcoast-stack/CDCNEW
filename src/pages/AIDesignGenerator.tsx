@@ -12,6 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import ImageComparisonSlider from "@/components/ImageComparisonSlider";
 import { cn } from "@/lib/utils";
 import { useResolvedAsset } from "@/hooks/useSiteAssets";
+import SEO from "@/components/SEO";
 
 const ChatMessage = ({
   role,
@@ -33,7 +34,7 @@ const ChatMessage = ({
     {role === "assistant" && (
       <div className="h-9 w-9 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 overflow-hidden border border-border">
         {avatarSrc ? (
-          <img src={avatarSrc} alt="CDC" className="h-full w-full object-contain p-1" />
+          <img src={avatarSrc} alt="" className="h-full w-full object-contain p-1" />
         ) : (
           <span className="text-[11px] font-semibold">CDC</span>
         )}
@@ -146,7 +147,7 @@ const HistoryPreview = ({
             afterLabel="After"
           />
         ) : (
-          <img src={afterImage} alt="Generated design" className="w-full h-auto rounded-lg" />
+          <img src={afterImage} alt="AI-generated renovation result" className="w-full h-auto rounded-lg" />
         )}
       </div>
       <div className="px-5 pb-5">
@@ -215,6 +216,17 @@ type LayoutFailureReason =
   | "camera_or_geometry_shifted"
   | "fixtures_or_openings_moved"
   | "room_boundaries_expanded_or_compressed";
+
+interface FunctionErrorContext {
+  clone?: () => Response;
+  json?: () => Promise<unknown>;
+  text?: () => Promise<string>;
+}
+
+interface FunctionInvokeErrorLike {
+  message?: string;
+  context?: FunctionErrorContext;
+}
 
 const SPACE_TYPES = [
   { value: "bathroom", label: "Bathroom", icon: "🛁" },
@@ -386,7 +398,7 @@ const buildPreferenceSentence = (
               <p>Uploaded a photo.</p>
               <img
                 src={item.beforeImage}
-                alt="Uploaded space"
+                alt="Uploaded room photo for renovation preview"
                 className="w-full max-w-[260px] sm:max-w-[320px] rounded-xl border border-border"
               />
             </div>
@@ -560,18 +572,26 @@ const buildPreferenceSentence = (
 
     setLeadSubmitting(true);
     try {
-      const { error } = await supabase.from("enquiries").insert({
-        full_name: fullName,
-        email,
-        phone,
-        renovations: ["ai-renovation-generator"],
-        suburb: null,
-        postcode: null,
-        budget: null,
-        timeline: leadForm.timeline || null,
+      const { data, error } = await supabase.functions.invoke<{
+        success?: boolean;
+        error?: string;
+      }>("save-enquiry", {
+        body: {
+          fullName,
+          email,
+          phone,
+          renovations: ["ai-renovation-generator"],
+          suburb: "gold coast",
+          postcode: null,
+          budget: null,
+          timeline: leadForm.timeline || null,
+          source: "ai-generator",
+          website: "",
+        },
       });
 
       if (error) throw error;
+      if (data?.error) throw new Error(data.error);
 
       setLeadCaptured(true);
       if (typeof window !== "undefined") {
@@ -592,10 +612,12 @@ const buildPreferenceSentence = (
     }
   };
 
-  const parseFunctionErrorPayload = async (invokeError: any) => {
+  const parseFunctionErrorPayload = async (invokeError: unknown) => {
+    const typedError = invokeError as FunctionInvokeErrorLike;
+
     try {
-      if (invokeError?.context && typeof invokeError.context.json === "function") {
-        const clone = typeof invokeError.context.clone === "function" ? invokeError.context.clone() : invokeError.context;
+      if (typedError.context && typeof typedError.context.json === "function") {
+        const clone = typeof typedError.context.clone === "function" ? typedError.context.clone() : typedError.context;
         return await clone.json();
       }
     } catch {
@@ -603,8 +625,8 @@ const buildPreferenceSentence = (
     }
 
     try {
-      if (invokeError?.context && typeof invokeError.context.text === "function") {
-        const clone = typeof invokeError.context.clone === "function" ? invokeError.context.clone() : invokeError.context;
+      if (typedError.context && typeof typedError.context.text === "function") {
+        const clone = typeof typedError.context.clone === "function" ? typedError.context.clone() : typedError.context;
         const raw = await clone.text();
         if (!raw) return null;
         try {
@@ -617,9 +639,9 @@ const buildPreferenceSentence = (
       // Ignore parse errors and fall back below.
     }
 
-    if (typeof invokeError?.message === "string") {
+    if (typeof typedError.message === "string") {
       try {
-        return JSON.parse(invokeError.message);
+        return JSON.parse(typedError.message);
       } catch {
         return null;
       }
@@ -668,7 +690,7 @@ const buildPreferenceSentence = (
             <p>Uploaded a photo.</p>
             <img
               src={uploadedImage}
-              alt="Uploaded space"
+              alt="Uploaded room photo"
               className="w-full max-w-[260px] sm:max-w-[320px] rounded-xl border border-border"
             />
           </div>
@@ -1028,9 +1050,9 @@ const buildPreferenceSentence = (
       } else {
         applySuccessState();
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Generation error:", error);
-      const warning = error?.message || "Failed to generate design. Please try again.";
+      const warning = error instanceof Error ? error.message : "Failed to generate design. Please try again.";
       setGenerationGuardrailMessage(warning);
       toast.error(warning);
     } finally {
@@ -1113,7 +1135,7 @@ const buildPreferenceSentence = (
                   afterLabel="After"
                 />
               ) : (
-                <img src={generatedImage} alt="Generated design" className="w-full h-auto rounded-lg" />
+                <img src={generatedImage} alt="AI-generated renovation preview" className="w-full h-auto rounded-lg" />
               )}
             </div>
           </div>
@@ -1123,7 +1145,7 @@ const buildPreferenceSentence = (
               className="relative rounded-xl cursor-pointer overflow-hidden group border border-border"
               onClick={() => fileInputRef.current?.click()}
             >
-              <img src={uploadedImage} alt="Uploaded space" className="w-full h-auto" />
+              <img src={uploadedImage} alt="Uploaded room photo preview" className="w-full h-auto" />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
                 <span className="text-white text-sm font-medium bg-black/60 px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                   Change Image
@@ -1144,6 +1166,11 @@ const buildPreferenceSentence = (
  
    return (
      <div className="min-h-screen bg-background overflow-hidden">
+      <SEO
+        title="AI Renovation Generator | Visualise Your Gold Coast Renovation"
+        description="Upload a room photo and preview renovation ideas while preserving your existing layout. Explore finishes, styles, and design direction in seconds."
+        url="/design-tools/ai-generator"
+      />
        <Header />
  
       <main className="pt-16 md:pt-28 h-[100dvh] overflow-hidden">
@@ -1163,14 +1190,14 @@ const buildPreferenceSentence = (
                   <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                     <div className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full bg-primary/10 text-primary text-xs font-semibold flex items-center justify-center overflow-hidden border border-border shrink-0">
                       {logoSrc ? (
-                        <img src={logoSrc} alt="Concept Design Construct" className="h-full w-full object-contain p-1" />
+                        <img src={logoSrc} alt="" className="h-full w-full object-contain p-1" />
                       ) : (
                         <span>CDC</span>
                       )}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[13px] sm:text-sm font-medium text-foreground truncate">CDC Renovation Assistant</p>
-                      <p className="text-[11px] sm:text-xs text-foreground/60 leading-tight truncate">Chat through a few prompts to build your preview.</p>
+                      <h1 className="text-[13px] sm:text-sm font-medium text-foreground truncate">CDC Renovation Assistant</h1>
+                      <h2 className="text-[11px] sm:text-xs text-foreground/60 leading-tight truncate">Chat through a few prompts to build your preview.</h2>
                     </div>
                   </div>
                   <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-foreground/60 shrink-0">

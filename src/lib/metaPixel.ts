@@ -1,35 +1,58 @@
+type FbqFunction = ((...args: unknown[]) => void) & {
+  callMethod?: (...args: unknown[]) => void;
+  queue: unknown[][];
+  push: (...args: unknown[]) => void;
+  loaded: boolean;
+  version: string;
+};
+
 declare global {
   interface Window {
-    fbq?: (...args: any[]) => void;
-    _fbq?: (...args: any[]) => void;
+    fbq?: FbqFunction;
+    _fbq?: FbqFunction;
   }
 }
 
 const META_PIXEL_ID = import.meta.env.VITE_META_PIXEL_ID as string | undefined;
 
+function ensureFbq(windowRef: Window, documentRef: Document): FbqFunction {
+  if (windowRef.fbq) return windowRef.fbq;
+
+  const fbq = ((...args: unknown[]) => {
+    if (typeof fbq.callMethod === "function") {
+      fbq.callMethod(...args);
+      return;
+    }
+    fbq.queue.push(args);
+  }) as FbqFunction;
+
+  fbq.queue = [];
+  fbq.push = (...args: unknown[]) => {
+    fbq.queue.push(args);
+  };
+  fbq.loaded = true;
+  fbq.version = "2.0";
+
+  windowRef.fbq = fbq;
+  if (!windowRef._fbq) {
+    windowRef._fbq = fbq;
+  }
+
+  const script = documentRef.createElement("script");
+  script.async = true;
+  script.src = "https://connect.facebook.net/en_US/fbevents.js";
+  const firstScript = documentRef.getElementsByTagName("script")[0];
+  firstScript?.parentNode?.insertBefore(script, firstScript);
+
+  return fbq;
+}
+
 export const initMetaPixel = () => {
   if (!META_PIXEL_ID || typeof window === "undefined") return;
-  if (window.fbq) return;
 
-  (function (f: any, b: Document, e: string, v: string) {
-    if (f.fbq) return;
-    const n: any = f.fbq = function () {
-      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-    };
-    if (!f._fbq) f._fbq = n;
-    n.push = n;
-    n.loaded = true;
-    n.version = "2.0";
-    n.queue = [] as any[];
-    const t = b.createElement(e) as HTMLScriptElement;
-    t.async = true;
-    t.src = v;
-    const s = b.getElementsByTagName(e)[0];
-    s?.parentNode?.insertBefore(t, s);
-  })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
-
-  window.fbq?.("init", META_PIXEL_ID);
-  window.fbq?.("track", "PageView");
+  const fbq = ensureFbq(window, document);
+  fbq("init", META_PIXEL_ID);
+  fbq("track", "PageView");
 };
 
 export const trackMetaPixelPageView = () => {

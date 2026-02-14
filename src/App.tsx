@@ -9,6 +9,7 @@ import { AnimatePresence } from "framer-motion";
 import ScrollToTop from "@/components/ScrollToTop";
 import PageTransition from "@/components/PageTransition";
 import { trackMetaPixelPageView } from "@/lib/metaPixel";
+import RequireAdmin from "@/components/admin/RequireAdmin";
 
 // Eagerly load homepage (critical path)
 import TestHome from "./pages/TestHome";
@@ -81,16 +82,16 @@ const AnimatedRoutes = () => {
           <Route path="/get-quote" element={withTransition(<GetQuote />)} />
 
           <Route path="/auth" element={<Auth />} />
-          <Route path="/admin" element={<Navigate to="/admin/projects" replace />} />
-          <Route path="/admin/projects" element={<AdminProjects />} />
-          <Route path="/admin/enquiries" element={<AdminEnquiries />} />
-          <Route path="/admin/chat-inquiries" element={<AdminChatInquiries />} />
-          <Route path="/admin/gallery" element={<AdminGallery />} />
-          <Route path="/admin/site-images" element={<AdminSiteImages />} />
-          <Route path="/admin/image-assets" element={<AdminImageAssets />} />
-          <Route path="/admin/settings" element={<AdminSettings />} />
-          <Route path="/brand-guidelines" element={withTransition(<BrandGuidelines />)} />
-          <Route path="/print-brochure" element={withTransition(<PrintBrochure />)} />
+          <Route path="/admin" element={<RequireAdmin><Navigate to="/admin/projects" replace /></RequireAdmin>} />
+          <Route path="/admin/projects" element={<RequireAdmin><AdminProjects /></RequireAdmin>} />
+          <Route path="/admin/enquiries" element={<RequireAdmin><AdminEnquiries /></RequireAdmin>} />
+          <Route path="/admin/chat-inquiries" element={<RequireAdmin><AdminChatInquiries /></RequireAdmin>} />
+          <Route path="/admin/gallery" element={<RequireAdmin><AdminGallery /></RequireAdmin>} />
+          <Route path="/admin/site-images" element={<RequireAdmin><AdminSiteImages /></RequireAdmin>} />
+          <Route path="/admin/image-assets" element={<RequireAdmin><AdminImageAssets /></RequireAdmin>} />
+          <Route path="/admin/settings" element={<RequireAdmin><AdminSettings /></RequireAdmin>} />
+          <Route path="/brand-guidelines" element={<RequireAdmin>{withTransition(<BrandGuidelines />)}</RequireAdmin>} />
+          <Route path="/print-brochure" element={<RequireAdmin>{withTransition(<PrintBrochure />)}</RequireAdmin>} />
           <Route path="/privacy-policy" element={withTransition(<PrivacyPolicy />)} />
           <Route path="/terms-conditions" element={withTransition(<TermsConditions />)} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
@@ -112,9 +113,18 @@ const App = () => {
       document.dispatchEvent(new Event("prerender-ready"));
     };
 
+    const hasPrerenderableContent = () => {
+      const root = document.getElementById("root");
+      if (!root) return false;
+
+      // Require both mounted route content and canonical SEO tag before snapshot.
+      const hasRouteContent = !!root.querySelector("main, h1, h2, section");
+      const hasCanonical = !!document.head.querySelector("link[rel='canonical']");
+      return hasRouteContent && hasCanonical;
+    };
+
     const interval = setInterval(() => {
-      const preloader = document.querySelector('[data-preloader="true"]');
-      if (!preloader) {
+      if (hasPrerenderableContent()) {
         dispatchReady();
         clearInterval(interval);
       }
@@ -123,7 +133,7 @@ const App = () => {
     const timeout = setTimeout(() => {
       dispatchReady();
       clearInterval(interval);
-    }, 4000);
+    }, 12000);
 
     return () => {
       clearInterval(interval);

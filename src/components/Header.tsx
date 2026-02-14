@@ -94,9 +94,9 @@ const Header = () => {
     >
       <div className="w-[94%] lg:w-[84%] max-w-[1440px] mx-auto flex items-center justify-between h-[74px] md:h-[92px] gap-6">
         {/* Logo */}
-        <Link to="/" className="flex items-center">
+        <Link to="/" className="flex items-center" aria-label="Concept Design Construct home">
           {logoSrc ? (
-            <img src={logoSrc} alt="Concept Design Construct" className="h-auto w-36 md:w-48" />
+            <img src={logoSrc} alt="" className="h-auto w-36 md:w-48" />
           ) : (
             <div className="h-10 md:h-12 w-36 md:w-48 bg-muted animate-pulse" />
           )}

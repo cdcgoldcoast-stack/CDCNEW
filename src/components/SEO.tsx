@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { useLocation } from "react-router-dom";
 import { PRODUCTION_DOMAIN, SITE_NAME, DEFAULT_META } from "@/config/seo";
 
 interface SEOProps {
@@ -11,6 +12,27 @@ interface SEOProps {
   jsonLd?: object | object[];
 }
 
+const normalizeCanonicalPath = (path: string) => {
+  const withoutQueryOrHash = path.split(/[?#]/)[0] || "/";
+  const withLeadingSlash = withoutQueryOrHash.startsWith("/")
+    ? withoutQueryOrHash
+    : `/${withoutQueryOrHash}`;
+
+  if (withLeadingSlash === "/") {
+    return "/";
+  }
+
+  return withLeadingSlash.replace(/\/+$/, "");
+};
+
+const resolvePath = (url: string) => {
+  try {
+    return new URL(url, PRODUCTION_DOMAIN).pathname;
+  } catch {
+    return url;
+  }
+};
+
 export const SEO = ({
   title,
   description = DEFAULT_META.description,
@@ -20,10 +42,12 @@ export const SEO = ({
   noIndex = false,
   jsonLd,
 }: SEOProps) => {
+  const location = useLocation();
   const fullTitle = title 
     ? `${title} | ${SITE_NAME}` 
     : DEFAULT_META.title;
-  const canonicalUrl = new URL(url || "/", PRODUCTION_DOMAIN).toString();
+  const canonicalPath = normalizeCanonicalPath(resolvePath(url || location.pathname || "/"));
+  const canonicalUrl = new URL(canonicalPath, PRODUCTION_DOMAIN).toString();
   const imageUrl = image.startsWith("http") ? image : `${PRODUCTION_DOMAIN}${image}`;
   const robotsContent = noIndex ? "noindex, nofollow" : "index, follow";
 
@@ -52,11 +76,11 @@ export const SEO = ({
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <meta name="robots" content={robotsContent} />
-      <link rel="canonical" href={canonicalUrl} />
+      <link key="canonical" rel="canonical" href={canonicalUrl} />
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={type} />
-      <meta property="og:url" content={canonicalUrl} />
+      <meta key="og:url" property="og:url" content={canonicalUrl} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={imageUrl} />
@@ -65,7 +89,7 @@ export const SEO = ({
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:url" content={canonicalUrl} />
+      <meta key="twitter:url" name="twitter:url" content={canonicalUrl} />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={imageUrl} />

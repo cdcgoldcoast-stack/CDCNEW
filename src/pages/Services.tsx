@@ -48,6 +48,7 @@ const Services = () => {
       </section>
 
       {/* Services layout */}
+      <h2 className="sr-only">Renovation service categories</h2>
       <WhatWeRenovateSplit />
 
       <Footer />

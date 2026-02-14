@@ -389,9 +389,9 @@ const LifeStagesPage = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              <h4 className="text-label text-foreground/60 mb-4">Gold Coast Renovation Costs</h4>
+              <p className="text-label text-foreground/60 mb-4">Gold Coast Renovation Costs</p>
               <h2 className="text-foreground font-serif italic text-2xl md:text-3xl">
-                Frequently Asked Questions
+                Life Stage Renovation FAQs
               </h2>
             </motion.div>
             

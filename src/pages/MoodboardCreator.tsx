@@ -14,6 +14,8 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import html2canvas from "html2canvas";
 import { useIsMobile } from "@/hooks/use-mobile";
+import SEO from "@/components/SEO";
+import type { Json } from "@/integrations/supabase/types";
 
 type Step = "layout" | "photos" | "notes" | "download";
 
@@ -278,6 +280,15 @@ interface FrameContent {
   };
 }
 
+interface SavedMoodboardData {
+  layout?: string;
+  frameContent?: FrameContent;
+  noteText?: string;
+  colors?: string[];
+  lockedSwatches?: boolean[];
+  autoExtractEnabled?: boolean;
+}
+
 const MoodboardCreator = () => {
   const [currentStep, setCurrentStep] = useState<Step>("layout");
   const isMobile = useIsMobile();
@@ -377,14 +388,14 @@ const MoodboardCreator = () => {
         setLoadingMessage("Preparing your page...");
 
         if (saved && typeof saved === "object") {
-          const data = saved as any;
+          const data = saved as SavedMoodboardData;
 
           if (typeof data.layout === "string") {
             setSelectedLayout(data.layout);
             setCurrentStep("photos");
           }
 
-          if (data.frameContent && typeof data.frameContent === "object") {
+          if (data.frameContent && typeof data.frameContent === "object" && !Array.isArray(data.frameContent)) {
             setFrameContent(data.frameContent);
           }
 
@@ -392,11 +403,14 @@ const MoodboardCreator = () => {
             setNoteText(data.noteText);
           }
 
-          if (Array.isArray(data.colors) && data.colors.every((c: any) => typeof c === "string")) {
+          if (Array.isArray(data.colors) && data.colors.every((color): color is string => typeof color === "string")) {
             setColors(data.colors);
           }
 
-          if (Array.isArray(data.lockedSwatches) && data.lockedSwatches.every((l: any) => typeof l === "boolean")) {
+          if (
+            Array.isArray(data.lockedSwatches) &&
+            data.lockedSwatches.every((lock): lock is boolean => typeof lock === "boolean")
+          ) {
             setLockedSwatches(data.lockedSwatches);
           }
 
@@ -432,7 +446,7 @@ const MoodboardCreator = () => {
         lockedSwatches,
         autoExtractEnabled,
       };
-      saveMoodboard(data as any);
+      saveMoodboard(data as Json);
     }
   }, [frameContent, noteText, colors, lockedSwatches, autoExtractEnabled, selectedLayout, isInitialized, saveMoodboard]);
 
@@ -514,7 +528,7 @@ const MoodboardCreator = () => {
     return () => {
       observer.disconnect();
     };
-  }, [isMobile, currentLayout?.id]);
+  }, [isMobile, currentLayout]);
 
   const handleLoadMore = useCallback(() => {
     const nextPage = searchPage + 1;
@@ -558,7 +572,7 @@ const MoodboardCreator = () => {
   const handleSelectLayout = useCallback((layoutId: string) => {
     setSelectedLayout(layoutId);
     setFrameContent({});
-  }, [currentLayout]);
+  }, []);
 
   const handleAddPhoto = useCallback(
     (image: { url: string; alt: string; exportUrl?: string }) => {
@@ -877,7 +891,7 @@ const MoodboardCreator = () => {
       toast.error("Failed to download moodboard");
     }
     setIsExporting(false);
-  }, []);
+  }, [currentLayout]);
 
   const handleNextStep = useCallback(() => {
     const currentIndex = STEPS.findIndex((s) => s.key === currentStep);
@@ -1368,6 +1382,11 @@ const MoodboardCreator = () => {
         isMobile && "h-[100dvh] overflow-hidden"
       )}
     >
+      <SEO
+        title="Moodboard Creator | Plan Your Renovation Aesthetic"
+        description="Collect inspiration, curate colour palettes, and export a renovation moodboard to share with our Gold Coast design team."
+        url="/design-tools/moodboard"
+      />
       <Header />
 
       <div className="pt-20 flex-1 flex flex-col min-h-0 lg:min-h-0">

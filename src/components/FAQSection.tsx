@@ -81,7 +81,7 @@ const FAQSection = () => {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
         >
-          <motion.h4 
+          <motion.p 
             className="text-label text-foreground/60 mb-4 md:mb-8 text-xs md:text-sm"
             whileInView={{ 
               letterSpacing: ["0.1em", "0.2em", "0.1em"],
@@ -89,7 +89,7 @@ const FAQSection = () => {
             transition={{ duration: 1, delay: 0.2 }}
           >
             FAQ
-          </motion.h4>
+          </motion.p>
           <h2 className="text-foreground font-serif italic text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight">
             Renovation FAQ, Gold Coast
           </h2>

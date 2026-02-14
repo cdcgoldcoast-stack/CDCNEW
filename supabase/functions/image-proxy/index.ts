@@ -66,7 +66,7 @@ serve(async (req) => {
 
     const upstream = await fetch(targetUrl.toString(), {
       headers: {
-        "User-Agent": "FlowHomeStudio/1.0 (Moodboard Export)",
+        "User-Agent": "ConceptDesignConstruct/1.0 (Moodboard Export)",
         Accept: "image/avif,image/webp,image/apng,image/*,*/*;q=0.8",
       },
     });

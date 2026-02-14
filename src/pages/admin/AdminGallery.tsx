@@ -241,7 +241,7 @@ const AdminGallery = () => {
     }
   };
 
-  const uploadImages = async (files: FileList | File[]) => {
+  const uploadImages = useCallback(async (files: FileList | File[]) => {
     const fileArray = Array.from(files);
     const imageFiles = fileArray.filter(f => f.type.startsWith('image/'));
     
@@ -302,7 +302,7 @@ const AdminGallery = () => {
     if (successCount < imageFiles.length) {
       toast.error(`${imageFiles.length - successCount} image(s) failed to upload`);
     }
-  };
+  }, [galleryItems, queryClient]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -310,7 +310,7 @@ const AdminGallery = () => {
     if (e.dataTransfer.files.length > 0) {
       uploadImages(e.dataTransfer.files);
     }
-  }, [galleryItems]);
+  }, [uploadImages]);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();

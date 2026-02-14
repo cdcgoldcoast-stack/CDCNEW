@@ -80,7 +80,7 @@ serve(async (req) => {
       );
     }
 
-    const prompt = `You are a copywriter for Flow Home Studio, a Gold Coast renovation company focused on lifestyle enhancement through renovation.
+    const prompt = `You are a copywriter for Concept Design Construct, a Gold Coast renovation company focused on lifestyle enhancement through renovation.
 
 VOICE & TONE GUIDELINES:
 - Write about how the home FEELS to live in, not just how it looks

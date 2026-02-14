@@ -5,7 +5,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' https://iqugsxeejieneyksfbza.supabase.co https://www.google-analytics.com https://www.facebook.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+          "value": "default-src 'self'; script-src 'self' https://www.googletagmanager.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' https://iqugsxeejieneyksfbza.supabase.co https://www.google-analytics.com https://www.facebook.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
         },
         {
           "key": "X-Content-Type-Options",
@@ -26,7 +26,37 @@
       ]
     }
   ],
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "permanent": true
+    },
+    {
+      "source": "/our-story",
+      "destination": "/about-us",
+      "permanent": true
+    },
+    {
+      "source": "/our-story/",
+      "destination": "/about-us",
+      "permanent": true
+    }
+  ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/design-tools/ai-generator", "destination": "/index.html" },
+    { "source": "/design-tools/ai-generator/intro", "destination": "/index.html" },
+    { "source": "/design-tools/moodboard", "destination": "/index.html" },
+    { "source": "/auth", "destination": "/index.html" },
+    { "source": "/admin", "destination": "/index.html" },
+    { "source": "/admin/projects", "destination": "/index.html" },
+    { "source": "/admin/enquiries", "destination": "/index.html" },
+    { "source": "/admin/chat-inquiries", "destination": "/index.html" },
+    { "source": "/admin/gallery", "destination": "/index.html" },
+    { "source": "/admin/site-images", "destination": "/index.html" },
+    { "source": "/admin/image-assets", "destination": "/index.html" },
+    { "source": "/admin/settings", "destination": "/index.html" },
+    { "source": "/brand-guidelines", "destination": "/index.html" },
+    { "source": "/print-brochure", "destination": "/index.html" }
   ]
 }

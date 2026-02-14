@@ -22,8 +22,7 @@ export function useMoodboard() {
 
   const sessionIdRef = useRef<string | null>(null);
   const isLocalModeRef = useRef(false);
-  // Keep as any to avoid DOM/Node timer type conflicts in mixed TS libs.
-  const saveTimeoutRef = useRef<any>(null);
+  const saveTimeoutRef = useRef<number | null>(null);
   const getLocalStorageKey = useCallback((sessionId: string) => `moodboard_local_state_${sessionId}`, []);
 
   const getSessionId = useCallback(() => {

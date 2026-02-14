@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2026-02-14T04:59:20.065Z",
+  "domain": "https://cdconstruct.com.au",
+  "slugs": [
+    "coastal-modern",
+    "family-hub",
+    "heritage-revival",
+    "retreat-house",
+    "sunshine-retreat",
+    "urban-oasis"
+  ],
+  "sourceCounts": {
+    "supabase": 0,
+    "staticFallback": 6,
+    "previousGenerated": 6
+  }
+}

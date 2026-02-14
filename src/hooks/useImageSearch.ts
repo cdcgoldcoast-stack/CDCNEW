@@ -219,10 +219,15 @@ export function useImageSearch() {
       };
 
       setResults(newResults);
-    } catch (err: any) {
-      if (err.name === "AbortError") return;
+    } catch (err: unknown) {
+      const errorName =
+        typeof err === "object" && err !== null && "name" in err
+          ? String((err as { name?: string }).name)
+          : "";
+      if (errorName === "AbortError") return;
 
       console.error("Search error:", err);
+      const message = err instanceof Error ? err.message : "Failed to search images";
 
       // Use fallback images when API fails
       if (page === 1) {
@@ -236,11 +241,11 @@ export function useImageSearch() {
         return;
       }
 
-      setError(err.message || "Failed to search images");
+      setError(message);
 
-      if (err.message?.includes("Rate limit")) {
+      if (message.includes("Rate limit")) {
         toast.error("Too many requests. Please wait a moment.");
-      } else if (err.message?.includes("not configured")) {
+      } else if (message.includes("not configured")) {
         setError("Stock photos not available. Try Open Licensed search instead.");
       } else {
         toast.error("Failed to load more images");

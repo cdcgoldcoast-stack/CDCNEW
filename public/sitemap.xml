@@ -1,117 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Homepage -->
   <url>
-    <loc>https://conceptdesignconstruct.com.au/</loc>
-    <lastmod>2026-02-01</lastmod>
+    <loc>https://cdconstruct.com.au/</loc>
+    <lastmod>2026-02-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  <!-- Our Story -->
   <url>
-    <loc>https://conceptdesignconstruct.com.au/our-story</loc>
-    <lastmod>2026-02-01</lastmod>
+    <loc>https://cdconstruct.com.au/about-us</loc>
+    <lastmod>2026-02-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  
-  <!-- Projects -->
   <url>
-    <loc>https://conceptdesignconstruct.com.au/projects</loc>
-    <lastmod>2026-02-05</lastmod>
+    <loc>https://cdconstruct.com.au/projects</loc>
+    <lastmod>2026-02-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-  
-  <!-- Life Stages -->
   <url>
-    <loc>https://conceptdesignconstruct.com.au/life-stages</loc>
-    <lastmod>2026-02-01</lastmod>
+    <loc>https://cdconstruct.com.au/services</loc>
+    <lastmod>2026-02-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cdconstruct.com.au/life-stages</loc>
+    <lastmod>2026-02-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  
-  <!-- Get Quote -->
   <url>
-    <loc>https://conceptdesignconstruct.com.au/get-quote</loc>
-    <lastmod>2026-02-01</lastmod>
+    <loc>https://cdconstruct.com.au/get-quote</loc>
+    <lastmod>2026-02-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-  
-  <!-- Gallery -->
   <url>
-    <loc>https://conceptdesignconstruct.com.au/gallery</loc>
-    <lastmod>2026-02-01</lastmod>
+    <loc>https://cdconstruct.com.au/gallery</loc>
+    <lastmod>2026-02-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
-  
-  <!-- Design Tools -->
   <url>
-    <loc>https://conceptdesignconstruct.com.au/design-tools</loc>
-    <lastmod>2026-02-01</lastmod>
+    <loc>https://cdconstruct.com.au/design-tools</loc>
+    <lastmod>2026-02-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
-  <!-- Project Pages -->
   <url>
-    <loc>https://conceptdesignconstruct.com.au/projects/coastal-modern</loc>
-    <lastmod>2026-02-05</lastmod>
+    <loc>https://cdconstruct.com.au/design-tools/ai-generator/intro</loc>
+    <lastmod>2026-02-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.5</priority>
   </url>
-  
   <url>
-    <loc>https://conceptdesignconstruct.com.au/projects/heritage-revival</loc>
-    <lastmod>2026-02-05</lastmod>
+    <loc>https://cdconstruct.com.au/design-tools/ai-generator</loc>
+    <lastmod>2026-02-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.5</priority>
   </url>
-  
   <url>
-    <loc>https://conceptdesignconstruct.com.au/projects/family-hub</loc>
-    <lastmod>2026-02-05</lastmod>
+    <loc>https://cdconstruct.com.au/design-tools/moodboard</loc>
+    <lastmod>2026-02-14</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.5</priority>
   </url>
-  
   <url>
-    <loc>https://conceptdesignconstruct.com.au/projects/retreat-house</loc>
-    <lastmod>2026-02-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://conceptdesignconstruct.com.au/projects/urban-oasis</loc>
-    <lastmod>2026-02-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://conceptdesignconstruct.com.au/projects/sunshine-retreat</loc>
-    <lastmod>2026-02-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Privacy Policy -->
-  <url>
-    <loc>https://conceptdesignconstruct.com.au/privacy-policy</loc>
-    <lastmod>2026-02-04</lastmod>
+    <loc>https://cdconstruct.com.au/privacy-policy</loc>
+    <lastmod>2026-02-14</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-  
-  <!-- Terms & Conditions -->
   <url>
-    <loc>https://conceptdesignconstruct.com.au/terms-conditions</loc>
-    <lastmod>2026-02-04</lastmod>
+    <loc>https://cdconstruct.com.au/terms-conditions</loc>
+    <lastmod>2026-02-14</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://cdconstruct.com.au/projects/coastal-modern</loc>
+    <lastmod>2026-02-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cdconstruct.com.au/projects/family-hub</loc>
+    <lastmod>2026-02-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cdconstruct.com.au/projects/heritage-revival</loc>
+    <lastmod>2026-02-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cdconstruct.com.au/projects/retreat-house</loc>
+    <lastmod>2026-02-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cdconstruct.com.au/projects/sunshine-retreat</loc>
+    <lastmod>2026-02-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cdconstruct.com.au/projects/urban-oasis</loc>
+    <lastmod>2026-02-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>
