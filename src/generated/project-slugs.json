@@ -1,17 +1,22 @@
 {
-  "generatedAt": "2026-02-14T05:28:20.349Z",
+  "generatedAt": "2026-02-14T05:48:20.107Z",
   "domain": "https://www.cdconstruct.com.au",
   "slugs": [
-    "coastal-modern",
+    "everyday-ease",
     "family-hub",
-    "heritage-revival",
-    "retreat-house",
-    "sunshine-retreat",
-    "urban-oasis"
+    "light-and-flow-house",
+    "seamless-bathroom",
+    "stone-and-light",
+    "terrazzo-retreat",
+    "the-calm-edit",
+    "the-elanora-residence",
+    "warm-minimal-bathroom"
   ],
   "sourceCounts": {
     "supabase": 0,
+    "vercelRewrites": 9,
+    "publicSite": 0,
     "staticFallback": 6,
-    "previousGenerated": 6
+    "previousGenerated": 9
   }
 }

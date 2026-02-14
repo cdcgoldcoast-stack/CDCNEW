@@ -10,6 +10,7 @@ const ROOT_DIR = path.resolve(__dirname, "..");
 const PROJECT_DATA_PATH = path.join(ROOT_DIR, "src", "data", "projects.ts");
 const GENERATED_SLUGS_PATH = path.join(ROOT_DIR, "src", "generated", "project-slugs.json");
 const SITEMAP_PATH = path.join(ROOT_DIR, "public", "sitemap.xml");
+const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, "vercel.json");
 
 const DEFAULT_DOMAIN = "https://www.cdconstruct.com.au";
 const PRODUCTION_DOMAIN = normalizeDomain(process.env.VITE_SITE_URL || DEFAULT_DOMAIN);
@@ -36,7 +37,17 @@ const PROJECT_META = {
 };
 
 function normalizeDomain(domain) {
-  return domain.trim().replace(/\/+$/, "");
+  const cleaned = domain.trim().replace(/\/+$/, "");
+  try {
+    const url = new URL(cleaned);
+    // Keep canonical host consistent across sitemap and head tags.
+    if (url.hostname === "cdconstruct.com.au") {
+      url.hostname = "www.cdconstruct.com.au";
+    }
+    return url.origin;
+  } catch {
+    return cleaned;
+  }
 }
 
 function generateSlug(name) {
@@ -121,6 +132,44 @@ async function readSupabaseProjectSlugs() {
   }
 }
 
+async function readPublicSiteProjectSlugs() {
+  try {
+    const response = await fetch(`${PRODUCTION_DOMAIN}/projects`, {
+      headers: {
+        "user-agent": "Mozilla/5.0 (compatible; seo-sync-bot/1.0)",
+      },
+    });
+
+    if (!response.ok) {
+      return [];
+    }
+
+    const html = await response.text();
+    const matches = [...html.matchAll(/href="\/projects\/([a-z0-9-]+)"/g)];
+    return uniqSorted(matches.map((match) => match[1]));
+  } catch {
+    return [];
+  }
+}
+
+async function readVercelRewriteProjectSlugs() {
+  try {
+    const source = await fs.readFile(VERCEL_CONFIG_PATH, "utf8");
+    const parsed = JSON.parse(source);
+    const rewrites = Array.isArray(parsed?.rewrites) ? parsed.rewrites : [];
+    const projectSlugs = rewrites
+      .map((rewrite) => `${rewrite?.source || ""}`)
+      .filter((sourcePath) => sourcePath.startsWith("/projects/"))
+      .filter((sourcePath) => sourcePath !== "/projects")
+      .map((sourcePath) => sourcePath.replace(/^\/projects\//, ""))
+      .filter((slug) => slug && !slug.includes("/") && !slug.includes(":") && !slug.includes("("));
+
+    return uniqSorted(projectSlugs);
+  } catch {
+    return [];
+  }
+}
+
 function buildSitemapXml(projectSlugs) {
   const lastmod = formatDateUTC();
 
@@ -165,16 +214,28 @@ async function writeSitemap(projectSlugs) {
 }
 
 async function main() {
-  const [supabaseSlugs, staticSlugs, previousSlugs] = await Promise.all([
+  const [supabaseSlugs, vercelRewriteSlugs, publicSiteSlugs, staticSlugs, previousSlugs] = await Promise.all([
     readSupabaseProjectSlugs(),
+    readVercelRewriteProjectSlugs(),
+    readPublicSiteProjectSlugs(),
     readStaticProjectSlugs(),
     readPreviousGeneratedSlugs(),
   ]);
 
-  const mergedSlugs = uniqSorted([...supabaseSlugs, ...staticSlugs, ...previousSlugs]);
+  const preferredSlugs = [
+    ...supabaseSlugs,
+    ...vercelRewriteSlugs,
+    ...publicSiteSlugs,
+  ];
+
+  const mergedSlugs = preferredSlugs.length > 0
+    ? uniqSorted(preferredSlugs)
+    : uniqSorted([...staticSlugs, ...previousSlugs]);
 
   await writeProjectSlugArtifact(mergedSlugs, {
     supabase: supabaseSlugs.length,
+    vercelRewrites: vercelRewriteSlugs.length,
+    publicSite: publicSiteSlugs.length,
     staticFallback: staticSlugs.length,
     previousGenerated: previousSlugs.length,
   });
