@@ -87,7 +87,7 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
               className="text-primary mb-4 text-2xl sm:text-3xl leading-[1.15] font-serif"
               variants={itemVariants}
             >
-              Gold Coast Renovations — Locally Trusted
+              Gold Coast Renovations — Locally Trusted.
             </motion.h1>
 
             <motion.p
@@ -160,7 +160,7 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
                 className="text-primary mb-5 text-[2.5rem] lg:text-[2.8rem] leading-[1.15] font-serif"
                 variants={itemVariants}
               >
-                Gold Coast Renovations — Locally Trusted
+                Gold Coast Renovations — Locally Trusted.
               </motion.h1>
 
               <motion.p
