@@ -1,10 +1,18 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { buildCorsHeaders, rejectDisallowedOrigin } from "../_shared/security.ts";
+import {
+  buildCorsHeaders,
+  jsonResponse,
+  requireAdminUser,
+  requireJsonBody,
+  requireMethod,
+  rejectDisallowedOrigin,
+} from "../_shared/security.ts";
 
 serve(async (req) => {
   const corsHeaders = buildCorsHeaders(req);
+  const methodResponse = requireMethod(req, ["POST", "OPTIONS"]);
+  if (methodResponse) return methodResponse;
 
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -15,57 +23,20 @@ serve(async (req) => {
   if (originBlock) return originBlock;
 
   try {
-    // Verify authentication
-    const authHeader = req.headers.get('Authorization');
-    if (!authHeader) {
-      console.error('No authorization header provided');
-      return new Response(
-        JSON.stringify({ error: 'No authorization header' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    // Create Supabase client to verify user
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_ANON_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseKey, {
-      global: { headers: { Authorization: authHeader } }
-    });
-
-    // Verify the user is authenticated
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-      console.error('Authentication failed:', authError);
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
-
-    // Check if user is admin
-    const { data: roleData, error: roleError } = await supabase
-      .from('user_roles')
-      .select('role')
-      .eq('user_id', user.id)
-      .eq('role', 'admin')
-      .maybeSingle();
-
-    if (roleError || !roleData) {
-      console.error('User is not an admin:', roleError);
-      return new Response(
-        JSON.stringify({ error: 'Forbidden - Admin access required' }),
-        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+    const adminResult = await requireAdminUser(req);
+    if ("response" in adminResult) {
+      return adminResult.response;
     }
 
     // Parse request body
-    const { description, projectName } = await req.json();
+    const bodyResult = await requireJsonBody<{ description?: string; projectName?: string }>(req, 80_000);
+    if ("response" in bodyResult) {
+      return bodyResult.response;
+    }
+    const { description, projectName } = bodyResult.data;
 
     if (!description) {
-      return new Response(
-        JSON.stringify({ error: 'Description is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return jsonResponse(req, 400, { error: "Description is required" });
     }
 
     console.log('Generating content for project:', projectName);
@@ -74,10 +45,7 @@ serve(async (req) => {
     const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
     if (!geminiApiKey) {
       console.error('GEMINI_API_KEY not configured');
-      return new Response(
-        JSON.stringify({ error: 'AI service not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return jsonResponse(req, 500, { error: "AI service not configured" });
     }
 
     const prompt = `You are a copywriter for Concept Design Construct, a Gold Coast renovation company focused on lifestyle enhancement through renovation.
@@ -129,10 +97,7 @@ Return ONLY valid JSON with these three keys. No markdown, no code blocks, just 
     if (!response.ok) {
       const errorText = await response.text();
       console.error('AI Gateway error:', errorText);
-      return new Response(
-        JSON.stringify({ error: 'AI service error' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return jsonResponse(req, 500, { error: "AI service error" });
     }
 
     const data = await response.json();
@@ -140,10 +105,7 @@ Return ONLY valid JSON with these three keys. No markdown, no code blocks, just 
 
     const content = data.choices[0]?.message?.content;
     if (!content) {
-      return new Response(
-        JSON.stringify({ error: 'No content generated' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return jsonResponse(req, 500, { error: "No content generated" });
     }
 
     // Parse the JSON response
@@ -154,24 +116,15 @@ Return ONLY valid JSON with these three keys. No markdown, no code blocks, just 
       parsedContent = JSON.parse(cleanContent);
     } catch (parseError) {
       console.error('Failed to parse AI response:', content);
-      return new Response(
-        JSON.stringify({ error: 'Failed to parse AI response' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return jsonResponse(req, 500, { error: "Failed to parse AI response" });
     }
 
     console.log('Content generated successfully');
 
-    return new Response(
-      JSON.stringify(parsedContent),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return jsonResponse(req, 200, parsedContent);
 
   } catch (error) {
     console.error('Error in generate-project-content:', error);
-    return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return jsonResponse(req, 500, { error: "Internal server error" });
   }
 });

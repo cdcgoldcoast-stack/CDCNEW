@@ -6,6 +6,8 @@ import {
   enforceRateLimit,
   getClientHash,
   jsonResponse,
+  requireJsonBody,
+  requireMethod,
   rejectDisallowedOrigin,
 } from "../_shared/security.ts";
 
@@ -31,6 +33,18 @@ const LAYOUT_SHIFT_THRESHOLD = 2.2;
 const LAYOUT_MAX_SHIFT_SEARCH = 4;
 const CHANGE_INTENSITY_THRESHOLD = 10; // average per-channel diff (0-255)
 const MAX_ATTEMPTS = 2;
+
+interface GenerateDesignRequest {
+  imageBase64?: string;
+  prompt?: string;
+  spaceType?: string;
+  designStyle?: string | null;
+  colorTone?: string | null;
+  materialFeel?: string | null;
+  fixtureFinish?: string | null;
+  imageWidth?: number;
+  imageHeight?: number;
+}
 
 const STRICT_LAYOUT_SUFFIX = `
 
@@ -611,6 +625,8 @@ async function verifyLayoutIntegrity(
 
 serve(async (req) => {
   const corsHeaders = buildCorsHeaders(req);
+  const methodResponse = requireMethod(req, ["POST", "OPTIONS"]);
+  if (methodResponse) return methodResponse;
 
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -677,6 +693,11 @@ serve(async (req) => {
     }
 
     // Parse request fields
+    const bodyResult = await requireJsonBody<GenerateDesignRequest>(req, 17_000_000);
+    if ("response" in bodyResult) {
+      return bodyResult.response;
+    }
+
     const { 
       imageBase64, 
       prompt, 
@@ -687,7 +708,7 @@ serve(async (req) => {
       fixtureFinish,  // Optional overall guidance
       imageWidth,     // Original image width in pixels
       imageHeight     // Original image height in pixels
-    } = await req.json();
+    } = bodyResult.data;
 
     // Enhanced logging for debugging
     console.log("Design generation request:", {
@@ -925,10 +946,6 @@ serve(async (req) => {
     );
   } catch (error) {
     console.error('Error in generate-design function:', error);
-    const errorMessage = error instanceof Error ? error.message : 'Failed to generate design';
-    return new Response(
-      JSON.stringify({ error: errorMessage }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return jsonResponse(req, 500, { error: "Internal server error" });
   }
 });

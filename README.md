@@ -32,6 +32,18 @@ npm run build
 npm run preview
 ```
 
+## Security Model
+
+- This deployment uses a single frontend app. Admin page code can be discoverable as JS chunks, but sensitive operations are protected server-side.
+- Security is enforced by Supabase auth, RLS policies, SQL grants, and edge-function authorization checks.
+- Service-role keys must never be exposed in `src/`, `public/`, or built assets.
+
+Run the automated security audit:
+
+```sh
+npm run security:audit
+```
+
 ## SEO Features
 
 - Pre-rendered HTML for critical landing pages

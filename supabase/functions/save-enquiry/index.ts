@@ -1,9 +1,11 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import {
   buildCorsHeaders,
+  createServiceClient,
   enforceRateLimit,
   jsonResponse,
+  requireJsonBody,
+  requireMethod,
   rejectDisallowedOrigin,
 } from "../_shared/security.ts";
 
@@ -45,6 +47,8 @@ function normalizeRenovations(value: unknown): string[] {
 
 serve(async (req) => {
   const corsHeaders = buildCorsHeaders(req);
+  const methodResponse = requireMethod(req, ["POST", "OPTIONS"]);
+  if (methodResponse) return methodResponse;
 
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -74,7 +78,12 @@ serve(async (req) => {
       );
     }
 
-    const body = await req.json() as EnquiryRequest;
+    const bodyResult = await requireJsonBody<EnquiryRequest>(req, 200_000);
+    if ("response" in bodyResult) {
+      return bodyResult.response;
+    }
+
+    const body = bodyResult.data;
 
     // Honeypot: bots often fill hidden fields.
     if (typeof body.website === "string" && body.website.trim()) {
@@ -115,14 +124,7 @@ serve(async (req) => {
       return jsonResponse(req, 400, { error: "Please choose at least one renovation type." });
     }
 
-    const supabaseUrl = Deno.env.get("SUPABASE_URL");
-    const supabaseServiceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-
-    if (!supabaseUrl || !supabaseServiceRoleKey) {
-      throw new Error("Supabase service configuration missing");
-    }
-
-    const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
+    const supabase = createServiceClient();
 
     const { data, error } = await supabase
       .from("enquiries")

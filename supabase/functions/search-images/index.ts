@@ -1,10 +1,12 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import {
   buildCorsHeaders,
+  createServiceClient,
   enforceRateLimit,
   isAllowedImageHost,
   jsonResponse,
+  requireJsonBody,
+  requireMethod,
   rejectDisallowedOrigin,
 } from "../_shared/security.ts";
 
@@ -233,6 +235,8 @@ function interleaveResults(arrays: ImageResult[][]): ImageResult[] {
 
 serve(async (req) => {
   const corsHeaders = buildCorsHeaders(req);
+  const methodResponse = requireMethod(req, ["POST", "OPTIONS"]);
+  if (methodResponse) return methodResponse;
 
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -262,7 +266,12 @@ serve(async (req) => {
       );
     }
 
-    const { provider, query, page = 1 }: SearchRequest = await req.json();
+    const bodyResult = await requireJsonBody<SearchRequest>(req, 200_000);
+    if ("response" in bodyResult) {
+      return bodyResult.response;
+    }
+
+    const { provider, query, page = 1 } = bodyResult.data;
 
     if (!provider || !query || typeof query !== "string") {
       return jsonResponse(req, 400, { error: "Missing required fields: provider, query" });
@@ -284,9 +293,7 @@ serve(async (req) => {
     console.log(`Searching ${provider} for: "${trimmedQuery}" (page ${page})`);
 
     // Check cache first
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabase = createServiceClient();
 
     const cacheKey = `${trimmedQuery.toLowerCase()}-${page}`;
     
@@ -350,7 +357,6 @@ serve(async (req) => {
 
   } catch (error: unknown) {
     console.error("Search error:", error);
-    const errorMessage = error instanceof Error ? error.message : "Unknown error";
-    return jsonResponse(req, 500, { error: errorMessage });
+    return jsonResponse(req, 500, { error: "Internal server error" });
   }
 });

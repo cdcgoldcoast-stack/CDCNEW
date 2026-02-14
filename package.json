@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "seo:sync": "node scripts/sync-seo-artifacts.mjs",
+    "security:audit": "node scripts/security-audit.mjs",
     "prebuild": "npm run seo:sync",
     "build": "vite build",
     "build:dev": "vite build --mode development",

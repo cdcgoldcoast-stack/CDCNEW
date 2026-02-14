@@ -4,6 +4,7 @@ import {
   enforceRateLimit,
   isAllowedImageHost,
   jsonResponse,
+  requireMethod,
   rejectDisallowedOrigin,
 } from "../_shared/security.ts";
 
@@ -28,6 +29,8 @@ function parseTargetUrl(value: string | null): URL | null {
 
 serve(async (req) => {
   const corsHeaders = buildCorsHeaders(req);
+  const methodResponse = requireMethod(req, ["GET", "OPTIONS"]);
+  if (methodResponse) return methodResponse;
 
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
@@ -98,6 +101,6 @@ serve(async (req) => {
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
     console.error("image-proxy error:", message);
-    return jsonResponse(req, 500, { error: message });
+    return jsonResponse(req, 500, { error: "Internal server error" });
   }
 });

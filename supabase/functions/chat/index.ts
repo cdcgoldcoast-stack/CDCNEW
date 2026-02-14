@@ -3,6 +3,8 @@ import {
   buildCorsHeaders,
   enforceRateLimit,
   jsonResponse,
+  requireJsonBody,
+  requireMethod,
   rejectDisallowedOrigin,
 } from "../_shared/security.ts";
 
@@ -53,6 +55,8 @@ Always prefer useful, direct answers within this scope and keep language human a
 
 serve(async (req) => {
   const corsHeaders = buildCorsHeaders(req);
+  const methodResponse = requireMethod(req, ["POST", "OPTIONS"]);
+  if (methodResponse) return methodResponse;
 
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -82,8 +86,12 @@ serve(async (req) => {
       );
     }
 
-    const body = await req.json();
-    const { messages } = body;
+    const bodyResult = await requireJsonBody<{ messages?: Array<{ role?: string; content?: string }> }>(req, 200_000);
+    if ("response" in bodyResult) {
+      return bodyResult.response;
+    }
+
+    const { messages } = bodyResult.data;
 
     // Validate messages array
     if (!Array.isArray(messages) || messages.length === 0 || messages.length > 50) {
@@ -146,6 +154,6 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error("Chat error:", error);
-    return jsonResponse(req, 500, { error: error instanceof Error ? error.message : "Unknown error" });
+    return jsonResponse(req, 500, { error: "Internal server error" });
   }
 });

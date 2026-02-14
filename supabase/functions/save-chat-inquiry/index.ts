@@ -1,14 +1,18 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import {
   buildCorsHeaders,
+  createServiceClient,
   enforceRateLimit,
   jsonResponse,
+  requireJsonBody,
+  requireMethod,
   rejectDisallowedOrigin,
 } from "../_shared/security.ts";
 
 serve(async (req) => {
   const corsHeaders = buildCorsHeaders(req);
+  const methodResponse = requireMethod(req, ["POST", "OPTIONS"]);
+  if (methodResponse) return methodResponse;
 
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -38,6 +42,19 @@ serve(async (req) => {
       );
     }
 
+    const bodyResult = await requireJsonBody<{
+      name?: unknown;
+      phone?: unknown;
+      email?: unknown;
+      additionalNotes?: unknown;
+      conversationHistory?: unknown;
+      contextSummary?: unknown;
+      website?: unknown;
+    }>(req, 250_000);
+    if ("response" in bodyResult) {
+      return bodyResult.response;
+    }
+
     const {
       name,
       phone,
@@ -46,7 +63,7 @@ serve(async (req) => {
       conversationHistory,
       contextSummary,
       website,
-    } = await req.json();
+    } = bodyResult.data;
 
     // Honeypot field: bots often fill hidden "website" fields.
     if (typeof website === "string" && website.trim()) {
@@ -131,9 +148,7 @@ ${normalizedHistory.map((m: { role: string; content: string }) => `${m.role === 
     }
 
     // Save to database
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    const supabase = createServiceClient();
 
     const { data, error } = await supabase
       .from("chat_inquiries")
@@ -157,6 +172,6 @@ ${normalizedHistory.map((m: { role: string; content: string }) => `${m.role === 
     return jsonResponse(req, 200, { success: true, id: data.id });
   } catch (error) {
     console.error("Save inquiry error:", error);
-    return jsonResponse(req, 500, { error: error instanceof Error ? error.message : "Unknown error" });
+    return jsonResponse(req, 500, { error: "Internal server error" });
   }
 });

@@ -1,4 +1,4 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient, type User } from "https://esm.sh/@supabase/supabase-js@2";
 
 const DEFAULT_ALLOWED_ORIGINS = [
   "https://cdcnew-eight.vercel.app",
@@ -95,6 +95,129 @@ export function jsonResponse(
       ...headers,
     },
   });
+}
+
+type SupabaseClient = ReturnType<typeof createClient>;
+
+export interface AuthenticatedRequestContext {
+  user: User;
+  authHeader: string;
+  authClient: SupabaseClient;
+}
+
+export function requireMethod(req: Request, allowedMethods: string[]): Response | null {
+  if (allowedMethods.includes(req.method)) {
+    return null;
+  }
+
+  return jsonResponse(
+    req,
+    405,
+    { error: "Method not allowed" },
+    { Allow: allowedMethods.join(", ") },
+  );
+}
+
+export async function requireJsonBody<T>(
+  req: Request,
+  maxBytes: number = 1_000_000,
+): Promise<{ data: T } | { response: Response }> {
+  const contentType = (req.headers.get("content-type") ?? "").toLowerCase();
+  if (!contentType.includes("application/json")) {
+    return { response: jsonResponse(req, 415, { error: "Content-Type must be application/json" }) };
+  }
+
+  const contentLength = Number(req.headers.get("content-length") ?? "0");
+  if (contentLength > maxBytes) {
+    return { response: jsonResponse(req, 413, { error: "Request payload is too large" }) };
+  }
+
+  try {
+    const data = await req.json() as T;
+    return { data };
+  } catch {
+    return { response: jsonResponse(req, 400, { error: "Invalid JSON payload" }) };
+  }
+}
+
+function getAuthorizationHeader(req: Request): string | null {
+  const authHeader = req.headers.get("authorization") ?? req.headers.get("Authorization");
+  return authHeader?.trim() || null;
+}
+
+function createAuthClient(authHeader: string): SupabaseClient | null {
+  const supabaseUrl = Deno.env.get("SUPABASE_URL");
+  const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY");
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return null;
+  }
+
+  return createClient(supabaseUrl, supabaseAnonKey, {
+    global: {
+      headers: {
+        Authorization: authHeader,
+      },
+    },
+  });
+}
+
+export async function requireAuthenticatedUser(
+  req: Request,
+): Promise<{ context: AuthenticatedRequestContext } | { response: Response }> {
+  const authHeader = getAuthorizationHeader(req);
+  if (!authHeader) {
+    return { response: jsonResponse(req, 401, { error: "Unauthorized" }) };
+  }
+
+  const authClient = createAuthClient(authHeader);
+  if (!authClient) {
+    console.error("Missing Supabase auth configuration for edge function auth checks");
+    return { response: jsonResponse(req, 500, { error: "Authentication is not configured" }) };
+  }
+
+  const { data, error } = await authClient.auth.getUser();
+  if (error || !data?.user) {
+    if (error) {
+      console.error("Auth validation error:", error.message);
+    }
+    return { response: jsonResponse(req, 401, { error: "Unauthorized" }) };
+  }
+
+  return {
+    context: {
+      user: data.user,
+      authHeader,
+      authClient,
+    },
+  };
+}
+
+export async function requireAdminUser(
+  req: Request,
+): Promise<{ context: AuthenticatedRequestContext } | { response: Response }> {
+  const authResult = await requireAuthenticatedUser(req);
+  if ("response" in authResult) {
+    return authResult;
+  }
+
+  const { authClient, user } = authResult.context;
+  const { data, error } = await authClient
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", user.id)
+    .eq("role", "admin")
+    .maybeSingle();
+
+  if (error) {
+    console.error("Admin role check failed:", error.message);
+    return { response: jsonResponse(req, 403, { error: "Forbidden" }) };
+  }
+
+  if (!data) {
+    return { response: jsonResponse(req, 403, { error: "Forbidden" }) };
+  }
+
+  return authResult;
 }
 
 export function getClientIP(req: Request): string {
