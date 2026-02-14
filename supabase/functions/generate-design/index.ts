@@ -783,7 +783,7 @@ serve(async (req) => {
       const mimeMatch = imageBase64.match(/^data:([^;]+);/);
       const mimeType = mimeMatch ? mimeMatch[1] : "image/jpeg";
 
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent?key=${GEMINI_API_KEY}`, {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro:generateContent?key=${GEMINI_API_KEY}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
