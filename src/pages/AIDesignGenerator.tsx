@@ -1262,7 +1262,7 @@ const buildPreferenceSentence = (
 
                   {isInitialGeneration && !isNewImageFlow && (
                     <ChatMessage role="assistant" className="w-full max-w-none bg-transparent border-0 p-0" avatarSrc={logoSrc}>
-                      <div className="w-full max-w-[880px] mx-auto">
+                      <div className="w-full max-w-[440px] mx-auto">
                         <PreviewErrorBoundary>
                           <PreviewPanel variant="chat" />
                         </PreviewErrorBoundary>
@@ -1274,7 +1274,7 @@ const buildPreferenceSentence = (
                     <Fragment key={item.id}>
                       {renderHistoryContext(item, index)}
                       <ChatMessage role="assistant" className="w-full max-w-none bg-transparent border-0 p-0" avatarSrc={logoSrc}>
-                        <div className="w-full max-w-[880px] mx-auto">
+                        <div className="w-full max-w-[440px] mx-auto">
                           <HistoryPreview beforeImage={item.beforeImage} afterImage={item.afterImage} />
                         </div>
                       </ChatMessage>
@@ -1361,7 +1361,7 @@ const buildPreferenceSentence = (
 
                   {isUpdateGeneration && (
                     <ChatMessage role="assistant" className="w-full max-w-none bg-transparent border-0 p-0" avatarSrc={logoSrc}>
-                      <div className="w-full max-w-[880px] mx-auto">
+                      <div className="w-full max-w-[440px] mx-auto">
                         <PreviewErrorBoundary>
                           <PreviewPanel variant="chat" />
                         </PreviewErrorBoundary>
@@ -1373,7 +1373,7 @@ const buildPreferenceSentence = (
 
                   {isNewImageFlow && isInitialGeneration && (
                     <ChatMessage role="assistant" className="w-full max-w-none bg-transparent border-0 p-0" avatarSrc={logoSrc}>
-                      <div className="w-full max-w-[880px] mx-auto">
+                      <div className="w-full max-w-[440px] mx-auto">
                         <PreviewErrorBoundary>
                           <PreviewPanel variant="chat" />
                         </PreviewErrorBoundary>
