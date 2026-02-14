@@ -1397,7 +1397,7 @@ const MoodboardCreator = () => {
       />
       <Header />
 
-      <div className="pt-20 flex-1 flex flex-col min-h-0 lg:min-h-0">
+      <div className="pt-[74px] md:pt-[100px] flex-1 flex flex-col min-h-0 lg:min-h-0">
         {/* Top bar */}
         <div className="px-4 py-3 border-b border-border bg-background flex items-center gap-3 md:gap-4 shrink-0">
           <Link
@@ -1411,7 +1411,7 @@ const MoodboardCreator = () => {
           <h1 className="text-base font-medium shrink-0">Create Your Moodboard</h1>
 
           {/* Steps inline (desktop) */}
-          <div className="hidden lg:flex flex-1 items-center justify-center gap-1 sm:gap-4">
+          <div className="hidden lg:flex flex-1 min-w-0 items-center justify-start xl:justify-center gap-1 sm:gap-3 overflow-x-auto scrollbar-hide px-2">
             {STEPS.map((step, index) => {
               const isCompleted = index + 1 < stepNumber;
               const isCurrent = step.key === currentStep;
@@ -1423,7 +1423,7 @@ const MoodboardCreator = () => {
                   onClick={() => goToStep(step.key)}
                   disabled={!canNavigate && !isCurrent}
                   className={cn(
-                    "flex items-center gap-1.5 transition-all",
+                    "flex shrink-0 items-center gap-1.5 transition-all",
                     canNavigate || isCurrent ? "cursor-pointer" : "cursor-not-allowed opacity-50"
                   )}
                 >
@@ -1753,7 +1753,7 @@ const MoodboardCreator = () => {
           >
             {/* Zoom controls (desktop only) */}
             {!isMobile && currentLayout && !showLoading && (
-              <div className="absolute bottom-4 right-4 z-20 flex items-center gap-1 bg-card/90 backdrop-blur-sm rounded-lg shadow-lg border border-border p-1">
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1 bg-card/90 backdrop-blur-sm rounded-lg shadow-lg border border-border p-1">
                 <Button
                   variant="ghost"
                   size="sm"
@@ -1893,7 +1893,7 @@ const MoodboardCreator = () => {
 
             {/* Helpful hint */}
             {!isMobile && !showLoading && currentStep === "photos" && filledFrames.length === 0 && currentLayout && (
-              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-card px-5 py-3 rounded-full shadow-lg border border-border">
+              <div className="absolute bottom-20 left-1/2 -translate-x-1/2 bg-card px-5 py-3 rounded-full shadow-lg border border-border">
                 <p className="text-sm text-muted-foreground">
                   Click photos in the sidebar to fill the frames
                 </p>
