@@ -32,7 +32,7 @@ const LAYOUT_BOUNDARY_THRESHOLD = 0.68;
 const LAYOUT_SHIFT_THRESHOLD = 2.2;
 const LAYOUT_MAX_SHIFT_SEARCH = 4;
 const CHANGE_INTENSITY_THRESHOLD = 10; // average per-channel diff (0-255)
-const MAX_ATTEMPTS = 2;
+const MAX_ATTEMPTS = 1;
 
 interface GenerateDesignRequest {
   imageBase64?: string;
@@ -783,8 +783,12 @@ serve(async (req) => {
       const mimeMatch = imageBase64.match(/^data:([^;]+);/);
       const mimeType = mimeMatch ? mimeMatch[1] : "image/jpeg";
 
+      const abortController = new AbortController();
+      const fetchTimeout = setTimeout(() => abortController.abort(), 55_000);
+
       const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent?key=${GEMINI_API_KEY}`, {
         method: "POST",
+        signal: abortController.signal,
         headers: {
           "Content-Type": "application/json",
         },
@@ -808,6 +812,7 @@ serve(async (req) => {
           },
         }),
       });
+      clearTimeout(fetchTimeout);
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -868,13 +873,8 @@ serve(async (req) => {
     let textResponse: string | undefined;
     let layoutCheckResult: Awaited<ReturnType<typeof verifyLayoutIntegrity>> | null = null;
 
-    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-      const promptText =
-        attempt === 1
-          ? `${userPrompt}${STRONG_RENOVATION_SUFFIX}`
-          : attempt === 2
-            ? `${userPrompt}${STRICT_LAYOUT_SUFFIX}${STRONG_RENOVATION_SUFFIX}`
-            : `${userPrompt}${STRICT_LAYOUT_SUFFIX}${FINAL_LAYOUT_SUFFIX}${STRONG_RENOVATION_SUFFIX}`;
+    {
+      const promptText = `${userPrompt}${STRICT_LAYOUT_SUFFIX}${STRONG_RENOVATION_SUFFIX}`;
       const { data, error, status } = await callModel(promptText);
 
       if (error) {
@@ -901,24 +901,6 @@ serve(async (req) => {
       }
 
       generatedImageUrl = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
-
-      if (!generatedImageUrl) {
-        console.warn(`Attempt ${attempt}: No image in AI response, retrying...`);
-        continue;
-      }
-
-      const layoutCheck = await verifyLayoutIntegrity(imageBase64, generatedImageUrl);
-      layoutCheckResult = layoutCheck;
-      if (layoutCheck.ok && !layoutCheck.changeTooSubtle) {
-        break;
-      }
-
-      console.warn("Layout or intensity check failed, retrying with stricter prompt", {
-        metrics: layoutCheck.metrics,
-        reasons: layoutCheck.reasons,
-        changeTooSubtle: layoutCheck.changeTooSubtle,
-        attempt,
-      });
     }
 
     if (!generatedImageUrl) {
@@ -928,35 +910,22 @@ serve(async (req) => {
       );
     }
 
-    // Best-effort: if layout check failed, still return the image with a warning
-    if (layoutCheckResult && !layoutCheckResult.ok) {
-      console.warn("Returning best-effort result despite layout check failure", {
-        reasons: layoutCheckResult.reasons,
-        metrics: layoutCheckResult.metrics,
-      });
-      // Fall through to return the image with a warning flag
-    }
-
-    // changeTooSubtle is handled as a warning in the response payload below
-
     // Update usage count after successful generation
     if (usageData) {
-      // Update existing record
       const { error: updateError } = await supabase
         .from('design_generation_usage')
         .update({ generation_count: currentCount + 1 })
         .eq('ip_address', clientHash)
         .eq('usage_date', today);
-      
+
       if (updateError) {
         console.error("Error updating usage:", updateError);
       }
     } else {
-      // Insert new record
       const { error: insertError } = await supabase
         .from('design_generation_usage')
         .insert({ ip_address: clientHash, usage_date: today, generation_count: 1 });
-      
+
       if (insertError) {
         console.error("Error inserting usage:", insertError);
       }
@@ -964,22 +933,12 @@ serve(async (req) => {
 
     const remaining = DAILY_LIMIT - (currentCount + 1);
 
-    const responsePayload: Record<string, unknown> = { 
-      imageUrl: generatedImageUrl,
-      description: textResponse,
-      remaining: remaining,
-    };
-
-    if (layoutCheckResult && !layoutCheckResult.ok) {
-      responsePayload.layoutWarning = true;
-      responsePayload.layoutFailureReasons = layoutCheckResult.reasons;
-    }
-    if (layoutCheckResult?.changeTooSubtle) {
-      responsePayload.changeTooSubtle = true;
-    }
-
     return new Response(
-      JSON.stringify(responsePayload),
+      JSON.stringify({
+        imageUrl: generatedImageUrl,
+        description: textResponse,
+        remaining: remaining,
+      }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
