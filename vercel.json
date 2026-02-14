@@ -44,6 +44,15 @@
     }
   ],
   "rewrites": [
+    { "source": "/about-us", "destination": "/index.html" },
+    { "source": "/life-stages", "destination": "/index.html" },
+    { "source": "/projects", "destination": "/index.html" },
+    { "source": "/services", "destination": "/index.html" },
+    { "source": "/gallery", "destination": "/index.html" },
+    { "source": "/design-tools", "destination": "/index.html" },
+    { "source": "/get-quote", "destination": "/index.html" },
+    { "source": "/privacy-policy", "destination": "/index.html" },
+    { "source": "/terms-conditions", "destination": "/index.html" },
     { "source": "/design-tools/ai-generator", "destination": "/index.html" },
     { "source": "/design-tools/ai-generator/intro", "destination": "/index.html" },
     { "source": "/design-tools/moodboard", "destination": "/index.html" },

@@ -29,7 +29,7 @@ const AIDesignIntro = () => {
     <div className="min-h-screen bg-primary text-primary-foreground">
       <SEO
         title="AI Design Generator"
-        description="Add images, select finishes, and get your enhanced design with our AI renovation generator."
+        description="Preview your renovation style in minutes. Upload room photos, choose finishes, and generate visual concepts before planning your Gold Coast project."
         url="/design-tools/ai-generator/intro"
       />
       <Header />

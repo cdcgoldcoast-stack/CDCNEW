@@ -24,7 +24,7 @@ const AboutUs = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="About Us | Gold Coast Renovation Experts Since 2000"
-        description="Meet Concept Design Construct - QBCC licensed Gold Coast builders delivering full property renovations, extensions, bathroom, kitchen and laundry renovations on the Gold Coast."
+        description="Meet Concept Design Construct, QBCC licensed Gold Coast renovation specialists delivering kitchen, bathroom, extension, and full-home projects since 2000."
         url="/about-us"
         jsonLd={aboutSchema}
       />

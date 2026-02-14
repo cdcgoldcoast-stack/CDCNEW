@@ -7,7 +7,7 @@ const TermsConditions = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="Terms & Conditions | Concept Design Construct"
-        description="Terms and Conditions for Concept Design Construct - Gold Coast Renovations"
+        description="Review Concept Design Construct terms covering service information, quote guidance, intellectual property, and legal conditions for using this site."
         url="/terms-conditions"
       />
       <Header />

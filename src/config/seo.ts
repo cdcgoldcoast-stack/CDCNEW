@@ -7,16 +7,19 @@
 
 // Production domain - update this when connecting custom domain
 const envDomain = (import.meta.env?.VITE_SITE_URL as string | undefined) || "";
-export const PRODUCTION_DOMAIN = (envDomain ? envDomain.replace(/\/$/, "") : "https://cdconstruct.com.au");
+export const PRODUCTION_DOMAIN = (envDomain ? envDomain.replace(/\/$/, "") : "https://www.cdconstruct.com.au");
 
 // Site branding
 export const SITE_NAME = "Concept Design Construct";
 export const SITE_TAGLINE = "Gold Coast Home Renovations";
+const TITLE_MAX_LENGTH = 60;
+const TITLE_ELLIPSIS = "...";
 
 // Default meta content
 export const DEFAULT_META = {
-  title: `${SITE_NAME} | ${SITE_TAGLINE}`,
-  description: "Expert Gold Coast renovations for kitchens, bathrooms, and whole homes. QBCC licensed builders transforming Gold Coast homes. Free consultation.",
+  title: "Gold Coast Renovations | Concept Design Construct",
+  description:
+    "Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations with design-led planning, QBCC licensed delivery, and timelines.",
   image: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Gold-Coast-Renovations.webp",
 };
 
@@ -70,8 +73,24 @@ export const getFullUrl = (path: string = "/") => {
   return `${PRODUCTION_DOMAIN}${path}`;
 };
 
+const truncateTitle = (title: string) => {
+  const cleanTitle = title.trim();
+  if (cleanTitle.length <= TITLE_MAX_LENGTH) return cleanTitle;
+
+  const sliced = cleanTitle.slice(0, TITLE_MAX_LENGTH - TITLE_ELLIPSIS.length).trim();
+  const lastWordBoundary = sliced.lastIndexOf(" ");
+  const cutAt = lastWordBoundary > 35 ? lastWordBoundary : sliced.length;
+  return `${sliced.slice(0, cutAt).trim()}${TITLE_ELLIPSIS}`;
+};
+
 // Helper function to format page title
 export const formatPageTitle = (pageTitle?: string) => {
-  if (!pageTitle) return DEFAULT_META.title;
-  return `${pageTitle} | ${SITE_NAME}`;
+  if (!pageTitle?.trim()) return truncateTitle(DEFAULT_META.title);
+
+  const cleanTitle = pageTitle.trim();
+  const hasBrand = cleanTitle.toLowerCase().includes(SITE_NAME.toLowerCase());
+  const brandedTitle = hasBrand ? cleanTitle : `${cleanTitle} | ${SITE_NAME}`;
+  const preferredTitle = brandedTitle.length <= TITLE_MAX_LENGTH ? brandedTitle : cleanTitle;
+
+  return truncateTitle(preferredTitle);
 };

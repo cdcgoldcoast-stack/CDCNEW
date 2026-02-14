@@ -8,7 +8,7 @@ const ProjectCard = ({
   project: Project;
 }) => <Link to={`/projects/${project.slug}`} className="group flex-shrink-0 w-[240px] sm:w-[280px] md:w-[320px] cursor-pointer">
     <div className="relative aspect-[2/3] overflow-hidden">
-      <img src={project.image} alt={project.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+      <img src={project.image} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
 
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-media-overlay/70 pointer-events-none" />
 

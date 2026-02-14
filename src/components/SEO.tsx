@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
-import { PRODUCTION_DOMAIN, SITE_NAME, DEFAULT_META } from "@/config/seo";
+import { PRODUCTION_DOMAIN, SITE_NAME, DEFAULT_META, formatPageTitle } from "@/config/seo";
 
 interface SEOProps {
   title?: string;
@@ -33,6 +33,8 @@ const resolvePath = (url: string) => {
   }
 };
 
+const normalizeDescription = (value: string) => value.trim().replace(/\s+/g, " ");
+
 export const SEO = ({
   title,
   description = DEFAULT_META.description,
@@ -43,9 +45,8 @@ export const SEO = ({
   jsonLd,
 }: SEOProps) => {
   const location = useLocation();
-  const fullTitle = title 
-    ? `${title} | ${SITE_NAME}` 
-    : DEFAULT_META.title;
+  const fullTitle = formatPageTitle(title);
+  const fullDescription = normalizeDescription(description || DEFAULT_META.description);
   const canonicalPath = normalizeCanonicalPath(resolvePath(url || location.pathname || "/"));
   const canonicalUrl = new URL(canonicalPath, PRODUCTION_DOMAIN).toString();
   const imageUrl = image.startsWith("http") ? image : `${PRODUCTION_DOMAIN}${image}`;
@@ -74,7 +75,7 @@ export const SEO = ({
     <Helmet>
       {/* Primary Meta Tags */}
       <title>{fullTitle}</title>
-      <meta name="description" content={description} />
+      <meta name="description" content={fullDescription} />
       <meta name="robots" content={robotsContent} />
       <link key="canonical" rel="canonical" href={canonicalUrl} />
 
@@ -82,7 +83,7 @@ export const SEO = ({
       <meta property="og:type" content={type} />
       <meta key="og:url" property="og:url" content={canonicalUrl} />
       <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={description} />
+      <meta property="og:description" content={fullDescription} />
       <meta property="og:image" content={imageUrl} />
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:locale" content="en_AU" />
@@ -91,7 +92,7 @@ export const SEO = ({
       <meta name="twitter:card" content="summary_large_image" />
       <meta key="twitter:url" name="twitter:url" content={canonicalUrl} />
       <meta name="twitter:title" content={fullTitle} />
-      <meta name="twitter:description" content={description} />
+      <meta name="twitter:description" content={fullDescription} />
       <meta name="twitter:image" content={imageUrl} />
 
       {/* JSON-LD Structured Data */}

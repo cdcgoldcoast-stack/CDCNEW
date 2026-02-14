@@ -66,7 +66,7 @@ const TestHome = () => {
       {shouldShowPreloader && <Preloader onComplete={handlePreloaderComplete} />}
       <SEO
         title="Gold Coast Renovations | Concept Design Construct"
-        description="Gold Coast renovation builders for kitchens, bathrooms, and whole homes. Design-led, QBCC licensed. Free consultation."
+        description="Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations with design-led planning, QBCC licensed delivery, and timelines."
         url="/"
         jsonLd={[generateLocalBusinessSchema(), generateFAQSchema(homepageFAQs)]}
       />

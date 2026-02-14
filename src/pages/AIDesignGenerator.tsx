@@ -1167,7 +1167,7 @@ const buildPreferenceSentence = (
    return (
      <div className="min-h-screen bg-background overflow-hidden">
       <SEO
-        title="AI Renovation Generator | Visualise Your Gold Coast Renovation"
+        title="AI Renovation Visualiser | Gold Coast Design Preview"
         description="Upload a room photo and preview renovation ideas while preserving your existing layout. Explore finishes, styles, and design direction in seconds."
         url="/design-tools/ai-generator"
       />

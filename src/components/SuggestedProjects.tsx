@@ -100,7 +100,7 @@ const SuggestedProjects = ({ currentProjectId }: SuggestedProjectsProps) => {
               <div className="relative aspect-[3/4] overflow-hidden mb-4">
                 <img
                   src={project.image}
-                  alt={project.name}
+                  alt=""
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>

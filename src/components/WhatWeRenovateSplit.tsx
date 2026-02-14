@@ -99,7 +99,7 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
             {service.image && (
               <motion.img
                 src={service.image}
-                alt={service.title}
+                alt=""
                 className="w-full h-full object-cover"
                 whileHover={{ scale: 1.08 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}

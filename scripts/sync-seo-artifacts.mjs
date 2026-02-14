@@ -11,7 +11,7 @@ const PROJECT_DATA_PATH = path.join(ROOT_DIR, "src", "data", "projects.ts");
 const GENERATED_SLUGS_PATH = path.join(ROOT_DIR, "src", "generated", "project-slugs.json");
 const SITEMAP_PATH = path.join(ROOT_DIR, "public", "sitemap.xml");
 
-const DEFAULT_DOMAIN = "https://cdconstruct.com.au";
+const DEFAULT_DOMAIN = "https://www.cdconstruct.com.au";
 const PRODUCTION_DOMAIN = normalizeDomain(process.env.VITE_SITE_URL || DEFAULT_DOMAIN);
 
 const STATIC_ROUTES = [

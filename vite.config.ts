@@ -127,16 +127,10 @@ export default defineConfig(({ mode }) => ({
           if (id.includes("@supabase/supabase-js")) return "vendor-supabase";
           if (id.includes("framer-motion")) return "vendor-motion";
           if (id.includes("@radix-ui")) return "vendor-radix";
+          if (id.includes("use-callback-ref")) return "vendor-react";
+          if (id.includes("react-helmet-async")) return "vendor-react";
           if (id.includes("react") || id.includes("scheduler")) return "vendor-react";
-
-          const relativePath = id.split("node_modules/")[1];
-          if (!relativePath) return "vendor-misc";
-          const segments = relativePath.split("/");
-          const packageName = segments[0]?.startsWith("@")
-            ? `${segments[0]}-${segments[1]}`
-            : segments[0];
-
-          return `vendor-${packageName.replace(/[@/]/g, "-")}`;
+          return undefined;
         },
       },
     },

@@ -32,11 +32,18 @@ const Gallery = () => {
   const galleryItems: GalleryItem[] = !isError && dbItems && dbItems.filter(item => item.type === "image").length > 0
     ? dbItems
         .filter(item => item.type === "image")
-        .map((item, index) => ({
-          id: item.id,
-          src: resolveImageUrl(item.image_url),
-          alt: item.alt_text || `Gold Coast renovation gallery image ${index + 1}`,
-        }))
+        .map((item, index) => {
+          const rawAlt = item.alt_text?.trim() || "";
+          const alt = rawAlt && rawAlt.toLowerCase() !== "gallery image"
+            ? rawAlt
+            : `Gold Coast renovation gallery image ${index + 1}`;
+
+          return {
+            id: item.id,
+            src: resolveImageUrl(item.image_url),
+            alt,
+          };
+        })
     : fallbackGalleryItems;
 
   return (
