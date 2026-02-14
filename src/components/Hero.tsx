@@ -9,7 +9,7 @@ interface HeroProps {
 
 const Hero = ({ preloaderComplete = true }: HeroProps) => {
   const ref = useRef<HTMLElement>(null);
-  const heroImage = useResolvedAsset("hero-bg");
+  const heroImage = useResolvedAsset("hero-bg", { allowFallbackWhileLoading: true });
   
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -69,6 +69,7 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
               className="absolute inset-0 w-full h-full object-cover bg-muted"
               loading="eager"
               decoding="async"
+              fetchPriority="high"
             />
           ) : (
             <div className="absolute inset-0 bg-muted" />

@@ -7,7 +7,7 @@ import serviceKitchen from "@/assets/service-kitchen.jpg";
 import serviceBathroom from "@/assets/service-bathroom.jpg";
 import serviceLiving from "@/assets/service-living.jpg";
 import serviceWholeHome from "@/assets/service-whole-home.jpg";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/hero-bg.webp";
 
 // Print dimensions in mm converted to pixels at 96 DPI for screen display
 const MM_TO_PX = 3.7795275591;

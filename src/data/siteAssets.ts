@@ -11,7 +11,7 @@ import editorial7 from "@/assets/editorial-7.jpg";
 import editorial8 from "@/assets/editorial-8.jpg";
 import editorial9 from "@/assets/editorial-9.jpg";
 import editorial10 from "@/assets/editorial-10.jpg";
-import heroBg from "@/assets/hero-bg.jpg";
+import heroBg from "@/assets/hero-bg.webp";
 import lifestageForever from "@/assets/lifestage-forever.jpg";
 import lifestageFuture from "@/assets/lifestage-future.jpg";
 import lifestageGrowing from "@/assets/lifestage-growing.jpg";

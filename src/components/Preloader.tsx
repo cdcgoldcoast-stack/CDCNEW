@@ -22,7 +22,7 @@ const quotes = [
   "The right space changes everything.",
 ];
 
-const Preloader = ({ onComplete, minDuration = 1800 }: PreloaderProps) => {
+const Preloader = ({ onComplete, minDuration = 600 }: PreloaderProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
 
@@ -62,7 +62,7 @@ const Preloader = ({ onComplete, minDuration = 1800 }: PreloaderProps) => {
           data-preloader="true"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
         >
           <div className="flex flex-col items-center gap-10 w-full max-w-lg px-8">
             {/* Quote */}

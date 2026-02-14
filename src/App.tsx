@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import type { ReactElement } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,34 +7,44 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import ScrollToTop from "@/components/ScrollToTop";
-import AIChatWidget from "@/components/AIChatWidget";
 import PageTransition from "@/components/PageTransition";
-import TestHome from "./pages/TestHome";
-import Work from "./pages/Work";
-import Gallery from "./pages/Gallery";
-import ProjectDetail from "./pages/ProjectDetail";
-import DesignTools from "./pages/DesignTools";
-import AIDesignGenerator from "./pages/AIDesignGenerator";
-import AIDesignIntro from "./pages/AIDesignIntro";
-import MoodboardCreator from "./pages/MoodboardCreator";
-import Services from "./pages/Services";
-import GetQuote from "./pages/GetQuote";
-import AboutUs from "./pages/AboutUs";
-import LifeStagesPage from "./pages/LifeStages";
-import Auth from "./pages/Auth";
-import AdminProjects from "./pages/admin/AdminProjects";
-import AdminEnquiries from "./pages/admin/AdminEnquiries";
-import AdminChatInquiries from "./pages/admin/AdminChatInquiries";
-import AdminGallery from "./pages/admin/AdminGallery";
-import AdminSiteImages from "./pages/admin/AdminSiteImages";
-import AdminImageAssets from "./pages/admin/AdminImageAssets";
-import AdminSettings from "./pages/admin/AdminSettings";
-import BrandGuidelines from "./pages/BrandGuidelines";
-import NotFound from "./pages/NotFound";
-import PrintBrochure from "./pages/PrintBrochure";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import TermsConditions from "./pages/TermsConditions";
 import { trackMetaPixelPageView } from "@/lib/metaPixel";
+
+// Eagerly load homepage (critical path)
+import TestHome from "./pages/TestHome";
+
+// Lazy-load all other routes
+const Work = lazy(() => import("./pages/Work"));
+const Gallery = lazy(() => import("./pages/Gallery"));
+const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
+const DesignTools = lazy(() => import("./pages/DesignTools"));
+const AIDesignGenerator = lazy(() => import("./pages/AIDesignGenerator"));
+const AIDesignIntro = lazy(() => import("./pages/AIDesignIntro"));
+const MoodboardCreator = lazy(() => import("./pages/MoodboardCreator"));
+const Services = lazy(() => import("./pages/Services"));
+const GetQuote = lazy(() => import("./pages/GetQuote"));
+const AboutUs = lazy(() => import("./pages/AboutUs"));
+const LifeStagesPage = lazy(() => import("./pages/LifeStages"));
+const Auth = lazy(() => import("./pages/Auth"));
+const AdminProjects = lazy(() => import("./pages/admin/AdminProjects"));
+const AdminEnquiries = lazy(() => import("./pages/admin/AdminEnquiries"));
+const AdminChatInquiries = lazy(() => import("./pages/admin/AdminChatInquiries"));
+const AdminGallery = lazy(() => import("./pages/admin/AdminGallery"));
+const AdminSiteImages = lazy(() => import("./pages/admin/AdminSiteImages"));
+const AdminImageAssets = lazy(() => import("./pages/admin/AdminImageAssets"));
+const AdminSettings = lazy(() => import("./pages/admin/AdminSettings"));
+const BrandGuidelines = lazy(() => import("./pages/BrandGuidelines"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const PrintBrochure = lazy(() => import("./pages/PrintBrochure"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const TermsConditions = lazy(() => import("./pages/TermsConditions"));
+
+// Defer chat widget - load after 3 seconds
+const AIChatWidget = lazy(() =>
+  new Promise<typeof import("@/components/AIChatWidget")>((resolve) =>
+    setTimeout(() => resolve(import("@/components/AIChatWidget")), 3000)
+  )
+);
 
 const queryClient = new QueryClient();
 
@@ -53,39 +63,41 @@ const AnimatedRoutes = () => {
   const withTransition = (element: ReactElement) => <PageTransition>{element}</PageTransition>;
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={withTransition(<TestHome />)} />
-        <Route path="/about-us" element={withTransition(<AboutUs />)} />
-        <Route path="/our-story" element={<Navigate to="/about-us" replace />} />
-        <Route path="/life-stages" element={withTransition(<LifeStagesPage />)} />
-        <Route path="/projects" element={withTransition(<Work />)} />
-        <Route path="/services" element={withTransition(<Services />)} />
-        <Route path="/gallery" element={withTransition(<Gallery />)} />
-        <Route path="/projects/:slug" element={withTransition(<ProjectDetail />)} />
-        <Route path="/design-tools" element={withTransition(<DesignTools />)} />
-        <Route path="/design-tools/ai-generator/intro" element={withTransition(<AIDesignIntro />)} />
-        <Route path="/design-tools/ai-generator" element={withTransition(<AIDesignGenerator />)} />
-        <Route path="/design-tools/moodboard" element={withTransition(<MoodboardCreator />)} />
-        <Route path="/get-quote" element={withTransition(<GetQuote />)} />
+    <Suspense fallback={null}>
+      <AnimatePresence mode="wait" initial={false}>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={withTransition(<TestHome />)} />
+          <Route path="/about-us" element={withTransition(<AboutUs />)} />
+          <Route path="/our-story" element={<Navigate to="/about-us" replace />} />
+          <Route path="/life-stages" element={withTransition(<LifeStagesPage />)} />
+          <Route path="/projects" element={withTransition(<Work />)} />
+          <Route path="/services" element={withTransition(<Services />)} />
+          <Route path="/gallery" element={withTransition(<Gallery />)} />
+          <Route path="/projects/:slug" element={withTransition(<ProjectDetail />)} />
+          <Route path="/design-tools" element={withTransition(<DesignTools />)} />
+          <Route path="/design-tools/ai-generator/intro" element={withTransition(<AIDesignIntro />)} />
+          <Route path="/design-tools/ai-generator" element={withTransition(<AIDesignGenerator />)} />
+          <Route path="/design-tools/moodboard" element={withTransition(<MoodboardCreator />)} />
+          <Route path="/get-quote" element={withTransition(<GetQuote />)} />
 
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/admin" element={<Navigate to="/admin/projects" replace />} />
-        <Route path="/admin/projects" element={<AdminProjects />} />
-        <Route path="/admin/enquiries" element={<AdminEnquiries />} />
-        <Route path="/admin/chat-inquiries" element={<AdminChatInquiries />} />
-        <Route path="/admin/gallery" element={<AdminGallery />} />
-        <Route path="/admin/site-images" element={<AdminSiteImages />} />
-        <Route path="/admin/image-assets" element={<AdminImageAssets />} />
-        <Route path="/admin/settings" element={<AdminSettings />} />
-        <Route path="/brand-guidelines" element={withTransition(<BrandGuidelines />)} />
-        <Route path="/print-brochure" element={withTransition(<PrintBrochure />)} />
-        <Route path="/privacy-policy" element={withTransition(<PrivacyPolicy />)} />
-        <Route path="/terms-conditions" element={withTransition(<TermsConditions />)} />
-        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-        <Route path="*" element={withTransition(<NotFound />)} />
-      </Routes>
-    </AnimatePresence>
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/admin" element={<Navigate to="/admin/projects" replace />} />
+          <Route path="/admin/projects" element={<AdminProjects />} />
+          <Route path="/admin/enquiries" element={<AdminEnquiries />} />
+          <Route path="/admin/chat-inquiries" element={<AdminChatInquiries />} />
+          <Route path="/admin/gallery" element={<AdminGallery />} />
+          <Route path="/admin/site-images" element={<AdminSiteImages />} />
+          <Route path="/admin/image-assets" element={<AdminImageAssets />} />
+          <Route path="/admin/settings" element={<AdminSettings />} />
+          <Route path="/brand-guidelines" element={withTransition(<BrandGuidelines />)} />
+          <Route path="/print-brochure" element={withTransition(<PrintBrochure />)} />
+          <Route path="/privacy-policy" element={withTransition(<PrivacyPolicy />)} />
+          <Route path="/terms-conditions" element={withTransition(<TermsConditions />)} />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={withTransition(<NotFound />)} />
+        </Routes>
+      </AnimatePresence>
+    </Suspense>
   );
 };
 
@@ -133,7 +145,9 @@ const App = () => {
             <MetaPixelTracker />
             <ScrollToTop />
             <AnimatedRoutes />
-            <AIChatWidget />
+            <Suspense fallback={null}>
+              <AIChatWidget />
+            </Suspense>
           </BrowserRouter>
         </TooltipProvider>
       </QueryClientProvider>
