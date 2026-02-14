@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Loader2, Cloud, Check, X, Type, Palette, Image as ImageIcon, Search, Lock, Unlock, RotateCcw, LayoutGrid, Download } from "lucide-react";
+import { ArrowLeft, Loader2, Cloud, Check, X, Type, Palette, Image as ImageIcon, Search, Lock, Unlock, RotateCcw, LayoutGrid, Download, ZoomIn, ZoomOut, Maximize } from "lucide-react";
 import Header from "@/components/Header";
 import { useMoodboard } from "@/hooks/useMoodboard";
 // Images are now loaded dynamically from API only
@@ -295,6 +295,19 @@ const MoodboardCreator = () => {
   const boardRef = useRef<HTMLDivElement>(null);
   const boardViewportRef = useRef<HTMLDivElement>(null);
   const [boardScale, setBoardScale] = useState(1);
+  const [desktopZoom, setDesktopZoom] = useState(1);
+
+  const handleZoomIn = useCallback(() => {
+    setDesktopZoom((prev) => Math.min(prev + 0.15, 2));
+  }, []);
+
+  const handleZoomOut = useCallback(() => {
+    setDesktopZoom((prev) => Math.max(prev - 0.15, 0.4));
+  }, []);
+
+  const handleZoomReset = useCallback(() => {
+    setDesktopZoom(1);
+  }, []);
 
   // Search state
   const [searchQuery, setSearchQuery] = useState("");
@@ -1705,12 +1718,54 @@ const MoodboardCreator = () => {
               "order-1 lg:order-2 relative lg:flex-1 lg:overflow-hidden",
               isMobile
                 ? "shrink-0 flex flex-col items-center justify-center gap-3 bg-muted/30 px-3 pt-4 pb-3 border-b border-border"
-                : "flex items-center justify-center p-2 sm:p-6 border-b lg:border-b-0 lg:border-t-0 border-border"
+                : "flex items-center justify-center p-2 sm:p-6 border-b lg:border-b-0 lg:border-t-0 border-border overflow-auto"
             )}
             style={{
               backgroundColor: isMobile ? "hsl(var(--muted) / 0.2)" : "hsl(var(--muted) / 0.3)",
             }}
           >
+            {/* Zoom controls (desktop only) */}
+            {!isMobile && currentLayout && !showLoading && (
+              <div className="absolute bottom-4 right-4 z-20 flex items-center gap-1 bg-card/90 backdrop-blur-sm rounded-lg shadow-lg border border-border p-1">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleZoomOut}
+                  disabled={desktopZoom <= 0.4}
+                  className="h-8 w-8 p-0"
+                  title="Zoom out"
+                >
+                  <ZoomOut className="h-4 w-4" />
+                </Button>
+                <button
+                  onClick={handleZoomReset}
+                  className="h-8 px-2 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors min-w-[3rem] text-center"
+                  title="Reset zoom"
+                >
+                  {Math.round(desktopZoom * 100)}%
+                </button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleZoomIn}
+                  disabled={desktopZoom >= 2}
+                  className="h-8 w-8 p-0"
+                  title="Zoom in"
+                >
+                  <ZoomIn className="h-4 w-4" />
+                </Button>
+                <div className="w-px h-5 bg-border mx-0.5" />
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleZoomReset}
+                  className="h-8 w-8 p-0"
+                  title="Fit to view"
+                >
+                  <Maximize className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
             {/* Loading overlay */}
             {showLoading && (
               <div className="absolute inset-0 bg-muted/80 backdrop-blur-sm z-10 flex items-center justify-center">
@@ -1761,6 +1816,8 @@ const MoodboardCreator = () => {
                             maxWidth: "calc(100% - 48px)",
                             height: "calc(100% - 48px)",
                             maxHeight: "calc(100% - 48px)",
+                            transform: desktopZoom !== 1 ? `scale(${desktopZoom})` : undefined,
+                            transformOrigin: "center center",
                           }),
                     }}
                   >

@@ -2,6 +2,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const DEFAULT_ALLOWED_ORIGINS = [
   "https://cdcnew-eight.vercel.app",
+  "https://cdconstruct.com.au",
+  "https://www.cdconstruct.com.au",
   "https://cdcconstruct.com.au",
   "https://www.cdcconstruct.com.au",
   "https://conceptdesignconstruct.com.au",
