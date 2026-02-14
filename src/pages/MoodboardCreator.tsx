@@ -1404,7 +1404,7 @@ const MoodboardCreator = () => {
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors shrink-0"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">Back</span>
+            <span className="hidden sm:inline">Back to design tools</span>
           </Link>
 
           <h1 className="text-base font-medium shrink-0">Create Your Moodboard</h1>
