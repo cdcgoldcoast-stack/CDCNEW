@@ -44,6 +44,7 @@ function loadProjectPrerenderRoutes(): string[] {
 }
 
 const prerenderRoutes = Array.from(new Set([...basePrerenderRoutes, ...loadProjectPrerenderRoutes()]));
+const isVercelBuild = process.env.VERCEL === "1";
 
 function prerenderPlugin() {
   let outDir: string;
@@ -109,7 +110,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === "production" && prerenderPlugin(),
+    mode === "production" && !isVercelBuild && prerenderPlugin(),
   ].filter(Boolean),
   resolve: {
     alias: {
