@@ -56,7 +56,6 @@ const Header = () => {
     prefetchedRoutes.current.add(href);
     const link = document.createElement("link");
     link.rel = "prefetch";
-    link.as = "document";
     link.href = href;
     document.head.appendChild(link);
   }, []);
