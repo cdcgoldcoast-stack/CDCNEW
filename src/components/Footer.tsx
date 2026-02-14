@@ -7,6 +7,17 @@ import ResponsiveImage from "@/components/ResponsiveImage";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const logo = useResolvedAsset("logo");
+  const featuredProjectLinks = [
+    { label: "Everyday Ease", href: "/projects/everyday-ease" },
+    { label: "Family Hub", href: "/projects/family-hub" },
+    { label: "Light and Flow House", href: "/projects/light-and-flow-house" },
+    { label: "Seamless Bathroom", href: "/projects/seamless-bathroom" },
+    { label: "Stone and Light", href: "/projects/stone-and-light" },
+    { label: "Terrazzo Retreat", href: "/projects/terrazzo-retreat" },
+    { label: "The Calm Edit", href: "/projects/the-calm-edit" },
+    { label: "The Elanora Residence", href: "/projects/the-elanora-residence" },
+    { label: "Warm Minimal Bathroom", href: "/projects/warm-minimal-bathroom" },
+  ];
   const navLinks = [{
     label: "About Our Renovation Team",
     href: "/about-us"
@@ -28,6 +39,9 @@ const Footer = () => {
   }, {
     label: "AI Renovation Generator Preview",
     href: "/design-tools/ai-generator/intro"
+  }, {
+    label: "Start AI Renovation Generator",
+    href: "/design-tools/ai-generator"
   }, {
     label: "Renovation Moodboard Creator",
     href: "/design-tools/moodboard"
@@ -68,6 +82,22 @@ const Footer = () => {
                 </a>
               ))}
             </nav>
+            <div className="flex flex-col gap-2 md:items-end">
+              <p className="text-[10px] md:text-xs uppercase tracking-[0.22em] text-primary/60">
+                Project Case Studies
+              </p>
+              <div className="flex flex-wrap gap-x-4 gap-y-2 md:justify-end">
+                {featuredProjectLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="text-[11px] md:text-xs uppercase tracking-[0.15em] text-foreground/80 hover:text-primary transition-colors duration-300"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </div>
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 md:justify-end">
               <a
                 className="text-xs md:text-h4 uppercase tracking-widest text-foreground hover:text-primary transition-colors duration-300 break-all md:break-normal"
