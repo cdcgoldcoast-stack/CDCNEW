@@ -775,36 +775,34 @@ serve(async (req) => {
     console.log("Generating design with prompt:", userPrompt);
 
     const callModel = async (promptText: string) => {
-      const response = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
+      // Strip data URL prefix to get raw base64 for Gemini native API
+      const base64Data = imageBase64.includes(",") ? imageBase64.split(",")[1] : imageBase64;
+      const mimeMatch = imageBase64.match(/^data:([^;]+);/);
+      const mimeType = mimeMatch ? mimeMatch[1] : "image/jpeg";
+
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp-image-generation:generateContent?key=${GEMINI_API_KEY}`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${GEMINI_API_KEY}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "gemini-2.0-flash-exp-image-generation",
-          messages: [
-            {
-              role: "system",
-              content: SYSTEM_PROMPT
-            },
+          contents: [
             {
               role: "user",
-              content: [
+              parts: [
+                { text: `${SYSTEM_PROMPT}\n\n${promptText}` },
                 {
-                  type: "text",
-                  text: promptText
+                  inlineData: {
+                    mimeType,
+                    data: base64Data,
+                  },
                 },
-                {
-                  type: "image_url",
-                  image_url: {
-                    url: imageBase64
-                  }
-                }
-              ]
-            }
+              ],
+            },
           ],
-          modalities: ["image", "text"]
+          generationConfig: {
+            responseModalities: ["TEXT", "IMAGE"],
+          },
         }),
       });
 
@@ -822,7 +820,31 @@ serve(async (req) => {
         throw new Error(`AI gateway error: ${response.status}`);
       }
 
-      const data = await response.json();
+      const rawData = await response.json();
+
+      // Transform native Gemini response to match expected format
+      const parts = rawData.candidates?.[0]?.content?.parts || [];
+      let textContent = "";
+      let imageUrl = "";
+
+      for (const part of parts) {
+        if (part.text) {
+          textContent += part.text;
+        }
+        if (part.inlineData) {
+          imageUrl = `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
+        }
+      }
+
+      const data = {
+        choices: [{
+          message: {
+            content: textContent || null,
+            images: imageUrl ? [{ image_url: { url: imageUrl } }] : [],
+          },
+        }],
+      };
+
       return { data };
     };
 
