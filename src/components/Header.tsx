@@ -67,12 +67,12 @@ const Header = () => {
   });
 
   const baseLinks = [
-    { label: "About Us", href: "/about-us" },
-    { label: "Projects", href: "/projects" },
-    { label: "Gallery", href: "/gallery" },
-    { label: "Design Tools", href: "/design-tools" },
+    { label: "About Our Team", href: "/about-us" },
+    { label: "Renovation Projects", href: "/projects" },
+    { label: "Project Gallery", href: "/gallery" },
+    { label: "Renovation Design Tools", href: "/design-tools" },
   ];
-  const navLinks = isHome ? baseLinks : [{ label: "Home", href: "/" }, ...baseLinks];
+  const navLinks = isHome ? baseLinks : [{ label: "Gold Coast Renovation Home", href: "/" }, ...baseLinks];
   
   // Always use solid header (no transparent mode)
   const shouldBeTransparent = false;
@@ -127,7 +127,7 @@ const Header = () => {
             </Link>
           ))}
           <Link to="/get-quote" {...getPrefetchHandlers("/get-quote")} className={`${ctaClass} whitespace-nowrap`}>
-            Get Your Renovation Plan
+            Book A Renovation Consultation
           </Link>
           <a href="tel:1300020232" className={`${ctaClass} whitespace-nowrap`}>
             1300 020 232
@@ -141,7 +141,7 @@ const Header = () => {
               to="/"
               className="text-[10px] uppercase tracking-widest text-foreground border border-foreground/30 px-3 py-1 rounded-full"
             >
-              Home
+              Back To Home
             </Link>
           )}
           <button
@@ -177,7 +177,7 @@ const Header = () => {
               className="text-label bg-primary text-primary-foreground px-5 py-2 inline-block w-fit"
               onClick={() => setIsMenuOpen(false)}
             >
-              Get Your Renovation Plan
+              Book A Renovation Consultation
             </Link>
             <a
               href="tel:1300020232"

@@ -62,6 +62,27 @@ const Work = () => {
           </p>
         </div>
 
+        <section className="max-w-4xl mx-auto mb-10 md:mb-14 px-2">
+          <h2 className="text-lg md:text-2xl font-serif italic text-primary mb-3">Explore Related Renovation Resources</h2>
+          <p className="text-foreground/70 mb-4">
+            Use these guides while reviewing projects so your own renovation brief is easier to shape.
+          </p>
+          <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm md:text-base">
+            <Link to="/services" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Compare renovation service options
+            </Link>
+            <Link to="/life-stages" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Match renovation scope to your life stage
+            </Link>
+            <Link to="/design-tools/ai-generator/intro" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Preview ideas with the AI design generator
+            </Link>
+            <Link to="/get-quote" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Request a renovation consultation
+            </Link>
+          </div>
+        </section>
+
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-4 md:gap-5 lg:gap-6 max-w-[1600px] mx-auto animate-pulse">
             {Array.from({ length: 9 }).map((_, index) => (

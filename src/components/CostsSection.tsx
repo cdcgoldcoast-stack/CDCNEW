@@ -185,7 +185,7 @@ const CostsSection = () => {
         }} className="mb-6 md:mb-8">
             <Link to="/get-quote">
               <Button variant="heroOutline" size="lg" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-                Get Your Renovation Plan
+                Request Your Renovation Consultation
               </Button>
             </Link>
           </motion.div>

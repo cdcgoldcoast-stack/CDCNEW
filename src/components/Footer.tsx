@@ -8,23 +8,29 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   const logo = useResolvedAsset("logo");
   const navLinks = [{
-    label: "About Us",
+    label: "About Our Renovation Team",
     href: "/about-us"
   }, {
-    label: "Projects",
+    label: "Renovation Project Portfolio",
     href: "/projects"
   }, {
-    label: "Services",
+    label: "Renovation Services",
     href: "/services"
   }, {
-    label: "Gallery",
+    label: "Gallery Inspiration Hub",
     href: "/gallery"
   }, {
-    label: "Life Stages",
+    label: "Life Stage Renovation Guide",
     href: "/life-stages"
   }, {
-    label: "Design Tools",
+    label: "Renovation Design Tools",
     href: "/design-tools"
+  }, {
+    label: "AI Renovation Generator Preview",
+    href: "/design-tools/ai-generator/intro"
+  }, {
+    label: "Renovation Moodboard Creator",
+    href: "/design-tools/moodboard"
   }];
     return <footer className="py-8 md:py-10 lg:py-12 bg-background relative z-10">
       <div className="container-wide px-5 md:px-8">

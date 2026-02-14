@@ -175,6 +175,32 @@ const DesignTools = () => {
           </div>
         </section>
 
+        <section className="container-wide mt-12 md:mt-16">
+          <div className="border border-white/20 bg-white/5 backdrop-blur-sm rounded-sm p-6 md:p-8">
+            <h2 className="font-serif italic text-2xl md:text-3xl text-white mb-3">Useful Planning Links</h2>
+            <p className="text-white/75 mb-4 max-w-3xl">
+              Move from concept to action by comparing services, reviewing completed projects, and preparing a brief.
+            </p>
+            <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm md:text-base">
+              <Link to="/services" className="text-white hover:text-white/70 underline underline-offset-4">
+                Review renovation services and scope options
+              </Link>
+              <Link to="/projects" className="text-white hover:text-white/70 underline underline-offset-4">
+                Browse completed renovation project portfolio
+              </Link>
+              <Link to="/design-tools/ai-generator/intro" className="text-white hover:text-white/70 underline underline-offset-4">
+                Open the AI renovation generator preview
+              </Link>
+              <Link to="/design-tools/moodboard" className="text-white hover:text-white/70 underline underline-offset-4">
+                Start a renovation moodboard collection
+              </Link>
+              <Link to="/get-quote" className="text-white hover:text-white/70 underline underline-offset-4">
+                Book a renovation consultation call
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* Bottom CTA */}
         <section className="container-wide mt-20 md:mt-32">
           <motion.div

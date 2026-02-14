@@ -14,6 +14,7 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import Preloader from "@/components/Preloader";
 import { generateFAQSchema, generateLocalBusinessSchema } from "@/lib/structured-data";
+import { Link } from "react-router-dom";
 
 // FAQ data for structured data (matches FAQSection component)
 const homepageFAQs = [
@@ -80,6 +81,31 @@ const TestHome = () => {
         <WhyRenovate />
         <FAQSection />
         <CostsSection />
+        <section className="py-12 md:py-16 border-t border-foreground/10 bg-background">
+          <div className="container-wide">
+            <h2 className="font-serif italic text-2xl md:text-3xl text-primary mb-3">Explore Renovation Planning Resources</h2>
+            <p className="text-foreground/70 mb-4 max-w-3xl">
+              Start with these pages if you want clearer direction before booking your consultation.
+            </p>
+            <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm md:text-base">
+              <Link to="/services" className="text-primary hover:text-primary/70 underline underline-offset-4">
+                Compare renovation services and project scope
+              </Link>
+              <Link to="/projects" className="text-primary hover:text-primary/70 underline underline-offset-4">
+                Browse completed Gold Coast renovation projects
+              </Link>
+              <Link to="/design-tools/ai-generator/intro" className="text-primary hover:text-primary/70 underline underline-offset-4">
+                Test ideas with the AI renovation generator preview
+              </Link>
+              <Link to="/design-tools/moodboard" className="text-primary hover:text-primary/70 underline underline-offset-4">
+                Build a renovation moodboard for your brief
+              </Link>
+              <Link to="/life-stages" className="text-primary hover:text-primary/70 underline underline-offset-4">
+                Plan renovations around your life stage needs
+              </Link>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>

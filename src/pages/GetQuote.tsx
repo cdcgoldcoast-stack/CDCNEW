@@ -834,6 +834,37 @@ const GetQuote = () => {
         </AnimatePresence>
       </main>
 
+      <section className="py-10 md:py-14 border-t border-foreground/10 bg-background">
+        <div className="container-wide">
+          <h2 className="font-serif italic text-2xl md:text-3xl text-primary mb-3">
+            Helpful Renovation Planning Links
+          </h2>
+          <p className="text-foreground/70 mb-4 max-w-3xl">
+            While we review your enquiry, these guides can help you refine scope, style direction, and budget priorities.
+          </p>
+          <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm md:text-base">
+            <Link to="/services" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Compare kitchen, bathroom, and whole-home service options
+            </Link>
+            <Link to="/projects" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Review recent renovation project case studies
+            </Link>
+            <Link to="/gallery" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Browse project gallery inspiration by renovation style
+            </Link>
+            <Link to="/design-tools/ai-generator/intro" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Preview ideas in the AI renovation generator
+            </Link>
+            <Link to="/design-tools/moodboard" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Build a moodboard to share during consultation
+            </Link>
+            <Link to="/life-stages" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Match renovation scope to your life stage plan
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {!isInvitationStep && <Footer />}
     </div>
   );

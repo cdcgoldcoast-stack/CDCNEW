@@ -6,6 +6,7 @@ import { generateAboutPageSchema } from "@/lib/structured-data";
 import ProjectsTeaser from "@/components/ProjectsTeaser";
 import BottomInvitation from "@/components/BottomInvitation";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import { Link } from "react-router-dom";
 
 const AboutUs = () => {
   const heroImage = "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/licensed-builders-on-site-gold-coast.webp";
@@ -163,6 +164,31 @@ const AboutUs = () => {
                 The goal is simple: deliver high-quality results and make the whole process feel straightforward.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-10 md:py-14 border-y border-foreground/10 bg-background">
+        <div className="container-wide">
+          <h2 className="font-serif italic text-2xl md:text-3xl text-primary mb-3">
+            Explore The Next Planning Steps
+          </h2>
+          <p className="text-foreground/70 mb-4 max-w-3xl">
+            If you are comparing options, these pages make it easier to move from inspiration to a practical renovation brief.
+          </p>
+          <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm md:text-base">
+            <Link to="/services" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Review our renovation services and project scopes
+            </Link>
+            <Link to="/projects" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Browse recent Gold Coast renovation projects
+            </Link>
+            <Link to="/design-tools/ai-generator/intro" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Preview ideas in the AI renovation generator
+            </Link>
+            <Link to="/get-quote" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Book a renovation consultation call
+            </Link>
           </div>
         </div>
       </section>

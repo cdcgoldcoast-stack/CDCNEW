@@ -76,6 +76,12 @@ const ProjectDetail = () => {
   const currentIndex = allProjects.findIndex((p) => p.id === project.id);
   const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
   const nextProject = currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : null;
+  const categoryServiceAnchor =
+    project.category === "bathroom"
+      ? "See our bathroom renovation service approach"
+      : project.category === "kitchen"
+      ? "See our kitchen and living renovation service approach"
+      : "See our whole-home renovation service approach";
 
   // Generate structured data for SEO
   const projectSchema = generateProjectSchema({
@@ -233,6 +239,31 @@ const ProjectDetail = () => {
               Location
             </span>
             <p className="text-foreground font-serif text-sm md:text-lg">{project.location}</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-14 md:pb-16">
+        <div className="container-wide">
+          <div className="border border-foreground/10 p-6 md:p-8 bg-muted/20">
+            <h2 className="font-serif italic text-2xl text-primary mb-3">Plan A Similar Renovation</h2>
+            <p className="text-foreground/70 mb-4">
+              Use this project as a reference point, then review service details, planning tools, and the next consultation step.
+            </p>
+            <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm md:text-base">
+              <Link to="/services" className="text-primary hover:text-primary/70 underline underline-offset-4">
+                {categoryServiceAnchor}
+              </Link>
+              <Link to="/gallery" className="text-primary hover:text-primary/70 underline underline-offset-4">
+                Browse more completed renovation gallery examples
+              </Link>
+              <Link to="/design-tools/moodboard" className="text-primary hover:text-primary/70 underline underline-offset-4">
+                Build a moodboard for your renovation direction
+              </Link>
+              <Link to="/get-quote" className="text-primary hover:text-primary/70 underline underline-offset-4">
+                Request a project consultation and quote
+              </Link>
+            </div>
           </div>
         </div>
       </section>

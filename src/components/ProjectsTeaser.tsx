@@ -117,10 +117,10 @@ const ProjectsTeaser = () => {
       <div className="container-wide mt-8 md:mt-12 relative z-10 px-5 md:px-8">
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center items-center">
           <Link to="/projects" className="text-label text-foreground hover:opacity-60 transition-opacity border-b border-foreground pb-1 pointer-events-auto text-xs md:text-sm">
-            View All Projects
+            View Complete Project Portfolio
           </Link>
           <Link to="/gallery" className="text-label text-foreground hover:opacity-60 transition-opacity border-b border-foreground pb-1 pointer-events-auto text-xs md:text-sm">
-            Gallery
+            Browse Project Gallery
           </Link>
           <Link 
             to="/get-quote" 

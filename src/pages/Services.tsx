@@ -57,6 +57,37 @@ const Services = () => {
         </div>
       </section>
 
+      <section className="py-10 md:py-14 border-y border-foreground/10 bg-background">
+        <div className="container-wide">
+          <h2 className="font-serif italic text-2xl md:text-3xl text-primary mb-4">
+            Plan Your Renovation Pathway
+          </h2>
+          <p className="text-foreground/70 leading-relaxed max-w-3xl mb-6">
+            Explore related resources before your consultation so your scope, style direction, and budget priorities are clearer from day one.
+          </p>
+          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+            <Link to="/projects" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Browse our renovation project portfolio
+            </Link>
+            <Link to="/gallery" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Review our project gallery inspiration
+            </Link>
+            <Link to="/life-stages" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Explore life stage renovation planning
+            </Link>
+            <Link to="/design-tools/ai-generator/intro" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Try the AI renovation generator preview
+            </Link>
+            <Link to="/design-tools/moodboard" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Build a renovation moodboard
+            </Link>
+            <Link to="/get-quote" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              Start a renovation consultation request
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Services layout */}
       <h2 className="sr-only">Renovation service categories</h2>
       <WhatWeRenovateSplit />
