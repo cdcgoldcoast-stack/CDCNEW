@@ -10,23 +10,23 @@ const Footer = () => {
 
   const navLinks = [
     { label: "About Us", href: "/about-us" },
-    { label: "Projects", href: "/projects" },
+    { label: "Renovation Projects", href: "/renovation-projects" },
     { label: "Services", href: "/services" },
-    { label: "Gallery", href: "/gallery" },
+    { label: "Project Gallery", href: "/project-gallery" },
     { label: "Life Stages", href: "/life-stages" },
-    { label: "Design Tools", href: "/design-tools" },
+    { label: "Renovation Design Tools", href: "/renovation-design-tools" },
   ];
 
   const projectLinks = [
-    { label: "Everyday Ease", href: "/projects/everyday-ease" },
-    { label: "Family Hub", href: "/projects/family-hub" },
-    { label: "Light and Flow House", href: "/projects/light-and-flow-house" },
-    { label: "Seamless Bathroom", href: "/projects/seamless-bathroom" },
-    { label: "Stone and Light", href: "/projects/stone-and-light" },
-    { label: "Terrazzo Retreat", href: "/projects/terrazzo-retreat" },
-    { label: "The Calm Edit", href: "/projects/the-calm-edit" },
-    { label: "The Elanora Residence", href: "/projects/the-elanora-residence" },
-    { label: "Warm Minimal Bathroom", href: "/projects/warm-minimal-bathroom" },
+    { label: "Everyday Ease", href: "/renovation-projects/everyday-ease" },
+    { label: "Family Hub", href: "/renovation-projects/family-hub" },
+    { label: "Light and Flow House", href: "/renovation-projects/light-and-flow-house" },
+    { label: "Seamless Bathroom", href: "/renovation-projects/seamless-bathroom" },
+    { label: "Stone and Light", href: "/renovation-projects/stone-and-light" },
+    { label: "Terrazzo Retreat", href: "/renovation-projects/terrazzo-retreat" },
+    { label: "The Calm Edit", href: "/renovation-projects/the-calm-edit" },
+    { label: "The Elanora Residence", href: "/renovation-projects/the-elanora-residence" },
+    { label: "Warm Minimal Bathroom", href: "/renovation-projects/warm-minimal-bathroom" },
   ];
 
   return (

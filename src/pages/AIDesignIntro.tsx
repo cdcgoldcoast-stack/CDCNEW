@@ -31,7 +31,7 @@ const AIDesignIntro = () => {
       <SEO
         title="AI Design Generator"
         description="Preview your renovation style in minutes. Upload room photos, choose finishes, and generate visual concepts before planning your Gold Coast project."
-        url="/design-tools/ai-generator/intro"
+        url="/renovation-design-tools/ai-generator/intro"
       />
       <Header />
 
@@ -70,7 +70,7 @@ const AIDesignIntro = () => {
                 className="bg-primary-foreground text-primary hover:bg-primary-foreground/90"
                 onClick={() => {
                   sessionStorage.setItem("aiGeneratorIntroSeen", "true");
-                  navigate("/design-tools/ai-generator");
+                  navigate("/renovation-design-tools/ai-generator");
                 }}
               >
                 Continue to the generator

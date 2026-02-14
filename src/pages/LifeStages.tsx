@@ -480,13 +480,13 @@ const LifeStagesPage = () => {
               <Link to="/services" className="text-primary hover:text-primary/70 underline underline-offset-4">
                 Compare renovation service pathways
               </Link>
-              <Link to="/projects" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              <Link to="/renovation-projects" className="text-primary hover:text-primary/70 underline underline-offset-4">
                 Review completed renovation project case studies
               </Link>
-              <Link to="/design-tools" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              <Link to="/renovation-design-tools" className="text-primary hover:text-primary/70 underline underline-offset-4">
                 Explore renovation design planning tools
               </Link>
-              <Link to="/design-tools/moodboard" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              <Link to="/renovation-design-tools/moodboard" className="text-primary hover:text-primary/70 underline underline-offset-4">
                 Create a renovation moodboard before quoting
               </Link>
               <Link to="/get-quote" className="text-primary hover:text-primary/70 underline underline-offset-4">

@@ -71,14 +71,21 @@ const AnimatedRoutes = () => {
           <Route path="/about-us" element={withTransition(<AboutUs />)} />
           <Route path="/our-story" element={<Navigate to="/about-us" replace />} />
           <Route path="/life-stages" element={withTransition(<LifeStagesPage />)} />
-          <Route path="/projects" element={withTransition(<Work />)} />
+          <Route path="/renovation-projects" element={withTransition(<Work />)} />
+          <Route path="/projects" element={<Navigate to="/renovation-projects" replace />} />
           <Route path="/services" element={withTransition(<Services />)} />
-          <Route path="/gallery" element={withTransition(<Gallery />)} />
-          <Route path="/projects/:slug" element={withTransition(<ProjectDetail />)} />
-          <Route path="/design-tools" element={withTransition(<DesignTools />)} />
-          <Route path="/design-tools/ai-generator/intro" element={withTransition(<AIDesignIntro />)} />
-          <Route path="/design-tools/ai-generator" element={withTransition(<AIDesignGenerator />)} />
-          <Route path="/design-tools/moodboard" element={withTransition(<MoodboardCreator />)} />
+          <Route path="/project-gallery" element={withTransition(<Gallery />)} />
+          <Route path="/gallery" element={<Navigate to="/project-gallery" replace />} />
+          <Route path="/renovation-projects/:slug" element={withTransition(<ProjectDetail />)} />
+          <Route path="/projects/:slug" element={<Navigate to="/renovation-projects" replace />} />
+          <Route path="/renovation-design-tools" element={withTransition(<DesignTools />)} />
+          <Route path="/design-tools" element={<Navigate to="/renovation-design-tools" replace />} />
+          <Route path="/renovation-design-tools/ai-generator/intro" element={withTransition(<AIDesignIntro />)} />
+          <Route path="/design-tools/ai-generator/intro" element={<Navigate to="/renovation-design-tools/ai-generator/intro" replace />} />
+          <Route path="/renovation-design-tools/ai-generator" element={withTransition(<AIDesignGenerator />)} />
+          <Route path="/design-tools/ai-generator" element={<Navigate to="/renovation-design-tools/ai-generator" replace />} />
+          <Route path="/renovation-design-tools/moodboard" element={withTransition(<MoodboardCreator />)} />
+          <Route path="/design-tools/moodboard" element={<Navigate to="/renovation-design-tools/moodboard" replace />} />
           <Route path="/get-quote" element={withTransition(<GetQuote />)} />
 
           <Route path="/auth" element={<Auth />} />

@@ -7,7 +7,7 @@ const ProjectCard = ({
   project
 }: {
   project: Project;
-}) => <Link to={`/projects/${project.slug}`} className="group flex-shrink-0 w-[240px] sm:w-[280px] md:w-[320px] cursor-pointer">
+}) => <Link to={`/renovation-projects/${project.slug}`} className="group flex-shrink-0 w-[240px] sm:w-[280px] md:w-[320px] cursor-pointer">
     <div className="relative aspect-[2/3] overflow-hidden">
       <ResponsiveImage
         src={project.image}
@@ -116,10 +116,10 @@ const ProjectsTeaser = () => {
       {/* Links and CTA */}
       <div className="container-wide mt-8 md:mt-12 relative z-10 px-5 md:px-8">
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center items-center">
-          <Link to="/projects" className="text-label text-foreground hover:opacity-60 transition-opacity border-b border-foreground pb-1 pointer-events-auto text-xs md:text-sm">
+          <Link to="/renovation-projects" className="text-label text-foreground hover:opacity-60 transition-opacity border-b border-foreground pb-1 pointer-events-auto text-xs md:text-sm">
             View Complete Project Portfolio
           </Link>
-          <Link to="/gallery" className="text-label text-foreground hover:opacity-60 transition-opacity border-b border-foreground pb-1 pointer-events-auto text-xs md:text-sm">
+          <Link to="/project-gallery" className="text-label text-foreground hover:opacity-60 transition-opacity border-b border-foreground pb-1 pointer-events-auto text-xs md:text-sm">
             Browse Project Gallery
           </Link>
           <Link 

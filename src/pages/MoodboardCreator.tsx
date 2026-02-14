@@ -1393,7 +1393,7 @@ const MoodboardCreator = () => {
       <SEO
         title="Moodboard Creator | Plan Your Renovation Aesthetic"
         description="Collect inspiration, curate colour palettes, and export a renovation moodboard to share with our Gold Coast design team."
-        url="/design-tools/moodboard"
+        url="/renovation-design-tools/moodboard"
       />
       <Header />
 
@@ -1401,7 +1401,7 @@ const MoodboardCreator = () => {
         {/* Top bar */}
         <div className="px-4 py-3 border-b border-border bg-background flex items-center gap-3 md:gap-4 shrink-0">
           <Link
-            to="/design-tools"
+            to="/renovation-design-tools"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors shrink-0"
           >
             <ArrowLeft className="h-4 w-4" />

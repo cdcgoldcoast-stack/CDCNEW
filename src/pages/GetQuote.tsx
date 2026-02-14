@@ -225,7 +225,7 @@ const GetQuote = () => {
                     </p>
                   
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                      <Link to="/projects">
+                      <Link to="/renovation-projects">
                         <Button
                           variant="outline"
                           className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-primary px-8 h-14 text-sm tracking-widest uppercase font-medium"
@@ -233,7 +233,7 @@ const GetQuote = () => {
                           View Our Projects
                         </Button>
                       </Link>
-                      <Link to="/design-tools">
+                      <Link to="/renovation-design-tools">
                         <Button
                           className="w-full sm:w-auto bg-white text-primary hover:bg-white/90 px-8 h-14 text-sm tracking-widest uppercase font-medium"
                         >

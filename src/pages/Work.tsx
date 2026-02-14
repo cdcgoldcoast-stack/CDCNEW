@@ -25,7 +25,7 @@ const Work = () => {
   const itemListSchema = generateItemListSchema(
     projects.map((project, index) => ({
       name: project.name,
-      url: `/projects/${project.slug}`,
+      url: `/renovation-projects/${project.slug}`,
       image: project.image,
       position: index + 1,
     }))
@@ -43,7 +43,7 @@ const Work = () => {
       <SEO
         title="Projects | Gold Coast Renovation Projects & Portfolio"
         description="Browse our Gold Coast renovation portfolio. See completed kitchen, bathroom, and whole-home transformations across Burleigh, Broadbeach, Robina, and more."
-        url="/projects"
+        url="/renovation-projects"
         jsonLd={itemListSchema}
       />
       <Header />
@@ -77,7 +77,7 @@ const Work = () => {
             {projects.map((project) => (
               <Link 
                 key={project.id} 
-                to={`/projects/${project.slug}`}
+                to={`/renovation-projects/${project.slug}`}
                 className="group relative overflow-hidden aspect-[1/1.2] sm:aspect-[1/1.5]"
               >
                 <ResponsiveImage

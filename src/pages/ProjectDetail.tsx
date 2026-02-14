@@ -95,8 +95,8 @@ const ProjectDetail = () => {
 
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Projects", url: "/projects" },
-    { name: project.name, url: `/projects/${project.slug}` },
+    { name: "Renovation Projects", url: "/renovation-projects" },
+    { name: project.name, url: `/renovation-projects/${project.slug}` },
   ]);
 
   return (
@@ -104,7 +104,7 @@ const ProjectDetail = () => {
       <SEO
         title={`${project.name} | ${project.category.replace("-", " ")} Renovation ${project.location}`}
         description={project.description || `${project.name} - A ${project.category.replace("-", " ")} renovation project in ${project.location}, Gold Coast by Concept Design Construct.`}
-        url={`/projects/${project.slug}`}
+        url={`/renovation-projects/${project.slug}`}
         image={project.image}
         jsonLd={[projectSchema, breadcrumbSchema]}
       />
@@ -119,7 +119,7 @@ const ProjectDetail = () => {
       <section className="py-12 md:py-16 lg:py-20">
         <div className="container-wide">
           <Link 
-            to="/projects" 
+            to="/renovation-projects" 
             className="inline-flex items-center gap-2 text-foreground/50 hover:text-foreground transition-colors text-sm mb-10"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -254,10 +254,10 @@ const ProjectDetail = () => {
               <Link to="/services" className="text-primary hover:text-primary/70 underline underline-offset-4">
                 {categoryServiceAnchor}
               </Link>
-              <Link to="/gallery" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              <Link to="/project-gallery" className="text-primary hover:text-primary/70 underline underline-offset-4">
                 Browse more completed renovation gallery examples
               </Link>
-              <Link to="/design-tools/moodboard" className="text-primary hover:text-primary/70 underline underline-offset-4">
+              <Link to="/renovation-design-tools/moodboard" className="text-primary hover:text-primary/70 underline underline-offset-4">
                 Build a moodboard for your renovation direction
               </Link>
               <Link to="/get-quote" className="text-primary hover:text-primary/70 underline underline-offset-4">
@@ -274,7 +274,7 @@ const ProjectDetail = () => {
           <div className="flex justify-between items-center">
             {prevProject ? (
               <Link 
-                to={`/projects/${prevProject.slug}`}
+                to={`/renovation-projects/${prevProject.slug}`}
                 className="group flex items-center gap-2 md:gap-4 text-foreground/60 hover:text-foreground transition-colors"
               >
                 <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 group-hover:-translate-x-1 transition-transform" />
@@ -289,7 +289,7 @@ const ProjectDetail = () => {
 
             {nextProject ? (
               <Link 
-                to={`/projects/${nextProject.slug}`}
+                to={`/renovation-projects/${nextProject.slug}`}
                 className="group flex items-center gap-2 md:gap-4 text-right text-foreground/60 hover:text-foreground transition-colors"
               >
                 <div>

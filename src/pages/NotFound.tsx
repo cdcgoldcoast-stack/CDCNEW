@@ -27,7 +27,7 @@ const NotFound = () => {
           <Link to="/services" className="text-primary underline hover:text-primary/90">
             Review renovation services and scope options
           </Link>
-          <Link to="/projects" className="text-primary underline hover:text-primary/90">
+          <Link to="/renovation-projects" className="text-primary underline hover:text-primary/90">
             Browse completed renovation project portfolio
           </Link>
           <Link to="/get-quote" className="text-primary underline hover:text-primary/90">

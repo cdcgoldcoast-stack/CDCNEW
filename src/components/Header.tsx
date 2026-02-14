@@ -68,9 +68,9 @@ const Header = () => {
 
   const baseLinks = [
     { label: "About Us", href: "/about-us" },
-    { label: "Projects", href: "/projects" },
-    { label: "Gallery", href: "/gallery" },
-    { label: "Design Tools", href: "/design-tools" },
+    { label: "Renovation Projects", href: "/renovation-projects" },
+    { label: "Project Gallery", href: "/project-gallery" },
+    { label: "Renovation Design Tools", href: "/renovation-design-tools" },
   ];
   const navLinks = isHome ? baseLinks : [{ label: "Home", href: "/" }, ...baseLinks];
   

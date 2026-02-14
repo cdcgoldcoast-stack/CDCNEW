@@ -482,7 +482,7 @@ const buildPreferenceSentence = (
     if (typeof window === "undefined") return;
     const hasSeenIntro = sessionStorage.getItem("aiGeneratorIntroSeen") === "true";
     if (!hasSeenIntro) {
-      navigate("/design-tools/ai-generator/intro", { replace: true });
+      navigate("/renovation-design-tools/ai-generator/intro", { replace: true });
     }
   }, [navigate]);
 
@@ -1209,7 +1209,7 @@ const buildPreferenceSentence = (
       <SEO
         title="AI Renovation Visualiser | Gold Coast Design Preview"
         description="Upload a room photo and preview renovation ideas while preserving your existing layout. Explore finishes, styles, and design direction in seconds."
-        url="/design-tools/ai-generator"
+        url="/renovation-design-tools/ai-generator"
       />
        <Header />
  

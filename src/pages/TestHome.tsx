@@ -94,7 +94,7 @@ const TestHome = () => {
                   Snap a photo of your bathroom, kitchen, or living area — and see a renovation concept in seconds.
                 </p>
                 <Link
-                  to="/design-tools"
+                  to="/renovation-design-tools"
                   className="text-label bg-primary text-primary-foreground px-8 py-3 hover:opacity-90 transition-opacity inline-block"
                 >
                   Try With Your Own Photo

@@ -66,19 +66,19 @@ const Services = () => {
             Explore related resources before your consultation so your scope, style direction, and budget priorities are clearer from day one.
           </p>
           <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-            <Link to="/projects" className="text-primary hover:text-primary/70 underline underline-offset-4">
+            <Link to="/renovation-projects" className="text-primary hover:text-primary/70 underline underline-offset-4">
               Browse our renovation project portfolio
             </Link>
-            <Link to="/gallery" className="text-primary hover:text-primary/70 underline underline-offset-4">
+            <Link to="/project-gallery" className="text-primary hover:text-primary/70 underline underline-offset-4">
               Review our project gallery inspiration
             </Link>
             <Link to="/life-stages" className="text-primary hover:text-primary/70 underline underline-offset-4">
               Explore life stage renovation planning
             </Link>
-            <Link to="/design-tools/ai-generator/intro" className="text-primary hover:text-primary/70 underline underline-offset-4">
+            <Link to="/renovation-design-tools/ai-generator/intro" className="text-primary hover:text-primary/70 underline underline-offset-4">
               Try the AI renovation generator preview
             </Link>
-            <Link to="/design-tools/moodboard" className="text-primary hover:text-primary/70 underline underline-offset-4">
+            <Link to="/renovation-design-tools/moodboard" className="text-primary hover:text-primary/70 underline underline-offset-4">
               Build a renovation moodboard
             </Link>
             <Link to="/get-quote" className="text-primary hover:text-primary/70 underline underline-offset-4">

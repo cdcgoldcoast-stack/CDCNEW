@@ -41,7 +41,7 @@ const DesignTools = () => {
       <SEO
         title="Design Tools | Visualise Your Gold Coast Renovation"
         description="Use our free design tools to visualise your Gold Coast renovation. AI Design Generator and Moodboard Creator to plan your dream home."
-        url="/design-tools"
+        url="/renovation-design-tools"
       />
 
       {/* Decorative elements for creative feel */}
@@ -185,13 +185,13 @@ const DesignTools = () => {
               <Link to="/services" className="text-white hover:text-white/70 underline underline-offset-4">
                 Review renovation services and scope options
               </Link>
-              <Link to="/projects" className="text-white hover:text-white/70 underline underline-offset-4">
+              <Link to="/renovation-projects" className="text-white hover:text-white/70 underline underline-offset-4">
                 Browse completed renovation project portfolio
               </Link>
-              <Link to="/design-tools/ai-generator/intro" className="text-white hover:text-white/70 underline underline-offset-4">
+              <Link to="/renovation-design-tools/ai-generator/intro" className="text-white hover:text-white/70 underline underline-offset-4">
                 Open the AI renovation generator preview
               </Link>
-              <Link to="/design-tools/moodboard" className="text-white hover:text-white/70 underline underline-offset-4">
+              <Link to="/renovation-design-tools/moodboard" className="text-white hover:text-white/70 underline underline-offset-4">
                 Start a renovation moodboard collection
               </Link>
               <Link to="/get-quote" className="text-white hover:text-white/70 underline underline-offset-4">
