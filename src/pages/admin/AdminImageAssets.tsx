@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/admin/AdminLayout";
+import { useAdminPageAccess } from "@/hooks/useAdminPageAccess";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -55,8 +54,7 @@ interface StorageFile {
 const BUCKET_NAME = "gallery-images";
 
 const AdminImageAssets = () => {
-  const { user, isAdmin, loading } = useAuth();
-  const navigate = useNavigate();
+  const { user, isAuthorized, isCheckingAccess } = useAdminPageAccess();
   const queryClient = useQueryClient();
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
     new Set(["hero", "logo", "service"])
@@ -65,23 +63,10 @@ const AdminImageAssets = () => {
   const [selectedAsset, setSelectedAsset] = useState<SiteAsset | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
-  useEffect(() => {
-    if (!loading && !user) {
-      navigate("/auth");
-    }
-  }, [user, loading, navigate]);
-
-  useEffect(() => {
-    if (!loading && user && !isAdmin) {
-      toast.error("You don't have admin permissions.");
-      navigate("/");
-    }
-  }, [isAdmin, loading, user, navigate]);
-
   // Fetch current overrides
   const { data: overrides, isLoading: loadingOverrides } = useQuery({
     queryKey: ["image-overrides"],
-    enabled: !!user && isAdmin,
+    enabled: !!user && isAuthorized,
     queryFn: async () => {
       const { data, error } = await supabase
         .from("image_overrides")
@@ -96,7 +81,7 @@ const AdminImageAssets = () => {
   // Fetch available site images from storage
   const { data: siteImages, isLoading: loadingSiteImages } = useQuery({
     queryKey: ["site-images"],
-    enabled: !!user && isAdmin,
+    enabled: !!user && isAuthorized,
     queryFn: async () => {
       const { data, error } = await supabase.storage
         .from(BUCKET_NAME)
@@ -212,7 +197,7 @@ const AdminImageAssets = () => {
     img.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  if (loading || !isAdmin) {
+  if (isCheckingAccess) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <p className="text-foreground/60">Loading...</p>

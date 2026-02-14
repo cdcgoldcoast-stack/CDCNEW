@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/admin/AdminLayout";
+import { useAdminPageAccess } from "@/hooks/useAdminPageAccess";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -74,8 +74,7 @@ interface Project {
 }
 
 const AdminProjects = () => {
-  const { user, isAdmin, loading } = useAuth();
-  const navigate = useNavigate();
+  const { user, isAuthorized, isCheckingAccess } = useAdminPageAccess();
   const { assets: resolvedAssets, ready: assetsReady } = useSiteAssets();
 
   const [projects, setProjects] = useState<Project[]>([]);
@@ -101,7 +100,7 @@ const AdminProjects = () => {
   // Fetch images from storage bucket
   const { data: storageImages, isLoading: loadingStorageImages } = useQuery({
     queryKey: ["site-images"],
-    enabled: !!user && isAdmin,
+    enabled: !!user && isAuthorized,
     queryFn: async () => {
       const { data, error } = await supabase.storage
         .from(BUCKET_NAME)
@@ -139,23 +138,10 @@ const AdminProjects = () => {
   const [images, setImages] = useState<ProjectImage[]>([]);
 
   useEffect(() => {
-    if (!loading && !user) {
-      navigate("/auth");
-    }
-  }, [user, loading, navigate]);
-
-  useEffect(() => {
-    if (!loading && user && !isAdmin) {
-      toast.error("You don't have admin permissions.");
-      navigate("/");
-    }
-  }, [isAdmin, loading, user, navigate]);
-
-  useEffect(() => {
-    if (isAdmin && user) {
+    if (isAuthorized && user) {
       fetchProjects();
     }
-  }, [isAdmin, user]);
+  }, [isAuthorized, user]);
 
   const fetchProjects = async () => {
     try {
@@ -602,7 +588,7 @@ const AdminProjects = () => {
     }
   };
 
-  if (loading || !isAdmin) {
+  if (isCheckingAccess) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <p className="text-foreground/60">Loading...</p>

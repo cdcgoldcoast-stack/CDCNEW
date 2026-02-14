@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/useAuth";
 import AdminLayout from "@/components/admin/AdminLayout";
+import { useAdminPageAccess } from "@/hooks/useAdminPageAccess";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,10 +9,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { Loader2, Mail, Lock, User, Shield } from "lucide-react";
-import { Navigate } from "react-router-dom";
 
 const AdminSettings = () => {
-  const { user, isAdmin, loading } = useAuth();
+  const { user, isAuthorized, isCheckingAccess } = useAdminPageAccess({ showForbiddenToast: false });
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -44,7 +43,7 @@ const AdminSettings = () => {
     }
   }, [user, profileLoaded]);
 
-  if (loading) {
+  if (isCheckingAccess) {
     return (
       <AdminLayout>
         <div className="flex items-center justify-center py-20">
@@ -54,8 +53,8 @@ const AdminSettings = () => {
     );
   }
 
-  if (!user || !isAdmin) {
-    return <Navigate to="/auth" replace />;
+  if (!user || !isAuthorized) {
+    return null;
   }
 
   const handleUpdateProfile = async () => {

@@ -1,9 +1,8 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/admin/AdminLayout";
+import { useAdminPageAccess } from "@/hooks/useAdminPageAccess";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -90,8 +89,7 @@ const convertToWebP = (file: File): Promise<{ blob: Blob; originalSize: number }
 };
 
 const AdminSiteImages = () => {
-  const { user, isAdmin, loading } = useAuth();
-  const navigate = useNavigate();
+  const { user, isAuthorized, isCheckingAccess } = useAdminPageAccess();
   const queryClient = useQueryClient();
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState("");
@@ -100,23 +98,10 @@ const AdminSiteImages = () => {
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
   const [isRenaming, setIsRenaming] = useState(false);
 
-  useEffect(() => {
-    if (!loading && !user) {
-      navigate("/auth");
-    }
-  }, [user, loading, navigate]);
-
-  useEffect(() => {
-    if (!loading && user && !isAdmin) {
-      toast.error("You don't have admin permissions.");
-      navigate("/");
-    }
-  }, [isAdmin, loading, user, navigate]);
-
   // Fetch all images from storage bucket
   const { data: images, isLoading } = useQuery({
     queryKey: ["site-images"],
-    enabled: !!user && isAdmin,
+    enabled: !!user && isAuthorized,
     queryFn: async () => {
       const { data, error } = await supabase.storage
         .from(BUCKET_NAME)
@@ -340,7 +325,7 @@ const AdminSiteImages = () => {
     img.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  if (loading || !isAdmin) {
+  if (isCheckingAccess) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <p className="text-foreground/60">Loading...</p>

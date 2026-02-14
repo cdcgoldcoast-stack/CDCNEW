@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import html2canvas from "html2canvas";
 import { useIsMobile } from "@/hooks/use-mobile";
 import SEO from "@/components/SEO";
+import { FUNCTION_ENDPOINTS } from "@/config/endpoints";
 import type { Json } from "@/integrations/supabase/types";
 
 type Step = "layout" | "photos" | "notes" | "download";
@@ -764,7 +765,7 @@ const MoodboardCreator = () => {
         windowHeight: exportHeight,
         scrollX: 0,
         scrollY: 0,
-        proxy: `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/image-proxy?url=`,
+        proxy: `${FUNCTION_ENDPOINTS.imageProxy}?url=`,
         imageTimeout: 30000, // Allow more time for high-res images to load
         onclone: (clonedDoc, element) => {
           // Force the cloned board to exact export dimensions to prevent reflow

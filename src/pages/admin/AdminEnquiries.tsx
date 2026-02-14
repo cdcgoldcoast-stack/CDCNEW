@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/admin/AdminLayout";
+import { useAdminPageAccess } from "@/hooks/useAdminPageAccess";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -79,8 +78,7 @@ const renovationLabels: Record<string, string> = {
 };
 
 const AdminEnquiries = () => {
-  const { user, isAdmin, loading } = useAuth();
-  const navigate = useNavigate();
+  const { user, isAuthorized, isCheckingAccess } = useAdminPageAccess();
 
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [loadingEnquiries, setLoadingEnquiries] = useState(true);
@@ -88,23 +86,10 @@ const AdminEnquiries = () => {
   const [enquiryToDelete, setEnquiryToDelete] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!loading && !user) {
-      navigate("/auth");
-    }
-  }, [user, loading, navigate]);
-
-  useEffect(() => {
-    if (!loading && user && !isAdmin) {
-      toast.error("You don't have admin permissions.");
-      navigate("/");
-    }
-  }, [isAdmin, loading, user, navigate]);
-
-  useEffect(() => {
-    if (isAdmin && user) {
+    if (isAuthorized && user) {
       fetchEnquiries();
     }
-  }, [isAdmin, user]);
+  }, [isAuthorized, user]);
 
   const fetchEnquiries = async () => {
     try {
@@ -158,7 +143,7 @@ const AdminEnquiries = () => {
     }
   };
 
-  if (loading || !isAdmin) {
+  if (isCheckingAccess) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <p className="text-foreground/60">Loading...</p>

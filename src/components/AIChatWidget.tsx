@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
-import { supabase } from "@/integrations/supabase/client";
+import { FUNCTION_ENDPOINTS, getFunctionAuthHeaders } from "@/config/endpoints";
 
 type Message = {
   role: "user" | "assistant";
@@ -13,10 +13,6 @@ type Message = {
 };
 
 type ChatPhase = "chat" | "contact-prompt" | "collecting-contact" | "submitted";
-
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
-const SAVE_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/save-chat-inquiry`;
-const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 const QUICK_OPTIONS = [
   "What services do you offer?",
@@ -219,20 +215,9 @@ const AIChatWidget = () => {
     }
   }, [messageCount, chatPhase, messages]);
 
-  const getFunctionHeaders = async () => {
-    const { data } = await supabase.auth.getSession();
-    const token = data.session?.access_token || SUPABASE_PUBLISHABLE_KEY;
-
-    return {
-      "Content-Type": "application/json",
-      apikey: SUPABASE_PUBLISHABLE_KEY,
-      Authorization: `Bearer ${token}`,
-    };
-  };
-
   const streamChat = async (messagesToSend: Message[]) => {
-    const headers = await getFunctionHeaders();
-    const resp = await fetch(CHAT_URL, {
+    const headers = await getFunctionAuthHeaders();
+    const resp = await fetch(FUNCTION_ENDPOINTS.chat, {
       method: "POST",
       headers,
       body: JSON.stringify({ messages: messagesToSend.map(m => ({ role: m.role, content: m.content })) }),
@@ -398,9 +383,9 @@ const AIChatWidget = () => {
 
     try {
       const contextSummary = generateConversationSummary();
-      const headers = await getFunctionHeaders();
+      const headers = await getFunctionAuthHeaders();
       
-      const resp = await fetch(SAVE_URL, {
+      const resp = await fetch(FUNCTION_ENDPOINTS.saveChatInquiry, {
         method: "POST",
         headers,
         body: JSON.stringify({
