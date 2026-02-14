@@ -15,107 +15,102 @@ const ImageComparisonSlider = ({
   afterLabel = "After",
 }: ImageComparisonSliderProps) => {
   const [sliderPosition, setSliderPosition] = useState(50);
-  const [isDragging, setIsDragging] = useState(false);
   const [containerAspectRatio, setContainerAspectRatio] = useState<number | null>(null);
   const [orientationMismatch, setOrientationMismatch] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
 
-  // Use the BEFORE image to determine the aspect ratio (source of truth) and detect mismatches
   useEffect(() => {
     if (!beforeImage || !afterImage) return;
-    
-    // Load both images to compare orientations
+
     const beforeImg = new Image();
     const afterImg = new Image();
-    
+
     let beforeLoaded = false;
     let afterLoaded = false;
     let beforeDimensions = { width: 0, height: 0 };
     let afterDimensions = { width: 0, height: 0 };
-    
+
     const checkMismatch = () => {
       if (!beforeLoaded || !afterLoaded) return;
-      
       const beforeIsPortrait = beforeDimensions.height > beforeDimensions.width;
       const afterIsPortrait = afterDimensions.height > afterDimensions.width;
-      
-      // Detect orientation mismatch (portrait vs landscape)
       const mismatch = beforeIsPortrait !== afterIsPortrait;
       setOrientationMismatch(mismatch);
-      
-      if (mismatch) {
-        console.warn("Image orientation mismatch detected in slider:", {
-          before: beforeIsPortrait ? 'portrait' : 'landscape',
-          after: afterIsPortrait ? 'portrait' : 'landscape',
-          beforeDimensions,
-          afterDimensions
-        });
-      }
     };
-    
+
     beforeImg.onload = () => {
       beforeDimensions = { width: beforeImg.naturalWidth, height: beforeImg.naturalHeight };
-      const aspectRatio = beforeImg.naturalWidth / beforeImg.naturalHeight;
-      setContainerAspectRatio(aspectRatio);
+      setContainerAspectRatio(beforeImg.naturalWidth / beforeImg.naturalHeight);
       beforeLoaded = true;
       checkMismatch();
     };
-    
+
     afterImg.onload = () => {
       afterDimensions = { width: afterImg.naturalWidth, height: afterImg.naturalHeight };
       afterLoaded = true;
       checkMismatch();
     };
-    
+
     beforeImg.src = beforeImage;
     afterImg.src = afterImage;
   }, [beforeImage, afterImage]);
 
-  const handleMove = useCallback(
-    (clientX: number) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const x = clientX - rect.left;
-      const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
-      setSliderPosition(percentage);
-    },
-    []
-  );
+  const updatePosition = useCallback((clientX: number) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    setSliderPosition(percentage);
+  }, []);
 
-  const handleMouseDown = () => setIsDragging(true);
-  const handleMouseUp = () => setIsDragging(false);
+  // Global mouse/touch listeners for smooth dragging
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging.current) return;
+      e.preventDefault();
+      updatePosition(e.clientX);
+    };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    handleMove(e.clientX);
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!isDragging.current) return;
+      updatePosition(e.touches[0].clientX);
+    };
+
+    const handleUp = () => {
+      isDragging.current = false;
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleUp);
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("touchend", handleUp);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleUp);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleUp);
+    };
+  }, [updatePosition]);
+
+  const handlePointerDown = (e: React.MouseEvent | React.TouchEvent) => {
+    isDragging.current = true;
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    updatePosition(clientX);
   };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    handleMove(e.touches[0].clientX);
-  };
-
-  const handleClick = (e: React.MouseEvent) => {
-    handleMove(e.clientX);
-  };
-
-  // Calculate max height based on viewport
-  const maxHeight = "70vh";
 
   return (
     <div
       ref={containerRef}
       className="relative w-full overflow-hidden rounded-lg cursor-ew-resize select-none bg-muted/20"
       style={{
-        // Use aspect-ratio to maintain the before image's proportions
         aspectRatio: containerAspectRatio ? containerAspectRatio : undefined,
-        maxHeight: maxHeight,
       }}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
-      onClick={handleClick}
+      onMouseDown={handlePointerDown}
+      onTouchStart={handlePointerDown}
     >
-      {/* Before Image (defines the container size - source of truth) */}
+      {/* Before Image */}
       <div className="absolute inset-0 flex items-center justify-center">
         <img
           src={beforeImage}
@@ -129,7 +124,7 @@ const ImageComparisonSlider = ({
         />
       </div>
 
-      {/* After Image (Clipped overlay - must match before image positioning) */}
+      {/* After Image */}
       <div
         className="absolute inset-0 flex items-center justify-center"
         style={{ clipPath: `inset(0 0 0 ${sliderPosition}%)` }}
@@ -148,31 +143,12 @@ const ImageComparisonSlider = ({
 
       {/* Slider Line */}
       <div
-        className="absolute top-0 bottom-0 w-0.5 bg-white shadow-lg"
+        className="absolute top-0 bottom-0 w-0.5 bg-primary"
         style={{ left: `${sliderPosition}%`, transform: "translateX(-50%)" }}
       >
-        {/* Slider Handle */}
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center cursor-ew-resize"
-          onMouseDown={handleMouseDown}
-          onTouchStart={() => setIsDragging(true)}
-          onTouchEnd={() => setIsDragging(false)}
-          onTouchMove={handleTouchMove}
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            className="text-foreground/70"
-          >
-            <path
-              d="M6 10L3 7M3 7L6 4M3 7H8M14 10L17 13M17 13L14 16M17 13H12"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 bg-primary rounded-full shadow-md flex items-center justify-center">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M5 8L2 5.5M2 5.5L5 3M2 5.5H7M11 8L14 10.5M14 10.5L11 13M14 10.5H9" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       </div>
@@ -184,7 +160,7 @@ const ImageComparisonSlider = ({
       <div className="absolute top-4 right-4 bg-black/50 text-white text-xs uppercase tracking-wider px-2 py-1 rounded">
         {afterLabel}
       </div>
-      
+
       {/* Orientation Mismatch Warning */}
       {orientationMismatch && (
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-amber-500/90 text-white text-xs px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">

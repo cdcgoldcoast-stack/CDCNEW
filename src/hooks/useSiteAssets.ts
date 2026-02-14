@@ -24,9 +24,9 @@ export function useSiteAssets() {
       continue;
     }
 
-    // If error, fall back to original imported URL
+    // If error, return null — don't show bundled fallback images
     if (isError) {
-      resolvedAssets[asset.id] = asset.importedUrl;
+      resolvedAssets[asset.id] = null;
       continue;
     }
 
@@ -57,14 +57,12 @@ export function useSiteAssets() {
  */
 export function useResolvedAsset(
   assetId: string,
-  options?: { allowFallbackWhileLoading?: boolean }
 ): string | null {
   const { assets, isLoading } = useSiteAssets();
-  const originalAsset = siteAssets.find((a) => a.id === assetId);
 
   if (isLoading) {
-    return options?.allowFallbackWhileLoading ? originalAsset?.importedUrl || null : null;
+    return null;
   }
 
-  return assets[assetId] || originalAsset?.importedUrl || null;
+  return assets[assetId] || null;
 }

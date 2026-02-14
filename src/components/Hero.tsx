@@ -10,7 +10,7 @@ interface HeroProps {
 
 const Hero = ({ preloaderComplete = true }: HeroProps) => {
   const ref = useRef<HTMLElement>(null);
-  const heroImage = useResolvedAsset("hero-bg", { allowFallbackWhileLoading: true });
+  const heroImage = useResolvedAsset("hero-bg");
   
   const { scrollYProgress } = useScroll({
     target: ref,

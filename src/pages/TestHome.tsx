@@ -13,6 +13,7 @@ import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import Preloader from "@/components/Preloader";
+import ImageComparisonSlider from "@/components/ImageComparisonSlider";
 import { generateFAQSchema, generateLocalBusinessSchema } from "@/lib/structured-data";
 import { Link } from "react-router-dom";
 
@@ -79,33 +80,40 @@ const TestHome = () => {
         <WhatWeRenovateSplit />
         <ProjectsTeaser />
         <WhyRenovate />
-        <FAQSection />
-        <CostsSection />
-        <section className="py-12 md:py-16 border-t border-foreground/10 bg-background">
-          <div className="container-wide">
-            <h2 className="font-serif italic text-2xl md:text-3xl text-primary mb-3">Explore Renovation Planning Resources</h2>
-            <p className="text-foreground/70 mb-4 max-w-3xl">
-              Start with these pages if you want clearer direction before booking your consultation.
-            </p>
-            <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm md:text-base">
-              <Link to="/services" className="text-primary hover:text-primary/70 underline underline-offset-4">
-                Compare renovation services and project scope
-              </Link>
-              <Link to="/projects" className="text-primary hover:text-primary/70 underline underline-offset-4">
-                Browse completed Gold Coast renovation projects
-              </Link>
-              <Link to="/design-tools/ai-generator/intro" className="text-primary hover:text-primary/70 underline underline-offset-4">
-                Test ideas with the AI renovation generator preview
-              </Link>
-              <Link to="/design-tools/moodboard" className="text-primary hover:text-primary/70 underline underline-offset-4">
-                Build a renovation moodboard for your brief
-              </Link>
-              <Link to="/life-stages" className="text-primary hover:text-primary/70 underline underline-offset-4">
-                Plan renovations around your life stage needs
-              </Link>
+
+        {/* AI Design Tool Teaser */}
+        <section className="min-h-screen bg-cream relative z-10 flex items-center">
+          <div className="container-wide py-20 md:py-0">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+              <div>
+                <p className="text-label text-foreground/50 mb-6">AI Design Tool</p>
+                <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-6">
+                  What Could Your Space Look Like?
+                </h2>
+                <p className="text-foreground/60 text-lg leading-relaxed mb-10">
+                  Snap a photo of your bathroom, kitchen, or living area — and see a renovation concept in seconds.
+                </p>
+                <Link
+                  to="/design-tools"
+                  className="text-label bg-primary text-primary-foreground px-8 py-3 hover:opacity-90 transition-opacity inline-block"
+                >
+                  Try With Your Own Photo
+                </Link>
+              </div>
+              <div>
+                <ImageComparisonSlider
+                  beforeImage="https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Renovaton-before.webp"
+                  afterImage="https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/RenovationAI.webp"
+                  beforeLabel="Before"
+                  afterLabel="AI Visualisation"
+                />
+              </div>
             </div>
           </div>
         </section>
+
+        <FAQSection />
+        <CostsSection />
       </main>
       <Footer />
     </div>

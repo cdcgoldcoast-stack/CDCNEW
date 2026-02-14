@@ -5,6 +5,7 @@ import { fetchProjects, Project } from "@/data/projects";
 import SEO from "@/components/SEO";
 import { generateItemListSchema } from "@/lib/structured-data";
 import BottomInvitation from "@/components/BottomInvitation";
+import Footer from "@/components/Footer";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
 const Work = () => {
@@ -38,7 +39,7 @@ const Work = () => {
   ];
 
   return (
-    <div className="min-h-screen h-screen bg-background overflow-hidden flex flex-col">
+    <div className="min-h-screen bg-background">
       <SEO
         title="Projects | Gold Coast Renovation Projects & Portfolio"
         description="Browse our Gold Coast renovation portfolio. See completed kitchen, bathroom, and whole-home transformations across Burleigh, Broadbeach, Robina, and more."
@@ -46,9 +47,8 @@ const Work = () => {
         jsonLd={itemListSchema}
       />
       <Header />
-      
-      {/* Full screen grid with equal padding */}
-      <main className="flex-1 pt-4 md:pt-8 mt-16 md:mt-20 px-4 md:p-6 lg:p-8 overflow-auto">
+
+      <main className="pt-20 md:pt-28 px-4 md:px-6 lg:px-8 pb-16">
         {/* Title */}
         <div className="text-center mb-8 md:mb-16 max-w-2xl mx-auto px-2">
           <h1 className="font-serif italic text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-primary mb-4 md:mb-6">
@@ -61,27 +61,6 @@ const Work = () => {
             Each project tells a story of improved daily living across the Gold Coast.
           </p>
         </div>
-
-        <section className="max-w-4xl mx-auto mb-10 md:mb-14 px-2">
-          <h2 className="text-lg md:text-2xl font-serif italic text-primary mb-3">Explore Related Renovation Resources</h2>
-          <p className="text-foreground/70 mb-4">
-            Use these guides while reviewing projects so your own renovation brief is easier to shape.
-          </p>
-          <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm md:text-base">
-            <Link to="/services" className="text-primary hover:text-primary/70 underline underline-offset-4">
-              Compare renovation service options
-            </Link>
-            <Link to="/life-stages" className="text-primary hover:text-primary/70 underline underline-offset-4">
-              Match renovation scope to your life stage
-            </Link>
-            <Link to="/design-tools/ai-generator/intro" className="text-primary hover:text-primary/70 underline underline-offset-4">
-              Preview ideas with the AI design generator
-            </Link>
-            <Link to="/get-quote" className="text-primary hover:text-primary/70 underline underline-offset-4">
-              Request a renovation consultation
-            </Link>
-          </div>
-        </section>
 
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-4 md:gap-5 lg:gap-6 max-w-[1600px] mx-auto animate-pulse">
@@ -140,6 +119,7 @@ const Work = () => {
           description="Whether you're planning a bathroom update, a kitchen makeover, or a full property renovation - we'd love to hear about it."
         />
       </main>
+      <Footer />
     </div>
   );
 };

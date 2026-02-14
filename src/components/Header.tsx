@@ -67,12 +67,12 @@ const Header = () => {
   });
 
   const baseLinks = [
-    { label: "About Our Team", href: "/about-us" },
-    { label: "Renovation Projects", href: "/projects" },
-    { label: "Project Gallery", href: "/gallery" },
-    { label: "Renovation Design Tools", href: "/design-tools" },
+    { label: "About Us", href: "/about-us" },
+    { label: "Projects", href: "/projects" },
+    { label: "Gallery", href: "/gallery" },
+    { label: "Design Tools", href: "/design-tools" },
   ];
-  const navLinks = isHome ? baseLinks : [{ label: "Gold Coast Renovation Home", href: "/" }, ...baseLinks];
+  const navLinks = isHome ? baseLinks : [{ label: "Home", href: "/" }, ...baseLinks];
   
   // Always use solid header (no transparent mode)
   const shouldBeTransparent = false;
@@ -93,22 +93,22 @@ const Header = () => {
         transition: isVisible ? "transform 500ms ease-out" : "transform 300ms ease-out",
       }}
     >
-      <div className="w-[94%] lg:w-[84%] max-w-[1440px] mx-auto flex items-center justify-between h-[74px] md:h-[92px] gap-6">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-12 flex items-center justify-between h-[74px] md:h-[100px] gap-8">
         {/* Logo */}
-        <Link to="/" className="flex items-center" aria-label="Concept Design Construct home">
+        <Link to="/" className="flex-shrink-0 flex items-center mr-4 lg:mr-8" aria-label="Concept Design Construct home">
           {logoSrc ? (
             <ResponsiveImage
               src={logoSrc}
               alt="Concept Design Construct"
               width={701}
               height={131}
-              sizes="(min-width: 768px) 192px, 144px"
+              sizes="(min-width: 1024px) 256px, (min-width: 768px) 224px, 176px"
               loading="eager"
               priority
-              className="h-auto w-36 md:w-48"
+              className="h-auto w-36 md:w-44 lg:w-52"
             />
           ) : (
-            <div className="h-10 md:h-12 w-36 md:w-48 bg-muted animate-pulse" />
+            <div className="h-10 md:h-12 w-36 md:w-44 lg:w-52 bg-muted animate-pulse" />
           )}
         </Link>
 
@@ -126,10 +126,10 @@ const Header = () => {
               {link.label}
             </Link>
           ))}
-          <Link to="/get-quote" {...getPrefetchHandlers("/get-quote")} className={`${ctaClass} whitespace-nowrap`}>
-            Book A Renovation Consultation
+          <Link to="/get-quote" {...getPrefetchHandlers("/get-quote")} className={`${ctaClass} whitespace-nowrap flex-shrink-0`}>
+            Book A Consultation
           </Link>
-          <a href="tel:1300020232" className={`${ctaClass} whitespace-nowrap`}>
+          <a href="tel:1300020232" className={`${ctaClass} whitespace-nowrap flex-shrink-0`}>
             1300 020 232
           </a>
         </nav>

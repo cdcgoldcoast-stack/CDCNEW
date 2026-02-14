@@ -36,7 +36,7 @@ const renovationAfterImage =
 const renovationBeforeImage =
   "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Renovaton-before.webp";
 
-const totalSteps = 5; // 1 invitation + 4 form steps
+const totalSteps = 3; // 1 invitation + 2 form steps
 
 const GetQuote = () => {
   const navigate = useNavigate();
@@ -50,7 +50,6 @@ const GetQuote = () => {
     email: "",
     phone: "",
     suburb: "",
-    postcode: "",
     renovations: [] as string[],
     budget: "",
   });
@@ -90,18 +89,9 @@ const GetQuote = () => {
     }
 
     if (step === 3) {
-      if (!formData.suburb.trim() && !formData.postcode.trim()) {
-        newErrors.location = "Please enter either suburb or postcode";
-      }
-    }
-
-    if (step === 4) {
       if (formData.renovations.length === 0) {
         newErrors.renovations = "Please select at least one renovation type";
       }
-    }
-
-    if (step === 5) {
       if (!formData.budget) {
         newErrors.budget = "Please select a budget";
       }
@@ -125,8 +115,8 @@ const GetQuote = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate budget step before submitting
-    if (!validateStep(5)) {
+    // Validate final step before submitting
+    if (!validateStep(3)) {
       return;
     }
     
@@ -142,7 +132,6 @@ const GetQuote = () => {
           email: formData.email,
           phone: formData.phone,
           suburb: formData.suburb || null,
-          postcode: formData.postcode || null,
           renovations: formData.renovations,
           budget: formData.budget || null,
           source: "quote-form",
@@ -164,15 +153,13 @@ const GetQuote = () => {
   };
 
   const formStepTitles = [
-    "We'd love to get to know you",
-    "Where are you located?",
+    "Tell us about yourself",
     "What are you looking to renovate?",
-    "Do you have a budget in mind?",
   ];
 
   const isInvitationStep = currentStep === 1;
   const formStepIndex = currentStep - 2; // 0-indexed for form steps (step 2 = index 0)
-  const formStepsTotal = 4;
+  const formStepsTotal = 2;
 
   // Generate ContactPage schema for SEO
   const contactSchema = generateContactPageSchema();
@@ -557,7 +544,7 @@ const GetQuote = () => {
                     />
                   </div>
                   <AnimatePresence mode="wait">
-                    {/* Step 2: Personal Details */}
+                    {/* Step 2: Personal Details + Suburb */}
                     {currentStep === 2 && (
                       <motion.div
                         key="step-2"
@@ -625,25 +612,7 @@ const GetQuote = () => {
                             <p className="text-white/80 text-sm">{errors.phone}</p>
                           )}
                         </div>
-                      </motion.div>
-                    )}
 
-                    {/* Step 3: Location */}
-                    {currentStep === 3 && (
-                      <motion.div
-                        key="step-3"
-                        initial={{ opacity: 0, x: 30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -30 }}
-                        transition={{ duration: 0.4, ease: "easeOut" }}
-                        className="space-y-5"
-                      >
-                        <p className="text-sm text-white/60 text-center mb-2">
-                          Enter suburb or postcode <span className="text-white/60">*</span>
-                        </p>
-                        {errors.location && (
-                          <p className="text-white/80 text-sm text-center">{errors.location}</p>
-                        )}
                         <div className="space-y-2">
                           <Label htmlFor="suburb" className="text-white/90">
                             Suburb
@@ -651,128 +620,92 @@ const GetQuote = () => {
                           <Input
                             id="suburb"
                             value={formData.suburb}
-                            onChange={(e) => {
-                              updateFormData("suburb", e.target.value);
-                              if (errors.location) setErrors((prev) => ({ ...prev, location: "" }));
-                            }}
+                            onChange={(e) => updateFormData("suburb", e.target.value)}
                             placeholder="Your suburb"
-                            className={cn(
-                              "h-12 text-base bg-background/95 border-background/70 text-foreground placeholder:text-foreground/50 focus:border-background focus:ring-background/40",
-                              errors.location && "border-white/60"
-                            )}
-                          />
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label htmlFor="postcode" className="text-white/90">
-                            Postcode
-                          </Label>
-                          <Input
-                            id="postcode"
-                            value={formData.postcode}
-                            onChange={(e) => {
-                              updateFormData("postcode", e.target.value);
-                              if (errors.location) setErrors((prev) => ({ ...prev, location: "" }));
-                            }}
-                            placeholder="Your postcode"
-                            className={cn(
-                              "h-12 text-base bg-background/95 border-background/70 text-foreground placeholder:text-foreground/50 focus:border-background focus:ring-background/40",
-                              errors.location && "border-white/60"
-                            )}
+                            className="h-12 text-base bg-background/95 border-background/70 text-foreground placeholder:text-foreground/50 focus:border-background focus:ring-background/40"
                           />
                         </div>
                       </motion.div>
                     )}
 
-                    {/* Step 4: Renovation Type */}
-                    {currentStep === 4 && (
+                    {/* Step 3: Renovation Type + Budget */}
+                    {currentStep === 3 && (
                       <motion.div
-                        key="step-4"
+                        key="step-3"
                         initial={{ opacity: 0, x: 30 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -30 }}
                         transition={{ duration: 0.4, ease: "easeOut" }}
-                        className="space-y-6"
+                        className="space-y-8"
                       >
-                        <p className="text-sm text-white/60 text-center">
-                          Select all that apply <span className="text-white/60">*</span>
-                        </p>
-                        {errors.renovations && (
-                          <p className="text-white/80 text-sm text-center">{errors.renovations}</p>
-                        )}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          {renovationOptions.map((option) => (
-                            <button
-                              key={option.id}
-                              type="button"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                toggleRenovation(option.id);
-                                if (errors.renovations) {
-                                  setErrors((prev) => ({ ...prev, renovations: "" }));
-                                }
-                              }}
-                              className={cn(
-                                "relative border rounded-lg px-6 py-5 text-left transition-all duration-200",
-                                formData.renovations.includes(option.id)
-                                  ? "border-white bg-white/20"
-                                  : "border-white/30 bg-white/5 hover:border-white/50 hover:bg-white/10"
-                              )}
-                            >
-                              <span className="text-base text-white">
-                                {option.label}
-                              </span>
-                              {formData.renovations.includes(option.id) && (
-                                <Check className="absolute top-4 right-4 w-5 h-5 text-white" />
-                              )}
-                            </button>
-                          ))}
+                        <div className="space-y-4">
+                          <p className="text-sm text-white/60 text-center">
+                            Select all that apply <span className="text-white/60">*</span>
+                          </p>
+                          {errors.renovations && (
+                            <p className="text-white/80 text-sm text-center">{errors.renovations}</p>
+                          )}
+                          <div className="grid grid-cols-2 gap-3">
+                            {renovationOptions.map((option) => (
+                              <button
+                                key={option.id}
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  toggleRenovation(option.id);
+                                  if (errors.renovations) {
+                                    setErrors((prev) => ({ ...prev, renovations: "" }));
+                                  }
+                                }}
+                                className={cn(
+                                  "relative border rounded-lg px-5 py-4 text-left transition-all duration-200",
+                                  formData.renovations.includes(option.id)
+                                    ? "border-white bg-white/20"
+                                    : "border-white/30 bg-white/5 hover:border-white/50 hover:bg-white/10"
+                                )}
+                              >
+                                <span className="text-sm text-white">
+                                  {option.label}
+                                </span>
+                                {formData.renovations.includes(option.id) && (
+                                  <Check className="absolute top-3 right-3 w-4 h-4 text-white" />
+                                )}
+                              </button>
+                            ))}
+                          </div>
                         </div>
-                      </motion.div>
-                    )}
 
-                    {/* Step 5: Budget */}
-                    {currentStep === 5 && (
-                      <motion.div
-                        key="step-5"
-                        initial={{ opacity: 0, x: 30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -30 }}
-                        transition={{ duration: 0.4, ease: "easeOut" }}
-                        className="space-y-6"
-                      >
-                        <p className="text-sm text-white/60 text-center">
-                          Select your approximate budget <span className="text-white/60">*</span>
-                        </p>
-                        {errors.budget && (
-                          <p className="text-white/80 text-sm text-center">{errors.budget}</p>
-                        )}
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                          {budgetOptions.map((option) => (
-                            <button
-                              key={option.id}
-                              type="button"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                updateFormData("budget", option.id);
-                              }}
-                              className={cn(
-                                "relative border rounded-lg px-5 py-4 text-center transition-all duration-200",
-                                formData.budget === option.id
-                                  ? "border-white bg-white/20"
-                                  : "border-white/30 bg-white/5 hover:border-white/50 hover:bg-white/10"
-                              )}
-                            >
-                              <span className="text-base text-white">
-                                {option.label}
-                              </span>
-                              {formData.budget === option.id && (
-                                <Check className="absolute top-3 right-3 w-4 h-4 text-white" />
-                              )}
-                            </button>
-                          ))}
+                        <div className="space-y-4">
+                          <p className="text-sm text-white/60 text-center">
+                            Budget range <span className="text-white/60">*</span>
+                          </p>
+                          {errors.budget && (
+                            <p className="text-white/80 text-sm text-center">{errors.budget}</p>
+                          )}
+                          <div className="grid grid-cols-3 gap-3">
+                            {budgetOptions.map((option) => (
+                              <button
+                                key={option.id}
+                                type="button"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  updateFormData("budget", option.id);
+                                }}
+                                className={cn(
+                                  "relative border rounded-lg px-4 py-3 text-center transition-all duration-200",
+                                  formData.budget === option.id
+                                    ? "border-white bg-white/20"
+                                    : "border-white/30 bg-white/5 hover:border-white/50 hover:bg-white/10"
+                                )}
+                              >
+                                <span className="text-sm text-white">
+                                  {option.label}
+                                </span>
+                              </button>
+                            ))}
+                          </div>
                         </div>
                       </motion.div>
                     )}
@@ -833,37 +766,6 @@ const GetQuote = () => {
           )}
         </AnimatePresence>
       </main>
-
-      <section className="py-10 md:py-14 border-t border-foreground/10 bg-background">
-        <div className="container-wide">
-          <h2 className="font-serif italic text-2xl md:text-3xl text-primary mb-3">
-            Helpful Renovation Planning Links
-          </h2>
-          <p className="text-foreground/70 mb-4 max-w-3xl">
-            While we review your enquiry, these guides can help you refine scope, style direction, and budget priorities.
-          </p>
-          <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm md:text-base">
-            <Link to="/services" className="text-primary hover:text-primary/70 underline underline-offset-4">
-              Compare kitchen, bathroom, and whole-home service options
-            </Link>
-            <Link to="/projects" className="text-primary hover:text-primary/70 underline underline-offset-4">
-              Review recent renovation project case studies
-            </Link>
-            <Link to="/gallery" className="text-primary hover:text-primary/70 underline underline-offset-4">
-              Browse project gallery inspiration by renovation style
-            </Link>
-            <Link to="/design-tools/ai-generator/intro" className="text-primary hover:text-primary/70 underline underline-offset-4">
-              Preview ideas in the AI renovation generator
-            </Link>
-            <Link to="/design-tools/moodboard" className="text-primary hover:text-primary/70 underline underline-offset-4">
-              Build a moodboard to share during consultation
-            </Link>
-            <Link to="/life-stages" className="text-primary hover:text-primary/70 underline underline-offset-4">
-              Match renovation scope to your life stage plan
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {!isInvitationStep && <Footer />}
     </div>
