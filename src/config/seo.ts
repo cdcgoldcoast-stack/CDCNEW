@@ -5,9 +5,8 @@
  * to ensure consistent branding across the site.
  */
 
-// Production domain - update this when connecting custom domain
-const envDomain = (import.meta.env?.VITE_SITE_URL as string | undefined) || "";
-export const PRODUCTION_DOMAIN = (envDomain ? envDomain.replace(/\/$/, "") : "https://www.cdconstruct.com.au");
+// Production canonical host used across canonical/og/twitter URLs.
+export const PRODUCTION_DOMAIN = "https://www.cdconstruct.com.au";
 
 // Site branding
 export const SITE_NAME = "Concept Design Construct";

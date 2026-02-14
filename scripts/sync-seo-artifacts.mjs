@@ -12,8 +12,7 @@ const GENERATED_SLUGS_PATH = path.join(ROOT_DIR, "src", "generated", "project-sl
 const SITEMAP_PATH = path.join(ROOT_DIR, "public", "sitemap.xml");
 const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, "vercel.json");
 
-const DEFAULT_DOMAIN = "https://www.cdconstruct.com.au";
-const PRODUCTION_DOMAIN = normalizeDomain(process.env.VITE_SITE_URL || DEFAULT_DOMAIN);
+const PRODUCTION_DOMAIN = "https://www.cdconstruct.com.au";
 
 const STATIC_ROUTES = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
@@ -35,20 +34,6 @@ const PROJECT_META = {
   changefreq: "monthly",
   priority: "0.7",
 };
-
-function normalizeDomain(domain) {
-  const cleaned = domain.trim().replace(/\/+$/, "");
-  try {
-    const url = new URL(cleaned);
-    // Keep canonical host consistent across sitemap and head tags.
-    if (url.hostname === "cdconstruct.com.au") {
-      url.hostname = "www.cdconstruct.com.au";
-    }
-    return url.origin;
-  } catch {
-    return cleaned;
-  }
-}
 
 function generateSlug(name) {
   return name
