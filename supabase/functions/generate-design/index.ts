@@ -782,7 +782,7 @@ serve(async (req) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "gemini-3-pro-image-preview",
+          model: "gemini-2.0-flash-exp-image-generation",
           messages: [
             {
               role: "system",
