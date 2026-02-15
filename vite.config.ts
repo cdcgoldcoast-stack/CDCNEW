@@ -97,7 +97,14 @@ function prerenderPlugin() {
       });
 
       try {
-        await prerenderer.initialize();
+        try {
+          await prerenderer.initialize();
+        } catch (initErr) {
+          console.warn("[prerender] Chrome failed to launch — skipping prerendering (SPA fallback).");
+          console.warn("[prerender]", initErr instanceof Error ? initErr.message : String(initErr));
+          return;
+        }
+
         console.log(`\n[prerender] Rendering ${prerenderRoutes.length} routes...`);
         console.log(
           `[prerender] options: extended=${includeExtendedPrerenderRoutes ? "on" : "off"}, projectDetail=${includeProjectDetailPrerenderRoutes ? "on" : "off"}`
@@ -119,14 +126,14 @@ function prerenderPlugin() {
             console.log(`[prerender] ${rendered.route} -> ${path.relative(outDir, filePath)}`);
           } catch (error) {
             const message = error instanceof Error ? error.message : String(error);
-            throw new Error(`Route ${route} failed: ${message}`);
+            console.warn(`[prerender] Route ${route} failed: ${message} — skipping.`);
           }
         }
 
         console.log("[prerender] Done!\n");
       } catch (err) {
-        console.error("[prerender] Failed:", err);
-        throw err;
+        console.warn("[prerender] Unexpected error — skipping prerendering (SPA fallback).");
+        console.warn("[prerender]", err);
       } finally {
         prerenderer.destroy();
       }
