@@ -175,7 +175,7 @@ const GetQuote = () => {
       <Header />
 
       <main className="flex-1 relative overflow-hidden pt-16 md:pt-20">
-        <h1 className="sr-only">Get Your Free Renovation Plan</h1>
+        <h1 className="sr-only">Book a Gold Coast Renovation Consultation</h1>
         {/* Expanding Background Panel */}
         <motion.div
           className="absolute inset-0 bg-primary z-0"

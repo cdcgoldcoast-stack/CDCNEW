@@ -17,15 +17,15 @@ const PRODUCTION_DOMAIN = "https://www.cdconstruct.com.au";
 const STATIC_ROUTES = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
   { path: "/about-us", changefreq: "monthly", priority: "0.8" },
-  { path: "/projects", changefreq: "weekly", priority: "0.9" },
+  { path: "/renovation-projects", changefreq: "weekly", priority: "0.9" },
   { path: "/services", changefreq: "monthly", priority: "0.8" },
   { path: "/life-stages", changefreq: "monthly", priority: "0.7" },
   { path: "/get-quote", changefreq: "monthly", priority: "0.9" },
-  { path: "/gallery", changefreq: "weekly", priority: "0.7" },
-  { path: "/design-tools", changefreq: "monthly", priority: "0.6" },
-  { path: "/design-tools/ai-generator/intro", changefreq: "monthly", priority: "0.5" },
-  { path: "/design-tools/ai-generator", changefreq: "monthly", priority: "0.5" },
-  { path: "/design-tools/moodboard", changefreq: "monthly", priority: "0.5" },
+  { path: "/project-gallery", changefreq: "weekly", priority: "0.7" },
+  { path: "/renovation-design-tools", changefreq: "monthly", priority: "0.6" },
+  { path: "/renovation-design-tools/ai-generator/intro", changefreq: "monthly", priority: "0.5" },
+  { path: "/renovation-design-tools/ai-generator", changefreq: "monthly", priority: "0.5" },
+  { path: "/renovation-design-tools/moodboard", changefreq: "monthly", priority: "0.5" },
   { path: "/privacy-policy", changefreq: "yearly", priority: "0.3" },
   { path: "/terms-conditions", changefreq: "yearly", priority: "0.3" },
 ];
@@ -119,7 +119,7 @@ async function readSupabaseProjectSlugs() {
 
 async function readPublicSiteProjectSlugs() {
   try {
-    const response = await fetch(`${PRODUCTION_DOMAIN}/projects`, {
+    const response = await fetch(`${PRODUCTION_DOMAIN}/renovation-projects`, {
       headers: {
         "user-agent": "Mozilla/5.0 (compatible; seo-sync-bot/1.0)",
       },
@@ -130,7 +130,7 @@ async function readPublicSiteProjectSlugs() {
     }
 
     const html = await response.text();
-    const matches = [...html.matchAll(/href="\/projects\/([a-z0-9-]+)"/g)];
+    const matches = [...html.matchAll(/href="\/renovation-projects\/([a-z0-9-]+)"/g)];
     return uniqSorted(matches.map((match) => match[1]));
   } catch {
     return [];
@@ -144,9 +144,9 @@ async function readVercelRewriteProjectSlugs() {
     const rewrites = Array.isArray(parsed?.rewrites) ? parsed.rewrites : [];
     const projectSlugs = rewrites
       .map((rewrite) => `${rewrite?.source || ""}`)
-      .filter((sourcePath) => sourcePath.startsWith("/projects/"))
-      .filter((sourcePath) => sourcePath !== "/projects")
-      .map((sourcePath) => sourcePath.replace(/^\/projects\//, ""))
+      .filter((sourcePath) => sourcePath.startsWith("/renovation-projects/"))
+      .filter((sourcePath) => sourcePath !== "/renovation-projects")
+      .map((sourcePath) => sourcePath.replace(/^\/renovation-projects\//, ""))
       .filter((slug) => slug && !slug.includes("/") && !slug.includes(":") && !slug.includes("("));
 
     return uniqSorted(projectSlugs);
@@ -161,7 +161,7 @@ function buildSitemapXml(projectSlugs) {
   const entries = [
     ...STATIC_ROUTES,
     ...projectSlugs.map((slug) => ({
-      path: `/projects/${slug}`,
+      path: `/renovation-projects/${slug}`,
       changefreq: PROJECT_META.changefreq,
       priority: PROJECT_META.priority,
     })),

@@ -144,7 +144,7 @@ const EditorialReveal = () => {
               {img.src && (
                 <ResponsiveImage
                   src={shouldLoadImages ? img.src : null}
-                  alt=""
+                  alt={`Renovation inspiration editorial image ${i + 1}`}
                   width={800}
                   height={1200}
                   sizes="33vw"
@@ -161,7 +161,7 @@ const EditorialReveal = () => {
               {img.src && (
                 <ResponsiveImage
                   src={shouldLoadImages ? img.src : null}
-                  alt=""
+                  alt={`Renovation inspiration editorial image ${i + 4}`}
                   width={800}
                   height={1200}
                   sizes="33vw"

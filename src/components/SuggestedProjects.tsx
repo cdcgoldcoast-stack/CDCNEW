@@ -95,13 +95,13 @@ const SuggestedProjects = ({ currentProjectId }: SuggestedProjectsProps) => {
           {suggestedProjects.map((project) => (
             <Link
               key={project.id}
-              to={`/projects/${project.slug}`}
+              to={`/renovation-projects/${project.slug}`}
               className="group block"
             >
               <div className="relative aspect-[3/4] overflow-hidden mb-4">
                 <ResponsiveImage
                   src={project.image}
-                  alt=""
+                  alt={`${project.name} renovation project`}
                   width={800}
                   height={1067}
                   sizes="(min-width: 1024px) 24vw, 48vw"

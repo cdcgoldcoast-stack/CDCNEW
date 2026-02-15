@@ -52,7 +52,7 @@ const CostsSection = () => {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
         >
-          <motion.h4 
+          <motion.p 
             className="text-label text-primary-foreground/60 mb-3 md:mb-4 text-xs md:text-sm"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -60,7 +60,7 @@ const CostsSection = () => {
             transition={{ duration: 0.5 }}
           >
             Gold Coast
-          </motion.h4>
+          </motion.p>
           <motion.h2 
             className="text-primary-foreground font-serif italic text-lg sm:text-xl md:text-3xl leading-tight"
             initial={{ opacity: 0, y: 30 }}
@@ -138,7 +138,7 @@ const CostsSection = () => {
         {/* Invitation / CTA Section - Centered */}
         <div className="flex flex-col items-center text-center">
           {/* Left: Invitation content - now centered */}
-          <motion.h4 className="text-label text-primary-foreground/60 mb-4 md:mb-6 text-xs md:text-sm" initial={{
+          <motion.p className="text-label text-primary-foreground/60 mb-4 md:mb-6 text-xs md:text-sm" initial={{
           opacity: 0,
           y: 20
         }} whileInView={{
@@ -151,7 +151,7 @@ const CostsSection = () => {
           duration: 0.5
         }}>
             Invitation
-          </motion.h4>
+          </motion.p>
           
           <motion.h2 className="text-primary-foreground font-serif italic text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[1.15] mb-6 md:mb-8" initial={{
           opacity: 0,

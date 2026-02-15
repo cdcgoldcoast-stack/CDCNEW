@@ -84,7 +84,7 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
         {service.bgImage ? (
           <ResponsiveImage
             src={service.bgImage}
-            alt=""
+            alt={`${service.title} background example`}
             width={1200}
             height={900}
             sizes="(min-width: 768px) 50vw, 100vw"
@@ -114,7 +114,7 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
               >
                 <ResponsiveImage
                   src={service.image}
-                  alt=""
+                  alt={`${service.title} project example`}
                   width={800}
                   height={1200}
                   sizes="(min-width: 1024px) 22vw, (min-width: 640px) 48vw, 55vw"
@@ -151,9 +151,9 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
           transition={{ duration: 0.6 }}
         >
           {/* Label */}
-          <h4 className="text-label text-primary mb-4 md:mb-6 uppercase tracking-wider text-xs md:text-sm">
+          <p className="text-label text-primary mb-4 md:mb-6 uppercase tracking-wider text-xs md:text-sm">
             Our Services
-          </h4>
+          </p>
 
           {/* Title */}
           <h2 className="text-foreground text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif leading-tight mb-4 md:mb-6">

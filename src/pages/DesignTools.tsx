@@ -91,8 +91,8 @@ const DesignTools = () => {
             >
               Welcome to the Creative Studio
             </motion.p>
-            <h1 className="font-serif italic text-3xl md:text-4xl lg:text-5xl text-white whitespace-nowrap">
-              Where Your Ideas Come to Life
+            <h1 className="font-serif italic text-3xl md:text-4xl lg:text-5xl text-white">
+              Renovation Design Tools for Gold Coast Homes
             </h1>
           </motion.div>
         </section>
@@ -177,7 +177,7 @@ const DesignTools = () => {
 
         <section className="container-wide mt-12 md:mt-16">
           <div className="border border-white/20 bg-white/5 backdrop-blur-sm rounded-sm p-6 md:p-8">
-            <h2 className="font-serif italic text-2xl md:text-3xl text-white mb-3">Useful Planning Links</h2>
+            <h2 className="font-serif italic text-2xl md:text-3xl text-white mb-3">Renovation Planning Links and Next Steps</h2>
             <p className="text-white/75 mb-4 max-w-3xl">
               Move from concept to action by comparing services, reviewing completed projects, and preparing a brief.
             </p>

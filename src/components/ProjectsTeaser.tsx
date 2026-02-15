@@ -11,7 +11,7 @@ const ProjectCard = ({
     <div className="relative aspect-[2/3] overflow-hidden">
       <ResponsiveImage
         src={project.image}
-        alt=""
+        alt={`${project.name} renovation project in ${project.location}`}
         width={800}
         height={1200}
         sizes="(min-width: 1024px) 320px, (min-width: 640px) 280px, 240px"
@@ -88,7 +88,7 @@ const ProjectsTeaser = () => {
   return <section className="py-12 md:py-28 border-t border-foreground/10 bg-background relative z-10" id="projects">
       <div className="container-wide mb-8 md:mb-12 px-5 md:px-8">
         <div className="max-w-2xl mx-auto text-center mb-8 md:mb-12">
-          <h4 className="text-label text-foreground/60 mb-4 md:mb-6 text-xs md:text-sm">Selected Work</h4>
+          <p className="text-label text-foreground/60 mb-4 md:mb-6 text-xs md:text-sm">Selected Work</p>
           <h2 className="text-foreground font-serif italic text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight mb-3 md:mb-4">
             Our Construction Projects And Client Stories
           </h2>

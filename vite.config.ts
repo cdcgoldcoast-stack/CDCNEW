@@ -13,18 +13,32 @@ const FALLBACK_PROJECT_SLUGS = [
   "sunshine-retreat",
 ];
 
-const basePrerenderRoutes = [
+const CORE_PRERENDER_ROUTES = [
   "/",
   "/about-us",
-  "/projects",
+  "/renovation-projects",
   "/services",
-  "/gallery",
-  "/design-tools",
+  "/project-gallery",
+  "/renovation-design-tools",
   "/get-quote",
   "/life-stages",
   "/privacy-policy",
   "/terms-conditions",
 ];
+
+const EXTENDED_PRERENDER_ROUTES = [
+  "/renovation-design-tools/ai-generator/intro",
+  "/renovation-design-tools/ai-generator",
+  "/renovation-design-tools/moodboard",
+];
+
+const parseEnvBoolean = (value: string | undefined, defaultValue = false) => {
+  if (typeof value === "undefined") return defaultValue;
+  return ["1", "true", "yes", "on"].includes(value.toLowerCase());
+};
+
+const includeExtendedPrerenderRoutes = parseEnvBoolean(process.env.PRERENDER_EXTENDED, true);
+const includeProjectDetailPrerenderRoutes = parseEnvBoolean(process.env.PRERENDER_PROJECT_DETAIL, false);
 
 function loadProjectPrerenderRoutes(): string[] {
   try {
@@ -34,17 +48,22 @@ function loadProjectPrerenderRoutes(): string[] {
       return parsed.slugs
         .map((slug) => `${slug}`.trim())
         .filter(Boolean)
-        .map((slug) => `/projects/${slug}`);
+        .map((slug) => `/renovation-projects/${slug}`);
     }
   } catch {
     // Fall through to static fallback.
   }
 
-  return FALLBACK_PROJECT_SLUGS.map((slug) => `/projects/${slug}`);
+  return FALLBACK_PROJECT_SLUGS.map((slug) => `/renovation-projects/${slug}`);
 }
 
-const prerenderRoutes = Array.from(new Set([...basePrerenderRoutes, ...loadProjectPrerenderRoutes()]));
-const isVercelBuild = process.env.VERCEL === "1";
+const prerenderRoutes = Array.from(
+  new Set([
+    ...CORE_PRERENDER_ROUTES,
+    ...(includeExtendedPrerenderRoutes ? EXTENDED_PRERENDER_ROUTES : []),
+    ...(includeProjectDetailPrerenderRoutes ? loadProjectPrerenderRoutes() : []),
+  ])
+);
 
 function prerenderPlugin() {
   let outDir: string;
@@ -64,8 +83,12 @@ function prerenderPlugin() {
 
       const renderer = new PuppeteerRenderer({
         headless: true,
+        maxConcurrentRoutes: 4,
+        timeout: 45000,
+        inject: { skipAIGeneratorIntroRedirect: true },
         renderAfterDocumentEvent: "prerender-ready",
-        renderAfterTime: 10000,
+        renderAfterTime: 12000,
+        skipThirdPartyRequests: true,
       });
 
       const prerenderer = new Prerenderer({
@@ -76,16 +99,28 @@ function prerenderPlugin() {
       try {
         await prerenderer.initialize();
         console.log(`\n[prerender] Rendering ${prerenderRoutes.length} routes...`);
+        console.log(
+          `[prerender] options: extended=${includeExtendedPrerenderRoutes ? "on" : "off"}, projectDetail=${includeProjectDetailPrerenderRoutes ? "on" : "off"}`
+        );
 
-        const renderedRoutes = await prerenderer.renderRoutes(prerenderRoutes);
+        for (const route of prerenderRoutes) {
+          try {
+            const renderedRoutes = await prerenderer.renderRoutes([route]);
+            const rendered = renderedRoutes[0];
+            if (!rendered) {
+              throw new Error("Renderer did not return HTML.");
+            }
 
-        for (const route of renderedRoutes) {
-          const routePath = route.route === "/" ? "" : route.route;
-          const dir = path.join(outDir, routePath);
-          const filePath = path.join(dir, "index.html");
-          await fs.mkdir(dir, { recursive: true });
-          await fs.writeFile(filePath, route.html);
-          console.log(`[prerender] ${route.route} -> ${path.relative(outDir, filePath)}`);
+            const routePath = rendered.route === "/" ? "" : rendered.route;
+            const dir = path.join(outDir, routePath);
+            const filePath = path.join(dir, "index.html");
+            await fs.mkdir(dir, { recursive: true });
+            await fs.writeFile(filePath, rendered.html);
+            console.log(`[prerender] ${rendered.route} -> ${path.relative(outDir, filePath)}`);
+          } catch (error) {
+            const message = error instanceof Error ? error.message : String(error);
+            throw new Error(`Route ${route} failed: ${message}`);
+          }
         }
 
         console.log("[prerender] Done!\n");
@@ -110,7 +145,7 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === "production" && !isVercelBuild && prerenderPlugin(),
+    mode === "production" && prerenderPlugin(),
   ].filter(Boolean),
   resolve: {
     alias: {

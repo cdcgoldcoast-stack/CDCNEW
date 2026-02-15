@@ -3,7 +3,7 @@ import type { ReactElement } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -59,6 +59,11 @@ const MetaPixelTracker = () => {
   return null;
 };
 
+const LegacyProjectRouteRedirect = () => {
+  const { slug } = useParams<{ slug?: string }>();
+  return <Navigate to={slug ? `/renovation-projects/${slug}` : "/renovation-projects"} replace />;
+};
+
 const AnimatedRoutes = () => {
   const location = useLocation();
   const withTransition = (element: ReactElement) => <PageTransition>{element}</PageTransition>;
@@ -77,7 +82,7 @@ const AnimatedRoutes = () => {
           <Route path="/project-gallery" element={withTransition(<Gallery />)} />
           <Route path="/gallery" element={<Navigate to="/project-gallery" replace />} />
           <Route path="/renovation-projects/:slug" element={withTransition(<ProjectDetail />)} />
-          <Route path="/projects/:slug" element={<Navigate to="/renovation-projects" replace />} />
+          <Route path="/projects/:slug" element={<LegacyProjectRouteRedirect />} />
           <Route path="/renovation-design-tools" element={withTransition(<DesignTools />)} />
           <Route path="/design-tools" element={<Navigate to="/renovation-design-tools" replace />} />
           <Route path="/renovation-design-tools/ai-generator/intro" element={withTransition(<AIDesignIntro />)} />

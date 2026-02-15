@@ -243,7 +243,7 @@ const PrintBrochure = () => {
                 
                 <SafeArea className="justify-between relative z-10">
                   <div>
-                    <img src={logoImage} alt="" className="h-8 mb-3 brightness-0 invert" />
+                    <img src={logoImage} alt="Concept Design Construct logo" className="h-8 mb-3 brightness-0 invert" />
                   </div>
                   
                   <div className="flex-1 flex flex-col justify-center">
@@ -486,7 +486,7 @@ const PrintBrochure = () => {
                         <p className="text-[8px] uppercase tracking-wider text-white/40 mb-0.5">Service Area</p>
                         <p className="text-[10px] text-white/80 font-serif">Gold Coast & Brisbane</p>
                       </div>
-                      <img src={logoImage} alt="" className="h-6 brightness-0 invert opacity-60" />
+                      <img src={logoImage} alt="Concept Design Construct logo" className="h-6 brightness-0 invert opacity-60" />
                     </div>
                     <p className="text-[7px] text-white/40 text-center uppercase tracking-wider">
                       QBCC Licensed • Master Builders Member • Est. Gold Coast

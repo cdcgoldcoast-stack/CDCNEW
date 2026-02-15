@@ -28,4 +28,4 @@ Disallow: /brand-guidelines
 Crawl-delay: 1
 
 # Sitemap location
-Sitemap: https://cdconstruct.com.au/sitemap.xml
+Sitemap: https://www.cdconstruct.com.au/sitemap.xml

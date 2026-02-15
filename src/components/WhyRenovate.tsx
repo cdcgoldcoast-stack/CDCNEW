@@ -55,7 +55,7 @@ const WhyRenovate = () => {
         
         <div className="container-wide relative z-10 px-5 md:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            <motion.h4 
+            <motion.p 
               className="text-label text-white/70 mb-6 md:mb-10 text-xs md:text-sm"
               style={{ y: labelY }}
               initial={{ opacity: 0, y: 20 }}
@@ -64,7 +64,7 @@ const WhyRenovate = () => {
               transition={{ duration: 0.6 }}
             >
               Why Renovate
-            </motion.h4>
+            </motion.p>
             
             {/* Quote with parallax */}
             <motion.blockquote 

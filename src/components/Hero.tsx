@@ -65,7 +65,7 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
           {heroImage ? (
             <ResponsiveImage
               src={heroImage}
-              alt=""
+              alt="Gold Coast home renovation interior by Concept Design Construct"
               className="absolute inset-0 w-full h-full object-cover bg-muted"
               width={1200}
               height={800}
@@ -229,7 +229,7 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
             {heroImage ? (
               <ResponsiveImage
                 src={heroImage}
-                alt=""
+                alt="Gold Coast home renovation interior by Concept Design Construct"
                 className="w-full max-w-[600px] h-[65vh] max-h-[680px] object-cover bg-muted"
                 width={1200}
                 height={800}

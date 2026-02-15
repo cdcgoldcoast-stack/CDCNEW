@@ -62,7 +62,7 @@ const Gallery = () => {
           {/* Title */}
           <div className="text-center mb-12 md:mb-16 max-w-2xl mx-auto">
             <h1 className="font-serif italic text-4xl md:text-5xl lg:text-6xl text-primary mb-6">
-              Gallery
+              Gold Coast Renovation Gallery
             </h1>
             <p className="text-foreground/70 text-lg md:text-xl leading-relaxed mb-3">
               Inspiration for your next renovation.

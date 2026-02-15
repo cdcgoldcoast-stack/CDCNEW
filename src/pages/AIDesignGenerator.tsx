@@ -36,7 +36,7 @@ const ChatMessage = ({
         {avatarSrc ? (
           <img
             src={avatarSrc}
-            alt=""
+            alt="Concept Design Construct logo"
             width={36}
             height={36}
             loading="lazy"
@@ -480,6 +480,13 @@ const buildPreferenceSentence = (
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    const injected = (
+      window as Window & {
+        __PRERENDER_INJECTED?: { skipAIGeneratorIntroRedirect?: boolean };
+      }
+    ).__PRERENDER_INJECTED;
+    if (injected?.skipAIGeneratorIntroRedirect) return;
+
     const hasSeenIntro = sessionStorage.getItem("aiGeneratorIntroSeen") === "true";
     if (!hasSeenIntro) {
       navigate("/renovation-design-tools/ai-generator/intro", { replace: true });
@@ -1232,7 +1239,7 @@ const buildPreferenceSentence = (
                       {logoSrc ? (
                         <img
                           src={logoSrc}
-                          alt=""
+                          alt="Concept Design Construct logo"
                           width={36}
                           height={36}
                           loading="lazy"

@@ -143,7 +143,7 @@ const LifeStagesPage = () => {
         >
           <ResponsiveImage
             src={lifestageForever}
-            alt=""
+            alt="Life stage renovation inspiration on the Gold Coast"
             width={800}
             height={533}
             sizes="100vw"
@@ -222,7 +222,7 @@ const LifeStagesPage = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h4 className="text-label text-foreground/60 mb-4">Why a Better Space Helps</h4>
+            <p className="text-label text-foreground/60 mb-4">Why a Better Space Helps</p>
             <h2 className="text-foreground font-serif italic text-2xl md:text-4xl">
               Health, Comfort, Daily Living
             </h2>
@@ -359,7 +359,7 @@ const LifeStagesPage = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              <h4 className="text-label text-white/60 mb-4">Trust and Peace of Mind</h4>
+              <p className="text-label text-white/60 mb-4">Trust and Peace of Mind</p>
               <h2 className="font-serif italic text-2xl md:text-4xl mb-6">
                 Gold Coast Planning Notes
               </h2>

@@ -63,9 +63,9 @@ const LifestyleSection = () => {
       {/* Header section with parallax */}
       <motion.div style={{ y: headerY }} className="py-12 md:py-20 container-wide px-5 md:px-8">
         <div className="max-w-3xl">
-          <h4 className="text-label text-foreground/60 mb-4 md:mb-6 text-xs md:text-sm">
+          <p className="text-label text-foreground/60 mb-4 md:mb-6 text-xs md:text-sm">
             Our Approach
-          </h4>
+          </p>
           <h2 className="text-foreground text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight mb-2 md:mb-3">
             Lifestyle enhancement, through renovation
           </h2>
@@ -90,7 +90,7 @@ const LifestyleSection = () => {
               {shouldLoadImages && benefit.image ? (
                 <ResponsiveImage
                   src={benefit.image}
-                  alt=""
+                  alt={`${benefit.title} renovation lifestyle improvement`}
                   width={1200}
                   height={800}
                   sizes="260px"
@@ -128,7 +128,7 @@ const LifestyleSection = () => {
             {shouldLoadImages && benefit.image ? (
               <ResponsiveImage
                 src={benefit.image}
-                alt=""
+                alt={`${benefit.title} renovation lifestyle improvement`}
                 width={1200}
                 height={800}
                 sizes={`${activeIndex === index ? "48vw" : "12vw"}`}

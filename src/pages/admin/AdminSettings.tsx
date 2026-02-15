@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import SEO from "@/components/SEO";
 import { toast } from "sonner";
 import { Loader2, Mail, Lock, User, Shield } from "lucide-react";
 
@@ -144,6 +145,7 @@ const AdminSettings = () => {
 
   return (
     <AdminLayout>
+      <SEO title="Admin - Account Settings" noIndex={true} />
       <div className="space-y-2 mb-8">
         <h1 className="text-3xl font-serif italic text-foreground">Account Settings</h1>
         <p className="text-foreground/60">Manage your profile, email, and password</p>

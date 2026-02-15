@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "vite",
     "seo:sync": "node scripts/sync-seo-artifacts.mjs",
+    "seo:audit": "node scripts/seo-audit.mjs",
     "security:audit": "node scripts/security-audit.mjs",
     "prebuild": "npm run seo:sync",
     "build": "vite build",
+    "build:seo": "npm run build && npm run seo:audit",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",

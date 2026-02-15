@@ -1,7 +1,7 @@
 import { useResolvedAsset } from "@/hooks/useSiteAssets";
 import masterBuildersLogo from "@/assets/master-builders.png";
 import qbccLogo from "@/assets/qbcc.png";
-import { Instagram } from "lucide-react";
+import { Facebook, Instagram } from "lucide-react";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
 const Footer = () => {
@@ -55,7 +55,7 @@ const Footer = () => {
 
           {/* Navigation */}
           <div className="md:col-span-3">
-            <h4 className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-4">Navigate</h4>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-4">Navigate</p>
             <nav className="flex flex-col gap-3">
               {navLinks.map(link => (
                 <a
@@ -71,7 +71,7 @@ const Footer = () => {
 
           {/* Project case studies */}
           <div className="md:col-span-3">
-            <h4 className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-4">Projects</h4>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-4">Projects</p>
             <nav className="flex flex-col gap-3">
               {projectLinks.map(link => (
                 <a
@@ -88,25 +88,36 @@ const Footer = () => {
           {/* Contact & certifications */}
           <div className="md:col-span-3 flex flex-col gap-6">
             <div>
-              <h4 className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-4">Contact</h4>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-4">Contact</p>
               <a
                 className="text-xs uppercase tracking-[0.15em] text-foreground/80 hover:text-primary transition-colors duration-300 block mb-3"
                 href="mailto:info@cdconstruct.com.au"
               >
                 info@cdconstruct.com.au
               </a>
-              <a
-                href="https://www.instagram.com/conceptdesignconstruct_"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visit Concept Design Construct on Instagram"
-                className="text-foreground/60 hover:text-primary transition-colors duration-300 inline-flex items-center"
-              >
-                <Instagram className="w-4 h-4" />
-              </a>
+              <div className="flex items-center gap-3">
+                <a
+                  href="https://www.instagram.com/conceptdesignconstruct_"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Visit Concept Design Construct on Instagram"
+                  className="text-foreground/60 hover:text-primary transition-colors duration-300 inline-flex items-center"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://www.facebook.com/conceptdesignconstruct"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Visit Concept Design Construct on Facebook"
+                  className="text-foreground/60 hover:text-primary transition-colors duration-300 inline-flex items-center"
+                >
+                  <Facebook className="w-4 h-4" />
+                </a>
+              </div>
             </div>
             <div>
-              <h4 className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-4">Accreditation</h4>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-4">Accreditation</p>
               <div className="flex items-center gap-4">
                 <ResponsiveImage
                   src={qbccLogo}

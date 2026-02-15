@@ -49,7 +49,9 @@ export const SEO = ({
   const fullDescription = normalizeDescription(description || DEFAULT_META.description);
   const canonicalPath = normalizeCanonicalPath(resolvePath(url || location.pathname || "/"));
   const canonicalUrl = new URL(canonicalPath, PRODUCTION_DOMAIN).toString();
+  const canonicalDomain = new URL(PRODUCTION_DOMAIN).hostname;
   const imageUrl = image.startsWith("http") ? image : `${PRODUCTION_DOMAIN}${image}`;
+  const twitterImageAlt = `${fullTitle} image`;
   const robotsContent = noIndex ? "noindex, nofollow" : "index, follow";
 
   // Handle both single object and array of JSON-LD schemas
@@ -90,10 +92,12 @@ export const SEO = ({
 
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:domain" content={canonicalDomain} />
       <meta key="twitter:url" name="twitter:url" content={canonicalUrl} />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={fullDescription} />
       <meta name="twitter:image" content={imageUrl} />
+      <meta name="twitter:image:alt" content={twitterImageAlt} />
 
       {/* JSON-LD Structured Data */}
       {renderJsonLd()}

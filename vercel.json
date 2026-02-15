@@ -41,30 +41,57 @@
       "source": "/our-story/",
       "destination": "/about-us",
       "permanent": true
+    },
+    {
+      "source": "/projects/:slug",
+      "destination": "/renovation-projects/:slug",
+      "permanent": true
+    },
+    {
+      "source": "/projects",
+      "destination": "/renovation-projects",
+      "permanent": true
+    },
+    {
+      "source": "/gallery",
+      "destination": "/project-gallery",
+      "permanent": true
+    },
+    {
+      "source": "/design-tools/ai-generator/intro",
+      "destination": "/renovation-design-tools/ai-generator/intro",
+      "permanent": true
+    },
+    {
+      "source": "/design-tools/ai-generator",
+      "destination": "/renovation-design-tools/ai-generator",
+      "permanent": true
+    },
+    {
+      "source": "/design-tools/moodboard",
+      "destination": "/renovation-design-tools/moodboard",
+      "permanent": true
+    },
+    {
+      "source": "/design-tools",
+      "destination": "/renovation-design-tools",
+      "permanent": true
     }
   ],
   "rewrites": [
     { "source": "/about-us", "destination": "/index.html" },
     { "source": "/life-stages", "destination": "/index.html" },
-    { "source": "/projects", "destination": "/index.html" },
-    { "source": "/projects/everyday-ease", "destination": "/index.html" },
-    { "source": "/projects/family-hub", "destination": "/index.html" },
-    { "source": "/projects/light-and-flow-house", "destination": "/index.html" },
-    { "source": "/projects/seamless-bathroom", "destination": "/index.html" },
-    { "source": "/projects/stone-and-light", "destination": "/index.html" },
-    { "source": "/projects/terrazzo-retreat", "destination": "/index.html" },
-    { "source": "/projects/the-calm-edit", "destination": "/index.html" },
-    { "source": "/projects/the-elanora-residence", "destination": "/index.html" },
-    { "source": "/projects/warm-minimal-bathroom", "destination": "/index.html" },
+    { "source": "/renovation-projects", "destination": "/index.html" },
+    { "source": "/renovation-projects/:slug", "destination": "/index.html" },
     { "source": "/services", "destination": "/index.html" },
-    { "source": "/gallery", "destination": "/index.html" },
-    { "source": "/design-tools", "destination": "/index.html" },
+    { "source": "/project-gallery", "destination": "/index.html" },
+    { "source": "/renovation-design-tools", "destination": "/index.html" },
     { "source": "/get-quote", "destination": "/index.html" },
     { "source": "/privacy-policy", "destination": "/index.html" },
     { "source": "/terms-conditions", "destination": "/index.html" },
-    { "source": "/design-tools/ai-generator", "destination": "/index.html" },
-    { "source": "/design-tools/ai-generator/intro", "destination": "/index.html" },
-    { "source": "/design-tools/moodboard", "destination": "/index.html" },
+    { "source": "/renovation-design-tools/ai-generator", "destination": "/index.html" },
+    { "source": "/renovation-design-tools/ai-generator/intro", "destination": "/index.html" },
+    { "source": "/renovation-design-tools/moodboard", "destination": "/index.html" },
     { "source": "/auth", "destination": "/index.html" },
     { "source": "/admin", "destination": "/index.html" },
     { "source": "/admin/projects", "destination": "/index.html" },

@@ -41,7 +41,7 @@ const AIDesignIntro = () => {
             <div className="space-y-4">
               <p className="text-xs tracking-[0.3em] uppercase text-primary-foreground/70">AI Design Tool</p>
               <h1 className="font-serif italic text-3xl sm:text-4xl md:text-5xl text-primary-foreground">
-                AI Renovation Generator
+                AI Renovation Visualiser Preview
               </h1>
               <p className="text-primary-foreground/80 text-base md:text-lg">
                 Get creative with your renovation ideas and see your space improve before you commit. Our AI helps you
@@ -50,7 +50,7 @@ const AIDesignIntro = () => {
             </div>
 
             <h2 className="text-sm tracking-[0.2em] uppercase text-primary-foreground/70">
-              How the preview process works
+              How your AI renovation preview works
             </h2>
             <div className="grid gap-4 sm:grid-cols-3">
               {steps.map((step, index) => (
