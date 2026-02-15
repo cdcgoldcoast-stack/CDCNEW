@@ -9,6 +9,7 @@ import { AnimatePresence } from "framer-motion";
 import ScrollToTop from "@/components/ScrollToTop";
 import PageTransition from "@/components/PageTransition";
 import { trackMetaPixelPageView } from "@/lib/metaPixel";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import RequireAdmin from "@/components/admin/RequireAdmin";
 
 // Eagerly load homepage (critical path)
@@ -171,6 +172,7 @@ const App = () => {
               <AIChatWidget />
             </Suspense>
           </BrowserRouter>
+          <SpeedInsights />
         </TooltipProvider>
       </QueryClientProvider>
     </HelmetProvider>
