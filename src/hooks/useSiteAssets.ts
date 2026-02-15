@@ -24,9 +24,9 @@ export function useSiteAssets() {
       continue;
     }
 
-    // If error, return null — don't show bundled fallback images
+    // If error, fall back to bundled images so the site still has visuals
     if (isError) {
-      resolvedAssets[asset.id] = null;
+      resolvedAssets[asset.id] = asset.importedUrl;
       continue;
     }
 
