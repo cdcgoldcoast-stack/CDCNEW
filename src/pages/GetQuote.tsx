@@ -139,7 +139,17 @@ const GetQuote = () => {
         },
       });
 
-      if (error) throw error;
+      if (error) {
+        // Extract the actual response body from FunctionsHttpError
+        const context = (error as { context?: { json?: () => Promise<unknown> } }).context;
+        if (context?.json) {
+          const body = await context.json();
+          console.error("Edge Function response:", body);
+          const msg = (body as { error?: string })?.error;
+          if (msg) throw new Error(msg);
+        }
+        throw error;
+      }
       if (data?.error) throw new Error(data.error);
 
       setSubmitted(true);
