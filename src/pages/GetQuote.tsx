@@ -86,6 +86,9 @@ const GetQuote = () => {
       if (!formData.phone.trim()) {
         newErrors.phone = "Phone number is required";
       }
+      if (!formData.suburb.trim()) {
+        newErrors.suburb = "Suburb is required";
+      }
     }
 
     if (step === 3) {
@@ -625,7 +628,7 @@ const GetQuote = () => {
 
                         <div className="space-y-2">
                           <Label htmlFor="suburb" className="text-white/90">
-                            Suburb
+                            Suburb <span className="text-white/60">*</span>
                           </Label>
                           <Input
                             id="suburb"
@@ -634,6 +637,9 @@ const GetQuote = () => {
                             placeholder="Your suburb"
                             className="h-12 text-base bg-background/95 border-background/70 text-foreground placeholder:text-foreground/50 focus:border-background focus:ring-background/40"
                           />
+                          {errors.suburb && (
+                            <p className="text-white/80 text-sm">{errors.suburb}</p>
+                          )}
                         </div>
                       </motion.div>
                     )}
