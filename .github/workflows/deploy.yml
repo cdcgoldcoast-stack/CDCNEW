@@ -26,6 +26,8 @@ jobs:
 
       - name: Build & prerender
         run: npm run build
+        env:
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
 
       - name: Package Vercel output
         run: node scripts/prepare-vercel-output.mjs
