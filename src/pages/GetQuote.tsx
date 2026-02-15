@@ -266,7 +266,7 @@ const GetQuote = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4, ease: "easeInOut" }}
-              className="relative h-[calc(100vh-4rem)] md:h-[calc(100vh-5rem)] flex flex-col lg:flex-row z-10 overflow-hidden"
+              className="relative min-h-[calc(100vh-4rem)] md:min-h-[calc(100vh-5rem)] lg:h-[calc(100vh-5rem)] flex flex-col lg:flex-row z-10 lg:overflow-hidden"
             >
               {/* Left Side - Invitation Message */}
               <motion.div
@@ -276,7 +276,7 @@ const GetQuote = () => {
                 transition={{ duration: 0.5, ease: "easeOut" }}
                 className="relative lg:w-1/2 flex items-center bg-primary"
               >
-                <div className="w-full h-full flex items-center justify-center px-6 lg:px-12 xl:px-16">
+                <div className="w-full h-full flex items-center justify-center px-6 py-8 lg:py-0 lg:px-12 xl:px-16">
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -411,7 +411,7 @@ const GetQuote = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 100 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="flex-1 flex flex-col items-center justify-center px-6 lg:px-12 xl:px-16 bg-background"
+                className="hidden lg:flex flex-1 flex-col items-center justify-center px-6 lg:px-12 xl:px-16 bg-background"
               >
                 <div className="max-w-md w-full">
                   <motion.div
