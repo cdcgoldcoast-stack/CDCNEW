@@ -103,7 +103,6 @@ const Header = () => {
               height={131}
               sizes="(min-width: 1024px) 256px, (min-width: 768px) 224px, 176px"
               loading="eager"
-              priority
               className="h-auto w-36 md:w-44 lg:w-52"
             />
           ) : (

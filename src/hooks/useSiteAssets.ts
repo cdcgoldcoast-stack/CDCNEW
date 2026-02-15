@@ -5,8 +5,8 @@ import { siteAssets } from "@/data/siteAssets";
  * Hook that returns all site assets with any database overrides applied.
  * Use this in components to get resolved image URLs that respect admin replacements.
  * 
- * IMPORTANT: Returns null for each asset while loading to prevent flash of original images.
- * Components should check `ready` or individual asset values before rendering.
+ * While override data loads, this returns bundled assets so above-the-fold imagery
+ * can paint immediately. Overrides are applied once available.
  */
 export function useSiteAssets() {
   const { data: overrides, isLoading, isError } = useImageOverrides();
@@ -14,25 +14,20 @@ export function useSiteAssets() {
   // Ready means we've finished loading (success or error)
   const ready = !isLoading;
 
-  // Build a map of path -> resolved URL (null while loading)
-  const resolvedAssets: Record<string, string | null> = {};
+  // Build a map of asset ID -> resolved URL.
+  const resolvedAssets: Record<string, string> = {};
 
   for (const asset of siteAssets) {
-    // While loading, return null to force components to show placeholders
-    if (isLoading) {
-      resolvedAssets[asset.id] = null;
-      continue;
-    }
+    // Default to bundled images so first render is never blocked on DB/network.
+    resolvedAssets[asset.id] = asset.importedUrl;
 
-    // If error, fall back to bundled images so the site still has visuals
+    // If error or still loading, keep bundled fallback.
     if (isError) {
-      resolvedAssets[asset.id] = asset.importedUrl;
       continue;
     }
 
     const override = overrides?.find((o) => o.original_path === asset.path);
     if (!override) {
-      resolvedAssets[asset.id] = asset.importedUrl;
       continue;
     }
 
@@ -58,11 +53,7 @@ export function useSiteAssets() {
 export function useResolvedAsset(
   assetId: string,
 ): string | null {
-  const { assets, isLoading } = useSiteAssets();
-
-  if (isLoading) {
-    return null;
-  }
+  const { assets } = useSiteAssets();
 
   return assets[assetId] || null;
 }

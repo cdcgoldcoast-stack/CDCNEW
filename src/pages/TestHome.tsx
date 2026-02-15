@@ -51,8 +51,17 @@ const homepageFAQs = [
 
 const TestHome = () => {
   const shouldShowPreloader = useMemo(() => {
-    if (typeof window === "undefined") return true;
-    return sessionStorage.getItem("home_preloader_seen") !== "true";
+    if (typeof window === "undefined") return false;
+    if (sessionStorage.getItem("home_preloader_seen") === "true") return false;
+
+    const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+    const connection = (
+      navigator as Navigator & { connection?: { effectiveType?: string; saveData?: boolean } }
+    ).connection;
+    const slowConnection = Boolean(connection?.saveData) || ["slow-2g", "2g", "3g"].includes(connection?.effectiveType || "");
+    const lowPowerDevice = typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 4;
+
+    return !prefersReducedMotion && !slowConnection && !lowPowerDevice;
   }, []);
   const [isPreloaderComplete, setIsPreloaderComplete] = useState(!shouldShowPreloader);
 
@@ -65,7 +74,7 @@ const TestHome = () => {
 
   return (
     <div className="min-h-screen">
-      {shouldShowPreloader && <Preloader onComplete={handlePreloaderComplete} />}
+      {shouldShowPreloader && <Preloader onComplete={handlePreloaderComplete} minDuration={320} />}
       <SEO
         title="Gold Coast Renovations | Concept Design Construct"
         description="Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations with design-led planning, QBCC licensed delivery, and timelines."
