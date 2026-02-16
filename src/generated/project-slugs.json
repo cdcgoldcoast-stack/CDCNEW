@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-15T10:40:48.763Z",
+  "generatedAt": "2026-02-16T00:57:46.018Z",
   "domain": "https://www.cdconstruct.com.au",
   "slugs": [
     "coastal-modern",
@@ -19,9 +19,10 @@
   ],
   "sourceCounts": {
     "supabase": 0,
-    "vercelRewrites": 0,
+    "vercelRewrites": 14,
     "publicSite": 0,
     "staticFallback": 6,
-    "previousGenerated": 14
+    "previousGenerated": 14,
+    "usedPreviousGeneratedFallback": false
   }
 }

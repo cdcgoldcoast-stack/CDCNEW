@@ -64,7 +64,31 @@ To pull live project slugs from Supabase during build, set one of these env pair
 - `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` (recommended)
 - `VITE_SUPABASE_URL` + `VITE_SUPABASE_ANON_KEY` (fallback)
 
-If env vars are missing, sync falls back to static project slugs and the previous generated slug cache.
+If env vars are missing, sync falls back to static/public slug sources and only uses previous generated slugs as an emergency fallback when all authoritative sources are empty.
+
+### SEO Reliability Tooling (Backend-Only)
+
+- `npm run seo:check`
+  - Runs sync + strict SEO audit gate (canonical/sitemap/noindex/redirect integrity).
+- `npm run seo:monitor`
+  - Runs live production checks and writes `artifacts/seo-monitor-report.json`.
+- `npm run seo:ai-discovery`
+  - Generates:
+    - `public/ai-discovery.json`
+    - `public/llms.txt`
+    - `public/llms-full.txt`
+- `npm run seo:gsc:ingest -- --input <path-to-gsc-export.csv>`
+  - Correlates Search Console export with sitemap/redirect/noindex expectations.
+  - Writes `artifacts/seo-gsc-correlation.json` by default.
+
+Runtime monitor environment options:
+
+- `SEO_MONITOR_BASE_URL` (default: `https://www.cdconstruct.com.au`)
+- `SEO_MONITOR_STRICT` (default: `true`)
+- `SEO_MONITOR_MAX_URLS` (default: `120`)
+- `SEO_MONITOR_TIMEOUT_MS` (default: `12000`)
+- `SEO_ALERT_MODE` (`off|stdout|webhook|slack|email|github|custom`)
+- `SEO_ALERT_TARGET` (HTTP webhook target used by alert modes)
 
 ## Service Areas
 

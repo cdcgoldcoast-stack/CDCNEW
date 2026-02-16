@@ -1,0 +1,165 @@
+# www.cdconstruct.com.au Full AI Content Inventory
+Generated: 2026-02-16T00:57:46.480Z
+
+## /
+URL: https://www.cdconstruct.com.au/
+Type: homepage
+Last-Modified: 2026-02-16
+Structured-Data-Types: Answer, City, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, Offer, OfferCatalog, OpeningHoursSpecification, PostalAddress, Question, Service, State
+
+## /about-us
+URL: https://www.cdconstruct.com.au/about-us
+Type: about-page
+Last-Modified: 2026-02-16
+Structured-Data-Types: AboutPage, City, HomeAndConstructionBusiness
+
+## /renovation-projects
+URL: https://www.cdconstruct.com.au/renovation-projects
+Type: projects-index
+Last-Modified: 2026-02-16
+Structured-Data-Types: CreativeWork, ItemList, ListItem
+
+## /services
+URL: https://www.cdconstruct.com.au/services
+Type: services-page
+Last-Modified: 2026-02-16
+Structured-Data-Types: none
+
+## /life-stages
+URL: https://www.cdconstruct.com.au/life-stages
+Type: content-page
+Last-Modified: 2026-02-16
+Structured-Data-Types: Answer, FAQPage, Question
+
+## /get-quote
+URL: https://www.cdconstruct.com.au/get-quote
+Type: contact-page
+Last-Modified: 2026-02-16
+Structured-Data-Types: City, ContactPage, HomeAndConstructionBusiness
+
+## /project-gallery
+URL: https://www.cdconstruct.com.au/project-gallery
+Type: gallery-page
+Last-Modified: 2026-02-16
+Structured-Data-Types: none
+
+## /renovation-design-tools
+URL: https://www.cdconstruct.com.au/renovation-design-tools
+Type: design-tools
+Last-Modified: 2026-02-16
+Structured-Data-Types: none
+
+## /renovation-design-tools/ai-generator/intro
+URL: https://www.cdconstruct.com.au/renovation-design-tools/ai-generator/intro
+Type: design-tool
+Last-Modified: 2026-02-16
+Structured-Data-Types: none
+
+## /renovation-design-tools/ai-generator
+URL: https://www.cdconstruct.com.au/renovation-design-tools/ai-generator
+Type: design-tool
+Last-Modified: 2026-02-16
+Structured-Data-Types: none
+
+## /renovation-design-tools/moodboard
+URL: https://www.cdconstruct.com.au/renovation-design-tools/moodboard
+Type: design-tool
+Last-Modified: 2026-02-16
+Structured-Data-Types: none
+
+## /privacy-policy
+URL: https://www.cdconstruct.com.au/privacy-policy
+Type: legal-page
+Last-Modified: 2026-02-16
+Structured-Data-Types: none
+
+## /terms-conditions
+URL: https://www.cdconstruct.com.au/terms-conditions
+Type: legal-page
+Last-Modified: 2026-02-16
+Structured-Data-Types: none
+
+## /renovation-projects/coastal-modern
+URL: https://www.cdconstruct.com.au/renovation-projects/coastal-modern
+Type: project-detail
+Last-Modified: 2026-02-16
+Structured-Data-Types: BreadcrumbList, CreativeWork
+
+## /renovation-projects/everyday-ease
+URL: https://www.cdconstruct.com.au/renovation-projects/everyday-ease
+Type: project-detail
+Last-Modified: 2026-02-16
+Structured-Data-Types: BreadcrumbList, CreativeWork
+
+## /renovation-projects/family-hub
+URL: https://www.cdconstruct.com.au/renovation-projects/family-hub
+Type: project-detail
+Last-Modified: 2026-02-16
+Structured-Data-Types: BreadcrumbList, CreativeWork
+
+## /renovation-projects/heritage-revival
+URL: https://www.cdconstruct.com.au/renovation-projects/heritage-revival
+Type: project-detail
+Last-Modified: 2026-02-16
+Structured-Data-Types: BreadcrumbList, CreativeWork
+
+## /renovation-projects/light-and-flow-house
+URL: https://www.cdconstruct.com.au/renovation-projects/light-and-flow-house
+Type: project-detail
+Last-Modified: 2026-02-16
+Structured-Data-Types: BreadcrumbList, CreativeWork
+
+## /renovation-projects/retreat-house
+URL: https://www.cdconstruct.com.au/renovation-projects/retreat-house
+Type: project-detail
+Last-Modified: 2026-02-16
+Structured-Data-Types: BreadcrumbList, CreativeWork
+
+## /renovation-projects/seamless-bathroom
+URL: https://www.cdconstruct.com.au/renovation-projects/seamless-bathroom
+Type: project-detail
+Last-Modified: 2026-02-16
+Structured-Data-Types: BreadcrumbList, CreativeWork
+
+## /renovation-projects/stone-and-light
+URL: https://www.cdconstruct.com.au/renovation-projects/stone-and-light
+Type: project-detail
+Last-Modified: 2026-02-16
+Structured-Data-Types: BreadcrumbList, CreativeWork
+
+## /renovation-projects/sunshine-retreat
+URL: https://www.cdconstruct.com.au/renovation-projects/sunshine-retreat
+Type: project-detail
+Last-Modified: 2026-02-16
+Structured-Data-Types: BreadcrumbList, CreativeWork
+
+## /renovation-projects/terrazzo-retreat
+URL: https://www.cdconstruct.com.au/renovation-projects/terrazzo-retreat
+Type: project-detail
+Last-Modified: 2026-02-16
+Structured-Data-Types: BreadcrumbList, CreativeWork
+
+## /renovation-projects/the-calm-edit
+URL: https://www.cdconstruct.com.au/renovation-projects/the-calm-edit
+Type: project-detail
+Last-Modified: 2026-02-16
+Structured-Data-Types: BreadcrumbList, CreativeWork
+
+## /renovation-projects/the-elanora-residence
+URL: https://www.cdconstruct.com.au/renovation-projects/the-elanora-residence
+Type: project-detail
+Last-Modified: 2026-02-16
+Structured-Data-Types: BreadcrumbList, CreativeWork
+
+## /renovation-projects/urban-oasis
+URL: https://www.cdconstruct.com.au/renovation-projects/urban-oasis
+Type: project-detail
+Last-Modified: 2026-02-16
+Structured-Data-Types: BreadcrumbList, CreativeWork
+
+## /renovation-projects/warm-minimal-bathroom
+URL: https://www.cdconstruct.com.au/renovation-projects/warm-minimal-bathroom
+Type: project-detail
+Last-Modified: 2026-02-16
+Structured-Data-Types: BreadcrumbList, CreativeWork
+

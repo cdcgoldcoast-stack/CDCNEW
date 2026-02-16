@@ -2,42 +2,30 @@ import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 import { JSDOM } from "jsdom";
+import {
+  CORE_ROUTES,
+  EXTENDED_ROUTES,
+  PRODUCTION_DOMAIN,
+  parseEnvBoolean,
+  normalizePath,
+  canonicalForPath,
+  normalizeAbsoluteUrl,
+  parseSitemapEntries,
+  pathFromUrl,
+  isNoindexRoute,
+  loadGeneratedProjectSlugs,
+  isProjectDetailPath,
+  slugFromProjectPath,
+  sameDomain,
+} from "./lib/seo-utils.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
 const DIST_DIR = path.join(ROOT_DIR, "dist");
+const PUBLIC_SITEMAP_PATH = path.join(ROOT_DIR, "public", "sitemap.xml");
 const GENERATED_PROJECT_SLUGS_PATH = path.join(ROOT_DIR, "src", "generated", "project-slugs.json");
-
-const PRODUCTION_DOMAIN = "https://www.cdconstruct.com.au";
-
-const CORE_ROUTES = [
-  "/",
-  "/about-us",
-  "/renovation-projects",
-  "/services",
-  "/project-gallery",
-  "/renovation-design-tools",
-  "/get-quote",
-  "/life-stages",
-  "/privacy-policy",
-  "/terms-conditions",
-];
-
-const EXTENDED_ROUTES = [
-  "/renovation-design-tools/ai-generator/intro",
-  "/renovation-design-tools/ai-generator",
-  "/renovation-design-tools/moodboard",
-];
-
-const FALLBACK_PROJECT_SLUGS = [
-  "coastal-modern",
-  "heritage-revival",
-  "family-hub",
-  "retreat-house",
-  "urban-oasis",
-  "sunshine-retreat",
-];
+const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, "vercel.json");
 
 const REQUIRED_TWITTER_META = [
   "twitter:card",
@@ -49,26 +37,19 @@ const REQUIRED_TWITTER_META = [
   "twitter:image:alt",
 ];
 
-const parseEnvBoolean = (value, defaultValue = false) => {
-  if (typeof value === "undefined") return defaultValue;
-  return ["1", "true", "yes", "on"].includes(String(value).toLowerCase());
-};
-
 const includeExtendedRoutes = parseEnvBoolean(process.env.PRERENDER_EXTENDED, true);
 const includeProjectDetailRoutes = parseEnvBoolean(process.env.PRERENDER_PROJECT_DETAIL, false);
-
-const normalizePath = (route) => {
-  if (!route || route === "/") return "/";
-  const withLeadingSlash = route.startsWith("/") ? route : `/${route}`;
-  return withLeadingSlash.replace(/\/+$/, "");
-};
+const performHttpChecks = parseEnvBoolean(
+  process.env.SEO_AUDIT_HTTP,
+  parseEnvBoolean(process.env.CI, false)
+);
+const maxHttpChecks = Number.parseInt(process.env.SEO_AUDIT_MAX_HTTP_CHECKS || "80", 10);
+const httpTimeoutMs = Number.parseInt(process.env.SEO_AUDIT_TIMEOUT_MS || "12000", 10);
 
 const routeToFilePath = (route) => {
   if (route === "/") return path.join(DIST_DIR, "index.html");
   return path.join(DIST_DIR, route.replace(/^\//, ""), "index.html");
 };
-
-const canonicalForRoute = (route) => new URL(normalizePath(route), PRODUCTION_DOMAIN).toString();
 
 const extractMetaByName = (document, name) => {
   const meta = document.querySelector(`meta[name="${name}"]`);
@@ -110,17 +91,77 @@ const hasBrokenHeadingHierarchy = (document) => {
   return false;
 };
 
-const loadProjectRoutes = async () => {
+const loadVercelConfig = async () => {
   try {
-    const source = await fs.readFile(GENERATED_PROJECT_SLUGS_PATH, "utf8");
-    const parsed = JSON.parse(source);
-    const slugs = Array.isArray(parsed?.slugs) ? parsed.slugs : [];
-    return [...new Set(slugs.map((slug) => `${slug}`.trim()).filter(Boolean))].map(
-      (slug) => `/renovation-projects/${slug}`
-    );
+    const source = await fs.readFile(VERCEL_CONFIG_PATH, "utf8");
+    return JSON.parse(source);
   } catch {
-    return FALLBACK_PROJECT_SLUGS.map((slug) => `/renovation-projects/${slug}`);
+    return {};
   }
+};
+
+const isStaticRoutePattern = (route) => !/[:*()[\]+?]/.test(route);
+
+const extractStaticRedirectPairs = (redirects) => {
+  const pairs = [];
+  for (const redirect of redirects || []) {
+    const source = `${redirect?.source || ""}`.trim();
+    const destination = `${redirect?.destination || ""}`.trim();
+    if (!source || !destination) continue;
+    if (!isStaticRoutePattern(source)) continue;
+
+    let sourcePath = "";
+    let destinationPath = "";
+
+    try {
+      sourcePath = normalizePath(source);
+      if (/^https?:\/\//i.test(destination)) {
+        if (!sameDomain(destination, PRODUCTION_DOMAIN)) continue;
+        destinationPath = normalizePath(new URL(destination).pathname);
+      } else {
+        if (!isStaticRoutePattern(destination)) continue;
+        destinationPath = normalizePath(destination);
+      }
+    } catch {
+      continue;
+    }
+
+    if (!sourcePath || !destinationPath || sourcePath === destinationPath) continue;
+    pairs.push({ sourcePath, destinationPath });
+  }
+  return pairs;
+};
+
+const buildRedirectChainIssues = (redirectPairs) => {
+  const issues = [];
+  const redirectMap = new Map(redirectPairs.map((pair) => [pair.sourcePath, pair.destinationPath]));
+
+  for (const [sourcePath, destinationPath] of redirectMap.entries()) {
+    let depth = 0;
+    let currentPath = destinationPath;
+    const visited = new Set([sourcePath]);
+
+    while (redirectMap.has(currentPath) && depth < 10) {
+      if (visited.has(currentPath)) {
+        issues.push(`Redirect loop detected: ${sourcePath} -> ${currentPath}`);
+        break;
+      }
+      visited.add(currentPath);
+      depth += 1;
+      currentPath = redirectMap.get(currentPath);
+    }
+
+    if (depth > 0 && !issues.some((issue) => issue.includes(`${sourcePath} ->`))) {
+      issues.push(`Redirect chain detected: ${sourcePath} -> ${destinationPath} -> ${currentPath}`);
+    }
+  }
+
+  return issues;
+};
+
+const loadProjectRoutes = async () => {
+  const slugs = await loadGeneratedProjectSlugs(GENERATED_PROJECT_SLUGS_PATH);
+  return slugs.map((slug) => `/renovation-projects/${slug}`);
 };
 
 const getAuditRoutes = async () => {
@@ -134,10 +175,10 @@ const getAuditRoutes = async () => {
     routes.push(...(await loadProjectRoutes()));
   }
 
-  return [...new Set(routes)];
+  return [...new Set(routes.map((route) => normalizePath(route)))];
 };
 
-const auditRoute = async (route) => {
+const auditRouteHtml = async (route) => {
   const issues = [];
   const htmlPath = routeToFilePath(route);
 
@@ -155,8 +196,9 @@ const auditRoute = async (route) => {
   if (!canonical) {
     issues.push("Missing canonical tag");
   } else {
-    const expectedCanonical = canonicalForRoute(route);
-    if (canonical !== expectedCanonical) {
+    const expectedCanonical = canonicalForPath(route);
+    const normalizedCanonical = normalizeAbsoluteUrl(canonical);
+    if (normalizedCanonical !== normalizeAbsoluteUrl(expectedCanonical)) {
       issues.push(`Canonical mismatch. Expected ${expectedCanonical}, found ${canonical}`);
     }
   }
@@ -200,25 +242,228 @@ const auditRoute = async (route) => {
   return issues;
 };
 
-const main = async () => {
-  const routes = await getAuditRoutes();
-  const failures = [];
+const readSitemapEntries = async () => {
+  const xml = await fs.readFile(PUBLIC_SITEMAP_PATH, "utf8");
+  return parseSitemapEntries(xml);
+};
 
-  console.log(
-    `[seo:audit] Auditing ${routes.length} routes (extended=${includeExtendedRoutes ? "on" : "off"}, projectDetail=${includeProjectDetailRoutes ? "on" : "off"})`
-  );
+const auditSitemapStructure = async ({ generatedProjectSlugs, vercelConfig }) => {
+  const issues = [];
+  const entries = await readSitemapEntries();
+  const redirectPairs = extractStaticRedirectPairs(vercelConfig.redirects || []);
+  const staticRedirectSources = new Set(redirectPairs.map((pair) => pair.sourcePath));
+  const seenUrls = new Set();
+  const seenPaths = new Set();
+  const sitemapProjectSlugs = new Set();
 
-  for (const route of routes) {
-    const issues = await auditRoute(route);
-    if (issues.length > 0) {
-      failures.push({ route, issues });
+  if (entries.length === 0) {
+    issues.push("sitemap.xml contains no URL entries");
+  }
+
+  for (const entry of entries) {
+    const normalizedUrl = normalizeAbsoluteUrl(entry.loc);
+    if (!normalizedUrl) {
+      issues.push(`Invalid sitemap <loc>: ${entry.loc}`);
+      continue;
+    }
+
+    if (!sameDomain(normalizedUrl, PRODUCTION_DOMAIN)) {
+      issues.push(`Sitemap URL is off-domain: ${entry.loc}`);
+      continue;
+    }
+
+    if (seenUrls.has(normalizedUrl)) {
+      issues.push(`Duplicate sitemap URL: ${normalizedUrl}`);
+      continue;
+    }
+    seenUrls.add(normalizedUrl);
+
+    const routePath = pathFromUrl(normalizedUrl, PRODUCTION_DOMAIN);
+    seenPaths.add(routePath);
+
+    if (isNoindexRoute(routePath)) {
+      issues.push(`Noindex route included in sitemap: ${routePath}`);
+    }
+
+    if (staticRedirectSources.has(routePath)) {
+      issues.push(`Redirect source included in sitemap: ${routePath}`);
+    }
+
+    try {
+      const rawPath = new URL(entry.loc).pathname || "/";
+      if (rawPath.length > 1 && rawPath.endsWith("/")) {
+        issues.push(`Trailing-slash URL found in sitemap: ${entry.loc}`);
+      }
+    } catch {
+      // Already captured by invalid URL check.
+    }
+
+    if (isProjectDetailPath(routePath)) {
+      const slug = slugFromProjectPath(routePath);
+      if (!slug) {
+        issues.push(`Invalid project slug format in sitemap: ${routePath}`);
+      } else {
+        sitemapProjectSlugs.add(slug);
+      }
     }
   }
 
+  for (const route of CORE_ROUTES) {
+    const normalizedRoute = normalizePath(route);
+    if (!seenPaths.has(normalizedRoute)) {
+      issues.push(`Missing core route from sitemap: ${normalizedRoute}`);
+    }
+  }
+
+  const generatedProjectSlugSet = new Set(generatedProjectSlugs);
+  const missingProjectSlugs = generatedProjectSlugs.filter((slug) => !sitemapProjectSlugs.has(slug));
+  const staleProjectSlugs = [...sitemapProjectSlugs].filter((slug) => !generatedProjectSlugSet.has(slug));
+
+  if (missingProjectSlugs.length > 0) {
+    issues.push(
+      `Generated project slugs missing in sitemap (${missingProjectSlugs.length}): ${missingProjectSlugs
+        .slice(0, 8)
+        .join(", ")}`
+    );
+  }
+
+  if (staleProjectSlugs.length > 0) {
+    issues.push(
+      `Sitemap contains stale project slugs (${staleProjectSlugs.length}): ${staleProjectSlugs
+        .slice(0, 8)
+        .join(", ")}`
+    );
+  }
+
+  issues.push(...buildRedirectChainIssues(redirectPairs));
+
+  return {
+    issues,
+    sitemapUrls: [...seenUrls],
+  };
+};
+
+const fetchWithTimeout = async (url, options = {}) => {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), httpTimeoutMs);
+  try {
+    return await fetch(url, {
+      ...options,
+      signal: controller.signal,
+      headers: {
+        "user-agent": "cdc-seo-audit/1.0",
+        ...(options.headers || {}),
+      },
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
+};
+
+const auditLiveSitemapUrls = async (sitemapUrls) => {
+  const issues = [];
+  const urlsToCheck = sitemapUrls.slice(0, Math.max(1, maxHttpChecks));
+
+  for (const url of urlsToCheck) {
+    let response;
+    try {
+      response = await fetchWithTimeout(url, { redirect: "manual" });
+    } catch (error) {
+      issues.push(`Live check failed for ${url}: ${String(error)}`);
+      continue;
+    }
+
+    if (response.status >= 300 && response.status < 400) {
+      const location = response.headers.get("location") || "<missing>";
+      issues.push(`Sitemap URL redirects (${response.status}): ${url} -> ${location}`);
+      continue;
+    }
+
+    if (response.status !== 200) {
+      issues.push(`Sitemap URL returned non-200 (${response.status}): ${url}`);
+      continue;
+    }
+
+    const contentType = (response.headers.get("content-type") || "").toLowerCase();
+    if (!contentType.includes("text/html")) {
+      continue;
+    }
+
+    const html = await response.text();
+    const document = new JSDOM(html).window.document;
+    const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute("href")?.trim() || "";
+    if (!canonical) {
+      issues.push(`Missing canonical on live URL: ${url}`);
+      continue;
+    }
+
+    const normalizedCanonical = normalizeAbsoluteUrl(canonical);
+    const normalizedUrl = normalizeAbsoluteUrl(url);
+    if (!normalizedCanonical) {
+      issues.push(`Invalid canonical URL on live page: ${url} -> ${canonical}`);
+      continue;
+    }
+    if (normalizedCanonical !== normalizedUrl) {
+      issues.push(`Live canonical mismatch: ${url} -> ${canonical}`);
+    }
+
+    try {
+      const canonicalResponse = await fetchWithTimeout(normalizedCanonical, { redirect: "manual" });
+      if (canonicalResponse.status >= 300 && canonicalResponse.status < 400) {
+        const location = canonicalResponse.headers.get("location") || "<missing>";
+        issues.push(
+          `Canonical URL redirects (${canonicalResponse.status}): ${normalizedCanonical} -> ${location}`
+        );
+      }
+    } catch (error) {
+      issues.push(`Canonical reachability check failed for ${normalizedCanonical}: ${String(error)}`);
+    }
+  }
+
+  return issues;
+};
+
+const main = async () => {
+  const [auditRoutes, generatedProjectSlugs, vercelConfig] = await Promise.all([
+    getAuditRoutes(),
+    loadGeneratedProjectSlugs(GENERATED_PROJECT_SLUGS_PATH),
+    loadVercelConfig(),
+  ]);
+
+  const failures = [];
+
+  console.log(
+    `[seo:audit] Auditing ${auditRoutes.length} prerender route(s) (extended=${includeExtendedRoutes ? "on" : "off"}, projectDetail=${includeProjectDetailRoutes ? "on" : "off"})`
+  );
+
+  for (const route of auditRoutes) {
+    const issues = await auditRouteHtml(route);
+    if (issues.length > 0) {
+      failures.push({ scope: route, issues });
+    }
+  }
+
+  const sitemapAudit = await auditSitemapStructure({ generatedProjectSlugs, vercelConfig });
+  if (sitemapAudit.issues.length > 0) {
+    failures.push({ scope: "[sitemap]", issues: sitemapAudit.issues });
+  }
+
+  if (performHttpChecks) {
+    console.log(
+      `[seo:audit] Running live URL checks for ${Math.min(sitemapAudit.sitemapUrls.length, maxHttpChecks)} sitemap URL(s)`
+    );
+    const liveIssues = await auditLiveSitemapUrls(sitemapAudit.sitemapUrls);
+    if (liveIssues.length > 0) {
+      failures.push({ scope: "[live]", issues: liveIssues });
+    }
+  } else {
+    console.log("[seo:audit] Live URL checks skipped (set SEO_AUDIT_HTTP=1 to enable).");
+  }
+
   if (failures.length > 0) {
-    console.error(`[seo:audit] Failed on ${failures.length} route(s):`);
+    console.error(`[seo:audit] Failed with ${failures.length} scope(s):`);
     for (const failure of failures) {
-      console.error(`- ${failure.route}`);
+      console.error(`- ${failure.scope}`);
       for (const issue of failure.issues) {
         console.error(`  - ${issue}`);
       }
@@ -233,3 +478,4 @@ main().catch((error) => {
   console.error("[seo:audit] Unexpected failure:", error);
   process.exit(1);
 });
+

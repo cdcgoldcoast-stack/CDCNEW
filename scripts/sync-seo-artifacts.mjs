@@ -215,6 +215,7 @@ async function main() {
   const authoritativeSlugs = [
     ...supabaseSlugs,
     ...publicSiteSlugs,
+    ...vercelRewriteSlugs,
     ...staticSlugs,
   ];
 
