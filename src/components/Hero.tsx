@@ -65,7 +65,8 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
           {heroImage ? (
             <ResponsiveImage
               src={heroImage}
-              alt="Gold Coast home renovation interior by Concept Design Construct"
+              alt=""
+              aria-hidden="true"
               className="absolute inset-0 w-full h-full object-cover bg-muted"
               width={1200}
               height={800}

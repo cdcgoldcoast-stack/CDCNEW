@@ -13,6 +13,14 @@ interface GalleryItem {
   alt: string;
 }
 
+const normalizeAltText = (value: string) => value.trim().replace(/\s+/g, " ");
+
+const hasDescriptiveAltText = (value: string) => {
+  const normalized = normalizeAltText(value).toLowerCase();
+  if (!normalized || normalized === "gallery image") return false;
+  return normalized.split(" ").length >= 3;
+};
+
 const Gallery = () => {
   // Fetch gallery items from database
   const { data: dbItems, isLoading, isError } = useQuery({
@@ -34,10 +42,10 @@ const Gallery = () => {
     ? dbItems
         .filter(item => item.type === "image")
         .map((item, index) => {
-          const rawAlt = item.alt_text?.trim() || "";
-          const alt = rawAlt && rawAlt.toLowerCase() !== "gallery image"
+          const rawAlt = normalizeAltText(item.alt_text || "");
+          const alt = hasDescriptiveAltText(rawAlt)
             ? rawAlt
-            : `Gold Coast renovation gallery image ${index + 1}`;
+            : `Gold Coast renovation gallery image ${index + 1} with service and finish inspiration`;
 
           return {
             id: item.id,

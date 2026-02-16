@@ -1,6 +1,6 @@
 import { useResolvedAsset } from "@/hooks/useSiteAssets";
-import masterBuildersLogo from "@/assets/master-builders.png";
-import qbccLogo from "@/assets/qbcc.png";
+import masterBuildersLogo from "@/assets/master-builders.webp";
+import qbccLogo from "@/assets/qbcc.webp";
 import { Facebook, Instagram } from "lucide-react";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
@@ -15,6 +15,7 @@ const Footer = () => {
     { label: "Project Gallery", href: "/project-gallery" },
     { label: "Life Stages", href: "/life-stages" },
     { label: "Renovation Design Tools", href: "/renovation-design-tools" },
+    { label: "AI Design Generator", href: "/renovation-design-tools/ai-generator" },
   ];
 
   const projectLinks = [
@@ -38,16 +39,16 @@ const Footer = () => {
           <div className="md:col-span-3 flex flex-col">
             <ResponsiveImage
               src={logo}
-              alt="Concept Design Construct"
+              alt="Concept Design Construct Gold Coast renovation builders logo"
               width={701}
               height={131}
               sizes="(min-width: 768px) 176px, 144px"
               loading="lazy"
               className="h-auto w-36 md:w-44"
             />
-            <span className="text-xs uppercase tracking-widest text-primary mt-3">
+            <strong className="text-xs uppercase tracking-widest text-primary mt-3">
               Gold Coast Renovations
-            </span>
+            </strong>
             <span className="text-[10px] text-primary/50 mt-1">
               Serving Gold Coast
             </span>
@@ -56,32 +57,38 @@ const Footer = () => {
           {/* Navigation */}
           <div className="md:col-span-3">
             <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-4">Navigate</p>
-            <nav className="flex flex-col gap-3">
+            <nav aria-label="Footer navigation">
+              <ul className="flex flex-col gap-3">
               {navLinks.map(link => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="text-xs uppercase tracking-[0.15em] text-foreground/80 hover:text-primary transition-colors duration-300"
-                >
-                  {link.label}
-                </a>
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-xs uppercase tracking-[0.15em] text-foreground/80 hover:text-primary transition-colors duration-300"
+                  >
+                    {link.label}
+                  </a>
+                </li>
               ))}
+              </ul>
             </nav>
           </div>
 
           {/* Project case studies */}
           <div className="md:col-span-3">
             <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-4">Projects</p>
-            <nav className="flex flex-col gap-3">
+            <nav aria-label="Footer projects">
+              <ul className="flex flex-col gap-3">
               {projectLinks.map(link => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-xs uppercase tracking-[0.15em] text-foreground/80 hover:text-primary transition-colors duration-300"
-                >
-                  {link.label}
-                </a>
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-xs uppercase tracking-[0.15em] text-foreground/80 hover:text-primary transition-colors duration-300"
+                  >
+                    {link.label}
+                  </a>
+                </li>
               ))}
+              </ul>
             </nav>
           </div>
 
@@ -148,20 +155,24 @@ const Footer = () => {
             <p className="text-xs uppercase tracking-widest text-foreground/40">
               &copy; {currentYear} Concept Design Construct
             </p>
-            <div className="flex items-center gap-6">
-              <a
-                href="/privacy-policy"
-                className="text-xs uppercase tracking-widest text-foreground/40 hover:text-primary transition-colors duration-300"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="/terms-conditions"
-                className="text-xs uppercase tracking-widest text-foreground/40 hover:text-primary transition-colors duration-300"
-              >
-                Terms & Conditions
-              </a>
-            </div>
+            <ul className="flex items-center gap-6">
+              <li>
+                <a
+                  href="/privacy-policy"
+                  className="text-xs uppercase tracking-widest text-foreground/40 hover:text-primary transition-colors duration-300"
+                >
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/terms-conditions"
+                  className="text-xs uppercase tracking-widest text-foreground/40 hover:text-primary transition-colors duration-300"
+                >
+                  Terms & Conditions
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

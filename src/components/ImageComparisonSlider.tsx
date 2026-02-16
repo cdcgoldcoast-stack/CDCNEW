@@ -114,7 +114,7 @@ const ImageComparisonSlider = ({
       <div className="absolute inset-0 flex items-center justify-center">
         <img
           src={beforeImage}
-          alt={beforeLabel}
+          alt={`${beforeLabel} room image for renovation comparison`}
           width={1200}
           height={900}
           loading="lazy"
@@ -131,7 +131,7 @@ const ImageComparisonSlider = ({
       >
         <img
           src={afterImage}
-          alt={afterLabel}
+          alt={`${afterLabel} room image for renovation comparison`}
           width={1200}
           height={900}
           loading="lazy"

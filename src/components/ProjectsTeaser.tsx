@@ -4,14 +4,16 @@ import { Pause, Play } from "lucide-react";
 import { fetchProjects, Project } from "@/data/projects";
 import ResponsiveImage from "@/components/ResponsiveImage";
 const ProjectCard = ({
-  project
+  project,
+  isDuplicate = false
 }: {
   project: Project;
-}) => <Link to={`/renovation-projects/${project.slug}`} className="group flex-shrink-0 w-[240px] sm:w-[280px] md:w-[320px] cursor-pointer">
+  isDuplicate?: boolean;
+}) => <Link to={`/renovation-projects/${project.slug}`} className="group flex-shrink-0 w-[240px] sm:w-[280px] md:w-[320px] cursor-pointer" aria-hidden={isDuplicate || undefined} tabIndex={isDuplicate ? -1 : undefined}>
     <div className="relative aspect-[2/3] overflow-hidden">
       <ResponsiveImage
         src={project.image}
-        alt={`${project.name} renovation project in ${project.location}`}
+        alt={isDuplicate ? "" : `${project.name} renovation project in ${project.location}`}
         width={800}
         height={1200}
         sizes="(min-width: 1024px) 320px, (min-width: 640px) 280px, 240px"
@@ -24,9 +26,9 @@ const ProjectCard = ({
       {/* Magazine-style text layout */}
       <div className="absolute inset-0 flex flex-col items-center text-center p-3 md:p-4 pointer-events-none">
         <div className="pt-2">
-          <h3 className="font-serif italic text-base sm:text-lg md:text-xl lg:text-2xl leading-none text-media-foreground">
+          <p className="font-serif italic text-base sm:text-lg md:text-xl lg:text-2xl leading-none text-media-foreground">
             {project.name}
-          </h3>
+          </p>
         </div>
 
         <div className="mt-auto pb-2">
@@ -109,7 +111,7 @@ const ProjectsTeaser = () => {
         maskImage: 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)',
         WebkitMaskImage: 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)'
       }}>
-          {duplicatedProjects.map((project, index) => <ProjectCard key={`${project.id}-${index}`} project={project} />)}
+          {duplicatedProjects.map((project, index) => <ProjectCard key={`${project.id}-${index}`} project={project} isDuplicate={index >= projects.length} />)}
         </div>
       </div>
 

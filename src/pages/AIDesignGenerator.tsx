@@ -36,7 +36,7 @@ const ChatMessage = ({
         {avatarSrc ? (
           <img
             src={avatarSrc}
-            alt="Concept Design Construct logo"
+            alt="Concept Design Construct assistant avatar"
             width={36}
             height={36}
             loading="lazy"
@@ -1239,7 +1239,7 @@ const buildPreferenceSentence = (
                       {logoSrc ? (
                         <img
                           src={logoSrc}
-                          alt="Concept Design Construct logo"
+                          alt="Concept Design Construct logo mark"
                           width={36}
                           height={36}
                           loading="lazy"

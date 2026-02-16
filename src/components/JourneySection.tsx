@@ -97,9 +97,9 @@ const JourneySection = () => {
                 <span className="font-serif text-3xl text-primary/30 block mb-2">
                   {step.number}
                 </span>
-                <h3 className="font-serif text-sm text-primary italic mb-2">
+                <p className="font-serif text-sm text-primary italic mb-2">
                   {step.title}
-                </h3>
+                </p>
                 <p className="text-xs leading-relaxed text-primary/70">
                   {step.lines.join(" ")}
                 </p>
@@ -123,9 +123,9 @@ const JourneySection = () => {
                 <span className="font-serif text-4xl text-primary/20 block mb-3 h-[48px]">
                   {step.number}
                 </span>
-                <h3 className="font-serif text-sm text-primary italic mb-2 h-[40px]">
+                <p className="font-serif text-sm text-primary italic mb-2 h-[40px]">
                   {step.title}
-                </h3>
+                </p>
                 <p className="text-xs leading-relaxed text-primary/70">
                   {step.lines.join(" ")}
                 </p>

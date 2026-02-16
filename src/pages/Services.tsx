@@ -30,7 +30,7 @@ const Services = () => {
               </h1>
               <p className="text-foreground/80 text-lg leading-relaxed mb-6">
                 From kitchens and bathrooms to whole home renovations and extensions, we design and build
-                spaces that improve flow, comfort, and everyday routines.
+                spaces that improve <strong>flow, comfort, and everyday routines</strong>.
               </p>
               <Link
                 to="/get-quote"
@@ -43,7 +43,7 @@ const Services = () => {
               {heroImage && (
                 <ResponsiveImage
                   src={heroImage}
-                  alt="Gold Coast home renovation"
+                  alt="Gold Coast whole-home renovation living space by Concept Design Construct"
                   width={1200}
                   height={1500}
                   sizes="(min-width: 1024px) 40vw, 100vw"
@@ -65,26 +65,38 @@ const Services = () => {
           <p className="text-foreground/70 leading-relaxed max-w-3xl mb-6">
             Explore related resources before your consultation so your scope, style direction, and budget priorities are clearer from day one.
           </p>
-          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-            <Link to="/renovation-projects" className="text-primary hover:text-primary/70 underline underline-offset-4">
-              Browse our renovation project portfolio
-            </Link>
-            <Link to="/project-gallery" className="text-primary hover:text-primary/70 underline underline-offset-4">
-              Review our project gallery inspiration
-            </Link>
-            <Link to="/life-stages" className="text-primary hover:text-primary/70 underline underline-offset-4">
-              Explore life stage renovation planning
-            </Link>
-            <Link to="/renovation-design-tools/ai-generator/intro" className="text-primary hover:text-primary/70 underline underline-offset-4">
-              Try the AI renovation generator preview
-            </Link>
-            <Link to="/renovation-design-tools/moodboard" className="text-primary hover:text-primary/70 underline underline-offset-4">
-              Build a renovation moodboard
-            </Link>
-            <Link to="/get-quote" className="text-primary hover:text-primary/70 underline underline-offset-4">
-              Start a renovation consultation request
-            </Link>
-          </div>
+          <ul className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+            <li>
+              <Link to="/renovation-projects" className="text-primary hover:text-primary/70 underline underline-offset-4">
+                Browse our renovation project portfolio
+              </Link>
+            </li>
+            <li>
+              <Link to="/project-gallery" className="text-primary hover:text-primary/70 underline underline-offset-4">
+                Review our project gallery inspiration
+              </Link>
+            </li>
+            <li>
+              <Link to="/life-stages" className="text-primary hover:text-primary/70 underline underline-offset-4">
+                Explore life stage renovation planning
+              </Link>
+            </li>
+            <li>
+              <Link to="/renovation-design-tools/ai-generator/intro" className="text-primary hover:text-primary/70 underline underline-offset-4">
+                Try the AI renovation generator preview
+              </Link>
+            </li>
+            <li>
+              <Link to="/renovation-design-tools/moodboard" className="text-primary hover:text-primary/70 underline underline-offset-4">
+                Build a renovation moodboard
+              </Link>
+            </li>
+            <li>
+              <Link to="/get-quote" className="text-primary hover:text-primary/70 underline underline-offset-4">
+                Start a renovation consultation request
+              </Link>
+            </li>
+          </ul>
         </div>
       </section>
 

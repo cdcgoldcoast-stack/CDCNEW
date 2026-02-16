@@ -102,9 +102,9 @@ const LifestyleSection = () => {
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-4">
-                <h3 className="text-background text-sm font-medium italic mb-1">
+                <p className="text-background text-sm font-medium italic mb-1">
                   {benefit.title}
-                </h3>
+                </p>
                 <p className="text-background/80 text-xs leading-relaxed">
                   {benefit.description}
                 </p>

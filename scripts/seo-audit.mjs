@@ -12,7 +12,7 @@ import {
   normalizeAbsoluteUrl,
   parseSitemapEntries,
   pathFromUrl,
-  isNoindexRoute,
+  isSitemapEligibleRoute,
   loadGeneratedProjectSlugs,
   isProjectDetailPath,
   slugFromProjectPath,
@@ -36,6 +36,38 @@ const REQUIRED_TWITTER_META = [
   "twitter:image",
   "twitter:image:alt",
 ];
+
+const GENERIC_INTERNAL_ANCHOR_WORDS = new Set([
+  "view",
+  "click",
+  "more",
+  "learn",
+  "read",
+  "start",
+  "open",
+  "go",
+  "here",
+]);
+
+const ROUTES_REQUIRING_LISTS = new Set([
+  "/",
+  "/about-us",
+  "/services",
+  "/renovation-design-tools",
+  "/get-quote",
+  "/life-stages",
+  "/renovation-design-tools/ai-generator/intro",
+]);
+
+const ROUTES_REQUIRING_EMPHASIS = new Set([
+  "/",
+  "/about-us",
+  "/services",
+  "/renovation-design-tools",
+  "/get-quote",
+  "/life-stages",
+  "/renovation-design-tools/ai-generator/intro",
+]);
 
 const includeExtendedRoutes = parseEnvBoolean(process.env.PRERENDER_EXTENDED, true);
 const includeProjectDetailRoutes = parseEnvBoolean(process.env.PRERENDER_PROJECT_DETAIL, false);
@@ -89,6 +121,100 @@ const hasBrokenHeadingHierarchy = (document) => {
   }
 
   return false;
+};
+
+const normalizeText = (value) => value.replace(/\s+/g, " ").trim();
+
+const findWeakInternalAnchorText = (document) => {
+  const weakAnchors = [];
+  const links = [...document.querySelectorAll("a[href]")];
+
+  for (const link of links) {
+    const href = (link.getAttribute("href") || "").trim();
+    const rel = (link.getAttribute("rel") || "").toLowerCase();
+    if (!href || !href.startsWith("/") || href.startsWith("//") || href.startsWith("/#")) continue;
+    if (rel.includes("nofollow")) continue;
+
+    const rawText = normalizeText(link.textContent || link.getAttribute("aria-label") || "");
+    if (!rawText) continue;
+    const lowered = rawText.toLowerCase();
+    const words = lowered.split(/\s+/).filter(Boolean);
+    if (words.length !== 1) continue;
+
+    if (GENERIC_INTERNAL_ANCHOR_WORDS.has(words[0])) {
+      weakAnchors.push({ href, text: rawText });
+    }
+  }
+
+  return weakAnchors;
+};
+
+const collectDuplicateHeadingTexts = (document) => {
+  const counts = new Map();
+  const headings = [...document.querySelectorAll("h1, h2, h3")];
+
+  for (const heading of headings) {
+    const text = normalizeText(heading.textContent || "");
+    if (!text) continue;
+    const key = text.toLowerCase();
+    counts.set(key, {
+      text,
+      count: (counts.get(key)?.count || 0) + 1,
+    });
+  }
+
+  return [...counts.values()].filter((entry) => entry.count > 1);
+};
+
+const collectDuplicateAltTexts = (document) => {
+  const counts = new Map();
+  const images = [...document.querySelectorAll("img[alt]")];
+
+  for (const image of images) {
+    const alt = normalizeText(image.getAttribute("alt") || "");
+    if (!alt) continue;
+    if (/logo|avatar|icon/i.test(alt)) continue;
+
+    const key = alt.toLowerCase();
+    counts.set(key, {
+      alt,
+      count: (counts.get(key)?.count || 0) + 1,
+    });
+  }
+
+  return [...counts.values()].filter((entry) => entry.count > 1);
+};
+
+const collectOneWordAltTexts = (document) => {
+  const offenders = new Set();
+  const images = [...document.querySelectorAll("img[alt]")];
+
+  for (const image of images) {
+    const alt = normalizeText(image.getAttribute("alt") || "");
+    if (!alt) continue;
+    if (/logo|avatar|icon/i.test(alt)) continue;
+
+    const words = alt.split(/\s+/).filter(Boolean);
+    if (words.length === 1) {
+      offenders.add(alt);
+    }
+  }
+
+  return [...offenders];
+};
+
+const collectInsecureHttpLinks = (document) => {
+  const offenders = [];
+  const links = [...document.querySelectorAll("a[href]")];
+
+  for (const link of links) {
+    const href = (link.getAttribute("href") || "").trim();
+    if (!href.toLowerCase().startsWith("http://")) continue;
+    if (/^http:\/\/www\.w3\.org\//i.test(href)) continue;
+    offenders.push(href);
+  }
+
+  return [...new Set(offenders)];
 };
 
 const loadVercelConfig = async () => {
@@ -229,7 +355,11 @@ const auditRouteHtml = async (route) => {
   const linkedImages = [...document.querySelectorAll("a img")];
   for (const image of linkedImages) {
     const alt = image.getAttribute("alt");
-    if (!alt || !alt.trim()) {
+    const link = image.closest("a");
+    const linkIsDecorative =
+      link?.getAttribute("aria-hidden") === "true" ||
+      link?.getAttribute("tabindex") === "-1";
+    if ((!alt || !alt.trim()) && !linkIsDecorative) {
       issues.push("Anchored image missing alt text");
       break;
     }
@@ -237,6 +367,56 @@ const auditRouteHtml = async (route) => {
 
   if (!hasFollowedInternalLinks(document)) {
     issues.push("Fewer than 2 followed internal links");
+  }
+
+  const weakInternalAnchorText = findWeakInternalAnchorText(document);
+  if (weakInternalAnchorText.length > 0) {
+    issues.push(
+      `Generic one-word internal anchor text found (${weakInternalAnchorText.length}): ${weakInternalAnchorText
+        .slice(0, 5)
+        .map((entry) => `${entry.text} -> ${entry.href}`)
+        .join(", ")}`
+    );
+  }
+
+  const duplicateHeadings = collectDuplicateHeadingTexts(document);
+  if (duplicateHeadings.length > 0) {
+    issues.push(
+      `Duplicate heading text found (${duplicateHeadings.length}): ${duplicateHeadings
+        .slice(0, 6)
+        .map((entry) => `${entry.text} (${entry.count})`)
+        .join(", ")}`
+    );
+  }
+
+  const duplicateAlts = collectDuplicateAltTexts(document);
+  if (duplicateAlts.length > 0) {
+    issues.push(
+      `Duplicate image alt text found (${duplicateAlts.length}): ${duplicateAlts
+        .slice(0, 6)
+        .map((entry) => `${entry.alt} (${entry.count})`)
+        .join(", ")}`
+    );
+  }
+
+  const oneWordAlts = collectOneWordAltTexts(document);
+  if (oneWordAlts.length > 0) {
+    issues.push(`One-word image alt text found (${oneWordAlts.length}): ${oneWordAlts.slice(0, 8).join(", ")}`);
+  }
+
+  const insecureHttpLinks = collectInsecureHttpLinks(document);
+  if (insecureHttpLinks.length > 0) {
+    issues.push(`Insecure http:// links found (${insecureHttpLinks.length}): ${insecureHttpLinks.slice(0, 6).join(", ")}`);
+  }
+
+  const listItemCount = document.querySelectorAll("ul li, ol li").length;
+  if (ROUTES_REQUIRING_LISTS.has(route) && listItemCount < 2) {
+    issues.push("Content is missing semantic list markup (expected at least one list section)");
+  }
+
+  const emphasisCount = document.querySelectorAll("strong, b").length;
+  if (ROUTES_REQUIRING_EMPHASIS.has(route) && emphasisCount < 1) {
+    issues.push("Content is missing emphasis elements (expected <strong> or <b>)");
   }
 
   return issues;
@@ -281,8 +461,8 @@ const auditSitemapStructure = async ({ generatedProjectSlugs, vercelConfig }) =>
     const routePath = pathFromUrl(normalizedUrl, PRODUCTION_DOMAIN);
     seenPaths.add(routePath);
 
-    if (isNoindexRoute(routePath)) {
-      issues.push(`Noindex route included in sitemap: ${routePath}`);
+    if (!isSitemapEligibleRoute(routePath)) {
+      issues.push(`Non-indexable route included in sitemap: ${routePath}`);
     }
 
     if (staticRedirectSources.has(routePath)) {
@@ -392,6 +572,10 @@ const auditLiveSitemapUrls = async (sitemapUrls) => {
     const html = await response.text();
     const document = new JSDOM(html).window.document;
     const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute("href")?.trim() || "";
+    const robots = (document.querySelector('meta[name="robots"]')?.getAttribute("content") || "").toLowerCase();
+    if (robots.includes("noindex")) {
+      issues.push(`Sitemap URL is noindex on live page: ${url}`);
+    }
     if (!canonical) {
       issues.push(`Missing canonical on live URL: ${url}`);
       continue;
@@ -478,4 +662,3 @@ main().catch((error) => {
   console.error("[seo:audit] Unexpected failure:", error);
   process.exit(1);
 });
-

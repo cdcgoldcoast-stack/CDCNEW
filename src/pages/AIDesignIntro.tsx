@@ -45,24 +45,24 @@ const AIDesignIntro = () => {
               </h1>
               <p className="text-primary-foreground/80 text-base md:text-lg">
                 Get creative with your renovation ideas and see your space improve before you commit. Our AI helps you
-                visualise the upgrade so you can make confident, clear decisions while keeping the same layout.
+                visualise the upgrade so you can make <strong>confident, clear decisions</strong> while keeping the same layout.
               </p>
             </div>
 
             <h2 className="text-sm tracking-[0.2em] uppercase text-primary-foreground/70">
               How your AI renovation preview works
             </h2>
-            <div className="grid gap-4 sm:grid-cols-3">
+            <ol className="grid gap-4 sm:grid-cols-3">
               {steps.map((step, index) => (
-                <div key={step.title} className="bg-primary-foreground/10 border border-primary-foreground/20 rounded-2xl p-4">
+                <li key={step.title} className="bg-primary-foreground/10 border border-primary-foreground/20 rounded-2xl p-4 list-none">
                   <p className="text-xs uppercase tracking-[0.25em] text-primary-foreground/60 mb-2">
                     Step {index + 1}
                   </p>
                   <p className="text-sm font-medium text-primary-foreground">{step.title}</p>
                   <p className="text-xs text-primary-foreground/70 mt-2">{step.description}</p>
-                </div>
+                </li>
               ))}
-            </div>
+            </ol>
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               <Button

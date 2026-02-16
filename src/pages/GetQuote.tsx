@@ -339,8 +339,13 @@ const GetQuote = () => {
 
                     {/* Description + trust row */}
                     <p className="text-white/60 text-sm leading-relaxed mb-5">
-                      See what's possible in your space and get a renovation plan designed around your lifestyle. From kitchens and bathrooms to full home transformations — honest pricing and quality craftsmanship.
+                      See what's possible in your space and get a renovation plan designed around your lifestyle. From kitchens and bathrooms to full home transformations — <strong>honest pricing and quality craftsmanship</strong>.
                     </p>
+                    <ul className="space-y-2 text-white/70 text-sm mb-5">
+                      <li>A clear consultation pathway from first call to scope confirmation.</li>
+                      <li>Advice shaped around your budget, timeline, and daily routines.</li>
+                      <li>Design-led recommendations before you commit to construction.</li>
+                    </ul>
 
                     <div className="flex items-center gap-2.5 bg-white/10 rounded-lg px-3 py-2 w-fit">
                       <svg viewBox="0 0 24 24" className="w-5 h-5 shrink-0" xmlns="http://www.w3.org/2000/svg">

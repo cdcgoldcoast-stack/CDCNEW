@@ -133,6 +133,18 @@ export function isNoindexRoute(routePath) {
   return NOINDEX_PREFIXES.some((prefix) => routePath === prefix || routePath.startsWith(`${prefix}/`));
 }
 
+export function isIndexableRoute(routePath) {
+  return !isNoindexRoute(normalizePath(routePath));
+}
+
+export function isCanonicalRoute(routePath) {
+  return isIndexableRoute(routePath);
+}
+
+export function isSitemapEligibleRoute(routePath) {
+  return isIndexableRoute(routePath);
+}
+
 export async function loadGeneratedProjectSlugs(filePath) {
   try {
     const source = await fs.readFile(filePath, "utf8");
@@ -170,4 +182,3 @@ export async function fileExists(filePath) {
     return false;
   }
 }
-

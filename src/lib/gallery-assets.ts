@@ -48,15 +48,15 @@
  }
  
  // Fallback gallery items for public gallery
- export const fallbackGalleryItems = [
-   { id: "1", src: editorial1, alt: "Modern bathroom renovation" },
-   { id: "2", src: editorial2, alt: "Elegant kitchen design" },
-   { id: "3", src: editorial3, alt: "Living space transformation" },
-   { id: "4", src: editorial4, alt: "Contemporary finishes" },
-   { id: "5", src: editorial5, alt: "Luxury bathroom" },
-   { id: "6", src: editorial6, alt: "Kitchen details" },
-   { id: "7", src: editorial7, alt: "Open plan living" },
-   { id: "8", src: editorial8, alt: "Bathroom tiles" },
-   { id: "9", src: editorial9, alt: "Kitchen island" },
-   { id: "10", src: editorial10, alt: "Living room" },
- ];
+export const fallbackGalleryItems = [
+  { id: "1", src: editorial1, alt: "Gold Coast bathroom renovation with warm timber and stone finishes" },
+  { id: "2", src: editorial2, alt: "Gold Coast kitchen renovation with integrated storage and soft lighting" },
+  { id: "3", src: editorial3, alt: "Open-plan living renovation designed for better everyday flow" },
+  { id: "4", src: editorial4, alt: "Contemporary Gold Coast renovation styling with layered textures" },
+  { id: "5", src: editorial5, alt: "Luxury bathroom renovation featuring premium fixtures and natural tones" },
+  { id: "6", src: editorial6, alt: "Kitchen renovation detail showing joinery, splashback, and benchtop finishes" },
+  { id: "7", src: editorial7, alt: "Whole-home renovation concept with connected living and dining zones" },
+  { id: "8", src: editorial8, alt: "Gold Coast bathroom tile palette for a calm modern design direction" },
+  { id: "9", src: editorial9, alt: "Kitchen island renovation inspiration with practical family seating" },
+  { id: "10", src: editorial10, alt: "Renovated living room with balanced light, layout, and storage" },
+];

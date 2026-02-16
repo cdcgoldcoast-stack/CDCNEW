@@ -28,6 +28,16 @@ const strictMode = parseEnvBoolean(process.env.SEO_MONITOR_STRICT, true);
 const maxSitemapChecks = Number.parseInt(process.env.SEO_MONITOR_MAX_URLS || "120", 10);
 const timeoutMs = Number.parseInt(process.env.SEO_MONITOR_TIMEOUT_MS || "12000", 10);
 
+const REQUIRED_TWITTER_META = [
+  "twitter:card",
+  "twitter:domain",
+  "twitter:url",
+  "twitter:title",
+  "twitter:description",
+  "twitter:image",
+  "twitter:image:alt",
+];
+
 const severityRank = {
   info: 0,
   medium: 1,
@@ -92,6 +102,32 @@ async function fetchWithTimeout(url, options = {}) {
   } finally {
     clearTimeout(timeout);
   }
+}
+
+function extractMetaByName(document, name) {
+  const node = document.querySelector(`meta[name="${name}"]`);
+  return node?.getAttribute("content")?.trim() || "";
+}
+
+function collectLegacyImageSources(document, pageUrl) {
+  const offenders = [];
+  const images = [...document.querySelectorAll("img[src]")];
+
+  for (const image of images) {
+    const src = (image.getAttribute("src") || "").trim();
+    if (!src || src.startsWith("data:")) continue;
+
+    try {
+      const pathname = new URL(src, pageUrl).pathname.toLowerCase();
+      if (pathname.endsWith(".jpg") || pathname.endsWith(".jpeg") || pathname.endsWith(".png")) {
+        offenders.push(src);
+      }
+    } catch {
+      // Ignore unparseable URLs.
+    }
+  }
+
+  return [...new Set(offenders)];
 }
 
 async function loadVercelRedirectPairs() {
@@ -236,6 +272,9 @@ async function monitorSitemapUrls(entries, checks) {
   const urlsToCheck = entries.slice(0, Math.max(1, maxSitemapChecks));
   let failures = 0;
   const canonicalMismatches = [];
+  const noindexUrls = [];
+  const missingTwitterMetaUrls = [];
+  const legacyImageUrls = [];
 
   for (const entry of urlsToCheck) {
     const normalizedUrl = normalizeAbsoluteUrl(entry.loc);
@@ -299,6 +338,11 @@ async function monitorSitemapUrls(entries, checks) {
     if (contentType.includes("text/html")) {
       const html = await response.text();
       const document = new JSDOM(html).window.document;
+      const robots = (document.querySelector('meta[name="robots"]')?.getAttribute("content") || "").toLowerCase();
+      if (robots.includes("noindex")) {
+        failures += 1;
+        noindexUrls.push({ url: normalizedUrl, robots });
+      }
       const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute("href")?.trim() || "";
       const normalizedCanonical = normalizeAbsoluteUrl(canonical);
       if (!normalizedCanonical) {
@@ -312,6 +356,20 @@ async function monitorSitemapUrls(entries, checks) {
       } else if (normalizedCanonical !== normalizedUrl) {
         failures += 1;
         canonicalMismatches.push({ url: normalizedUrl, canonical: normalizedCanonical });
+      }
+
+      const missingTwitterTags = REQUIRED_TWITTER_META.filter((tagName) => !extractMetaByName(document, tagName));
+      if (missingTwitterTags.length > 0) {
+        failures += 1;
+        missingTwitterMetaUrls.push({ url: normalizedUrl, missingTwitterTags });
+      }
+
+      const legacyImages = collectLegacyImageSources(document, normalizedUrl);
+      if (legacyImages.length > 0) {
+        legacyImageUrls.push({
+          url: normalizedUrl,
+          legacyImages: legacyImages.slice(0, 8),
+        });
       }
     }
   }
@@ -333,6 +391,69 @@ async function monitorSitemapUrls(entries, checks) {
         "info",
         "pass",
         `Canonical matched for ${urlsToCheck.length} checked sitemap URL(s)`
+      )
+    );
+  }
+
+  if (noindexUrls.length > 0) {
+    checks.push(
+      createCheckResult(
+        "sitemap_noindex_conflict",
+        "high",
+        "fail",
+        `Sitemap contains ${noindexUrls.length} URL(s) rendering noindex`,
+        { urls: noindexUrls.slice(0, 20) }
+      )
+    );
+  } else {
+    checks.push(
+      createCheckResult(
+        "sitemap_noindex_conflict",
+        "info",
+        "pass",
+        `No noindex conflicts found in ${urlsToCheck.length} checked sitemap URL(s)`
+      )
+    );
+  }
+
+  if (missingTwitterMetaUrls.length > 0) {
+    checks.push(
+      createCheckResult(
+        "twitter_meta_completeness",
+        "high",
+        "fail",
+        `Missing required Twitter meta tags on ${missingTwitterMetaUrls.length} URL(s)`,
+        { missing: missingTwitterMetaUrls.slice(0, 20) }
+      )
+    );
+  } else {
+    checks.push(
+      createCheckResult(
+        "twitter_meta_completeness",
+        "info",
+        "pass",
+        `Twitter meta tags complete for ${urlsToCheck.length} checked sitemap URL(s)`
+      )
+    );
+  }
+
+  if (legacyImageUrls.length > 0) {
+    checks.push(
+      createCheckResult(
+        "next_gen_image_coverage",
+        "medium",
+        "warn",
+        `Detected legacy .jpg/.jpeg/.png image sources on ${legacyImageUrls.length} URL(s)`,
+        { offenders: legacyImageUrls.slice(0, 20) }
+      )
+    );
+  } else {
+    checks.push(
+      createCheckResult(
+        "next_gen_image_coverage",
+        "info",
+        "pass",
+        `No legacy .jpg/.jpeg/.png image sources detected in ${urlsToCheck.length} checked sitemap URL(s)`
       )
     );
   }

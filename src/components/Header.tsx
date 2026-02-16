@@ -98,7 +98,7 @@ const Header = () => {
           {logoSrc ? (
             <ResponsiveImage
               src={logoSrc}
-              alt="Concept Design Construct"
+              alt="Concept Design Construct home page logo"
               width={701}
               height={131}
               sizes="(min-width: 1024px) 256px, (min-width: 768px) 224px, 176px"

@@ -51,7 +51,7 @@ const AboutUs = () => {
             <div className="aspect-[4/5] overflow-hidden">
               <ResponsiveImage
                 src={heroImage}
-                alt="Our team at work"
+                alt="Concept Design Construct renovation team working on a Gold Coast home"
                 width={1200}
                 height={1500}
                 sizes="(min-width: 1024px) 40vw, 100vw"
@@ -67,13 +67,13 @@ const AboutUs = () => {
       {/* 2. WHAT WE DO */}
       <section className="py-16 md:py-20 bg-foreground relative z-10">
         <div className="container-wide">
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 md:gap-x-16">
+          <ul className="flex flex-wrap justify-center gap-x-8 gap-y-4 md:gap-x-16">
             {whatWeDo.map((item, index) => (
-              <span key={index} className="text-background/90 font-serif italic text-lg md:text-xl">
+              <li key={index} className="text-background/90 font-serif italic text-lg md:text-xl list-none">
                 {item}
-              </span>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
@@ -108,7 +108,7 @@ const AboutUs = () => {
               <span className="text-primary text-4xl font-serif italic block mb-4">03</span>
               <h3 className="font-serif text-h3 text-foreground mb-3">Quality Results</h3>
               <p className="text-foreground/60 text-sm leading-relaxed">
-                We don't cut corners. Every job is done properly, the first time.
+                We don't cut corners. Every job is done <strong>properly, the first time</strong>.
               </p>
             </div>
           </div>
@@ -120,7 +120,7 @@ const AboutUs = () => {
         <div className="absolute inset-0">
           <ResponsiveImage
             src={teamImage}
-            alt="Our team"
+            alt="Concept Design Construct renovation team on a Gold Coast project site"
             width={1200}
             height={900}
             sizes="100vw"

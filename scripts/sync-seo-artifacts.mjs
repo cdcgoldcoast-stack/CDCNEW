@@ -2,6 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createClient } from "@supabase/supabase-js";
+import { isSitemapEligibleRoute, normalizePath } from "./lib/seo-utils.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -163,7 +164,7 @@ async function readVercelRewriteProjectSlugs() {
 function buildSitemapXml(projectSlugs) {
   const lastmod = formatDateUTC();
 
-  const entries = [
+  const rawEntries = [
     ...STATIC_ROUTES,
     ...projectSlugs.map((slug) => ({
       path: `/renovation-projects/${slug}`,
@@ -171,6 +172,20 @@ function buildSitemapXml(projectSlugs) {
       priority: PROJECT_META.priority,
     })),
   ];
+
+  const entries = [];
+  const seenPaths = new Set();
+  for (const entry of rawEntries) {
+    const normalizedPath = normalizePath(entry.path);
+    if (!normalizedPath) continue;
+    if (!isSitemapEligibleRoute(normalizedPath)) continue;
+    if (seenPaths.has(normalizedPath)) continue;
+    seenPaths.add(normalizedPath);
+    entries.push({
+      ...entry,
+      path: normalizedPath,
+    });
+  }
 
   const lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'];
 
