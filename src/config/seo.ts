@@ -24,7 +24,7 @@ export const DEFAULT_META = {
 
 // Service areas
 export const SERVICE_AREAS = {
-  primary: ["Gold Coast", "Brisbane"],
+  primary: ["Gold Coast"],
   suburbs: [
     "Burleigh Heads",
     "Mermaid Beach", 

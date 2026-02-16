@@ -232,20 +232,27 @@ async function main() {
     ...publicSiteSlugs,
     ...vercelRewriteSlugs,
     ...staticSlugs,
+    ...previousSlugs,
   ];
 
   const mergedAuthoritativeSlugs = uniqSorted(authoritativeSlugs);
-  const usedPreviousGeneratedFallback = mergedAuthoritativeSlugs.length === 0 && previousSlugs.length > 0;
-  const mergedSlugs = usedPreviousGeneratedFallback
-    ? uniqSorted(previousSlugs)
-    : mergedAuthoritativeSlugs;
+  const usedPreviousGeneratedFallback =
+    supabaseSlugs.length === 0 &&
+    publicSiteSlugs.length === 0 &&
+    vercelRewriteSlugs.length === 0 &&
+    staticSlugs.length === 0 &&
+    previousSlugs.length > 0;
+  const mergedSlugs = mergedAuthoritativeSlugs;
 
   const mergedSlugSet = new Set(mergedSlugs);
   const vercelRewriteSlugSet = new Set(vercelRewriteSlugs);
   const missingVercelRewrites = mergedSlugs.filter((slug) => !vercelRewriteSlugSet.has(slug));
   const staleVercelRewrites = vercelRewriteSlugs.filter((slug) => !mergedSlugSet.has(slug));
 
-  if (missingVercelRewrites.length > 0 || staleVercelRewrites.length > 0) {
+  if (
+    vercelRewriteSlugs.length > 0 &&
+    (missingVercelRewrites.length > 0 || staleVercelRewrites.length > 0)
+  ) {
     console.warn(
       `[seo:sync] Vercel project rewrite mismatch. missing=${missingVercelRewrites.length}, stale=${staleVercelRewrites.length}`
     );

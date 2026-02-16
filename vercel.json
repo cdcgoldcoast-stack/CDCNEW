@@ -1,32 +1,7 @@
 {
+  "framework": "nextjs",
+  "installCommand": "npm install && npm --prefix next-ssrhome install",
   "buildCommand": "npm run build",
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' https://www.googletagmanager.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' https://iqugsxeejieneyksfbza.supabase.co https://www.google-analytics.com https://www.facebook.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=()"
-        }
-      ]
-    }
-  ],
   "redirects": [
     {
       "source": "/favicon.ico",
@@ -40,11 +15,6 @@
     },
     {
       "source": "/our-story",
-      "destination": "/about-us",
-      "permanent": true
-    },
-    {
-      "source": "/our-story/",
       "destination": "/about-us",
       "permanent": true
     },
@@ -83,44 +53,5 @@
       "destination": "/renovation-design-tools",
       "permanent": true
     }
-  ],
-  "rewrites": [
-    { "source": "/about-us", "destination": "/index.html" },
-    { "source": "/life-stages", "destination": "/index.html" },
-    { "source": "/renovation-projects", "destination": "/index.html" },
-    { "source": "/renovation-projects/coastal-modern", "destination": "/index.html" },
-    { "source": "/renovation-projects/everyday-ease", "destination": "/index.html" },
-    { "source": "/renovation-projects/family-hub", "destination": "/index.html" },
-    { "source": "/renovation-projects/heritage-revival", "destination": "/index.html" },
-    { "source": "/renovation-projects/light-and-flow-house", "destination": "/index.html" },
-    { "source": "/renovation-projects/retreat-house", "destination": "/index.html" },
-    { "source": "/renovation-projects/seamless-bathroom", "destination": "/index.html" },
-    { "source": "/renovation-projects/stone-and-light", "destination": "/index.html" },
-    { "source": "/renovation-projects/sunshine-retreat", "destination": "/index.html" },
-    { "source": "/renovation-projects/terrazzo-retreat", "destination": "/index.html" },
-    { "source": "/renovation-projects/the-calm-edit", "destination": "/index.html" },
-    { "source": "/renovation-projects/the-elanora-residence", "destination": "/index.html" },
-    { "source": "/renovation-projects/urban-oasis", "destination": "/index.html" },
-    { "source": "/renovation-projects/warm-minimal-bathroom", "destination": "/index.html" },
-    { "source": "/services", "destination": "/index.html" },
-    { "source": "/project-gallery", "destination": "/index.html" },
-    { "source": "/renovation-design-tools", "destination": "/index.html" },
-    { "source": "/get-quote", "destination": "/index.html" },
-    { "source": "/privacy-policy", "destination": "/index.html" },
-    { "source": "/terms-conditions", "destination": "/index.html" },
-    { "source": "/renovation-design-tools/ai-generator", "destination": "/index.html" },
-    { "source": "/renovation-design-tools/ai-generator/intro", "destination": "/index.html" },
-    { "source": "/renovation-design-tools/moodboard", "destination": "/index.html" },
-    { "source": "/auth", "destination": "/index.html" },
-    { "source": "/admin", "destination": "/index.html" },
-    { "source": "/admin/projects", "destination": "/index.html" },
-    { "source": "/admin/enquiries", "destination": "/index.html" },
-    { "source": "/admin/chat-inquiries", "destination": "/index.html" },
-    { "source": "/admin/gallery", "destination": "/index.html" },
-    { "source": "/admin/site-images", "destination": "/index.html" },
-    { "source": "/admin/image-assets", "destination": "/index.html" },
-    { "source": "/admin/settings", "destination": "/index.html" },
-    { "source": "/brand-guidelines", "destination": "/index.html" },
-    { "source": "/print-brochure", "destination": "/index.html" }
   ]
 }

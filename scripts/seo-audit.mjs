@@ -1,4 +1,5 @@
 import fs from "fs/promises";
+import { existsSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { JSDOM } from "jsdom";
@@ -23,9 +24,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
 const DIST_DIR = path.join(ROOT_DIR, "dist");
+const NEXT_SERVER_APP_DIR = path.join(ROOT_DIR, "next-ssrhome", ".next", "server", "app");
 const PUBLIC_SITEMAP_PATH = path.join(ROOT_DIR, "public", "sitemap.xml");
 const GENERATED_PROJECT_SLUGS_PATH = path.join(ROOT_DIR, "src", "generated", "project-slugs.json");
 const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, "vercel.json");
+const BUILD_OUTPUT_MODE = existsSync(path.join(NEXT_SERVER_APP_DIR, "index.html")) ? "next" : "legacy";
 
 const REQUIRED_TWITTER_META = [
   "twitter:card",
@@ -79,6 +82,11 @@ const maxHttpChecks = Number.parseInt(process.env.SEO_AUDIT_MAX_HTTP_CHECKS || "
 const httpTimeoutMs = Number.parseInt(process.env.SEO_AUDIT_TIMEOUT_MS || "12000", 10);
 
 const routeToFilePath = (route) => {
+  if (BUILD_OUTPUT_MODE === "next") {
+    if (route === "/") return path.join(NEXT_SERVER_APP_DIR, "index.html");
+    return path.join(NEXT_SERVER_APP_DIR, `${route.replace(/^\//, "")}.html`);
+  }
+
   if (route === "/") return path.join(DIST_DIR, "index.html");
   return path.join(DIST_DIR, route.replace(/^\//, ""), "index.html");
 };
@@ -617,7 +625,7 @@ const main = async () => {
   const failures = [];
 
   console.log(
-    `[seo:audit] Auditing ${auditRoutes.length} prerender route(s) (extended=${includeExtendedRoutes ? "on" : "off"}, projectDetail=${includeProjectDetailRoutes ? "on" : "off"})`
+    `[seo:audit] Auditing ${auditRoutes.length} prerender route(s) from ${BUILD_OUTPUT_MODE} build output (extended=${includeExtendedRoutes ? "on" : "off"}, projectDetail=${includeProjectDetailRoutes ? "on" : "off"})`
   );
 
   for (const route of auditRoutes) {

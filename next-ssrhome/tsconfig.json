@@ -1,0 +1,77 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2020"
+    ],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/hooks/useSiteAssets": [
+        "./compat/useSiteAssets.ts"
+      ],
+      "@/data/projects": [
+        "./compat/projects.ts"
+      ],
+      "@/integrations/supabase/client": [
+        "./compat/supabase-client.ts"
+      ],
+      "@/config/endpoints": [
+        "./compat/endpoints.ts"
+      ],
+      "@/components/SEO": [
+        "./compat/SEO.tsx"
+      ],
+      "@/components/JsonLd": [
+        "./components/JsonLd.tsx"
+      ],
+      "@/components/route-clients": [
+        "./components/route-clients.tsx"
+      ],
+      "@/lib/metaPixel": [
+        "./compat/metaPixel.ts"
+      ],
+      "@/lib/seo": [
+        "./lib/seo.ts"
+      ],
+      "react-router-dom": [
+        "./compat/react-router-dom.tsx"
+      ],
+      "@/*": [
+        "../src/*"
+      ],
+      "@/components/ResponsiveImage": [
+        "./compat/ResponsiveImage.tsx"
+      ],
+      "@/components/ui/button": [
+        "./compat/button.tsx"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -8,8 +8,9 @@ This is the official website for Concept Design Construct, a QBCC licensed build
 
 ## Technology Stack
 
+- **Next.js (App Router)** - Production web framework for the full site
 - **React** - UI framework
-- **Vite** - Build tool with prerendering for SEO
+- **Vite** - Legacy runtime retained temporarily for archival/rollback branch only
 - **TypeScript** - Type safety
 - **Tailwind CSS** - Styling
 - **shadcn/ui** - Component library
@@ -22,15 +23,30 @@ This is the official website for Concept Design Construct, a QBCC licensed build
 # Install dependencies
 npm install
 
-# Start development server
+# Start primary Next.js app
 npm run dev
 
-# Build for production
+# Build primary Next.js app
 npm run build
 
-# Preview production build
+# Run primary Next.js production server
 npm run preview
+
+# Optional cutover parity + SEO build audit
+npm run cutover:audit
+
+# Legacy React/Vite commands (temporary rollback support only)
+npm run dev:legacy
+npm run build:legacy
+npm run preview:legacy
 ```
+
+## Deployment
+
+- `vercel.json` is configured for Next.js cutover:
+  - no SPA rewrites to `/index.html`
+  - legacy URL redirects preserved
+  - build uses `npm run build` and installs `next-ssrhome` dependencies
 
 ## Security Model
 
@@ -46,7 +62,7 @@ npm run security:audit
 
 ## SEO Features
 
-- Pre-rendered HTML for critical landing pages
+- SSR/SSG metadata coverage for all public Next routes
 - Structured data (JSON-LD) for rich snippets
 - Optimised meta tags for Gold Coast renovation keywords
 - XML sitemap and robots.txt
@@ -64,7 +80,7 @@ To pull live project slugs from Supabase during build, set one of these env pair
 - `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` (recommended)
 - `VITE_SUPABASE_URL` + `VITE_SUPABASE_ANON_KEY` (fallback)
 
-If env vars are missing, sync falls back to static/public slug sources and only uses previous generated slugs as an emergency fallback when all authoritative sources are empty.
+If env vars are missing, sync falls back to static/public/generated slug sources to prevent accidental slug loss.
 
 ### SEO Reliability Tooling (Backend-Only)
 
@@ -93,7 +109,6 @@ Runtime monitor environment options:
 ## Service Areas
 
 - Gold Coast
-- Brisbane
 - South East Queensland
 
 ## Contact
