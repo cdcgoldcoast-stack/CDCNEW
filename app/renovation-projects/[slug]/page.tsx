@@ -20,7 +20,7 @@ const fallbackDescription = (slug: string) =>
 
 const findStaticProject = (slug: string) =>
   projects.find((project) => project.slug === slug || project.name.toLowerCase().replace(/\s+/g, "-") === slug);
-const DEFAULT_ARTICLE_TIMESTAMP = "2024-01-15T00:00:00.000Z";
+const DEFAULT_PROJECT_TIMESTAMP = "2024-01-15T00:00:00.000Z";
 
 const normalizeIsoDate = (value?: string | null) => {
   if (!value) return undefined;
@@ -41,13 +41,13 @@ export function generateMetadata({ params }: PageProps): Metadata {
     ? `${project.name} | ${categoryLabel} Renovation ${location}`
     : `${titleFromSlug(params.slug)} | Gold Coast Renovation Project`;
   const description = project?.description || fallbackDescription(params.slug);
-  const articlePublishedTime =
+  const projectPublishedTime =
     normalizeIsoDate(project?.publishedAt) ||
     publishedTimeFromYear(project?.year) ||
-    DEFAULT_ARTICLE_TIMESTAMP;
-  const articleModifiedTime = normalizeIsoDate(project?.modifiedAt) || articlePublishedTime;
-  const articleAuthor = project?.authorName || SITE_NAME;
-  const articleTags = project?.tags?.length
+    DEFAULT_PROJECT_TIMESTAMP;
+  const projectModifiedTime = normalizeIsoDate(project?.modifiedAt) || projectPublishedTime;
+  const projectAuthor = project?.authorName || SITE_NAME;
+  const projectTags = project?.tags?.length
     ? project.tags
     : [
         "Gold Coast renovation project",
@@ -61,12 +61,8 @@ export function generateMetadata({ params }: PageProps): Metadata {
     description,
     path: `/renovation-projects/${project?.slug || params.slug}`,
     image: project?.image,
-    type: "article",
-    keywords: articleTags,
-    author: articleAuthor,
-    articlePublishedTime,
-    articleModifiedTime,
-    articleTags,
+    keywords: projectTags,
+    author: projectAuthor,
   });
 }
 
@@ -84,11 +80,11 @@ export default function Page({ params }: PageProps) {
   const projectCategory = project?.category || "whole-home";
   const projectYear = project?.year || "";
   const projectSlug = project?.slug || params.slug;
-  const articlePublishedTime =
+  const projectPublishedTime =
     normalizeIsoDate(project?.publishedAt) ||
     publishedTimeFromYear(project?.year) ||
-    DEFAULT_ARTICLE_TIMESTAMP;
-  const articleModifiedTime = normalizeIsoDate(project?.modifiedAt) || articlePublishedTime;
+    DEFAULT_PROJECT_TIMESTAMP;
+  const projectModifiedTime = normalizeIsoDate(project?.modifiedAt) || projectPublishedTime;
 
   const projectSchema = generateProjectSchema({
     name: projectName,
@@ -98,8 +94,8 @@ export default function Page({ params }: PageProps) {
     image: projectImage,
     category: projectCategory,
     path: `/renovation-projects/${projectSlug}`,
-    publishedAt: articlePublishedTime,
-    modifiedAt: articleModifiedTime,
+    publishedAt: projectPublishedTime,
+    modifiedAt: projectModifiedTime,
     authorName: project?.authorName || SITE_NAME,
     tags: project?.tags,
   });

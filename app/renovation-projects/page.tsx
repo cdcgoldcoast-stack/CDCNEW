@@ -44,6 +44,20 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, itemListSchema, breadcrumbSchema]} />
+      <section className="sr-only" aria-label="Project route index for search crawlers">
+        <p>Gold Coast renovation project directory.</p>
+        <p>
+          Browse completed Concept Design Construct projects across kitchen, bathroom, and whole-home renovations on
+          the Gold Coast.
+        </p>
+        <ul>
+          {slugs.map((slug) => (
+            <li key={slug}>
+              <a href={`/renovation-projects/${slug}`}>{titleFromSlug(slug)} renovation project</a>
+            </li>
+          ))}
+        </ul>
+      </section>
       <RenovationProjectsClient />
     </>
   );

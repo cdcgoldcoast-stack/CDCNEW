@@ -10,7 +10,6 @@ export default function robots(): MetadataRoute.Robots {
           "/admin",
           "/admin/",
           "/auth",
-          "/print-brochure",
           "/brand-guidelines",
           "/api/",
         ],

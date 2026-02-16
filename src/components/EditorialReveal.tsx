@@ -8,7 +8,7 @@ const EditorialReveal = () => {
   const [blackOverlay, setBlackOverlay] = useState(0);
   const [parallaxOffset, setParallaxOffset] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const { assets, ready } = useSiteAssets();
+  const { assets } = useSiteAssets();
   const sectionRef = useRef<HTMLElement>(null);
   const shouldLoadImages = useInView(sectionRef, { margin: "200px 0px", once: true });
 
@@ -132,6 +132,11 @@ const EditorialReveal = () => {
 
   const outerTransform = `translateY(${-parallaxOffset}px)`;
   const centerTransform = `translateY(${80 + parallaxOffset}px)`;
+  const editorialImageQuality = 54;
+  const editorialResponsiveWidths = [240, 320, 480, 640, 800] as const;
+
+  const objectPositionClass = (position?: string) =>
+    position?.includes("top") ? "object-top" : "object-bottom";
 
   // Mobile: 3 columns simple grid
   if (isMobile) {
@@ -151,6 +156,8 @@ const EditorialReveal = () => {
                   className={`w-full h-full object-cover ${img.objPos}`}
                   loading="lazy"
                   decoding="async"
+                  quality={editorialImageQuality}
+                  responsiveWidths={editorialResponsiveWidths}
                 />
               )}
             </div>
@@ -168,6 +175,8 @@ const EditorialReveal = () => {
                   className={`w-full h-full object-cover ${img.objPos}`}
                   loading="lazy"
                   decoding="async"
+                  quality={editorialImageQuality}
+                  responsiveWidths={editorialResponsiveWidths}
                 />
               )}
             </div>
@@ -186,9 +195,17 @@ const EditorialReveal = () => {
           {tabletImages.filter((_, i) => i % 2 === 0).map((img, i) => (
             <div key={i} className="aspect-[2/3] overflow-hidden bg-muted">
               {img.src && (
-                <div 
-                  className={`w-full h-full bg-cover ${img.bgPos} bg-muted`}
-                  style={{ backgroundImage: shouldLoadImages && img.src ? `url(${img.src})` : "none" }}
+                <ResponsiveImage
+                  src={shouldLoadImages ? img.src : null}
+                  alt={`Renovation inspiration editorial image ${i + 1}`}
+                  width={800}
+                  height={1200}
+                  sizes="25vw"
+                  className={`w-full h-full object-cover ${objectPositionClass(img.bgPos)}`}
+                  loading="lazy"
+                  decoding="async"
+                  quality={editorialImageQuality}
+                  responsiveWidths={editorialResponsiveWidths}
                 />
               )}
             </div>
@@ -197,9 +214,17 @@ const EditorialReveal = () => {
           {tabletImages.filter((_, i) => i % 2 === 1).map((img, i) => (
             <div key={i + 4} className="aspect-[2/3] overflow-hidden bg-muted">
               {img.src && (
-                <div 
-                  className={`w-full h-full bg-cover ${img.bgPos} bg-muted`}
-                  style={{ backgroundImage: shouldLoadImages && img.src ? `url(${img.src})` : "none" }}
+                <ResponsiveImage
+                  src={shouldLoadImages ? img.src : null}
+                  alt={`Renovation inspiration editorial image ${i + 5}`}
+                  width={800}
+                  height={1200}
+                  sizes="25vw"
+                  className={`w-full h-full object-cover ${objectPositionClass(img.bgPos)}`}
+                  loading="lazy"
+                  decoding="async"
+                  quality={editorialImageQuality}
+                  responsiveWidths={editorialResponsiveWidths}
                 />
               )}
             </div>
@@ -224,100 +249,36 @@ const EditorialReveal = () => {
           style={{ opacity: blackOverlay }}
         />
         <div className="h-full w-full flex gap-[24px]">
-          {/* Column 1 - outer transform */}
-          <div 
-            className="flex-1 flex flex-col gap-[24px] items-center justify-center transition-transform duration-100 ease-out"
-            style={{ transform: outerTransform }}
-          >
-            <div className="relative w-full aspect-[2/3]">
-              <div 
-                className={`absolute inset-0 bg-cover bg-muted ${desktopImages[0].bgPos}`}
-                style={{ backgroundImage: shouldLoadImages && desktopImages[0].src ? `url(${desktopImages[0].src})` : "none" }}
-              />
+          {[
+            { items: [desktopImages[0], desktopImages[1]], transform: outerTransform },
+            { items: [desktopImages[2], desktopImages[3]], transform: centerTransform },
+            { items: [desktopImages[4], desktopImages[5]], transform: outerTransform },
+            { items: [desktopImages[6], desktopImages[7]], transform: centerTransform },
+            { items: [desktopImages[8], desktopImages[9]], transform: outerTransform },
+          ].map((column, columnIndex) => (
+            <div
+              key={`desktop-column-${columnIndex}`}
+              className="flex-1 flex flex-col gap-[24px] items-center justify-center transition-transform duration-100 ease-out"
+              style={{ transform: column.transform }}
+            >
+              {column.items.map((image, imageIndex) => (
+                <div key={`desktop-image-${columnIndex}-${imageIndex}`} className="relative w-full aspect-[2/3] bg-muted">
+                  <ResponsiveImage
+                    src={shouldLoadImages ? image.src : null}
+                    alt={`Renovation inspiration editorial image ${columnIndex * 2 + imageIndex + 1}`}
+                    width={800}
+                    height={1200}
+                    sizes="20vw"
+                    className={`absolute inset-0 w-full h-full object-cover ${objectPositionClass(image.bgPos)}`}
+                    loading="lazy"
+                    decoding="async"
+                    quality={editorialImageQuality}
+                    responsiveWidths={editorialResponsiveWidths}
+                  />
+                </div>
+              ))}
             </div>
-            <div className="relative w-full aspect-[2/3]">
-              <div 
-                className={`absolute inset-0 bg-cover bg-muted ${desktopImages[1].bgPos}`}
-                style={{ backgroundImage: shouldLoadImages && desktopImages[1].src ? `url(${desktopImages[1].src})` : "none" }}
-              />
-            </div>
-          </div>
-          
-          {/* Column 2 - center transform */}
-          <div 
-            className="flex-1 flex flex-col gap-[24px] items-center justify-center transition-transform duration-100 ease-out"
-            style={{ transform: centerTransform }}
-          >
-            <div className="relative w-full aspect-[2/3]">
-              <div 
-                className={`absolute inset-0 bg-cover bg-muted ${desktopImages[2].bgPos}`}
-                style={{ backgroundImage: shouldLoadImages && desktopImages[2].src ? `url(${desktopImages[2].src})` : "none" }}
-              />
-            </div>
-            <div className="relative w-full aspect-[2/3]">
-              <div 
-                className={`absolute inset-0 bg-cover bg-muted ${desktopImages[3].bgPos}`}
-                style={{ backgroundImage: shouldLoadImages && desktopImages[3].src ? `url(${desktopImages[3].src})` : "none" }}
-              />
-            </div>
-          </div>
-          
-          {/* Column 3 - outer transform */}
-          <div 
-            className="flex-1 flex flex-col gap-[24px] items-center justify-center transition-transform duration-100 ease-out"
-            style={{ transform: outerTransform }}
-          >
-            <div className="relative w-full aspect-[2/3]">
-              <div 
-                className={`absolute inset-0 bg-cover bg-muted ${desktopImages[4].bgPos}`}
-                style={{ backgroundImage: shouldLoadImages && desktopImages[4].src ? `url(${desktopImages[4].src})` : "none" }}
-              />
-            </div>
-            <div className="relative w-full aspect-[2/3]">
-              <div 
-                className={`absolute inset-0 bg-cover bg-muted ${desktopImages[5].bgPos}`}
-                style={{ backgroundImage: shouldLoadImages && desktopImages[5].src ? `url(${desktopImages[5].src})` : "none" }}
-              />
-            </div>
-          </div>
-
-          {/* Column 4 - center transform */}
-          <div 
-            className="flex-1 flex flex-col gap-[24px] items-center justify-center transition-transform duration-100 ease-out"
-            style={{ transform: centerTransform }}
-          >
-            <div className="relative w-full aspect-[2/3]">
-              <div 
-                className={`absolute inset-0 bg-cover bg-muted ${desktopImages[6].bgPos}`}
-                style={{ backgroundImage: shouldLoadImages && desktopImages[6].src ? `url(${desktopImages[6].src})` : "none" }}
-              />
-            </div>
-            <div className="relative w-full aspect-[2/3]">
-              <div 
-                className={`absolute inset-0 bg-cover bg-muted ${desktopImages[7].bgPos}`}
-                style={{ backgroundImage: shouldLoadImages && desktopImages[7].src ? `url(${desktopImages[7].src})` : "none" }}
-              />
-            </div>
-          </div>
-
-          {/* Column 5 - outer transform */}
-          <div 
-            className="flex-1 flex flex-col gap-[24px] items-center justify-center transition-transform duration-100 ease-out"
-            style={{ transform: outerTransform }}
-          >
-            <div className="relative w-full aspect-[2/3]">
-              <div 
-                className={`absolute inset-0 bg-cover bg-muted ${desktopImages[8].bgPos}`}
-                style={{ backgroundImage: shouldLoadImages && desktopImages[8].src ? `url(${desktopImages[8].src})` : "none" }}
-              />
-            </div>
-            <div className="relative w-full aspect-[2/3]">
-              <div 
-                className={`absolute inset-0 bg-cover bg-muted ${desktopImages[9].bgPos}`}
-                style={{ backgroundImage: shouldLoadImages && desktopImages[9].src ? `url(${desktopImages[9].src})` : "none" }}
-              />
-            </div>
-          </div>
+          ))}
         </div>
       </div>
       

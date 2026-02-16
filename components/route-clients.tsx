@@ -12,7 +12,6 @@ import GetQuotePage from "@/views/GetQuote";
 import LifeStagesPage from "@/views/LifeStages";
 import MoodboardCreatorPage from "@/views/MoodboardCreator";
 import NotFoundPage from "@/views/NotFound";
-import PrintBrochurePage from "@/views/PrintBrochure";
 import PrivacyPolicyPage from "@/views/PrivacyPolicy";
 import ProjectDetailPage from "@/views/ProjectDetail";
 import ServicesPage from "@/views/Services";
@@ -91,14 +90,6 @@ export function BrandGuidelinesClient() {
   return (
     <RequireAdmin>
       <BrandGuidelinesPage />
-    </RequireAdmin>
-  );
-}
-
-export function PrintBrochureClient() {
-  return (
-    <RequireAdmin>
-      <PrintBrochurePage />
     </RequireAdmin>
   );
 }

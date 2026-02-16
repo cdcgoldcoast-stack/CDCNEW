@@ -1,4 +1,17 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "cdconstruct.com.au"
+        }
+      ],
+      "destination": "https://www.cdconstruct.com.au/:path*",
+      "permanent": true
+    }
+  ]
 }

@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import SEO from "@/components/SEO";
 import { generateContactPageSchema } from "@/lib/structured-data";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 const renovationOptions = [
   { id: "bathroom", label: "Bathroom" },
@@ -154,6 +155,13 @@ const GetQuote = () => {
         throw error;
       }
       if (data?.error) throw new Error(data.error);
+
+      const primaryRenovation = formData.renovations[0] || "general";
+      trackAnalyticsEvent({
+        event_name: "quote_form_submit",
+        cta_location: "form",
+        lead_type: primaryRenovation,
+      });
 
       setSubmitted(true);
     } catch (error: unknown) {

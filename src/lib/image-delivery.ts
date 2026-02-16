@@ -1,6 +1,6 @@
 const SUPABASE_STORAGE_SEGMENT = "/storage/v1/object/public/";
 
-export const DEFAULT_RESPONSIVE_WIDTHS = [480, 768, 1024, 1366, 1600] as const;
+export const DEFAULT_RESPONSIVE_WIDTHS = [320, 480, 640, 768, 960, 1200] as const;
 
 export type ModernImageFormat = "avif" | "webp";
 
@@ -78,4 +78,3 @@ export const buildSupabaseSrcSet = (
     .map((width) => `${buildSupabaseImageUrl(originalUrl, { ...options, width })} ${width}w`)
     .join(", ");
 };
-

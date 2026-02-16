@@ -38,42 +38,74 @@ export const generateFAQSchema = (faqs: FAQItem[]) => ({
 });
 
 /**
- * Generate CreativeWork/Project structured data for project pages
+ * Generate WebPage + CreativeWork structured data for project pages
  */
-export const generateProjectSchema = (project: ProjectData) => ({
-  "@context": "https://schema.org",
-  "@type": "CreativeWork",
-  "@id": `${PRODUCTION_DOMAIN}${project.path || ""}#project`,
-  name: project.name,
-  description: project.description,
-  dateCreated: project.year?.toString() || undefined,
-  datePublished: project.publishedAt || undefined,
-  dateModified: project.modifiedAt || undefined,
-  mainEntityOfPage: project.path ? `${PRODUCTION_DOMAIN}${project.path}` : undefined,
-  locationCreated: project.location ? {
-    "@type": "Place",
-    name: project.location,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: project.location,
-      addressRegion: SERVICE_AREAS.state,
-      addressCountry: SERVICE_AREAS.country,
+export const generateProjectSchema = (project: ProjectData) => {
+  const path = project.path || "";
+  const pageUrl = `${PRODUCTION_DOMAIN}${path}`;
+  const imageUrl = project.image.startsWith("http") ? project.image : `${PRODUCTION_DOMAIN}${project.image}`;
+  const aboutTopics = [
+    "Gold Coast renovation project",
+    `${project.category} renovation`,
+    project.location ? `${project.location} renovation` : "Gold Coast home renovation",
+  ];
+
+  const contentLocation = project.location
+    ? {
+        "@type": "Place",
+        name: project.location,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: project.location,
+          addressRegion: SERVICE_AREAS.state,
+          addressCountry: SERVICE_AREAS.country,
+        },
+      }
+    : undefined;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${pageUrl}#webpage`,
+    name: `${project.name} Renovation Project`,
+    description: project.description,
+    url: pageUrl,
+    image: imageUrl,
+    about: aboutTopics,
+    contentLocation,
+    provider: {
+      "@id": ORGANIZATION_ID,
     },
-  } : undefined,
-  image: project.image.startsWith("http") ? project.image : `${PRODUCTION_DOMAIN}${project.image}`,
-  creator: {
-    "@id": ORGANIZATION_ID,
-  },
-  author: {
-    "@type": "Person",
-    name: project.authorName || SITE_NAME,
-  },
-  publisher: {
-    "@id": ORGANIZATION_ID,
-  },
-  genre: project.category,
-  keywords: project.tags?.length ? project.tags.join(", ") : undefined,
-});
+    mainEntity: {
+      "@type": "CreativeWork",
+      "@id": `${pageUrl}#creativework`,
+      name: project.name,
+      description: project.description,
+      image: imageUrl,
+      about: aboutTopics,
+      genre: project.category,
+      dateCreated: project.year?.toString() || undefined,
+      datePublished: project.publishedAt || undefined,
+      dateModified: project.modifiedAt || undefined,
+      mainEntityOfPage: pageUrl || undefined,
+      contentLocation,
+      provider: {
+        "@id": ORGANIZATION_ID,
+      },
+      creator: {
+        "@id": ORGANIZATION_ID,
+      },
+      author: {
+        "@type": "Person",
+        name: project.authorName || SITE_NAME,
+      },
+      publisher: {
+        "@id": ORGANIZATION_ID,
+      },
+      keywords: project.tags?.length ? project.tags.join(", ") : undefined,
+    },
+  };
+};
 
 /**
  * Generate BreadcrumbList structured data

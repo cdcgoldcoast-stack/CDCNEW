@@ -122,6 +122,8 @@ const Gallery = () => {
                     sizes="(min-width: 1024px) 32vw, (min-width: 640px) 48vw, 100vw"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
+                    quality={60}
+                    responsiveWidths={[320, 480, 640, 800, 960]}
                   />
                   
                   {/* Subtle overlay gradient */}

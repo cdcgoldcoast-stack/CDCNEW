@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -8,7 +8,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import { SpeedInsights } from "@vercel/speed-insights/react";
-import { initGoogleAnalytics } from "@/lib/analytics";
+import { initGoogleAnalytics, trackPageView } from "@/lib/analytics";
 import { initMetaPixel, trackMetaPixelPageView } from "@/lib/metaPixel";
 
 const AIChatWidget = dynamic(() => import("@/components/AIChatWidget"), {
@@ -23,6 +23,7 @@ export default function AppProviders({ children }: AppProvidersProps) {
   const pathname = usePathname();
   const [queryClient] = useState(() => new QueryClient());
   const [showChatWidget, setShowChatWidget] = useState(false);
+  const isFirstPathRender = useRef(true);
 
   useEffect(() => {
     initGoogleAnalytics();
@@ -30,6 +31,14 @@ export default function AppProviders({ children }: AppProvidersProps) {
   }, []);
 
   useEffect(() => {
+    if (!pathname) return;
+
+    trackPageView(pathname);
+
+    if (isFirstPathRender.current) {
+      isFirstPathRender.current = false;
+      return;
+    }
     trackMetaPixelPageView();
   }, [pathname]);
 

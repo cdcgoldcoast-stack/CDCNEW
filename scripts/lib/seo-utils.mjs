@@ -37,7 +37,6 @@ export const NOINDEX_EXACT_ROUTES = new Set([
   "/404",
   "/auth",
   "/brand-guidelines",
-  "/print-brochure",
 ]);
 
 export const NOINDEX_PREFIXES = ["/admin"];

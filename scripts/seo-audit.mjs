@@ -83,6 +83,20 @@ const ROUTES_REQUIRING_EMPHASIS = new Set([
   "/life-stages",
   "/renovation-design-tools/ai-generator/intro",
 ]);
+const ORPHAN_ROUTE_EXCEPTIONS = new Set([]);
+
+const REQUIRED_SSR_CONTENT_FRAGMENTS = {
+  "/": [
+    "Gold Coast Renovations - Locally Trusted",
+    "Gold Coast Renovation Services",
+  ],
+  "/services": ["Gold Coast Renovation Services Built Around How You Live"],
+};
+
+const GOOGLEBOT_PARITY_ROUTES = ["/", "/services"];
+const GOOGLEBOT_USER_AGENT = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
+const STANDARD_BROWSER_USER_AGENT =
+  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 
 const includeExtendedRoutes = parseEnvBoolean(process.env.PRERENDER_EXTENDED, true);
 const includeProjectDetailRoutes = parseEnvBoolean(process.env.PRERENDER_PROJECT_DETAIL, true);
@@ -92,11 +106,30 @@ const performHttpChecks = parseEnvBoolean(
 );
 const maxHttpChecks = Number.parseInt(process.env.SEO_AUDIT_MAX_HTTP_CHECKS || "80", 10);
 const httpTimeoutMs = Number.parseInt(process.env.SEO_AUDIT_TIMEOUT_MS || "12000", 10);
+const liveHttpOrigin = (() => {
+  const rawValue = `${process.env.SEO_AUDIT_HTTP_ORIGIN || PRODUCTION_DOMAIN}`.trim();
+  try {
+    const parsed = new URL(rawValue);
+    parsed.pathname = "/";
+    parsed.search = "";
+    parsed.hash = "";
+    return parsed.toString().replace(/\/$/, "");
+  } catch {
+    return PRODUCTION_DOMAIN;
+  }
+})();
 
 const routeToFilePath = (route) => {
   if (route === "/") return path.join(NEXT_SERVER_APP_DIR, "index.html");
   return path.join(NEXT_SERVER_APP_DIR, `${route.replace(/^\//, "")}.html`);
 };
+
+const normalizeComparableText = (value) =>
+  value
+    .replace(/[–—]/g, "-")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
 
 const extractMetaByName = (document, name) => {
   const meta = document.querySelector(`meta[name="${name}"]`);
@@ -106,6 +139,48 @@ const extractMetaByName = (document, name) => {
 const extractMetaByProperty = (document, property) => {
   const meta = document.querySelector(`meta[property="${property}"]`);
   return meta?.getAttribute("content")?.trim() || "";
+};
+
+const normalizeInternalHrefPath = (href, baseRoute) => {
+  const trimmed = `${href || ""}`.trim();
+  if (!trimmed) return "";
+  if (trimmed.startsWith("#")) return "";
+  if (/^(mailto|tel|javascript|data):/i.test(trimmed)) return "";
+  if (trimmed.startsWith("//")) return "";
+
+  if (trimmed.startsWith("/")) {
+    const cleanPath = trimmed.split(/[?#]/)[0] || "/";
+    return normalizePath(cleanPath);
+  }
+
+  try {
+    if (/^https?:\/\//i.test(trimmed)) {
+      if (!sameDomain(trimmed, PRODUCTION_DOMAIN)) return "";
+      return pathFromUrl(trimmed, PRODUCTION_DOMAIN);
+    }
+
+    const resolvedUrl = new URL(trimmed, canonicalForPath(baseRoute)).toString();
+    if (!sameDomain(resolvedUrl, PRODUCTION_DOMAIN)) return "";
+    return pathFromUrl(resolvedUrl, PRODUCTION_DOMAIN);
+  } catch {
+    return "";
+  }
+};
+
+const collectInternalLinksFromDocument = (document, baseRoute) => {
+  const links = new Set();
+  const anchors = [...document.querySelectorAll("a[href]")];
+
+  for (const anchor of anchors) {
+    const href = anchor.getAttribute("href");
+    const routePath = normalizeInternalHrefPath(href, baseRoute);
+    if (!routePath) continue;
+    if (routePath.startsWith("/_next")) continue;
+    if (routePath.startsWith("/api")) continue;
+    links.add(routePath);
+  }
+
+  return links;
 };
 
 const hasFollowedInternalLinks = (document) => {
@@ -324,6 +399,60 @@ const getAuditRoutes = async () => {
   return [...new Set(routes.map((route) => normalizePath(route)))];
 };
 
+const auditInternalLinkGraph = async ({ routes, vercelConfig }) => {
+  const issues = [];
+  const issueSet = new Set();
+  const redirectPairs = extractStaticRedirectPairs(vercelConfig.redirects || []);
+  const validTargets = new Set([
+    ...routes,
+    ...redirectPairs.map((pair) => pair.sourcePath),
+  ]);
+  const inboundCount = new Map(routes.map((route) => [route, 0]));
+
+  for (const route of routes) {
+    const htmlPath = routeToFilePath(route);
+    let html = "";
+    try {
+      html = await fs.readFile(htmlPath, "utf8");
+    } catch {
+      // Missing files are already reported in route-level audit.
+      continue;
+    }
+
+    const document = new JSDOM(html).window.document;
+    const links = collectInternalLinksFromDocument(document, route);
+
+    for (const targetPath of links) {
+      if (!validTargets.has(targetPath)) {
+        issueSet.add(`Broken internal link: ${route} -> ${targetPath}`);
+        continue;
+      }
+      if (inboundCount.has(targetPath) && targetPath !== route) {
+        inboundCount.set(targetPath, (inboundCount.get(targetPath) || 0) + 1);
+      }
+    }
+  }
+
+  const orphanRoutes = [...inboundCount.entries()]
+    .filter(
+      ([route, count]) =>
+        route !== "/" &&
+        count === 0 &&
+        !ORPHAN_ROUTE_EXCEPTIONS.has(route)
+    )
+    .map(([route]) => route)
+    .sort();
+
+  if (orphanRoutes.length > 0) {
+    issueSet.add(
+      `Indexable orphan routes found (${orphanRoutes.length}): ${orphanRoutes.slice(0, 20).join(", ")}`
+    );
+  }
+
+  issues.push(...issueSet);
+  return issues;
+};
+
 const auditRouteHtml = async (route) => {
   const issues = [];
   const htmlPath = routeToFilePath(route);
@@ -338,6 +467,7 @@ const auditRouteHtml = async (route) => {
 
   const document = new JSDOM(html).window.document;
   const isProjectRoute = isProjectDetailPath(route);
+  const bodyText = normalizeComparableText(document.body?.textContent || html);
 
   const titleTag = document.querySelector("title")?.textContent?.trim() || "";
   if (!titleTag) {
@@ -394,20 +524,32 @@ const auditRouteHtml = async (route) => {
   }
 
   if (isProjectRoute) {
-    const ogType = extractMetaByProperty(document, "og:type");
-    if (ogType && ogType !== "article") {
-      issues.push(`Project route og:type should be article (found: ${ogType})`);
+    const jsonLdContent = [...document.querySelectorAll('script[type="application/ld+json"]')]
+      .map((script) => script.textContent || "")
+      .join("\n");
+    if (!jsonLdContent.includes('"CreativeWork"')) {
+      issues.push("Project route is missing CreativeWork schema");
     }
+    if (!jsonLdContent.includes("mainEntityOfPage")) {
+      issues.push("Project route schema is missing mainEntityOfPage");
+    }
+    if (!(jsonLdContent.includes("contentLocation") || jsonLdContent.includes("locationCreated"))) {
+      issues.push("Project route schema is missing content location");
+    }
+    if (!jsonLdContent.includes('"provider"')) {
+      issues.push("Project route schema is missing provider");
+    }
+  }
 
-    const articlePublished = extractMetaByProperty(document, "article:published_time");
-    const articleModified = extractMetaByProperty(document, "article:modified_time");
-    const articleAuthor = extractMetaByProperty(document, "article:author");
-    const articleTag = extractMetaByProperty(document, "article:tag");
+  const requiredFragments = REQUIRED_SSR_CONTENT_FRAGMENTS[route] || [];
+  for (const fragment of requiredFragments) {
+    if (!bodyText.includes(normalizeComparableText(fragment))) {
+      issues.push(`Missing required crawlable content fragment: "${fragment}"`);
+    }
+  }
 
-    if (!articlePublished) issues.push("Missing article:published_time");
-    if (!articleModified) issues.push("Missing article:modified_time");
-    if (!articleAuthor) issues.push("Missing article:author");
-    if (!articleTag) issues.push("Missing article:tag");
+  if (route === "/" && bodyText.length < 600) {
+    issues.push("Homepage appears too thin in rendered HTML body text");
   }
 
   if (process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && !extractMetaByName(document, "google-site-verification")) {
@@ -420,8 +562,11 @@ const auditRouteHtml = async (route) => {
     issues.push("Missing yandex-verification meta");
   }
 
-  if (document.querySelectorAll("h1").length === 0) {
+  const h1Count = document.querySelectorAll("h1").length;
+  if (h1Count === 0) {
     issues.push("Missing H1");
+  } else if (h1Count > 1) {
+    issues.push(`Expected single H1 but found ${h1Count}`);
   }
 
   if (document.querySelectorAll("h2").length === 0) {
@@ -599,6 +744,7 @@ const auditSitemapStructure = async ({ generatedProjectSlugs, vercelConfig }) =>
 
   return {
     issues,
+    sitemapPaths: [...seenPaths],
     sitemapUrls: [...seenUrls],
   };
 };
@@ -620,11 +766,82 @@ const fetchWithTimeout = async (url, options = {}) => {
   }
 };
 
-const auditLiveSitemapUrls = async (sitemapUrls) => {
-  const issues = [];
-  const urlsToCheck = sitemapUrls.slice(0, Math.max(1, maxHttpChecks));
+const fetchLiveHtmlForRoute = async (route, userAgent) => {
+  const url = canonicalForPath(route, liveHttpOrigin);
+  const response = await fetchWithTimeout(url, {
+    redirect: "follow",
+    headers: {
+      "user-agent": userAgent,
+      accept: "text/html,application/xhtml+xml",
+    },
+  });
 
-  for (const url of urlsToCheck) {
+  if (response.status !== 200) {
+    throw new Error(`${url} returned status ${response.status}`);
+  }
+
+  const contentType = (response.headers.get("content-type") || "").toLowerCase();
+  if (!contentType.includes("text/html")) {
+    throw new Error(`${url} returned non-HTML content type: ${contentType || "<missing>"}`);
+  }
+
+  return response.text();
+};
+
+const auditGooglebotParity = async () => {
+  const issues = [];
+
+  for (const route of GOOGLEBOT_PARITY_ROUTES) {
+    let standardHtml;
+    let googlebotHtml;
+
+    try {
+      [standardHtml, googlebotHtml] = await Promise.all([
+        fetchLiveHtmlForRoute(route, STANDARD_BROWSER_USER_AGENT),
+        fetchLiveHtmlForRoute(route, GOOGLEBOT_USER_AGENT),
+      ]);
+    } catch (error) {
+      issues.push(`Googlebot parity fetch failed for ${route}: ${String(error)}`);
+      continue;
+    }
+
+    const standardText = normalizeComparableText(new JSDOM(standardHtml).window.document.body?.textContent || "");
+    const googlebotText = normalizeComparableText(new JSDOM(googlebotHtml).window.document.body?.textContent || "");
+
+    if (!standardText || !googlebotText) {
+      issues.push(`Googlebot parity text extraction failed for ${route}`);
+      continue;
+    }
+
+    const shortest = Math.min(standardText.length, googlebotText.length);
+    const longest = Math.max(standardText.length, googlebotText.length);
+    if (longest > 0 && shortest / longest < 0.7) {
+      issues.push(
+        `Googlebot parity mismatch for ${route}: body text lengths differ significantly (browser=${standardText.length}, googlebot=${googlebotText.length})`
+      );
+    }
+
+    const requiredFragments = REQUIRED_SSR_CONTENT_FRAGMENTS[route] || [];
+    for (const fragment of requiredFragments) {
+      const normalizedFragment = normalizeComparableText(fragment);
+      if (!standardText.includes(normalizedFragment)) {
+        issues.push(`Browser HTML missing required fragment on ${route}: "${fragment}"`);
+      }
+      if (!googlebotText.includes(normalizedFragment)) {
+        issues.push(`Googlebot HTML missing required fragment on ${route}: "${fragment}"`);
+      }
+    }
+  }
+
+  return issues;
+};
+
+const auditLiveSitemapUrls = async (sitemapPaths) => {
+  const issues = [];
+  const pathsToCheck = sitemapPaths.slice(0, Math.max(1, maxHttpChecks));
+
+  for (const routePath of pathsToCheck) {
+    const url = canonicalForPath(routePath, liveHttpOrigin);
     let response;
     try {
       response = await fetchWithTimeout(url, { redirect: "manual" });
@@ -662,25 +879,27 @@ const auditLiveSitemapUrls = async (sitemapUrls) => {
     }
 
     const normalizedCanonical = normalizeAbsoluteUrl(canonical);
-    const normalizedUrl = normalizeAbsoluteUrl(url);
+    const expectedCanonical = canonicalForPath(routePath, PRODUCTION_DOMAIN);
     if (!normalizedCanonical) {
       issues.push(`Invalid canonical URL on live page: ${url} -> ${canonical}`);
       continue;
     }
-    if (normalizedCanonical !== normalizedUrl) {
-      issues.push(`Live canonical mismatch: ${url} -> ${canonical}`);
+    if (normalizedCanonical !== normalizeAbsoluteUrl(expectedCanonical)) {
+      issues.push(`Live canonical mismatch: ${url} -> ${canonical} (expected ${expectedCanonical})`);
     }
 
-    try {
-      const canonicalResponse = await fetchWithTimeout(normalizedCanonical, { redirect: "manual" });
-      if (canonicalResponse.status >= 300 && canonicalResponse.status < 400) {
-        const location = canonicalResponse.headers.get("location") || "<missing>";
-        issues.push(
-          `Canonical URL redirects (${canonicalResponse.status}): ${normalizedCanonical} -> ${location}`
-        );
+    if (sameDomain(normalizedCanonical, liveHttpOrigin)) {
+      try {
+        const canonicalResponse = await fetchWithTimeout(normalizedCanonical, { redirect: "manual" });
+        if (canonicalResponse.status >= 300 && canonicalResponse.status < 400) {
+          const location = canonicalResponse.headers.get("location") || "<missing>";
+          issues.push(
+            `Canonical URL redirects (${canonicalResponse.status}): ${normalizedCanonical} -> ${location}`
+          );
+        }
+      } catch (error) {
+        issues.push(`Canonical reachability check failed for ${normalizedCanonical}: ${String(error)}`);
       }
-    } catch (error) {
-      issues.push(`Canonical reachability check failed for ${normalizedCanonical}: ${String(error)}`);
     }
   }
 
@@ -712,13 +931,29 @@ const main = async () => {
     failures.push({ scope: "[sitemap]", issues: sitemapAudit.issues });
   }
 
+  const linkGraphIssues = await auditInternalLinkGraph({ routes: auditRoutes, vercelConfig });
+  if (linkGraphIssues.length > 0) {
+    failures.push({ scope: "[links]", issues: linkGraphIssues });
+  }
+
   if (performHttpChecks) {
     console.log(
-      `[seo:audit] Running live URL checks for ${Math.min(sitemapAudit.sitemapUrls.length, maxHttpChecks)} sitemap URL(s)`
+      `[seo:audit] Running live URL checks for ${Math.min(
+        sitemapAudit.sitemapPaths.length,
+        maxHttpChecks
+      )} sitemap URL(s) using origin ${liveHttpOrigin}`
     );
-    const liveIssues = await auditLiveSitemapUrls(sitemapAudit.sitemapUrls);
+    const liveIssues = await auditLiveSitemapUrls(sitemapAudit.sitemapPaths);
     if (liveIssues.length > 0) {
       failures.push({ scope: "[live]", issues: liveIssues });
+    }
+
+    console.log(
+      `[seo:audit] Running Googlebot parity checks for ${GOOGLEBOT_PARITY_ROUTES.length} route(s) using origin ${liveHttpOrigin}`
+    );
+    const googlebotParityIssues = await auditGooglebotParity();
+    if (googlebotParityIssues.length > 0) {
+      failures.push({ scope: "[googlebot-parity]", issues: googlebotParityIssues });
     }
   } else {
     console.log("[seo:audit] Live URL checks skipped (set SEO_AUDIT_HTTP=1 to enable).");

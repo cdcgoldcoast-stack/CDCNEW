@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useResolvedAsset } from "@/hooks/useSiteAssets";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 const SCROLL_THRESHOLD = 10; // Minimum scroll distance to trigger hide/show
 
@@ -82,6 +83,22 @@ const Header = () => {
       : "bg-primary text-primary-foreground hover:opacity-90"
   }`;
 
+  const handleBookConsultationClick = () => {
+    trackAnalyticsEvent({
+      event_name: "book_consultation_click",
+      cta_location: "header",
+      lead_type: "consultation",
+    });
+  };
+
+  const handleCallClick = () => {
+    trackAnalyticsEvent({
+      event_name: "click_call",
+      cta_location: "header",
+      lead_type: "phone",
+    });
+  };
+
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 ease-out ${
@@ -124,10 +141,15 @@ const Header = () => {
               {link.label}
             </Link>
           ))}
-          <Link to="/get-quote" {...getPrefetchHandlers("/get-quote")} className={`${ctaClass} whitespace-nowrap flex-shrink-0`}>
+          <Link
+            to="/get-quote"
+            {...getPrefetchHandlers("/get-quote")}
+            className={`${ctaClass} whitespace-nowrap flex-shrink-0`}
+            onClick={handleBookConsultationClick}
+          >
             Book A Consultation
           </Link>
-          <a href="tel:1300020232" className={`${ctaClass} whitespace-nowrap flex-shrink-0`}>
+          <a href="tel:1300020232" className={`${ctaClass} whitespace-nowrap flex-shrink-0`} onClick={handleCallClick}>
             1300 020 232
           </a>
         </nav>
@@ -173,14 +195,20 @@ const Header = () => {
               to="/get-quote"
               {...getPrefetchHandlers("/get-quote")}
               className="text-label bg-primary text-primary-foreground px-5 py-2 inline-block w-fit"
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => {
+                handleBookConsultationClick();
+                setIsMenuOpen(false);
+              }}
             >
               Book A Renovation Consultation
             </Link>
             <a
               href="tel:1300020232"
               className="text-label bg-primary text-primary-foreground px-5 py-2 inline-block w-fit"
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => {
+                handleCallClick();
+                setIsMenuOpen(false);
+              }}
             >
               Call Now
             </a>

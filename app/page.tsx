@@ -70,6 +70,19 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={[webSiteSchema, localBusinessSchema, faqSchema]} />
+      <section className="sr-only" aria-label="Home page summary for search crawlers">
+        <h1>Gold Coast Renovations - Locally Trusted</h1>
+        <p>
+          Clear communication, realistic timelines, and quality results for kitchens, bathrooms, and
+          whole-home renovations across the Gold Coast.
+        </p>
+        <h2>Gold Coast Renovation Services</h2>
+        <ul>
+          <li>Kitchen renovations designed for flow, storage, and everyday usability.</li>
+          <li>Bathroom renovations focused on comfort, durability, and clean detailing.</li>
+          <li>Whole-home renovations planned around lifestyle, layout, and long-term value.</li>
+        </ul>
+      </section>
       <SSRHomeClient />
     </>
   );

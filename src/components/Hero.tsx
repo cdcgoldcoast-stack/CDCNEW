@@ -48,7 +48,7 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
       ref={ref} 
       className="min-h-screen relative z-20 overflow-hidden bg-background"
     >
-      <h1 className="sr-only">Gold Coast Renovations - Locally Trusted.</h1>
+      <p className="sr-only">Gold Coast renovations by Concept Design Construct.</p>
       {/* Mobile layout - stacked (phones only) */}
       <div className="md:hidden min-h-screen flex flex-col pt-20">
         {/* Mobile hero image - top */}
@@ -68,6 +68,8 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
               loading="eager"
               decoding="async"
               priority
+              quality={62}
+              responsiveWidths={[360, 480, 640, 768, 960, 1200]}
             />
           ) : (
             <div className="absolute inset-0 bg-muted" />
@@ -232,6 +234,8 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
                 loading="lazy"
                 decoding="async"
                 fetchPriority="low"
+                quality={62}
+                responsiveWidths={[480, 640, 800, 960, 1200]}
               />
             ) : (
               <div className="w-full max-w-[600px] h-[65vh] max-h-[680px] bg-muted" />

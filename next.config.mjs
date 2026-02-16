@@ -172,11 +172,6 @@ const nextConfig = {
         destination: "/renovation-design-tools",
         permanent: true,
       },
-      {
-        source: "/ssrhome",
-        destination: "/",
-        permanent: false,
-      },
     ];
   },
   webpack: (config) => {

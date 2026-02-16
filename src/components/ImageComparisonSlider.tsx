@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import { AlertTriangle } from "lucide-react";
+import ResponsiveImage from "@/components/ResponsiveImage";
 
 interface ImageComparisonSliderProps {
   beforeImage: string;
@@ -15,46 +15,8 @@ const ImageComparisonSlider = ({
   afterLabel = "After",
 }: ImageComparisonSliderProps) => {
   const [sliderPosition, setSliderPosition] = useState(50);
-  const [containerAspectRatio, setContainerAspectRatio] = useState<number | null>(null);
-  const [orientationMismatch, setOrientationMismatch] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
-
-  useEffect(() => {
-    if (!beforeImage || !afterImage) return;
-
-    const beforeImg = new Image();
-    const afterImg = new Image();
-
-    let beforeLoaded = false;
-    let afterLoaded = false;
-    let beforeDimensions = { width: 0, height: 0 };
-    let afterDimensions = { width: 0, height: 0 };
-
-    const checkMismatch = () => {
-      if (!beforeLoaded || !afterLoaded) return;
-      const beforeIsPortrait = beforeDimensions.height > beforeDimensions.width;
-      const afterIsPortrait = afterDimensions.height > afterDimensions.width;
-      const mismatch = beforeIsPortrait !== afterIsPortrait;
-      setOrientationMismatch(mismatch);
-    };
-
-    beforeImg.onload = () => {
-      beforeDimensions = { width: beforeImg.naturalWidth, height: beforeImg.naturalHeight };
-      setContainerAspectRatio(beforeImg.naturalWidth / beforeImg.naturalHeight);
-      beforeLoaded = true;
-      checkMismatch();
-    };
-
-    afterImg.onload = () => {
-      afterDimensions = { width: afterImg.naturalWidth, height: afterImg.naturalHeight };
-      afterLoaded = true;
-      checkMismatch();
-    };
-
-    beforeImg.src = beforeImage;
-    afterImg.src = afterImage;
-  }, [beforeImage, afterImage]);
 
   const updatePosition = useCallback((clientX: number) => {
     if (!containerRef.current) return;
@@ -105,22 +67,24 @@ const ImageComparisonSlider = ({
       ref={containerRef}
       className="relative w-full overflow-hidden rounded-lg cursor-ew-resize select-none bg-muted/20"
       style={{
-        aspectRatio: containerAspectRatio ? containerAspectRatio : undefined,
+        aspectRatio: "4 / 3",
       }}
       onMouseDown={handlePointerDown}
       onTouchStart={handlePointerDown}
     >
       {/* Before Image */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <img
+        <ResponsiveImage
           src={beforeImage}
           alt={`${beforeLabel} room image for renovation comparison`}
           width={1200}
           height={900}
+          sizes="(max-width: 768px) 92vw, (max-width: 1200px) 44vw, 560px"
           loading="lazy"
           decoding="async"
+          quality={58}
+          responsiveWidths={[320, 480, 640, 800, 960]}
           className="w-full h-full object-contain"
-          draggable={false}
         />
       </div>
 
@@ -129,15 +93,17 @@ const ImageComparisonSlider = ({
         className="absolute inset-0 flex items-center justify-center"
         style={{ clipPath: `inset(0 0 0 ${sliderPosition}%)` }}
       >
-        <img
+        <ResponsiveImage
           src={afterImage}
           alt={`${afterLabel} room image for renovation comparison`}
           width={1200}
           height={900}
+          sizes="(max-width: 768px) 92vw, (max-width: 1200px) 44vw, 560px"
           loading="lazy"
           decoding="async"
+          quality={58}
+          responsiveWidths={[320, 480, 640, 800, 960]}
           className="w-full h-full object-contain"
-          draggable={false}
         />
       </div>
 
@@ -160,14 +126,6 @@ const ImageComparisonSlider = ({
       <div className="absolute top-4 right-4 bg-black/50 text-white text-xs uppercase tracking-wider px-2 py-1 rounded">
         {afterLabel}
       </div>
-
-      {/* Orientation Mismatch Warning */}
-      {orientationMismatch && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-amber-500/90 text-white text-xs px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
-          <AlertTriangle className="w-3.5 h-3.5" />
-          <span>Orientation mismatch</span>
-        </div>
-      )}
     </div>
   );
 };

@@ -85,6 +85,11 @@ const ProjectDetail = () => {
     location: project.location,
     image: project.image,
     category: project.category,
+    path: `/renovation-projects/${project.slug}`,
+    publishedAt: project.publishedAt,
+    modifiedAt: project.modifiedAt,
+    authorName: project.authorName,
+    tags: project.tags,
   });
 
   const breadcrumbSchema = generateBreadcrumbSchema([
@@ -92,6 +97,12 @@ const ProjectDetail = () => {
     { name: "Renovation Projects", url: "/renovation-projects" },
     { name: project.name, url: `/renovation-projects/${project.slug}` },
   ]);
+  const categoryLabel = project.category.replace("-", " ");
+  const outcomePoints = [
+    `Improved ${categoryLabel} usability for daily routines`,
+    `Renovation delivered for ${project.location} conditions and lifestyle`,
+    `Sequenced works completed over ${project.duration || "a defined project timeline"}`,
+  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -135,6 +146,30 @@ const ProjectDetail = () => {
         </div>
       </section>
 
+      {/* Project Snapshot */}
+      <section className="pb-16 md:pb-20">
+        <div className="container-wide">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 border border-foreground/15 p-6 md:p-8 bg-cream">
+            <div>
+              <p className="text-label text-foreground/50 mb-2">Category</p>
+              <p className="font-serif text-xl text-primary">{categoryLabel}</p>
+            </div>
+            <div>
+              <p className="text-label text-foreground/50 mb-2">Location</p>
+              <p className="font-serif text-xl text-primary">{project.location}</p>
+            </div>
+            <div>
+              <p className="text-label text-foreground/50 mb-2">Timeline</p>
+              <p className="font-serif text-xl text-primary">{project.duration || "Scope dependent"}</p>
+            </div>
+            <div>
+              <p className="text-label text-foreground/50 mb-2">Year</p>
+              <p className="font-serif text-xl text-primary">{project.year || "Current"}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Overview Section */}
       <section className="pb-16 md:pb-24">
         <div className="container-wide">
@@ -157,6 +192,8 @@ const ProjectDetail = () => {
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   className="w-full aspect-[4/3] object-cover"
                   loading="lazy"
+                  quality={62}
+                  responsiveWidths={[480, 640, 800, 960, 1200]}
                 />
               )}
             </div>
@@ -186,6 +223,8 @@ const ProjectDetail = () => {
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   className="w-full aspect-[4/3] object-cover"
                   loading="lazy"
+                  quality={62}
+                  responsiveWidths={[480, 640, 800, 960, 1200]}
                 />
               )}
             </div>
@@ -218,10 +257,40 @@ const ProjectDetail = () => {
                   sizes="(min-width: 768px) 33vw, 100vw"
                   className="w-full aspect-[4/3] object-cover"
                   loading="lazy"
+                  quality={62}
+                  responsiveWidths={[360, 480, 640, 800, 960]}
                 />
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Outcomes + Testimonial */}
+      <section className="pb-16 md:pb-24">
+        <div className="container-wide grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+          <div>
+            <h2 className="font-serif italic text-2xl md:text-3xl text-primary mb-6">Project Outcomes</h2>
+            <ul className="space-y-3 text-primary/80 list-disc pl-5">
+              {outcomePoints.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
+          </div>
+          <aside className="border border-primary/20 bg-cream p-6 md:p-8">
+            <p className="text-label text-primary mb-4">Client Feedback</p>
+            <blockquote className="font-serif italic text-xl md:text-2xl text-primary leading-relaxed mb-6">
+              “The process felt structured and transparent. Every milestone was clear and the final finish quality was
+              exactly what we were hoping for.”
+            </blockquote>
+            <p className="text-xs uppercase tracking-wider text-primary/70 mb-6">Renovation Client · {project.location}</p>
+            <Link
+              to="/get-quote"
+              className="inline-block bg-primary text-primary-foreground px-6 py-3 text-xs uppercase tracking-wider hover:opacity-90 transition-opacity"
+            >
+              Start Your Renovation Consultation
+            </Link>
+          </aside>
         </div>
       </section>
 

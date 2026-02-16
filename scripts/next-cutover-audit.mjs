@@ -31,7 +31,6 @@ const PRIVATE_ROUTES = [
   "/admin/image-assets",
   "/admin/settings",
   "/brand-guidelines",
-  "/print-brochure",
 ];
 
 const REQUIRED_REDIRECT_SOURCES = [
