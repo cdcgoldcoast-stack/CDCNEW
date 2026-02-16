@@ -16,6 +16,10 @@ const ROOT = path.resolve(__dirname, "..");
 const DIST = path.join(ROOT, "dist");
 const OUTPUT_DIR = path.join(ROOT, ".vercel", "output");
 const STATIC_DIR = path.join(OUTPUT_DIR, "static");
+const GENERATED_PROJECT_SLUGS_PATH = path.join(ROOT, "src", "generated", "project-slugs.json");
+const PROJECT_DETAIL_DYNAMIC_REWRITE_SOURCE = "/renovation-projects/:slug";
+const PROJECT_DETAIL_REWRITE_DESTINATION = "/index.html";
+const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 if (!fs.existsSync(DIST)) {
   console.error("[prepare-vercel-output] dist/ not found — run `npm run build` first.");
@@ -23,6 +27,70 @@ if (!fs.existsSync(DIST)) {
 }
 
 const vercelConfig = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8"));
+
+function loadGeneratedProjectDetailRewrites() {
+  try {
+    const source = fs.readFileSync(GENERATED_PROJECT_SLUGS_PATH, "utf8");
+    const parsed = JSON.parse(source);
+    const slugs = Array.isArray(parsed?.slugs) ? parsed.slugs : [];
+
+    return [...new Set(
+      slugs
+        .map((slug) => `${slug}`.trim().toLowerCase())
+        .filter((slug) => slug && SLUG_PATTERN.test(slug))
+    )]
+      .sort()
+      .map((slug) => ({
+        source: `/renovation-projects/${slug}`,
+        destination: PROJECT_DETAIL_REWRITE_DESTINATION,
+      }));
+  } catch {
+    return [];
+  }
+}
+
+function materializeProjectDetailRewrites(rewrites) {
+  const hasDynamicProjectRewrite = rewrites.some(
+    (rewrite) => rewrite?.source === PROJECT_DETAIL_DYNAMIC_REWRITE_SOURCE
+  );
+
+  if (!hasDynamicProjectRewrite) {
+    return rewrites;
+  }
+
+  const hasExplicitProjectRewrites = rewrites.some((rewrite) => {
+    const source = `${rewrite?.source || ""}`;
+    return source.startsWith("/renovation-projects/") &&
+      source !== "/renovation-projects" &&
+      source !== PROJECT_DETAIL_DYNAMIC_REWRITE_SOURCE;
+  });
+
+  if (hasExplicitProjectRewrites) {
+    return rewrites.filter(
+      (rewrite) => rewrite?.source !== PROJECT_DETAIL_DYNAMIC_REWRITE_SOURCE
+    );
+  }
+
+  const generatedProjectDetailRewrites = loadGeneratedProjectDetailRewrites();
+
+  if (generatedProjectDetailRewrites.length === 0) {
+    return rewrites;
+  }
+
+  const expandedRewrites = [];
+  for (const rewrite of rewrites) {
+    if (rewrite?.source === PROJECT_DETAIL_DYNAMIC_REWRITE_SOURCE) {
+      expandedRewrites.push(...generatedProjectDetailRewrites);
+    } else {
+      expandedRewrites.push(rewrite);
+    }
+  }
+
+  console.log(
+    `[prepare-vercel-output] Expanded ${PROJECT_DETAIL_DYNAMIC_REWRITE_SOURCE} to ${generatedProjectDetailRewrites.length} project detail rewrites`
+  );
+  return expandedRewrites;
+}
 
 /**
  * Convert vercel.json path pattern to a regex string.
@@ -79,7 +147,8 @@ for (const r of vercelConfig.redirects || []) {
 routes.push({ handle: "filesystem" });
 
 // 4. Rewrites (SPA fallback for client-side routes)
-for (const r of vercelConfig.rewrites || []) {
+const effectiveRewrites = materializeProjectDetailRewrites(vercelConfig.rewrites || []);
+for (const r of effectiveRewrites) {
   routes.push({
     src: pathToRegex(r.source),
     dest: r.destination,

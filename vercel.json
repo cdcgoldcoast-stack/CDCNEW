@@ -29,6 +29,11 @@
   ],
   "redirects": [
     {
+      "source": "/favicon.ico",
+      "destination": "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Master-Builders.webp",
+      "permanent": true
+    },
+    {
       "source": "/:path+/",
       "destination": "/:path+",
       "permanent": true
@@ -83,7 +88,20 @@
     { "source": "/about-us", "destination": "/index.html" },
     { "source": "/life-stages", "destination": "/index.html" },
     { "source": "/renovation-projects", "destination": "/index.html" },
-    { "source": "/renovation-projects/:slug", "destination": "/index.html" },
+    { "source": "/renovation-projects/coastal-modern", "destination": "/index.html" },
+    { "source": "/renovation-projects/everyday-ease", "destination": "/index.html" },
+    { "source": "/renovation-projects/family-hub", "destination": "/index.html" },
+    { "source": "/renovation-projects/heritage-revival", "destination": "/index.html" },
+    { "source": "/renovation-projects/light-and-flow-house", "destination": "/index.html" },
+    { "source": "/renovation-projects/retreat-house", "destination": "/index.html" },
+    { "source": "/renovation-projects/seamless-bathroom", "destination": "/index.html" },
+    { "source": "/renovation-projects/stone-and-light", "destination": "/index.html" },
+    { "source": "/renovation-projects/sunshine-retreat", "destination": "/index.html" },
+    { "source": "/renovation-projects/terrazzo-retreat", "destination": "/index.html" },
+    { "source": "/renovation-projects/the-calm-edit", "destination": "/index.html" },
+    { "source": "/renovation-projects/the-elanora-residence", "destination": "/index.html" },
+    { "source": "/renovation-projects/urban-oasis", "destination": "/index.html" },
+    { "source": "/renovation-projects/warm-minimal-bathroom", "destination": "/index.html" },
     { "source": "/services", "destination": "/index.html" },
     { "source": "/project-gallery", "destination": "/index.html" },
     { "source": "/renovation-design-tools", "destination": "/index.html" },

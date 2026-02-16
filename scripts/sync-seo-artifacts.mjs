@@ -13,6 +13,7 @@ const SITEMAP_PATH = path.join(ROOT_DIR, "public", "sitemap.xml");
 const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, "vercel.json");
 
 const PRODUCTION_DOMAIN = "https://www.cdconstruct.com.au";
+const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 const STATIC_ROUTES = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
@@ -46,7 +47,11 @@ function generateSlug(name) {
 }
 
 function uniqSorted(values) {
-  return [...new Set(values.map((value) => value.trim()).filter(Boolean))].sort();
+  return [...new Set(
+    values
+      .map((value) => `${value}`.trim().toLowerCase())
+      .filter((value) => value && SLUG_PATTERN.test(value))
+  )].sort();
 }
 
 function formatDateUTC(date = new Date()) {
@@ -84,7 +89,7 @@ async function readSupabaseProjectSlugs() {
     "";
 
   if (!supabaseUrl || !supabaseKey) {
-    console.warn("[seo:sync] Supabase credentials not found in env. Using static/project cache slugs.");
+    console.warn("[seo:sync] Supabase credentials not found in env. Using static/public slugs.");
     return [];
   }
 
@@ -207,15 +212,28 @@ async function main() {
     readPreviousGeneratedSlugs(),
   ]);
 
-  const preferredSlugs = [
+  const authoritativeSlugs = [
     ...supabaseSlugs,
-    ...vercelRewriteSlugs,
     ...publicSiteSlugs,
+    ...staticSlugs,
   ];
 
-  const mergedSlugs = preferredSlugs.length > 0
-    ? uniqSorted(preferredSlugs)
-    : uniqSorted([...staticSlugs, ...previousSlugs]);
+  const mergedAuthoritativeSlugs = uniqSorted(authoritativeSlugs);
+  const usedPreviousGeneratedFallback = mergedAuthoritativeSlugs.length === 0 && previousSlugs.length > 0;
+  const mergedSlugs = usedPreviousGeneratedFallback
+    ? uniqSorted(previousSlugs)
+    : mergedAuthoritativeSlugs;
+
+  const mergedSlugSet = new Set(mergedSlugs);
+  const vercelRewriteSlugSet = new Set(vercelRewriteSlugs);
+  const missingVercelRewrites = mergedSlugs.filter((slug) => !vercelRewriteSlugSet.has(slug));
+  const staleVercelRewrites = vercelRewriteSlugs.filter((slug) => !mergedSlugSet.has(slug));
+
+  if (missingVercelRewrites.length > 0 || staleVercelRewrites.length > 0) {
+    console.warn(
+      `[seo:sync] Vercel project rewrite mismatch. missing=${missingVercelRewrites.length}, stale=${staleVercelRewrites.length}`
+    );
+  }
 
   await writeProjectSlugArtifact(mergedSlugs, {
     supabase: supabaseSlugs.length,
@@ -223,6 +241,7 @@ async function main() {
     publicSite: publicSiteSlugs.length,
     staticFallback: staticSlugs.length,
     previousGenerated: previousSlugs.length,
+    usedPreviousGeneratedFallback,
   });
   await writeSitemap(mergedSlugs);
 
