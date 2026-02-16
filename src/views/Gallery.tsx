@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
-import { resolveImageUrl, fallbackGalleryItems } from "@/lib/gallery-assets";
+import { resolveImageUrl } from "@/lib/gallery-assets";
 import BottomInvitation from "@/components/BottomInvitation";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
@@ -37,23 +37,25 @@ const Gallery = () => {
     },
   });
 
-  // Convert database items to gallery format or use fallbacks
-  const galleryItems: GalleryItem[] = !isError && dbItems && dbItems.filter(item => item.type === "image").length > 0
-    ? dbItems
-        .filter(item => item.type === "image")
-        .map((item, index) => {
-          const rawAlt = normalizeAltText(item.alt_text || "");
-          const alt = hasDescriptiveAltText(rawAlt)
-            ? rawAlt
-            : `Gold Coast renovation gallery image ${index + 1} with service and finish inspiration`;
+  // Convert database items to gallery format without fallback imagery.
+  const galleryItems: GalleryItem[] = (dbItems || [])
+    .filter((item) => item.type === "image")
+    .map((item, index) => {
+      const src = resolveImageUrl(item.image_url);
+      if (!src) return null;
 
-          return {
-            id: item.id,
-            src: resolveImageUrl(item.image_url),
-            alt,
-          };
-        })
-    : fallbackGalleryItems;
+      const rawAlt = normalizeAltText(item.alt_text || "");
+      const alt = hasDescriptiveAltText(rawAlt)
+        ? rawAlt
+        : `Gold Coast renovation gallery image ${index + 1} with service and finish inspiration`;
+
+      return {
+        id: item.id,
+        src,
+        alt,
+      };
+    })
+    .filter((item): item is GalleryItem => item !== null);
 
   return (
     <div className="min-h-screen bg-background">
@@ -88,6 +90,20 @@ const Gallery = () => {
                   <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background/30" />
                 </div>
               ))}
+            </div>
+          ) : isError && galleryItems.length === 0 ? (
+            <div className="max-w-[900px] mx-auto rounded-sm border border-foreground/15 bg-background/70 p-8 text-center">
+              <h2 className="font-serif italic text-2xl text-primary mb-3">Gallery unavailable right now</h2>
+              <p className="text-foreground/70">
+                We could not load the project gallery. Please try again shortly.
+              </p>
+            </div>
+          ) : galleryItems.length === 0 ? (
+            <div className="max-w-[900px] mx-auto rounded-sm border border-foreground/15 bg-background/70 p-8 text-center">
+              <h2 className="font-serif italic text-2xl text-primary mb-3">No gallery images published</h2>
+              <p className="text-foreground/70">
+                Add active images in admin to display them on this page.
+              </p>
             </div>
           ) : (
             <>

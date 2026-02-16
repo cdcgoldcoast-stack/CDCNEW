@@ -1,5 +1,6 @@
 import { supabase } from "@/integrations/supabase/client";
 import { generateSlug, slugMatches } from "@/lib/slug";
+import { SITE_NAME } from "@/config/seo";
 
 export interface Project {
   id: string;
@@ -16,7 +17,22 @@ export interface Project {
   solution: string;
   gallery: string[];
   featuredImages: string[]; // Up to 5 featured images for detail page layout
+  publishedAt?: string;
+  modifiedAt?: string;
+  authorName?: string;
+  tags?: string[];
 }
+
+const buildProjectTags = (
+  projectName: string,
+  category: Project["category"],
+  location: string,
+) => [
+  "Gold Coast renovation project",
+  `${location || "Gold Coast"} renovation`,
+  `${category} renovation Gold Coast`,
+  projectName,
+];
 
 // Static fallback projects (used if database has no projects)
 export const staticProjects: Project[] = [
@@ -193,6 +209,14 @@ export const fetchProjects = async (): Promise<Project[]> => {
           solution: project.solution || "",
           gallery: gallery.length > 0 ? gallery : [featuredImage].filter(Boolean),
           featuredImages,
+          publishedAt: project.created_at || undefined,
+          modifiedAt: project.updated_at || project.created_at || undefined,
+          authorName: SITE_NAME,
+          tags: buildProjectTags(
+            project.name,
+            project.category as Project["category"],
+            project.location || "Gold Coast",
+          ),
         };
       })
     );
@@ -261,6 +285,14 @@ export const fetchProjectById = async (id: string): Promise<Project | undefined>
       solution: dbProject.solution || "",
       gallery: gallery.length > 0 ? gallery : [featuredImage].filter(Boolean),
       featuredImages,
+      publishedAt: dbProject.created_at || undefined,
+      modifiedAt: dbProject.updated_at || dbProject.created_at || undefined,
+      authorName: SITE_NAME,
+      tags: buildProjectTags(
+        dbProject.name,
+        dbProject.category as Project["category"],
+        dbProject.location || "Gold Coast",
+      ),
     };
   } catch (err) {
     console.error("Error in fetchProjectById:", err);

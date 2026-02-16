@@ -1025,9 +1025,6 @@ const MoodboardCreator = () => {
                     className="w-full h-full object-cover transition-transform group-hover:scale-105 pointer-events-none"
                     loading="lazy"
                     decoding="async"
-                    onError={(e) => {
-                      e.currentTarget.src = "/placeholder.svg";
-                    }}
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center">
                     <span className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">

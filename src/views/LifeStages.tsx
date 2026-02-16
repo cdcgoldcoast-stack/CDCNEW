@@ -469,44 +469,6 @@ const LifeStagesPage = () => {
         </div>
       </section>
 
-      <section className="pb-12 md:pb-16">
-        <div className="container-wide">
-          <div className="border border-foreground/10 p-6 md:p-8 bg-muted/20">
-            <h2 className="font-serif italic text-2xl text-primary mb-3">Useful Renovation Planning Links</h2>
-            <p className="text-foreground/70 mb-4">
-              Keep exploring by comparing service scopes, project examples, and <strong>practical planning tools</strong>.
-            </p>
-            <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm md:text-base">
-              <li>
-                <Link to="/services" className="text-primary hover:text-primary/70 underline underline-offset-4">
-                  Compare renovation service pathways
-                </Link>
-              </li>
-              <li>
-                <Link to="/renovation-projects" className="text-primary hover:text-primary/70 underline underline-offset-4">
-                  Review completed renovation project case studies
-                </Link>
-              </li>
-              <li>
-                <Link to="/renovation-design-tools" className="text-primary hover:text-primary/70 underline underline-offset-4">
-                  Explore renovation design planning tools
-                </Link>
-              </li>
-              <li>
-                <Link to="/renovation-design-tools/moodboard" className="text-primary hover:text-primary/70 underline underline-offset-4">
-                  Create a renovation moodboard before quoting
-                </Link>
-              </li>
-              <li>
-                <Link to="/get-quote" className="text-primary hover:text-primary/70 underline underline-offset-4">
-                  Request your renovation consultation
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
       <Footer />
     </div>
   );

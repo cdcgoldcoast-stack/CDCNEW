@@ -36,6 +36,21 @@ const REQUIRED_TWITTER_META = [
   "twitter:image",
   "twitter:image:alt",
 ];
+const REQUIRED_OG_META = [
+  "og:title",
+  "og:description",
+  "og:url",
+  "og:site_name",
+  "og:type",
+  "og:image",
+];
+const REQUIRED_GLOBAL_META = [
+  "viewport",
+  "author",
+  "referrer",
+  "format-detection",
+  "googlebot",
+];
 
 const GENERIC_INTERNAL_ANCHOR_WORDS = new Set([
   "view",
@@ -70,7 +85,7 @@ const ROUTES_REQUIRING_EMPHASIS = new Set([
 ]);
 
 const includeExtendedRoutes = parseEnvBoolean(process.env.PRERENDER_EXTENDED, true);
-const includeProjectDetailRoutes = parseEnvBoolean(process.env.PRERENDER_PROJECT_DETAIL, false);
+const includeProjectDetailRoutes = parseEnvBoolean(process.env.PRERENDER_PROJECT_DETAIL, true);
 const performHttpChecks = parseEnvBoolean(
   process.env.SEO_AUDIT_HTTP,
   parseEnvBoolean(process.env.CI, false)
@@ -85,6 +100,11 @@ const routeToFilePath = (route) => {
 
 const extractMetaByName = (document, name) => {
   const meta = document.querySelector(`meta[name="${name}"]`);
+  return meta?.getAttribute("content")?.trim() || "";
+};
+
+const extractMetaByProperty = (document, property) => {
+  const meta = document.querySelector(`meta[property="${property}"]`);
   return meta?.getAttribute("content")?.trim() || "";
 };
 
@@ -317,6 +337,12 @@ const auditRouteHtml = async (route) => {
   }
 
   const document = new JSDOM(html).window.document;
+  const isProjectRoute = isProjectDetailPath(route);
+
+  const titleTag = document.querySelector("title")?.textContent?.trim() || "";
+  if (!titleTag) {
+    issues.push("Missing <title> tag");
+  }
 
   const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute("href")?.trim() || "";
   if (!canonical) {
@@ -334,10 +360,64 @@ const auditRouteHtml = async (route) => {
     issues.push("Missing meta description");
   }
 
+  for (const tagName of REQUIRED_GLOBAL_META) {
+    if (!extractMetaByName(document, tagName)) {
+      issues.push(`Missing ${tagName}`);
+    }
+  }
+
+  const hasManifestLink = Boolean(document.querySelector('link[rel="manifest"]'));
+  if (!hasManifestLink) {
+    issues.push("Missing web manifest link");
+  }
+
+  const hreflangEnAu = document.querySelector('link[rel="alternate"][hreflang="en-AU"]');
+  if (!hreflangEnAu) {
+    issues.push("Missing hreflang alternate for en-AU");
+  }
+
+  const hreflangXDefault = document.querySelector('link[rel="alternate"][hreflang="x-default"]');
+  if (!hreflangXDefault) {
+    issues.push("Missing hreflang alternate for x-default");
+  }
+
+  for (const property of REQUIRED_OG_META) {
+    if (!extractMetaByProperty(document, property)) {
+      issues.push(`Missing ${property}`);
+    }
+  }
+
   for (const tagName of REQUIRED_TWITTER_META) {
     if (!extractMetaByName(document, tagName)) {
       issues.push(`Missing ${tagName}`);
     }
+  }
+
+  if (isProjectRoute) {
+    const ogType = extractMetaByProperty(document, "og:type");
+    if (ogType && ogType !== "article") {
+      issues.push(`Project route og:type should be article (found: ${ogType})`);
+    }
+
+    const articlePublished = extractMetaByProperty(document, "article:published_time");
+    const articleModified = extractMetaByProperty(document, "article:modified_time");
+    const articleAuthor = extractMetaByProperty(document, "article:author");
+    const articleTag = extractMetaByProperty(document, "article:tag");
+
+    if (!articlePublished) issues.push("Missing article:published_time");
+    if (!articleModified) issues.push("Missing article:modified_time");
+    if (!articleAuthor) issues.push("Missing article:author");
+    if (!articleTag) issues.push("Missing article:tag");
+  }
+
+  if (process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && !extractMetaByName(document, "google-site-verification")) {
+    issues.push("Missing google-site-verification meta");
+  }
+  if (process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION && !extractMetaByName(document, "msvalidate.01")) {
+    issues.push("Missing bing verification meta (msvalidate.01)");
+  }
+  if (process.env.NEXT_PUBLIC_YANDEX_SITE_VERIFICATION && !extractMetaByName(document, "yandex-verification")) {
+    issues.push("Missing yandex-verification meta");
   }
 
   if (document.querySelectorAll("h1").length === 0) {

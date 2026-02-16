@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   ...buildMetadata({
     title: "Gold Coast Renovations | Concept Design Construct",
     description:
-      "Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations with design-led planning, QBCC licensed delivery, and timelines.",
+      "Concept Design Construct (CD Construct) are Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations with design-led planning, QBCC licensed delivery, and timelines.",
     path: "/",
     keywords: [
       "Gold Coast renovations",
@@ -55,6 +55,9 @@ export const metadata: Metadata = {
       "bathroom renovation Gold Coast",
       "whole-home renovation Gold Coast",
       "QBCC licensed builder Gold Coast",
+      "Concept Design Construct",
+      "CD Construct",
+      "CD Construct Gold Coast",
     ],
   }),
 };

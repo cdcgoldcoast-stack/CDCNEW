@@ -322,6 +322,12 @@ const AdminGallery = () => {
 
   const imageItems = galleryItems?.filter(item => item.type === "image") || [];
   const textItems = galleryItems?.filter(item => item.type === "text") || [];
+  const imageItemsWithSrc = imageItems
+    .map((item) => ({
+      item,
+      src: resolveImageUrl(item.image_url),
+    }))
+    .filter((entry): entry is { item: GalleryItem; src: string } => Boolean(entry.src));
 
   const filteredStorageImages = storageImages?.filter((file) =>
     file.name.toLowerCase().includes(librarySearch.toLowerCase())
@@ -452,20 +458,20 @@ const AdminGallery = () => {
           <div className="flex items-center justify-center py-12">
             <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
           </div>
-        ) : imageItems.length === 0 ? (
+        ) : imageItemsWithSrc.length === 0 ? (
           <div className="text-center py-12 text-muted-foreground">
             <Image className="w-12 h-12 mx-auto mb-4 opacity-40" />
             <p>No images yet. Upload some to get started.</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-            {imageItems.map((item) => (
+            {imageItemsWithSrc.map(({ item, src }) => (
               <div
                 key={item.id}
                 className="relative group aspect-square rounded-lg overflow-hidden bg-muted"
               >
                 <img
-                  src={resolveImageUrl(item.image_url)}
+                  src={src}
                   alt={item.alt_text || "Gallery image"}
                   className="w-full h-full object-cover"
                   loading="lazy"
@@ -495,9 +501,9 @@ const AdminGallery = () => {
           </div>
         )}
 
-        {imageItems.length > 0 && (
+        {imageItemsWithSrc.length > 0 && (
           <p className="text-sm text-muted-foreground text-center">
-            {imageItems.length} image{imageItems.length !== 1 ? 's' : ''} in gallery
+            {imageItemsWithSrc.length} image{imageItemsWithSrc.length !== 1 ? 's' : ''} in gallery
           </p>
         )}
       </div>

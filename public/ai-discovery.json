@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-16T13:52:23.591Z",
+  "generatedAt": "2026-02-16T14:31:32.494Z",
   "domain": "https://www.cdconstruct.com.au",
   "urlCount": 27,
   "projectUrlCount": 14,
@@ -29,17 +29,18 @@
     "Question": 2,
     "Service": 2,
     "State": 1,
-    "WebSite": 13,
+    "WebSite": 1,
     "AboutPage": 1,
     "BreadcrumbList": 26,
     "ListItem": 26,
     "WebPage": 12,
     "CreativeWork": 15,
     "ItemList": 2,
-    "Organization": 15,
+    "Organization": 1,
     "ContactPage": 1,
     "CollectionPage": 1,
     "Thing": 1,
+    "Person": 14,
     "Place": 14
   },
   "routes": [
@@ -75,8 +76,7 @@
         "City",
         "HomeAndConstructionBusiness",
         "ListItem",
-        "WebPage",
-        "WebSite"
+        "WebPage"
       ]
     },
     {
@@ -89,8 +89,7 @@
         "CreativeWork",
         "ItemList",
         "ListItem",
-        "WebPage",
-        "WebSite"
+        "WebPage"
       ]
     },
     {
@@ -105,8 +104,7 @@
         "ListItem",
         "Organization",
         "Service",
-        "WebPage",
-        "WebSite"
+        "WebPage"
       ]
     },
     {
@@ -120,8 +118,7 @@
         "FAQPage",
         "ListItem",
         "Question",
-        "WebPage",
-        "WebSite"
+        "WebPage"
       ]
     },
     {
@@ -135,8 +132,7 @@
         "ContactPage",
         "HomeAndConstructionBusiness",
         "ListItem",
-        "WebPage",
-        "WebSite"
+        "WebPage"
       ]
     },
     {
@@ -149,8 +145,7 @@
         "CollectionPage",
         "ListItem",
         "Thing",
-        "WebPage",
-        "WebSite"
+        "WebPage"
       ]
     },
     {
@@ -161,8 +156,7 @@
       "structuredDataTypes": [
         "BreadcrumbList",
         "ListItem",
-        "WebPage",
-        "WebSite"
+        "WebPage"
       ]
     },
     {
@@ -173,8 +167,7 @@
       "structuredDataTypes": [
         "BreadcrumbList",
         "ListItem",
-        "WebPage",
-        "WebSite"
+        "WebPage"
       ]
     },
     {
@@ -185,8 +178,7 @@
       "structuredDataTypes": [
         "BreadcrumbList",
         "ListItem",
-        "WebPage",
-        "WebSite"
+        "WebPage"
       ]
     },
     {
@@ -197,8 +189,7 @@
       "structuredDataTypes": [
         "BreadcrumbList",
         "ListItem",
-        "WebPage",
-        "WebSite"
+        "WebPage"
       ]
     },
     {
@@ -209,8 +200,7 @@
       "structuredDataTypes": [
         "BreadcrumbList",
         "ListItem",
-        "WebPage",
-        "WebSite"
+        "WebPage"
       ]
     },
     {
@@ -221,8 +211,7 @@
       "structuredDataTypes": [
         "BreadcrumbList",
         "ListItem",
-        "WebPage",
-        "WebSite"
+        "WebPage"
       ]
     },
     {
@@ -234,7 +223,7 @@
         "BreadcrumbList",
         "CreativeWork",
         "ListItem",
-        "Organization",
+        "Person",
         "Place",
         "PostalAddress"
       ]
@@ -248,7 +237,7 @@
         "BreadcrumbList",
         "CreativeWork",
         "ListItem",
-        "Organization",
+        "Person",
         "Place",
         "PostalAddress"
       ]
@@ -262,7 +251,7 @@
         "BreadcrumbList",
         "CreativeWork",
         "ListItem",
-        "Organization",
+        "Person",
         "Place",
         "PostalAddress"
       ]
@@ -276,7 +265,7 @@
         "BreadcrumbList",
         "CreativeWork",
         "ListItem",
-        "Organization",
+        "Person",
         "Place",
         "PostalAddress"
       ]
@@ -290,7 +279,7 @@
         "BreadcrumbList",
         "CreativeWork",
         "ListItem",
-        "Organization",
+        "Person",
         "Place",
         "PostalAddress"
       ]
@@ -304,7 +293,7 @@
         "BreadcrumbList",
         "CreativeWork",
         "ListItem",
-        "Organization",
+        "Person",
         "Place",
         "PostalAddress"
       ]
@@ -318,7 +307,7 @@
         "BreadcrumbList",
         "CreativeWork",
         "ListItem",
-        "Organization",
+        "Person",
         "Place",
         "PostalAddress"
       ]
@@ -332,7 +321,7 @@
         "BreadcrumbList",
         "CreativeWork",
         "ListItem",
-        "Organization",
+        "Person",
         "Place",
         "PostalAddress"
       ]
@@ -346,7 +335,7 @@
         "BreadcrumbList",
         "CreativeWork",
         "ListItem",
-        "Organization",
+        "Person",
         "Place",
         "PostalAddress"
       ]
@@ -360,7 +349,7 @@
         "BreadcrumbList",
         "CreativeWork",
         "ListItem",
-        "Organization",
+        "Person",
         "Place",
         "PostalAddress"
       ]
@@ -374,7 +363,7 @@
         "BreadcrumbList",
         "CreativeWork",
         "ListItem",
-        "Organization",
+        "Person",
         "Place",
         "PostalAddress"
       ]
@@ -388,7 +377,7 @@
         "BreadcrumbList",
         "CreativeWork",
         "ListItem",
-        "Organization",
+        "Person",
         "Place",
         "PostalAddress"
       ]
@@ -402,7 +391,7 @@
         "BreadcrumbList",
         "CreativeWork",
         "ListItem",
-        "Organization",
+        "Person",
         "Place",
         "PostalAddress"
       ]
@@ -416,7 +405,7 @@
         "BreadcrumbList",
         "CreativeWork",
         "ListItem",
-        "Organization",
+        "Person",
         "Place",
         "PostalAddress"
       ]

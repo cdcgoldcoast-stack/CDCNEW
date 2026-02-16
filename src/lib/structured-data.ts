@@ -12,7 +12,14 @@ export interface ProjectData {
   location: string | null;
   image: string;
   category: string;
+  path?: string;
+  publishedAt?: string;
+  modifiedAt?: string;
+  authorName?: string;
+  tags?: string[];
 }
+
+const ORGANIZATION_ID = `${PRODUCTION_DOMAIN}#organization`;
 
 /**
  * Generate FAQ Page structured data for rich snippets
@@ -36,9 +43,13 @@ export const generateFAQSchema = (faqs: FAQItem[]) => ({
 export const generateProjectSchema = (project: ProjectData) => ({
   "@context": "https://schema.org",
   "@type": "CreativeWork",
+  "@id": `${PRODUCTION_DOMAIN}${project.path || ""}#project`,
   name: project.name,
   description: project.description,
   dateCreated: project.year?.toString() || undefined,
+  datePublished: project.publishedAt || undefined,
+  dateModified: project.modifiedAt || undefined,
+  mainEntityOfPage: project.path ? `${PRODUCTION_DOMAIN}${project.path}` : undefined,
   locationCreated: project.location ? {
     "@type": "Place",
     name: project.location,
@@ -51,11 +62,17 @@ export const generateProjectSchema = (project: ProjectData) => ({
   } : undefined,
   image: project.image.startsWith("http") ? project.image : `${PRODUCTION_DOMAIN}${project.image}`,
   creator: {
-    "@type": "Organization",
-    name: SITE_NAME,
-    url: PRODUCTION_DOMAIN,
+    "@id": ORGANIZATION_ID,
+  },
+  author: {
+    "@type": "Person",
+    name: project.authorName || SITE_NAME,
+  },
+  publisher: {
+    "@id": ORGANIZATION_ID,
   },
   genre: project.category,
+  keywords: project.tags?.length ? project.tags.join(", ") : undefined,
 });
 
 /**
@@ -100,10 +117,12 @@ export const generateItemListSchema = (
 export const generateAboutPageSchema = () => ({
   "@context": "https://schema.org",
   "@type": "AboutPage",
+  "@id": `${PRODUCTION_DOMAIN}/about-us#webpage`,
   name: `About ${SITE_NAME}`,
   description: `Learn about ${SITE_NAME}'s mission to deliver quality service with quality outcomes for Gold Coast home renovations.`,
   url: `${PRODUCTION_DOMAIN}/about-us`,
   mainEntity: {
+    "@id": ORGANIZATION_ID,
     "@type": BUSINESS_INFO.type,
     name: SITE_NAME,
     url: PRODUCTION_DOMAIN,
@@ -118,10 +137,12 @@ export const generateAboutPageSchema = () => ({
 export const generateContactPageSchema = () => ({
   "@context": "https://schema.org",
   "@type": "ContactPage",
+  "@id": `${PRODUCTION_DOMAIN}/get-quote#webpage`,
   name: "Get a Quote - Gold Coast Home Renovation",
   description: "Start your Gold Coast renovation journey. Get a free consultation and quote for your kitchen, bathroom, or whole-home renovation project.",
   url: `${PRODUCTION_DOMAIN}/get-quote`,
   mainEntity: {
+    "@id": ORGANIZATION_ID,
     "@type": BUSINESS_INFO.type,
     name: SITE_NAME,
     email: BUSINESS_INFO.email,
@@ -135,7 +156,9 @@ export const generateContactPageSchema = () => ({
 export const generateLocalBusinessSchema = () => ({
   "@context": "https://schema.org",
   "@type": BUSINESS_INFO.type,
+  "@id": ORGANIZATION_ID,
   name: SITE_NAME,
+  alternateName: "CD Construct",
   description:
     "Gold Coast renovation builders for kitchens, bathrooms, and whole homes. Design-led, QBCC licensed. Free consultation.",
   url: PRODUCTION_DOMAIN,

@@ -33,6 +33,10 @@ type BuildMetadataOptions = {
   type?: "website" | "article";
   noIndex?: boolean;
   keywords?: string[];
+  author?: string;
+  articlePublishedTime?: string;
+  articleModifiedTime?: string;
+  articleTags?: string[];
 };
 
 export const buildMetadata = ({
@@ -43,51 +47,106 @@ export const buildMetadata = ({
   type = "website",
   noIndex = false,
   keywords,
+  author = SITE_NAME,
+  articlePublishedTime,
+  articleModifiedTime,
+  articleTags = [],
 }: BuildMetadataOptions): Metadata => {
   const canonical = absoluteUrl(path);
   const imageUrl = resolveImageUrl(image);
+  const cleanArticleTags = articleTags.filter(Boolean);
+  const openGraph: Metadata["openGraph"] = {
+    type,
+    url: canonical,
+    title,
+    description,
+    siteName: SITE_NAME,
+    locale: DEFAULT_LOCALE,
+    images: [
+      {
+        url: imageUrl,
+        width: 1200,
+        height: 630,
+        alt: title,
+      },
+    ],
+  };
+
+  if (type === "article") {
+    if (articlePublishedTime) {
+      openGraph.publishedTime = articlePublishedTime;
+    }
+    if (articleModifiedTime) {
+      openGraph.modifiedTime = articleModifiedTime;
+    }
+    if (author) {
+      openGraph.authors = [author];
+    }
+    if (cleanArticleTags.length > 0) {
+      openGraph.tags = cleanArticleTags;
+    }
+  }
+
+  const otherMeta: Record<string, string> = {
+    "twitter:domain": SITE_HOST,
+    "twitter:url": canonical,
+    "twitter:image:alt": title,
+  };
+
+  if (type === "article") {
+    if (articlePublishedTime) {
+      otherMeta["article:published_time"] = articlePublishedTime;
+    }
+    if (articleModifiedTime) {
+      otherMeta["article:modified_time"] = articleModifiedTime;
+    }
+    if (author) {
+      otherMeta["article:author"] = author;
+    }
+    if (cleanArticleTags.length > 0) {
+      otherMeta["article:tag"] = cleanArticleTags.join(", ");
+    }
+  }
 
   return {
     title,
     description,
     keywords,
+    authors: [{ name: author }],
+    creator: author,
+    publisher: SITE_NAME,
+    referrer: "strict-origin-when-cross-origin",
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
     alternates: {
       canonical,
       languages: {
         "en-AU": canonical,
+        "x-default": SITE_URL,
       },
     },
     robots: {
       index: !noIndex,
       follow: !noIndex,
+      googleBot: {
+        index: !noIndex,
+        follow: !noIndex,
+        "max-snippet": -1,
+        "max-image-preview": "large",
+        "max-video-preview": -1,
+      },
     },
-    openGraph: {
-      type,
-      url: canonical,
-      title,
-      description,
-      siteName: SITE_NAME,
-      locale: DEFAULT_LOCALE,
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
-    },
+    openGraph,
     twitter: {
       card: "summary_large_image",
       title,
       description,
       images: [imageUrl],
     },
-    other: {
-      "twitter:domain": SITE_HOST,
-      "twitter:url": canonical,
-      "twitter:image:alt": title,
-    },
+    other: otherMeta,
   };
 };
 
@@ -102,14 +161,19 @@ export const generateWebPageSchema = ({
 }) => ({
   "@context": "https://schema.org",
   "@type": "WebPage",
+  "@id": `${absoluteUrl(path)}#webpage`,
   name,
   description,
   url: absoluteUrl(path),
   inLanguage: "en-AU",
   isPartOf: {
-    "@type": "WebSite",
-    name: SITE_NAME,
-    url: SITE_URL,
+    "@id": `${SITE_URL}#website`,
+  },
+  about: {
+    "@id": `${SITE_URL}#organization`,
+  },
+  publisher: {
+    "@id": `${SITE_URL}#organization`,
   },
 });
 
@@ -139,8 +203,13 @@ export const generateServiceCatalogSchema = (services: string[]) => ({
 export const generateWebSiteSchema = () => ({
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": `${SITE_URL}#website`,
   name: SITE_NAME,
+  alternateName: "CD Construct",
   url: SITE_URL,
   inLanguage: "en-AU",
+  publisher: {
+    "@id": `${SITE_URL}#organization`,
+  },
   about: "Gold Coast renovations",
 });

@@ -5,6 +5,7 @@ import projectSlugData from "@/generated/project-slugs.json";
 import { projects } from "@/data/projects";
 import { generateBreadcrumbSchema, generateProjectSchema } from "@/lib/structured-data";
 import { buildMetadata, titleFromSlug, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { SITE_NAME } from "@/config/seo";
 
 type PageProps = {
   params: {
@@ -19,6 +20,18 @@ const fallbackDescription = (slug: string) =>
 
 const findStaticProject = (slug: string) =>
   projects.find((project) => project.slug === slug || project.name.toLowerCase().replace(/\s+/g, "-") === slug);
+const DEFAULT_ARTICLE_TIMESTAMP = "2024-01-15T00:00:00.000Z";
+
+const normalizeIsoDate = (value?: string | null) => {
+  if (!value) return undefined;
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString();
+};
+
+const publishedTimeFromYear = (year?: string | null) => {
+  if (!year || !/^\d{4}$/.test(year)) return undefined;
+  return `${year}-01-15T00:00:00.000Z`;
+};
 
 export function generateMetadata({ params }: PageProps): Metadata {
   const project = findStaticProject(params.slug);
@@ -28,6 +41,20 @@ export function generateMetadata({ params }: PageProps): Metadata {
     ? `${project.name} | ${categoryLabel} Renovation ${location}`
     : `${titleFromSlug(params.slug)} | Gold Coast Renovation Project`;
   const description = project?.description || fallbackDescription(params.slug);
+  const articlePublishedTime =
+    normalizeIsoDate(project?.publishedAt) ||
+    publishedTimeFromYear(project?.year) ||
+    DEFAULT_ARTICLE_TIMESTAMP;
+  const articleModifiedTime = normalizeIsoDate(project?.modifiedAt) || articlePublishedTime;
+  const articleAuthor = project?.authorName || SITE_NAME;
+  const articleTags = project?.tags?.length
+    ? project.tags
+    : [
+        "Gold Coast renovation project",
+        `${location} renovation`,
+        `${categoryLabel} renovation Gold Coast`,
+        project?.name || titleFromSlug(params.slug),
+      ];
 
   return buildMetadata({
     title,
@@ -35,12 +62,11 @@ export function generateMetadata({ params }: PageProps): Metadata {
     path: `/renovation-projects/${project?.slug || params.slug}`,
     image: project?.image,
     type: "article",
-    keywords: [
-      "Gold Coast renovation project",
-      `${location} renovation`,
-      `${categoryLabel} renovation Gold Coast`,
-      project?.name || titleFromSlug(params.slug),
-    ],
+    keywords: articleTags,
+    author: articleAuthor,
+    articlePublishedTime,
+    articleModifiedTime,
+    articleTags,
   });
 }
 
@@ -58,6 +84,11 @@ export default function Page({ params }: PageProps) {
   const projectCategory = project?.category || "whole-home";
   const projectYear = project?.year || "";
   const projectSlug = project?.slug || params.slug;
+  const articlePublishedTime =
+    normalizeIsoDate(project?.publishedAt) ||
+    publishedTimeFromYear(project?.year) ||
+    DEFAULT_ARTICLE_TIMESTAMP;
+  const articleModifiedTime = normalizeIsoDate(project?.modifiedAt) || articlePublishedTime;
 
   const projectSchema = generateProjectSchema({
     name: projectName,
@@ -66,6 +97,11 @@ export default function Page({ params }: PageProps) {
     location: projectLocation,
     image: projectImage,
     category: projectCategory,
+    path: `/renovation-projects/${projectSlug}`,
+    publishedAt: articlePublishedTime,
+    modifiedAt: articleModifiedTime,
+    authorName: project?.authorName || SITE_NAME,
+    tags: project?.tags,
   });
 
   const breadcrumbSchema = generateBreadcrumbSchema([
@@ -77,6 +113,11 @@ export default function Page({ params }: PageProps) {
   return (
     <>
       <JsonLd data={[projectSchema, breadcrumbSchema]} />
+      <section className="sr-only">
+        <h1>{`${projectName} Gold Coast Renovation Project`}</h1>
+        <h2>{`${projectCategory.replace("-", " ")} renovation in ${projectLocation}`}</h2>
+        <p>{projectDescription}</p>
+      </section>
       <ProjectDetailClient />
     </>
   );

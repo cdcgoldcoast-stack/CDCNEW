@@ -18,7 +18,7 @@ const TITLE_ELLIPSIS = "...";
 export const DEFAULT_META = {
   title: "Gold Coast Renovations | Concept Design Construct",
   description:
-    "Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations with design-led planning, QBCC licensed delivery, and timelines.",
+    "Concept Design Construct (CD Construct) are Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations with design-led planning, QBCC licensed delivery, and timelines.",
   image: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Gold-Coast-Renovations.webp",
 };
 
@@ -65,6 +65,9 @@ export const PRIMARY_KEYWORDS = [
   "whole home renovation Gold Coast",
   "Gold Coast builders",
   "QBCC licensed builder Gold Coast",
+  "Concept Design Construct",
+  "CD Construct",
+  "CD Construct Gold Coast",
 ];
 
 // Helper function to get full URL

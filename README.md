@@ -62,6 +62,12 @@ Supported Supabase env names:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
+Search verification env names (optional but recommended):
+
+- `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`
+- `NEXT_PUBLIC_BING_SITE_VERIFICATION`
+- `NEXT_PUBLIC_YANDEX_SITE_VERIFICATION`
+
 Fallback env names still supported for compatibility:
 
 - `VITE_SUPABASE_URL`

@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Concept Design Construct",
     short_name: "CDC Renovations",
     description:
-      "Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations.",
+      "Concept Design Construct (CD Construct): Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations.",
     start_url: "/",
     display: "standalone",
     background_color: "#f3f2e8",

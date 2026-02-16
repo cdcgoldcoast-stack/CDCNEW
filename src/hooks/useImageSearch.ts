@@ -27,142 +27,6 @@ interface CacheEntry {
 const searchCache: Record<string, CacheEntry> = {};
 const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
 
-// Fallback images when API is unavailable - using Pexels CDN URLs
-const FALLBACK_IMAGES: ImageResult[] = [
-  {
-    id: "fallback-1",
-    url: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=800",
-    fullUrl: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    thumbnailUrl: "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=400",
-    width: 800,
-    height: 600,
-    alt: "Modern living room with neutral tones",
-    source: "Pexels",
-    sourceUrl: "https://pexels.com",
-  },
-  {
-    id: "fallback-2",
-    url: "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800",
-    fullUrl: "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    thumbnailUrl: "https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=400",
-    width: 800,
-    height: 600,
-    alt: "Minimalist kitchen design",
-    source: "Pexels",
-    sourceUrl: "https://pexels.com",
-  },
-  {
-    id: "fallback-3",
-    url: "https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=800",
-    fullUrl: "https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    thumbnailUrl: "https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=400",
-    width: 800,
-    height: 600,
-    alt: "Cozy bedroom interior",
-    source: "Pexels",
-    sourceUrl: "https://pexels.com",
-  },
-  {
-    id: "fallback-4",
-    url: "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg?auto=compress&cs=tinysrgb&w=800",
-    fullUrl: "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    thumbnailUrl: "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg?auto=compress&cs=tinysrgb&w=400",
-    width: 800,
-    height: 600,
-    alt: "Modern bathroom design",
-    source: "Pexels",
-    sourceUrl: "https://pexels.com",
-  },
-  {
-    id: "fallback-5",
-    url: "https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg?auto=compress&cs=tinysrgb&w=800",
-    fullUrl: "https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    thumbnailUrl: "https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg?auto=compress&cs=tinysrgb&w=400",
-    width: 800,
-    height: 600,
-    alt: "Scandinavian style living room",
-    source: "Pexels",
-    sourceUrl: "https://pexels.com",
-  },
-  {
-    id: "fallback-6",
-    url: "https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg?auto=compress&cs=tinysrgb&w=800",
-    fullUrl: "https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    thumbnailUrl: "https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg?auto=compress&cs=tinysrgb&w=400",
-    width: 800,
-    height: 600,
-    alt: "Open plan kitchen and dining",
-    source: "Pexels",
-    sourceUrl: "https://pexels.com",
-  },
-  {
-    id: "fallback-7",
-    url: "https://images.pexels.com/photos/3935350/pexels-photo-3935350.jpeg?auto=compress&cs=tinysrgb&w=800",
-    fullUrl: "https://images.pexels.com/photos/3935350/pexels-photo-3935350.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    thumbnailUrl: "https://images.pexels.com/photos/3935350/pexels-photo-3935350.jpeg?auto=compress&cs=tinysrgb&w=400",
-    width: 800,
-    height: 600,
-    alt: "Contemporary home office",
-    source: "Pexels",
-    sourceUrl: "https://pexels.com",
-  },
-  {
-    id: "fallback-8",
-    url: "https://images.pexels.com/photos/2635038/pexels-photo-2635038.jpeg?auto=compress&cs=tinysrgb&w=800",
-    fullUrl: "https://images.pexels.com/photos/2635038/pexels-photo-2635038.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    thumbnailUrl: "https://images.pexels.com/photos/2635038/pexels-photo-2635038.jpeg?auto=compress&cs=tinysrgb&w=400",
-    width: 800,
-    height: 600,
-    alt: "Luxury master bedroom",
-    source: "Pexels",
-    sourceUrl: "https://pexels.com",
-  },
-  {
-    id: "fallback-9",
-    url: "https://images.pexels.com/photos/1743227/pexels-photo-1743227.jpeg?auto=compress&cs=tinysrgb&w=800",
-    fullUrl: "https://images.pexels.com/photos/1743227/pexels-photo-1743227.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    thumbnailUrl: "https://images.pexels.com/photos/1743227/pexels-photo-1743227.jpeg?auto=compress&cs=tinysrgb&w=400",
-    width: 800,
-    height: 600,
-    alt: "Industrial style loft",
-    source: "Pexels",
-    sourceUrl: "https://pexels.com",
-  },
-  {
-    id: "fallback-10",
-    url: "https://images.pexels.com/photos/2029665/pexels-photo-2029665.jpeg?auto=compress&cs=tinysrgb&w=800",
-    fullUrl: "https://images.pexels.com/photos/2029665/pexels-photo-2029665.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    thumbnailUrl: "https://images.pexels.com/photos/2029665/pexels-photo-2029665.jpeg?auto=compress&cs=tinysrgb&w=400",
-    width: 800,
-    height: 600,
-    alt: "Coastal style living space",
-    source: "Pexels",
-    sourceUrl: "https://pexels.com",
-  },
-  {
-    id: "fallback-11",
-    url: "https://images.pexels.com/photos/2251247/pexels-photo-2251247.jpeg?auto=compress&cs=tinysrgb&w=800",
-    fullUrl: "https://images.pexels.com/photos/2251247/pexels-photo-2251247.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    thumbnailUrl: "https://images.pexels.com/photos/2251247/pexels-photo-2251247.jpeg?auto=compress&cs=tinysrgb&w=400",
-    width: 800,
-    height: 600,
-    alt: "Modern dining room",
-    source: "Pexels",
-    sourceUrl: "https://pexels.com",
-  },
-  {
-    id: "fallback-12",
-    url: "https://images.pexels.com/photos/2440471/pexels-photo-2440471.jpeg?auto=compress&cs=tinysrgb&w=800",
-    fullUrl: "https://images.pexels.com/photos/2440471/pexels-photo-2440471.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    thumbnailUrl: "https://images.pexels.com/photos/2440471/pexels-photo-2440471.jpeg?auto=compress&cs=tinysrgb&w=400",
-    width: 800,
-    height: 600,
-    alt: "Warm timber kitchen",
-    source: "Pexels",
-    sourceUrl: "https://pexels.com",
-  },
-];
-
 export function useImageSearch() {
   const [results, setResults] = useState<ImageResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -229,26 +93,17 @@ export function useImageSearch() {
       console.error("Search error:", err);
       const message = err instanceof Error ? err.message : "Failed to search images";
 
-      // Use fallback images when API fails
-      if (page === 1) {
-        console.log("Using fallback images due to API error");
-        setResults(FALLBACK_IMAGES);
-        searchCache[cacheKey] = {
-          results: FALLBACK_IMAGES,
-          timestamp: Date.now(),
-        };
-        // Don't show error toast since we have fallbacks
-        return;
-      }
-
       setError(message);
 
       if (message.includes("Rate limit")) {
         toast.error("Too many requests. Please wait a moment.");
       } else if (message.includes("not configured")) {
         setError("Stock photos not available. Try Open Licensed search instead.");
-      } else {
+        toast.error("Stock photos not available. Try Open Licensed search instead.");
+      } else if (page > 1) {
         toast.error("Failed to load more images");
+      } else {
+        toast.error("Failed to search images");
       }
     } finally {
       setIsLoading(false);
