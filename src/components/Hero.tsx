@@ -1,6 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { Helmet } from "react-helmet-async";
 import { useResolvedAsset } from "@/hooks/useSiteAssets";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
@@ -10,7 +9,7 @@ interface HeroProps {
 
 const Hero = ({ preloaderComplete = true }: HeroProps) => {
   const ref = useRef<HTMLElement>(null);
-  const heroImage = useResolvedAsset("hero-bg");
+  const heroImage = useResolvedAsset("hero-bg", { staticFirst: true });
   
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -50,11 +49,6 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
       className="min-h-screen relative z-20 overflow-hidden bg-background"
     >
       <h1 className="sr-only">Gold Coast Renovations - Locally Trusted.</h1>
-      {heroImage && (
-        <Helmet>
-          <link rel="preload" as="image" href={heroImage} />
-        </Helmet>
-      )}
       {/* Mobile layout - stacked (phones only) */}
       <div className="md:hidden min-h-screen flex flex-col pt-20">
         {/* Mobile hero image - top */}
@@ -235,8 +229,9 @@ const Hero = ({ preloaderComplete = true }: HeroProps) => {
                 width={1200}
                 height={800}
                 sizes="(min-width: 768px) 50vw, 100vw"
-                loading="eager"
+                loading="lazy"
                 decoding="async"
+                fetchPriority="low"
               />
             ) : (
               <div className="w-full max-w-[600px] h-[65vh] max-h-[680px] bg-muted" />

@@ -1,15 +1,20 @@
 import { useImageOverrides } from "./useImageOverrides";
 import { siteAssets } from "@/data/siteAssets";
 
+interface UseSiteAssetsOptions {
+  staticFirst?: boolean;
+}
+
 /**
  * Hook that returns all site assets with any database overrides applied.
  * Use this in components to get resolved image URLs that respect admin replacements.
  *
- * While override data is loading, this returns empty strings for override-managed
- * assets to avoid rendering a fallback image that is immediately replaced.
+ * By default, while override data is loading this returns empty strings for
+ * override-managed assets to avoid image replacement flashes.
  */
-export function useSiteAssets() {
+export function useSiteAssets(options: UseSiteAssetsOptions = {}) {
   const { data: overrides, isLoading, isError } = useImageOverrides();
+  const { staticFirst = false } = options;
 
   // Ready means we've finished loading (success or error)
   const ready = !isLoading;
@@ -19,8 +24,8 @@ export function useSiteAssets() {
 
   for (const asset of siteAssets) {
     if (isLoading && !isError) {
-      // Avoid image-flash: do not paint bundled fallback while override state is unknown.
-      resolvedAssets[asset.id] = "";
+      // Allow static-first mode for critical assets (e.g. homepage hero LCP).
+      resolvedAssets[asset.id] = staticFirst ? asset.importedUrl : "";
       continue;
     }
 
@@ -45,12 +50,13 @@ export function useSiteAssets() {
 
 /**
  * Get a single resolved asset by ID.
- * Returns null while loading, then the override URL if one exists, otherwise the original.
+ * Returns null while loading by default, unless staticFirst is enabled.
  */
 export function useResolvedAsset(
   assetId: string,
+  options: UseSiteAssetsOptions = {},
 ): string | null {
-  const { assets } = useSiteAssets();
+  const { assets } = useSiteAssets(options);
 
   return assets[assetId] || null;
 }

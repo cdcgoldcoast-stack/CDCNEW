@@ -9,6 +9,7 @@ import { AnimatePresence } from "framer-motion";
 import ScrollToTop from "@/components/ScrollToTop";
 import PageTransition from "@/components/PageTransition";
 import { trackMetaPixelPageView } from "@/lib/metaPixel";
+import { initGoogleAnalytics } from "@/lib/analytics";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import RequireAdmin from "@/components/admin/RequireAdmin";
 
@@ -116,6 +117,10 @@ const AnimatedRoutes = () => {
 };
 
 const App = () => {
+  useEffect(() => {
+    initGoogleAnalytics();
+  }, []);
+
   // Signal to prerenderer that content is ready
   useEffect(() => {
     let didDispatch = false;

@@ -88,8 +88,7 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
             width={1200}
             height={900}
             sizes="(min-width: 768px) 50vw, 100vw"
-            loading={index === 0 ? "eager" : "lazy"}
-            priority={index === 0}
+            loading="lazy"
             className="absolute inset-0 w-full h-full object-cover bg-muted"
           />
         ) : (
@@ -118,7 +117,7 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
                   width={800}
                   height={1200}
                   sizes="(min-width: 1024px) 22vw, (min-width: 640px) 48vw, 55vw"
-                  loading={index <= 1 ? "eager" : "lazy"}
+                  loading="lazy"
                   className="w-full h-full object-cover"
                 />
               </motion.div>

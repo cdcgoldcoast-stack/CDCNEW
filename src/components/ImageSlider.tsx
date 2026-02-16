@@ -12,6 +12,11 @@ const ImageSlider = ({ images, projectName }: ImageSliderProps) => {
   const [isPaused, setIsPaused] = useState(false);
   const animationRef = useRef<number>();
   const scrollPosRef = useRef(0);
+  const singleSetWidthRef = useRef(0);
+  const [isInViewport, setIsInViewport] = useState(true);
+  const [isDocumentVisible, setIsDocumentVisible] = useState(
+    typeof document === "undefined" ? true : !document.hidden,
+  );
 
   // Duplicate images for seamless loop
   const duplicatedImages = [...images, ...images, ...images];
@@ -20,31 +25,70 @@ const ImageSlider = ({ images, projectName }: ImageSliderProps) => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
-    const speed = 0.8; // pixels per frame
+    const updateSingleSetWidth = () => {
+      singleSetWidthRef.current = scrollContainer.scrollWidth / 3;
+      if (scrollPosRef.current >= singleSetWidthRef.current) {
+        scrollPosRef.current = 0;
+        scrollContainer.scrollLeft = 0;
+      }
+    };
+
+    updateSingleSetWidth();
+    window.addEventListener("resize", updateSingleSetWidth);
+    return () => window.removeEventListener("resize", updateSingleSetWidth);
+  }, [images.length]);
+
+  useEffect(() => {
+    if (!scrollRef.current || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInViewport(entry.isIntersecting),
+      { threshold: 0.1 },
+    );
+    observer.observe(scrollRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsDocumentVisible(!document.hidden);
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
+  useEffect(() => {
+    const shouldAnimate = !isPaused && isInViewport && isDocumentVisible;
+    if (!shouldAnimate) {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      return;
+    }
+
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
+    const speed = 0.8;
 
     const animate = () => {
-      if (!isPaused) {
-        scrollPosRef.current += speed;
+      const singleSetWidth = singleSetWidthRef.current;
+      if (singleSetWidth <= 0) return;
 
-        // Reset when we've scrolled through one set of images
-        const singleSetWidth = scrollContainer.scrollWidth / 3;
-        if (scrollPosRef.current >= singleSetWidth) {
-          scrollPosRef.current = 0;
-        }
-
-        scrollContainer.scrollLeft = scrollPosRef.current;
+      scrollPosRef.current += speed;
+      if (scrollPosRef.current >= singleSetWidth) {
+        scrollPosRef.current = 0;
       }
+      scrollContainer.scrollLeft = scrollPosRef.current;
       animationRef.current = requestAnimationFrame(animate);
     };
 
     animationRef.current = requestAnimationFrame(animate);
-
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isPaused]);
+  }, [isPaused, isInViewport, isDocumentVisible]);
 
   // Handle keyboard shortcut
   useEffect(() => {

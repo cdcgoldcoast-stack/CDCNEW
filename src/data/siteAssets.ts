@@ -11,7 +11,6 @@ import editorial7 from "@/assets/editorial-7.webp";
 import editorial8 from "@/assets/editorial-8.webp";
 import editorial9 from "@/assets/editorial-9.webp";
 import editorial10 from "@/assets/editorial-10.webp";
-import heroBg from "@/assets/hero-bg.webp";
 import lifestageForever from "@/assets/lifestage-forever.webp";
 import lifestageFuture from "@/assets/lifestage-future.webp";
 import lifestageGrowing from "@/assets/lifestage-growing.webp";
@@ -43,7 +42,7 @@ export interface SiteAsset {
 
 export const siteAssets: SiteAsset[] = [
   // Hero
-  { id: "hero-bg", path: "hero-bg.jpg", importedUrl: heroBg, label: "Hero Background", category: "hero" },
+  { id: "hero-bg", path: "hero-bg.jpg", importedUrl: "/hero-bg.webp", label: "Hero Background", category: "hero" },
   
   // Logo
   { id: "logo", path: "logo.webp", importedUrl: logo, label: "Site Logo", category: "logo" },
