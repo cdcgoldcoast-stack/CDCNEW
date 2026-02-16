@@ -4,9 +4,9 @@ import { siteAssets } from "@/data/siteAssets";
 /**
  * Hook that returns all site assets with any database overrides applied.
  * Use this in components to get resolved image URLs that respect admin replacements.
- * 
- * While override data loads, this returns bundled assets so above-the-fold imagery
- * can paint immediately. Overrides are applied once available.
+ *
+ * While override data is loading, this returns empty strings for override-managed
+ * assets to avoid rendering a fallback image that is immediately replaced.
  */
 export function useSiteAssets() {
   const { data: overrides, isLoading, isError } = useImageOverrides();
@@ -18,25 +18,22 @@ export function useSiteAssets() {
   const resolvedAssets: Record<string, string> = {};
 
   for (const asset of siteAssets) {
-    // Default to bundled images so first render is never blocked on DB/network.
-    resolvedAssets[asset.id] = asset.importedUrl;
-
-    // If error or still loading, keep bundled fallback.
-    if (isError) {
+    if (isLoading && !isError) {
+      // Avoid image-flash: do not paint bundled fallback while override state is unknown.
+      resolvedAssets[asset.id] = "";
       continue;
     }
 
     const override = overrides?.find((o) => o.original_path === asset.path);
-    if (!override) {
-      continue;
-    }
-
-    // Cache-bust when file name stays the same.
-    resolvedAssets[asset.id] = override.updated_at
-      ? `${override.override_url}${override.override_url.includes("?") ? "&" : "?"}v=${encodeURIComponent(
+    resolvedAssets[asset.id] = override
+      ? (
           override.updated_at
-        )}`
-      : override.override_url;
+            ? `${override.override_url}${override.override_url.includes("?") ? "&" : "?"}v=${encodeURIComponent(
+                override.updated_at
+              )}`
+            : override.override_url
+        )
+      : asset.importedUrl;
   }
 
   return {
