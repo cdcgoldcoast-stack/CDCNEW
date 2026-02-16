@@ -17,6 +17,7 @@ import {
   isProjectDetailPath,
   slugFromProjectPath,
   sameDomain,
+  SITELINK_TARGET_PATHS,
 } from "./lib/seo-utils.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -450,7 +451,95 @@ const auditInternalLinkGraph = async ({ routes, vercelConfig }) => {
   }
 
   issues.push(...issueSet);
-  return issues;
+  return {
+    issues,
+    inboundCount,
+  };
+};
+
+const auditSitelinkTargets = async ({ routes, sitemapPaths, inboundCount }) => {
+  const issues = [];
+  const routeSet = new Set(routes.map((route) => normalizePath(route)));
+  const sitemapSet = new Set((sitemapPaths || []).map((routePath) => normalizePath(routePath)));
+  let homepageDocument = null;
+
+  try {
+    const homepageHtml = await fs.readFile(routeToFilePath("/"), "utf8");
+    homepageDocument = new JSDOM(homepageHtml).window.document;
+  } catch {
+    issues.push("Unable to validate sitelink targets because homepage HTML is missing");
+  }
+
+  for (const targetPath of SITELINK_TARGET_PATHS) {
+    const normalizedTargetPath = normalizePath(targetPath);
+
+    if (!routeSet.has(normalizedTargetPath)) {
+      issues.push(`Sitelink target missing from generated routes: ${normalizedTargetPath}`);
+      continue;
+    }
+
+    if (!sitemapSet.has(normalizedTargetPath)) {
+      issues.push(`Sitelink target missing from sitemap: ${normalizedTargetPath}`);
+    }
+
+    const inboundLinks = inboundCount?.get(normalizedTargetPath) || 0;
+    if (inboundLinks === 0) {
+      issues.push(`Sitelink target has no internal inbound links: ${normalizedTargetPath}`);
+    }
+
+    if (homepageDocument) {
+      const homepageAnchors = [...homepageDocument.querySelectorAll("a[href]")];
+      const matchingAnchors = homepageAnchors.filter((anchor) => {
+        const rel = (anchor.getAttribute("rel") || "").toLowerCase();
+        if (rel.includes("nofollow")) return false;
+        const href = anchor.getAttribute("href");
+        return normalizeInternalHrefPath(href, "/") === normalizedTargetPath;
+      });
+
+      if (matchingAnchors.length === 0) {
+        issues.push(`Homepage is missing a crawlable link to sitelink target: ${normalizedTargetPath}`);
+      } else {
+        const hasDescriptiveAnchor = matchingAnchors.some((anchor) => {
+          const anchorText = normalizeText(anchor.textContent || anchor.getAttribute("aria-label") || "");
+          return anchorText.split(/\s+/).filter(Boolean).length >= 2;
+        });
+
+        if (!hasDescriptiveAnchor) {
+          issues.push(`Homepage links to ${normalizedTargetPath} are not descriptive enough`);
+        }
+      }
+    }
+
+    const targetHtmlPath = routeToFilePath(normalizedTargetPath);
+    let targetHtml = "";
+    try {
+      targetHtml = await fs.readFile(targetHtmlPath, "utf8");
+    } catch {
+      issues.push(`Missing rendered HTML for sitelink target: ${normalizedTargetPath}`);
+      continue;
+    }
+
+    const targetDocument = new JSDOM(targetHtml).window.document;
+    const canonical = targetDocument.querySelector('link[rel="canonical"]')?.getAttribute("href")?.trim() || "";
+    const expectedCanonical = canonicalForPath(normalizedTargetPath);
+    const normalizedCanonical = normalizeAbsoluteUrl(canonical);
+
+    if (!canonical) {
+      issues.push(`Sitelink target missing canonical tag: ${normalizedTargetPath}`);
+    } else if (normalizedCanonical !== normalizeAbsoluteUrl(expectedCanonical)) {
+      issues.push(
+        `Sitelink target canonical mismatch: ${normalizedTargetPath} -> ${canonical} (expected ${expectedCanonical})`
+      );
+    }
+
+    const robotsMeta = extractMetaByName(targetDocument, "robots").toLowerCase();
+    const googlebotMeta = extractMetaByName(targetDocument, "googlebot").toLowerCase();
+    if (robotsMeta.includes("noindex") || googlebotMeta.includes("noindex")) {
+      issues.push(`Sitelink target is marked noindex: ${normalizedTargetPath}`);
+    }
+  }
+
+  return [...new Set(issues)];
 };
 
 const auditRouteHtml = async (route) => {
@@ -931,9 +1020,18 @@ const main = async () => {
     failures.push({ scope: "[sitemap]", issues: sitemapAudit.issues });
   }
 
-  const linkGraphIssues = await auditInternalLinkGraph({ routes: auditRoutes, vercelConfig });
-  if (linkGraphIssues.length > 0) {
-    failures.push({ scope: "[links]", issues: linkGraphIssues });
+  const linkGraphAudit = await auditInternalLinkGraph({ routes: auditRoutes, vercelConfig });
+  if (linkGraphAudit.issues.length > 0) {
+    failures.push({ scope: "[links]", issues: linkGraphAudit.issues });
+  }
+
+  const sitelinkIssues = await auditSitelinkTargets({
+    routes: auditRoutes,
+    sitemapPaths: sitemapAudit.sitemapPaths,
+    inboundCount: linkGraphAudit.inboundCount,
+  });
+  if (sitelinkIssues.length > 0) {
+    failures.push({ scope: "[sitelinks]", issues: sitelinkIssues });
   }
 
   if (performHttpChecks) {

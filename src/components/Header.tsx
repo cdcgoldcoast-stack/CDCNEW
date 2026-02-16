@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useResolvedAsset } from "@/hooks/useSiteAssets";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { trackAnalyticsEvent } from "@/lib/analytics";
+import { HEADER_SITELINK_TARGETS } from "@/config/seo";
 
 const SCROLL_THRESHOLD = 10; // Minimum scroll distance to trigger hide/show
 
@@ -66,12 +67,10 @@ const Header = () => {
     onTouchStart: () => prefetchRoute(href),
   });
 
-  const baseLinks = [
-    { label: "About Us", href: "/about-us" },
-    { label: "Renovation Projects", href: "/renovation-projects" },
-    { label: "Project Gallery", href: "/project-gallery" },
-    { label: "Renovation Design Tools", href: "/renovation-design-tools" },
-  ];
+  const baseLinks = HEADER_SITELINK_TARGETS.map((target) => ({
+    label: target.label,
+    href: target.path,
+  }));
   const navLinks = isHome ? baseLinks : [{ label: "Home", href: "/" }, ...baseLinks];
   
   // Always use solid header (no transparent mode)

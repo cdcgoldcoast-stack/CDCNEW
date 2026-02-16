@@ -12,6 +12,7 @@ import {
   loadGeneratedProjectSlugs,
   sameDomain,
   slugFromProjectPath,
+  SITELINK_TARGET_PATHS,
 } from "./lib/seo-utils.mjs";
 import { sendAlert } from "./lib/notify.mjs";
 
@@ -655,6 +656,161 @@ async function monitorProjectSlugDrift(entries, checks) {
   );
 }
 
+async function monitorSitelinkTargets(entries, checks) {
+  const sitemapPathSet = new Set(
+    entries.map((entry) => normalizePath(pathFromUrl(entry.loc, baseUrl)))
+  );
+  const missingInSitemap = SITELINK_TARGET_PATHS.filter(
+    (targetPath) => !sitemapPathSet.has(normalizePath(targetPath))
+  );
+
+  const missingHomepageLinks = [];
+  const weakHomepageAnchors = [];
+  const targetHealthFailures = [];
+
+  try {
+    const homepageUrl = new URL("/", baseUrl).toString();
+    const homepageResponse = await fetchWithTimeout(homepageUrl, { redirect: "follow" });
+    if (!homepageResponse.ok) {
+      targetHealthFailures.push({
+        path: "/",
+        reason: `homepage_status_${homepageResponse.status}`,
+      });
+    } else {
+      const homepageHtml = await homepageResponse.text();
+      const homepageDocument = new JSDOM(homepageHtml).window.document;
+      const homepageAnchors = [...homepageDocument.querySelectorAll("a[href]")];
+
+      for (const targetPath of SITELINK_TARGET_PATHS) {
+        const matchingAnchors = homepageAnchors.filter((anchor) => {
+          const href = anchor.getAttribute("href");
+          if (!href) return false;
+          if (/^(mailto|tel|javascript|data):/i.test(href)) return false;
+          try {
+            const resolved = new URL(href, homepageUrl);
+            return normalizePath(resolved.pathname) === normalizePath(targetPath);
+          } catch {
+            return false;
+          }
+        });
+
+        if (matchingAnchors.length === 0) {
+          missingHomepageLinks.push(targetPath);
+          continue;
+        }
+
+        const hasDescriptiveAnchor = matchingAnchors.some((anchor) => {
+          const text = (anchor.textContent || anchor.getAttribute("aria-label") || "")
+            .replace(/\s+/g, " ")
+            .trim();
+          return text.split(" ").filter(Boolean).length >= 2;
+        });
+
+        if (!hasDescriptiveAnchor) {
+          weakHomepageAnchors.push(targetPath);
+        }
+      }
+    }
+  } catch (error) {
+    targetHealthFailures.push({
+      path: "/",
+      reason: `homepage_fetch_failed:${String(error)}`,
+    });
+  }
+
+  for (const targetPath of SITELINK_TARGET_PATHS) {
+    const targetUrl = new URL(targetPath, baseUrl).toString();
+    let response;
+    try {
+      response = await fetchWithTimeout(targetUrl, { redirect: "manual" });
+    } catch (error) {
+      targetHealthFailures.push({
+        path: targetPath,
+        reason: `request_failed:${String(error)}`,
+      });
+      continue;
+    }
+
+    if (response.status >= 300 && response.status < 400) {
+      targetHealthFailures.push({
+        path: targetPath,
+        reason: `redirect_${response.status}`,
+        location: response.headers.get("location") || null,
+      });
+      continue;
+    }
+
+    if (response.status !== 200) {
+      targetHealthFailures.push({
+        path: targetPath,
+        reason: `status_${response.status}`,
+      });
+      continue;
+    }
+
+    const contentType = (response.headers.get("content-type") || "").toLowerCase();
+    if (!contentType.includes("text/html")) {
+      continue;
+    }
+
+    const html = await response.text();
+    const document = new JSDOM(html).window.document;
+    const robots = (extractMetaByName(document, "robots") || "").toLowerCase();
+    const googlebot = (extractMetaByName(document, "googlebot") || "").toLowerCase();
+    if (robots.includes("noindex") || googlebot.includes("noindex")) {
+      targetHealthFailures.push({
+        path: targetPath,
+        reason: "noindex",
+      });
+    }
+
+    const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute("href")?.trim() || "";
+    const normalizedCanonical = normalizeAbsoluteUrl(canonical);
+    const expectedCanonical = normalizeAbsoluteUrl(targetUrl);
+    if (!normalizedCanonical || normalizedCanonical !== expectedCanonical) {
+      targetHealthFailures.push({
+        path: targetPath,
+        reason: "canonical_mismatch",
+        canonical: canonical || null,
+        expectedCanonical,
+      });
+    }
+  }
+
+  const hasFailures =
+    missingInSitemap.length > 0 ||
+    missingHomepageLinks.length > 0 ||
+    weakHomepageAnchors.length > 0 ||
+    targetHealthFailures.length > 0;
+
+  if (hasFailures) {
+    checks.push(
+      createCheckResult(
+        "sitelink_targets",
+        "high",
+        "fail",
+        "Sitelink target coverage has regressions",
+        {
+          missingInSitemap,
+          missingHomepageLinks,
+          weakHomepageAnchors,
+          targetHealthFailures: targetHealthFailures.slice(0, 30),
+        }
+      )
+    );
+    return;
+  }
+
+  checks.push(
+    createCheckResult(
+      "sitelink_targets",
+      "info",
+      "pass",
+      `Sitelink targets are indexable and linked (${SITELINK_TARGET_PATHS.length} targets)`
+    )
+  );
+}
+
 async function main() {
   const checks = [];
   const startedAt = Date.now();
@@ -668,6 +824,7 @@ async function main() {
   if (entries.length > 0) {
     await monitorSitemapUrls(entries, checks);
     await monitorProjectSlugDrift(entries, checks);
+    await monitorSitelinkTargets(entries, checks);
   }
   await monitorRedirectHygiene(checks);
   await monitor404Behavior(checks);

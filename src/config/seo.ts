@@ -70,6 +70,73 @@ export const PRIMARY_KEYWORDS = [
   "CD Construct Gold Coast",
 ];
 
+export type SitelinkTarget = {
+  path: string;
+  label: string;
+  description: string;
+  includeInHeader?: boolean;
+  includeInFooter?: boolean;
+};
+
+// Core indexable routes we want Google to understand as primary sitelink candidates.
+export const SITELINK_TARGETS: SitelinkTarget[] = [
+  {
+    path: "/about-us",
+    label: "About Us",
+    description: "Meet the Gold Coast renovation team behind Concept Design Construct.",
+    includeInHeader: true,
+    includeInFooter: true,
+  },
+  {
+    path: "/renovation-projects",
+    label: "Renovation Projects",
+    description: "Browse completed Gold Coast kitchen, bathroom, and home renovation projects.",
+    includeInHeader: true,
+    includeInFooter: true,
+  },
+  {
+    path: "/project-gallery",
+    label: "Project Gallery",
+    description: "Explore Gold Coast renovation inspiration across kitchens, bathrooms, and living spaces.",
+    includeInHeader: true,
+    includeInFooter: true,
+  },
+  {
+    path: "/services",
+    label: "Renovation Services",
+    description: "View Gold Coast renovation services for bathrooms, kitchens, and whole-home upgrades.",
+    includeInFooter: true,
+  },
+  {
+    path: "/life-stages",
+    label: "Life Stages",
+    description: "Plan renovation priorities around family stages, comfort, and long-term value.",
+    includeInFooter: true,
+  },
+  {
+    path: "/renovation-design-tools",
+    label: "Renovation Design Tools",
+    description: "Use renovation design tools to plan style, scope, and layout direction.",
+    includeInHeader: true,
+    includeInFooter: true,
+  },
+  {
+    path: "/renovation-design-tools/ai-generator",
+    label: "AI Design Generator",
+    description: "Preview renovation directions with AI before-and-after concept visuals.",
+    includeInFooter: true,
+  },
+  {
+    path: "/get-quote",
+    label: "Book A Consultation",
+    description: "Start your Gold Coast renovation quote and consultation process.",
+    includeInFooter: true,
+  },
+];
+
+export const HEADER_SITELINK_TARGETS = SITELINK_TARGETS.filter((target) => target.includeInHeader);
+export const FOOTER_SITELINK_TARGETS = SITELINK_TARGETS.filter((target) => target.includeInFooter);
+
 // Helper function to get full URL
 export const getFullUrl = (path: string = "/") => {
   return `${PRODUCTION_DOMAIN}${path}`;

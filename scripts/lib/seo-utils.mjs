@@ -24,6 +24,17 @@ export const EXTENDED_ROUTES = [
   "/renovation-design-tools/moodboard",
 ];
 
+export const SITELINK_TARGET_PATHS = [
+  "/about-us",
+  "/renovation-projects",
+  "/project-gallery",
+  "/services",
+  "/life-stages",
+  "/renovation-design-tools",
+  "/renovation-design-tools/ai-generator",
+  "/get-quote",
+];
+
 export const FALLBACK_PROJECT_SLUGS = [
   "coastal-modern",
   "heritage-revival",

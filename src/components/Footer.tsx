@@ -3,20 +3,16 @@ import masterBuildersLogo from "@/assets/master-builders.webp";
 import qbccLogo from "@/assets/qbcc.webp";
 import { Facebook, Instagram } from "lucide-react";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import { FOOTER_SITELINK_TARGETS } from "@/config/seo";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const logo = useResolvedAsset("logo");
 
-  const navLinks = [
-    { label: "About Us", href: "/about-us" },
-    { label: "Renovation Projects", href: "/renovation-projects" },
-    { label: "Services", href: "/services" },
-    { label: "Project Gallery", href: "/project-gallery" },
-    { label: "Life Stages", href: "/life-stages" },
-    { label: "Renovation Design Tools", href: "/renovation-design-tools" },
-    { label: "AI Design Generator", href: "/renovation-design-tools/ai-generator" },
-  ];
+  const navLinks = FOOTER_SITELINK_TARGETS.map((target) => ({
+    label: target.label,
+    href: target.path,
+  }));
 
   const projectLinks = [
     { label: "Everyday Ease", href: "/renovation-projects/everyday-ease" },

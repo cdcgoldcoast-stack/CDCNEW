@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DEFAULT_META, PRODUCTION_DOMAIN, SITE_NAME } from "@/config/seo";
+import { DEFAULT_META, PRODUCTION_DOMAIN, SITE_NAME, SITELINK_TARGETS } from "@/config/seo";
 
 export const SITE_URL = PRODUCTION_DOMAIN;
 export const SITE_HOST = "www.cdconstruct.com.au";
@@ -200,16 +200,43 @@ export const generateServiceCatalogSchema = (services: string[]) => ({
   })),
 });
 
-export const generateWebSiteSchema = () => ({
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "@id": `${SITE_URL}#website`,
-  name: SITE_NAME,
-  alternateName: "CD Construct",
-  url: SITE_URL,
-  inLanguage: "en-AU",
-  publisher: {
-    "@id": `${SITE_URL}#organization`,
-  },
-  about: "Gold Coast renovations",
-});
+type WebSiteSchemaOptions = {
+  enableSearchAction?: boolean;
+  searchPath?: string;
+};
+
+export const generateWebSiteSchema = ({
+  enableSearchAction = false,
+  searchPath = "/project-gallery",
+}: WebSiteSchemaOptions = {}) => {
+  const schema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE_URL}#website`,
+    name: SITE_NAME,
+    alternateName: "CD Construct",
+    url: SITE_URL,
+    inLanguage: "en-AU",
+    publisher: {
+      "@id": `${SITE_URL}#organization`,
+    },
+    about: "Gold Coast renovations",
+    hasPart: SITELINK_TARGETS.map((target) => ({
+      "@type": "WebPage",
+      "@id": `${absoluteUrl(target.path)}#webpage`,
+      name: target.label,
+      description: target.description,
+      url: absoluteUrl(target.path),
+    })),
+  };
+
+  if (enableSearchAction) {
+    schema.potentialAction = {
+      "@type": "SearchAction",
+      target: `${absoluteUrl(searchPath)}?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    };
+  }
+
+  return schema;
+};

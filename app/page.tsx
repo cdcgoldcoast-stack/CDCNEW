@@ -3,6 +3,7 @@ import { generateFAQSchema, generateLocalBusinessSchema } from "@/lib/structured
 import JsonLd from "@/components/JsonLd";
 import SSRHomeClient from "../components/SSRHomeClient";
 import { buildMetadata, generateWebSiteSchema } from "@/lib/seo";
+import { SITELINK_TARGETS } from "@/config/seo";
 
 const homepageFAQs = [
   {
@@ -66,6 +67,7 @@ export default function HomePage() {
   const localBusinessSchema = generateLocalBusinessSchema();
   const faqSchema = generateFAQSchema(homepageFAQs);
   const webSiteSchema = generateWebSiteSchema();
+  const sitelinkTargets = SITELINK_TARGETS;
 
   return (
     <>
@@ -81,6 +83,14 @@ export default function HomePage() {
           <li>Kitchen renovations designed for flow, storage, and everyday usability.</li>
           <li>Bathroom renovations focused on comfort, durability, and clean detailing.</li>
           <li>Whole-home renovations planned around lifestyle, layout, and long-term value.</li>
+        </ul>
+        <h2>Popular Renovation Pages</h2>
+        <ul>
+          {sitelinkTargets.map((target) => (
+            <li key={target.path}>
+              <a href={target.path}>{target.label}</a>: {target.description}
+            </li>
+          ))}
         </ul>
       </section>
       <SSRHomeClient />
