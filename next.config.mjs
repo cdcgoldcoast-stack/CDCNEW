@@ -7,10 +7,10 @@ const __dirname = path.dirname(__filename);
 const DEFAULT_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_riMzmbUjAEXtvSij0Ho2Ew_eGK9ChO8";
 const isDevelopment = process.env.NODE_ENV === "development";
 
-const readRootEnvValue = (key) => {
+const readLocalEnvValue = (key) => {
   const envFiles = [
-    path.resolve(__dirname, "..", ".env.local"),
-    path.resolve(__dirname, "..", ".env"),
+    path.resolve(__dirname, ".env.local"),
+    path.resolve(__dirname, ".env"),
   ];
 
   for (const filePath of envFiles) {
@@ -45,8 +45,8 @@ const readRootEnvValue = (key) => {
 const resolvedSupabaseUrl =
   process.env.NEXT_PUBLIC_SUPABASE_URL ||
   process.env.VITE_SUPABASE_URL ||
-  readRootEnvValue("NEXT_PUBLIC_SUPABASE_URL") ||
-  readRootEnvValue("VITE_SUPABASE_URL") ||
+  readLocalEnvValue("NEXT_PUBLIC_SUPABASE_URL") ||
+  readLocalEnvValue("VITE_SUPABASE_URL") ||
   "https://iqugsxeejieneyksfbza.supabase.co";
 
 const resolvedSupabaseAnonKey =
@@ -54,19 +54,16 @@ const resolvedSupabaseAnonKey =
   process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
   process.env.VITE_SUPABASE_ANON_KEY ||
   process.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
-  readRootEnvValue("NEXT_PUBLIC_SUPABASE_ANON_KEY") ||
-  readRootEnvValue("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY") ||
-  readRootEnvValue("VITE_SUPABASE_ANON_KEY") ||
-  readRootEnvValue("VITE_SUPABASE_PUBLISHABLE_KEY") ||
+  readLocalEnvValue("NEXT_PUBLIC_SUPABASE_ANON_KEY") ||
+  readLocalEnvValue("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY") ||
+  readLocalEnvValue("VITE_SUPABASE_ANON_KEY") ||
+  readLocalEnvValue("VITE_SUPABASE_PUBLISHABLE_KEY") ||
   DEFAULT_SUPABASE_PUBLISHABLE_KEY;
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    externalDir: true,
-  },
   typescript: {
-    // Temporary while shared source is split across root + next-ssrhome.
+    // Temporary while legacy modules remain under src.
     ignoreBuildErrors: true,
   },
   env: {
@@ -197,7 +194,7 @@ const nextConfig = {
       "@/components/ResponsiveImage$": path.resolve(__dirname, "compat/ResponsiveImage.tsx"),
       "@/components/ui/button$": path.resolve(__dirname, "compat/button.tsx"),
       "react-router-dom$": path.resolve(__dirname, "compat/react-router-dom.tsx"),
-      "@": path.resolve(__dirname, "../src"),
+      "@": path.resolve(__dirname, "src"),
     };
 
     return config;

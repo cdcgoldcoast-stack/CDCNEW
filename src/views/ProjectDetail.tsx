@@ -10,7 +10,7 @@ import { generateProjectSchema, generateBreadcrumbSchema } from "@/lib/structure
 import SuggestedProjects from "@/components/SuggestedProjects";
 import BottomInvitation from "@/components/BottomInvitation";
 import { slugMatches } from "@/lib/slug";
-import NotFound from "@/pages/NotFound";
+import NotFound from "@/views/NotFound";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
 const ProjectDetail = () => {

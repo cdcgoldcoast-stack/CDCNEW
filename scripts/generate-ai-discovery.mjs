@@ -15,7 +15,7 @@ import {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
-const DIST_DIR = path.join(ROOT_DIR, "dist");
+const NEXT_SERVER_APP_DIR = path.join(ROOT_DIR, ".next", "server", "app");
 const PUBLIC_DIR = path.join(ROOT_DIR, "public");
 const PUBLIC_SITEMAP_PATH = path.join(PUBLIC_DIR, "sitemap.xml");
 const GENERATED_PROJECT_SLUGS_PATH = path.join(ROOT_DIR, "src", "generated", "project-slugs.json");
@@ -32,9 +32,9 @@ const FALLBACK_SCHEMA_TYPES_BY_ROUTE = {
   "/life-stages": ["FAQPage"],
 };
 
-const routeToDistFile = (routePath) => {
-  if (routePath === "/") return path.join(DIST_DIR, "index.html");
-  return path.join(DIST_DIR, routePath.replace(/^\//, ""), "index.html");
+const routeToHtmlFile = (routePath) => {
+  if (routePath === "/") return path.join(NEXT_SERVER_APP_DIR, "index.html");
+  return path.join(NEXT_SERVER_APP_DIR, `${routePath.replace(/^\//, "")}.html`);
 };
 
 function collectSchemaTypes(node, sink) {
@@ -66,7 +66,7 @@ function collectSchemaTypes(node, sink) {
 }
 
 async function extractStructuredDataTypes(routePath) {
-  const htmlPath = routeToDistFile(routePath);
+  const htmlPath = routeToHtmlFile(routePath);
 
   let html = "";
   try {

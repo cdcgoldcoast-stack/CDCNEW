@@ -13,10 +13,10 @@ import {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
-const NEXT_SERVER_APP_DIR = path.join(ROOT_DIR, "next-ssrhome", ".next", "server", "app");
+const NEXT_SERVER_APP_DIR = path.join(ROOT_DIR, ".next", "server", "app");
 const GENERATED_PROJECT_SLUGS_PATH = path.join(ROOT_DIR, "src", "generated", "project-slugs.json");
 const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, "vercel.json");
-const NEXT_CONFIG_PATH = path.join(ROOT_DIR, "next-ssrhome", "next.config.mjs");
+const NEXT_CONFIG_PATH = path.join(ROOT_DIR, "next.config.mjs");
 const ARTIFACTS_DIR = path.join(ROOT_DIR, "artifacts");
 const OUTPUT_PATH = path.join(ARTIFACTS_DIR, "next-cutover-audit.json");
 

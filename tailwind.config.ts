@@ -1,10 +1,14 @@
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 
-export default {
+const config: Config = {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
-  prefix: "",
+  content: [
+    "./app/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./compat/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   theme: {
     container: {
       center: true,
@@ -15,22 +19,22 @@ export default {
     },
     extend: {
       fontFamily: {
-        serif: ['Georgia', '"Times New Roman"', 'serif'],
-        sans: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+        serif: ["Georgia", '"Times New Roman"', "serif"],
+        sans: ['"Helvetica Neue"', "Helvetica", "Arial", "sans-serif"],
       },
       fontSize: {
-        'h1': ['3.1rem', { lineHeight: '1.15', letterSpacing: '-0.01em' }],
-        'h1-mobile': ['2.35rem', { lineHeight: '1.15', letterSpacing: '-0.01em' }],
-        'h2': ['2.3rem', { lineHeight: '1.2', letterSpacing: '-0.01em' }],
-        'h2-mobile': ['1.8rem', { lineHeight: '1.2', letterSpacing: '-0.01em' }],
-        'hero-sub': ['1.35rem', { lineHeight: '1.5' }],
-        'h3': ['1.2rem', { lineHeight: '1.3', fontWeight: '700' }],
-        'h4': ['0.85rem', { lineHeight: '1.4', letterSpacing: '0.08em' }],
-        'body': ['1.125rem', { lineHeight: '1.6' }],
-        'lead': ['1.2rem', { lineHeight: '1.6' }],
-        'list': ['1.05rem', { lineHeight: '1.6' }],
-        'small': ['0.95rem', { lineHeight: '1.5' }],
-        'button': ['1rem', { lineHeight: '1' }],
+        h1: ["3.1rem", { lineHeight: "1.15", letterSpacing: "-0.01em" }],
+        "h1-mobile": ["2.35rem", { lineHeight: "1.15", letterSpacing: "-0.01em" }],
+        h2: ["2.3rem", { lineHeight: "1.2", letterSpacing: "-0.01em" }],
+        "h2-mobile": ["1.8rem", { lineHeight: "1.2", letterSpacing: "-0.01em" }],
+        "hero-sub": ["1.35rem", { lineHeight: "1.5" }],
+        h3: ["1.2rem", { lineHeight: "1.3", fontWeight: "700" }],
+        h4: ["0.85rem", { lineHeight: "1.4", letterSpacing: "0.08em" }],
+        body: ["1.125rem", { lineHeight: "1.6" }],
+        lead: ["1.2rem", { lineHeight: "1.6" }],
+        list: ["1.05rem", { lineHeight: "1.6" }],
+        small: ["0.95rem", { lineHeight: "1.5" }],
+        button: ["1rem", { lineHeight: "1" }],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -111,4 +115,6 @@ export default {
     },
   },
   plugins: [tailwindcssAnimate],
-} satisfies Config;
+};
+
+export default config;

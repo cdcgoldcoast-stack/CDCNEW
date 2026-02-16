@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-16T13:15:33.306Z",
+  "generatedAt": "2026-02-16T13:52:23.591Z",
   "domain": "https://www.cdconstruct.com.au",
   "urlCount": 27,
   "projectUrlCount": 14,
@@ -18,23 +18,29 @@
   },
   "structuredDataTypeCounts": {
     "Answer": 2,
-    "City": 3,
+    "City": 4,
     "FAQPage": 2,
     "GeoCoordinates": 1,
     "HomeAndConstructionBusiness": 3,
     "Offer": 1,
     "OfferCatalog": 1,
     "OpeningHoursSpecification": 1,
-    "PostalAddress": 1,
+    "PostalAddress": 15,
     "Question": 2,
-    "Service": 1,
+    "Service": 2,
     "State": 1,
+    "WebSite": 13,
     "AboutPage": 1,
+    "BreadcrumbList": 26,
+    "ListItem": 26,
+    "WebPage": 12,
     "CreativeWork": 15,
-    "ItemList": 1,
-    "ListItem": 1,
+    "ItemList": 2,
+    "Organization": 15,
     "ContactPage": 1,
-    "BreadcrumbList": 14
+    "CollectionPage": 1,
+    "Thing": 1,
+    "Place": 14
   },
   "routes": [
     {
@@ -54,7 +60,8 @@
         "PostalAddress",
         "Question",
         "Service",
-        "State"
+        "State",
+        "WebSite"
       ]
     },
     {
@@ -64,8 +71,12 @@
       "contentType": "about-page",
       "structuredDataTypes": [
         "AboutPage",
+        "BreadcrumbList",
         "City",
-        "HomeAndConstructionBusiness"
+        "HomeAndConstructionBusiness",
+        "ListItem",
+        "WebPage",
+        "WebSite"
       ]
     },
     {
@@ -74,9 +85,12 @@
       "lastmod": "2026-02-16",
       "contentType": "projects-index",
       "structuredDataTypes": [
+        "BreadcrumbList",
         "CreativeWork",
         "ItemList",
-        "ListItem"
+        "ListItem",
+        "WebPage",
+        "WebSite"
       ]
     },
     {
@@ -84,7 +98,16 @@
       "url": "https://www.cdconstruct.com.au/services",
       "lastmod": "2026-02-16",
       "contentType": "services-page",
-      "structuredDataTypes": []
+      "structuredDataTypes": [
+        "BreadcrumbList",
+        "City",
+        "ItemList",
+        "ListItem",
+        "Organization",
+        "Service",
+        "WebPage",
+        "WebSite"
+      ]
     },
     {
       "path": "/life-stages",
@@ -93,8 +116,12 @@
       "contentType": "content-page",
       "structuredDataTypes": [
         "Answer",
+        "BreadcrumbList",
         "FAQPage",
-        "Question"
+        "ListItem",
+        "Question",
+        "WebPage",
+        "WebSite"
       ]
     },
     {
@@ -103,9 +130,13 @@
       "lastmod": "2026-02-16",
       "contentType": "contact-page",
       "structuredDataTypes": [
+        "BreadcrumbList",
         "City",
         "ContactPage",
-        "HomeAndConstructionBusiness"
+        "HomeAndConstructionBusiness",
+        "ListItem",
+        "WebPage",
+        "WebSite"
       ]
     },
     {
@@ -113,49 +144,86 @@
       "url": "https://www.cdconstruct.com.au/project-gallery",
       "lastmod": "2026-02-16",
       "contentType": "gallery-page",
-      "structuredDataTypes": []
+      "structuredDataTypes": [
+        "BreadcrumbList",
+        "CollectionPage",
+        "ListItem",
+        "Thing",
+        "WebPage",
+        "WebSite"
+      ]
     },
     {
       "path": "/renovation-design-tools",
       "url": "https://www.cdconstruct.com.au/renovation-design-tools",
       "lastmod": "2026-02-16",
       "contentType": "design-tools",
-      "structuredDataTypes": []
+      "structuredDataTypes": [
+        "BreadcrumbList",
+        "ListItem",
+        "WebPage",
+        "WebSite"
+      ]
     },
     {
       "path": "/renovation-design-tools/ai-generator/intro",
       "url": "https://www.cdconstruct.com.au/renovation-design-tools/ai-generator/intro",
       "lastmod": "2026-02-16",
       "contentType": "design-tool",
-      "structuredDataTypes": []
+      "structuredDataTypes": [
+        "BreadcrumbList",
+        "ListItem",
+        "WebPage",
+        "WebSite"
+      ]
     },
     {
       "path": "/renovation-design-tools/ai-generator",
       "url": "https://www.cdconstruct.com.au/renovation-design-tools/ai-generator",
       "lastmod": "2026-02-16",
       "contentType": "design-tool",
-      "structuredDataTypes": []
+      "structuredDataTypes": [
+        "BreadcrumbList",
+        "ListItem",
+        "WebPage",
+        "WebSite"
+      ]
     },
     {
       "path": "/renovation-design-tools/moodboard",
       "url": "https://www.cdconstruct.com.au/renovation-design-tools/moodboard",
       "lastmod": "2026-02-16",
       "contentType": "design-tool",
-      "structuredDataTypes": []
+      "structuredDataTypes": [
+        "BreadcrumbList",
+        "ListItem",
+        "WebPage",
+        "WebSite"
+      ]
     },
     {
       "path": "/privacy-policy",
       "url": "https://www.cdconstruct.com.au/privacy-policy",
       "lastmod": "2026-02-16",
       "contentType": "legal-page",
-      "structuredDataTypes": []
+      "structuredDataTypes": [
+        "BreadcrumbList",
+        "ListItem",
+        "WebPage",
+        "WebSite"
+      ]
     },
     {
       "path": "/terms-conditions",
       "url": "https://www.cdconstruct.com.au/terms-conditions",
       "lastmod": "2026-02-16",
       "contentType": "legal-page",
-      "structuredDataTypes": []
+      "structuredDataTypes": [
+        "BreadcrumbList",
+        "ListItem",
+        "WebPage",
+        "WebSite"
+      ]
     },
     {
       "path": "/renovation-projects/coastal-modern",
@@ -164,7 +232,11 @@
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
-        "CreativeWork"
+        "CreativeWork",
+        "ListItem",
+        "Organization",
+        "Place",
+        "PostalAddress"
       ]
     },
     {
@@ -174,7 +246,11 @@
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
-        "CreativeWork"
+        "CreativeWork",
+        "ListItem",
+        "Organization",
+        "Place",
+        "PostalAddress"
       ]
     },
     {
@@ -184,7 +260,11 @@
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
-        "CreativeWork"
+        "CreativeWork",
+        "ListItem",
+        "Organization",
+        "Place",
+        "PostalAddress"
       ]
     },
     {
@@ -194,7 +274,11 @@
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
-        "CreativeWork"
+        "CreativeWork",
+        "ListItem",
+        "Organization",
+        "Place",
+        "PostalAddress"
       ]
     },
     {
@@ -204,7 +288,11 @@
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
-        "CreativeWork"
+        "CreativeWork",
+        "ListItem",
+        "Organization",
+        "Place",
+        "PostalAddress"
       ]
     },
     {
@@ -214,7 +302,11 @@
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
-        "CreativeWork"
+        "CreativeWork",
+        "ListItem",
+        "Organization",
+        "Place",
+        "PostalAddress"
       ]
     },
     {
@@ -224,7 +316,11 @@
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
-        "CreativeWork"
+        "CreativeWork",
+        "ListItem",
+        "Organization",
+        "Place",
+        "PostalAddress"
       ]
     },
     {
@@ -234,7 +330,11 @@
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
-        "CreativeWork"
+        "CreativeWork",
+        "ListItem",
+        "Organization",
+        "Place",
+        "PostalAddress"
       ]
     },
     {
@@ -244,7 +344,11 @@
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
-        "CreativeWork"
+        "CreativeWork",
+        "ListItem",
+        "Organization",
+        "Place",
+        "PostalAddress"
       ]
     },
     {
@@ -254,7 +358,11 @@
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
-        "CreativeWork"
+        "CreativeWork",
+        "ListItem",
+        "Organization",
+        "Place",
+        "PostalAddress"
       ]
     },
     {
@@ -264,7 +372,11 @@
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
-        "CreativeWork"
+        "CreativeWork",
+        "ListItem",
+        "Organization",
+        "Place",
+        "PostalAddress"
       ]
     },
     {
@@ -274,7 +386,11 @@
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
-        "CreativeWork"
+        "CreativeWork",
+        "ListItem",
+        "Organization",
+        "Place",
+        "PostalAddress"
       ]
     },
     {
@@ -284,7 +400,11 @@
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
-        "CreativeWork"
+        "CreativeWork",
+        "ListItem",
+        "Organization",
+        "Place",
+        "PostalAddress"
       ]
     },
     {
@@ -294,7 +414,11 @@
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
-        "CreativeWork"
+        "CreativeWork",
+        "ListItem",
+        "Organization",
+        "Place",
+        "PostalAddress"
       ]
     }
   ]
