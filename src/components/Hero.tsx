@@ -1,4 +1,3 @@
-import { useResolvedAsset } from "@/hooks/useSiteAssets";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import GoogleReviewBadge from "@/components/GoogleReviewBadge";
 
@@ -7,16 +6,10 @@ const MOBILE_HERO_IMAGE =
   "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Gold_Coast_renovation_builders.webp";
 
 interface HeroProps {
-  /** Pre-resolved hero image URL from server to avoid client-side hook waterfall */
-  heroImageUrl?: string;
+  desktopHeroImageUrl: string;
 }
 
-const Hero = ({ heroImageUrl }: HeroProps = {}) => {
-  const resolvedAsset = useResolvedAsset("hero-bg", { staticFirst: true });
-  // Server-provided URL already includes the correct override (fetched server-side).
-  // The hook is a fallback for client-side navigation where no server prop is available.
-  const heroImage = heroImageUrl || resolvedAsset;
-
+const Hero = ({ desktopHeroImageUrl }: HeroProps) => {
   return (
     <section className="min-h-screen relative z-20 overflow-hidden bg-background">
       <p className="sr-only">Gold Coast renovations by Concept Design Construct.</p>
@@ -24,23 +17,20 @@ const Hero = ({ heroImageUrl }: HeroProps = {}) => {
       {/* Mobile layout - stacked (phones only) */}
       <div className="md:hidden min-h-screen flex flex-col pt-20">
         <div className="h-[40vh] relative">
-          {MOBILE_HERO_IMAGE ? (
-            <ResponsiveImage
-              src={MOBILE_HERO_IMAGE}
-              alt="Gold Coast kitchen renovation in Helensvale by Concept Design Construct"
-              className="absolute inset-0 w-full h-full object-cover bg-muted"
-              width={1200}
-              height={800}
-              sizes="100vw"
-              loading="eager"
-              decoding="async"
-              priority
-              quality={54}
-              responsiveWidths={[320, 420, 560, 720, 860]}
-            />
-          ) : (
-            <div className="absolute inset-0 bg-muted" />
-          )}
+          <ResponsiveImage
+            src={MOBILE_HERO_IMAGE}
+            alt="Gold Coast kitchen renovation in Helensvale by Concept Design Construct"
+            className="absolute inset-0 w-full h-full object-cover bg-muted"
+            width={1200}
+            height={800}
+            sizes="100vw"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            priority
+            quality={54}
+            responsiveWidths={[320, 420, 560, 720, 860]}
+          />
         </div>
 
         <div className={`flex-1 flex items-center px-5 py-8 ${revealed}`}>
@@ -109,22 +99,19 @@ const Hero = ({ heroImageUrl }: HeroProps = {}) => {
           </div>
 
           <div className="flex items-center justify-center">
-            {heroImage ? (
-              <ResponsiveImage
-                src={heroImage}
-                alt="Gold Coast home renovation interior by Concept Design Construct"
-                className="w-full max-w-[600px] h-[65vh] max-h-[680px] object-cover bg-muted"
-                width={1200}
-                height={800}
-                sizes="(min-width: 768px) 50vw, 100vw"
-                loading="lazy"
-                decoding="async"
-                quality={60}
-                responsiveWidths={[640, 800, 960, 1200]}
-              />
-            ) : (
-              <div className="w-full max-w-[600px] h-[65vh] max-h-[680px] bg-muted" />
-            )}
+            <ResponsiveImage
+              src={desktopHeroImageUrl}
+              alt="Gold Coast home renovation interior by Concept Design Construct"
+              className="w-full max-w-[600px] h-[65vh] max-h-[680px] object-cover bg-muted"
+              width={1200}
+              height={800}
+              sizes="(min-width: 768px) 50vw, 100vw"
+              loading="lazy"
+              fetchPriority="low"
+              decoding="async"
+              quality={60}
+              responsiveWidths={[640, 800, 960, 1200]}
+            />
           </div>
         </div>
       </div>

@@ -2,8 +2,6 @@
 
 import dynamic from "next/dynamic";
 import { Link } from "react-router-dom";
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
 import Footer from "@/components/Footer";
 
 const EditorialReveal = dynamic(() => import("@/components/EditorialReveal"));
@@ -17,16 +15,10 @@ const ImageComparisonSlider = dynamic(() => import("@/components/ImageComparison
   ssr: false,
 });
 
-interface SSRHomeClientProps {
-  heroImageUrl?: string;
-}
-
-export default function SSRHomeClient({ heroImageUrl }: SSRHomeClientProps) {
+export default function SSRHomeClient() {
   return (
-    <div className="min-h-screen">
-      <Header />
+    <>
       <main>
-        <Hero heroImageUrl={heroImageUrl} />
         <EditorialReveal />
         <JourneySection />
         <WhatWeRenovateSplit />
@@ -84,6 +76,6 @@ export default function SSRHomeClient({ heroImageUrl }: SSRHomeClientProps) {
         <CostsSection />
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
