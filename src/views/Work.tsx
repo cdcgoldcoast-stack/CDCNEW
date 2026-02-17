@@ -41,8 +41,8 @@ const Work = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Projects | Gold Coast Renovation Projects & Portfolio"
-        description="Browse our Gold Coast renovation portfolio. See completed kitchen, bathroom, and whole-home transformations across Burleigh, Broadbeach, Robina, and more."
+        title="Gold Coast Renovation Projects | Kitchen, Bathroom & Full Home Renovations"
+        description="Browse Gold Coast renovations case studies with completed kitchen, bathroom, and whole-home transformations across Burleigh, Broadbeach, Robina, and more."
         url="/renovation-projects"
         jsonLd={itemListSchema}
       />
@@ -117,8 +117,8 @@ const Work = () => {
         )}
 
         <BottomInvitation
-          title="Plan Your Next Renovation"
-          description="Whether you're planning a bathroom update, a kitchen makeover, or a full property renovation - we'd love to hear about it."
+          title="Plan Your Next Gold Coast Renovation"
+          description="Whether you're planning a bathroom update, a kitchen makeover, or a full home renovation, we'd love to hear about it."
         />
       </main>
       <Footer />

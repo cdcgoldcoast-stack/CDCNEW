@@ -19,7 +19,7 @@ const homepageFAQs = [
   {
     question: "How much does a renovation cost on the Gold Coast?",
     answer:
-      "Costs depend on the size of the renovation, layout changes, and finishes. Kitchens and bathrooms are usually lower six figures, while whole home renovations vary based on scope.",
+      "Costs depend on scope, structural changes, finishes, and approvals. Most bathroom renovations start in the mid five figures, kitchens usually start higher, and full-home renovations vary widely based on layout and specification.",
   },
   {
     question: "Do renovations on the Gold Coast need council approval?",
@@ -49,17 +49,6 @@ export const metadata: Metadata = {
     description:
       "Concept Design Construct (CD Construct) are Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations with design-led planning, QBCC licensed delivery, and timelines.",
     path: "/",
-    keywords: [
-      "Gold Coast renovations",
-      "Gold Coast home renovations",
-      "kitchen renovation Gold Coast",
-      "bathroom renovation Gold Coast",
-      "whole-home renovation Gold Coast",
-      "QBCC licensed builder Gold Coast",
-      "Concept Design Construct",
-      "CD Construct",
-      "CD Construct Gold Coast",
-    ],
   }),
 };
 
@@ -72,8 +61,9 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={[webSiteSchema, localBusinessSchema, faqSchema]} />
+      <SSRHomeClient />
       <section className="sr-only" aria-label="Home page summary for search crawlers">
-        <h1>Gold Coast Renovations - Locally Trusted</h1>
+        <p>Gold Coast Renovations - Locally Trusted.</p>
         <p>
           Clear communication, realistic timelines, and quality results for kitchens, bathrooms, and
           whole-home renovations across the Gold Coast.
@@ -93,7 +83,6 @@ export default function HomePage() {
           ))}
         </ul>
       </section>
-      <SSRHomeClient />
     </>
   );
 }

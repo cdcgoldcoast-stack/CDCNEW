@@ -4,9 +4,9 @@ import { AIDesignIntroClient } from "@/components/route-clients";
 import { generateBreadcrumbSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 
-const pageTitle = "AI Design Generator | Gold Coast Renovation Preview";
+const pageTitle = "Gold Coast Renovations AI Design Generator | Preview";
 const pageDescription =
-  "Preview Gold Coast renovation concepts in minutes. Upload room photos, test finishes, and generate visual directions before your project planning phase.";
+  "Preview Gold Coast renovations concepts in minutes. Upload room photos, test finishes, and generate visual directions before your project planning phase.";
 
 export const metadata: Metadata = buildMetadata({
   title: pageTitle,
@@ -27,8 +27,8 @@ export default function Page() {
   });
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Renovation Design Tools", url: "/renovation-design-tools" },
-    { name: "AI Generator Intro", url: "/renovation-design-tools/ai-generator/intro" },
+    { name: "Gold Coast Renovations Design Tools", url: "/renovation-design-tools" },
+    { name: "Gold Coast Renovations AI Preview", url: "/renovation-design-tools/ai-generator/intro" },
   ]);
 
   return (

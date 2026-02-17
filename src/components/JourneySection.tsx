@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const steps = [
   {
     number: "01",
-    title: "Contact Us",
+    title: "Contact Gold Coast Renovations Team",
     lines: [
       "Stop thinking about it and do it.",
       "Just this one step and we will take care",
@@ -40,17 +40,17 @@ const steps = [
   },
   {
     number: "05",
-    title: "Shopping",
+    title: "Renovation Selections",
     lines: ["The fun part starts here.", "Selections, finishes, fixtures, details.", "Your ideas start becoming real."],
   },
   {
     number: "06",
-    title: "Construction",
+    title: "Gold Coast Renovations Build",
     lines: ["The transformation happens here.", "Yes, it is messy at times.", "But this is where the magic happens."],
   },
   {
     number: "07",
-    title: "Handover",
+    title: "Renovations Handover",
     lines: ["Into your new space.", "The build is complete.", "You start enjoying living."],
   },
 ];

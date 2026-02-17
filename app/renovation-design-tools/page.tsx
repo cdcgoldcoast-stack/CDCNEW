@@ -4,9 +4,9 @@ import { RenovationDesignToolsClient } from "@/components/route-clients";
 import { generateBreadcrumbSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 
-const pageTitle = "Design Tools | Visualise Your Gold Coast Renovation";
+const pageTitle = "Gold Coast Renovations | Design Tools to Visualise Before You Build";
 const pageDescription =
-  "Use our Gold Coast renovation design tools to preview room transformations, compare style directions, and plan renovation decisions before construction.";
+  "Use our design tools to preview Gold Coast renovations, compare style directions, and plan decisions before construction.";
 
 export const metadata: Metadata = buildMetadata({
   title: pageTitle,
@@ -27,7 +27,7 @@ export default function Page() {
   });
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Renovation Design Tools", url: "/renovation-design-tools" },
+    { name: "Gold Coast Renovations Design Tools", url: "/renovation-design-tools" },
   ]);
 
   return (

@@ -4,7 +4,7 @@ import { TermsConditionsClient } from "@/components/route-clients";
 import { generateBreadcrumbSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 
-const pageTitle = "Terms & Conditions";
+const pageTitle = "Gold Coast Renovations Terms & Conditions";
 const pageDescription =
   "Review terms and conditions for using Concept Design Construct resources related to Gold Coast renovation planning, consultations, and site content.";
 
@@ -23,7 +23,7 @@ export default function Page() {
   });
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Terms & Conditions", url: "/terms-conditions" },
+    { name: "Gold Coast Renovations Terms & Conditions", url: "/terms-conditions" },
   ]);
 
   return (

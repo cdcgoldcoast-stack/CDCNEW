@@ -5,11 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import WhatWeRenovateSplit from "@/components/WhatWeRenovateSplit";
 import Footer from "@/components/Footer";
 
 const EditorialReveal = dynamic(() => import("@/components/EditorialReveal"));
 const JourneySection = dynamic(() => import("@/components/JourneySection"));
+const WhatWeRenovateSplit = dynamic(() => import("@/components/WhatWeRenovateSplit"));
 const ProjectsTeaser = dynamic(() => import("@/components/ProjectsTeaser"));
 const WhyRenovate = dynamic(() => import("@/components/WhyRenovate"));
 const FAQSection = dynamic(() => import("@/components/FAQSection"));
@@ -57,7 +57,8 @@ export default function SSRHomeClient() {
   const [shouldShowPreloader, setShouldShowPreloader] = useState(false);
   const [isPreloaderComplete, setIsPreloaderComplete] = useState(true);
   const [showDeferredSections, setShowDeferredSections] = useState(false);
-  const idleCallbackId = useRef<number | null>(null);
+  const deferredRevealTimeout = useRef<number | null>(null);
+  const deferredRevealRef = useRef<HTMLDivElement | null>(null);
 
   const handlePreloaderComplete = () => {
     setIsPreloaderComplete(true);
@@ -75,30 +76,49 @@ export default function SSRHomeClient() {
 
   useEffect(() => {
     const revealDeferredSections = () => setShowDeferredSections(true);
+    deferredRevealTimeout.current = window.setTimeout(revealDeferredSections, 9000);
 
-    if (typeof window.requestIdleCallback === "function") {
-      idleCallbackId.current = window.requestIdleCallback(revealDeferredSections, { timeout: 3500 });
+    if (typeof IntersectionObserver !== "undefined" && deferredRevealRef.current) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            revealDeferredSections();
+            observer.disconnect();
+          }
+        },
+        { rootMargin: "0px", threshold: 0.01 }
+      );
+      observer.observe(deferredRevealRef.current);
+
       return () => {
-        if (
-          idleCallbackId.current !== null &&
-          typeof (
-            window as Window & {
-              cancelIdleCallback?: (id: number) => void;
-            }
-          ).cancelIdleCallback === "function"
-        ) {
-          (
-            window as Window & {
-              cancelIdleCallback?: (id: number) => void;
-            }
-          ).cancelIdleCallback?.(idleCallbackId.current);
+        observer.disconnect();
+        if (deferredRevealTimeout.current !== null) {
+          window.clearTimeout(deferredRevealTimeout.current);
         }
       };
     }
 
-    const timeoutId = window.setTimeout(revealDeferredSections, 2800);
-    return () => window.clearTimeout(timeoutId);
+    const interactionEvents: Array<keyof WindowEventMap> = ["scroll", "pointerdown", "touchstart"];
+    const revealOnInteraction = () => revealDeferredSections();
+    for (const eventName of interactionEvents) {
+      window.addEventListener(eventName, revealOnInteraction, { passive: true, once: true });
+    }
+
+    return () => {
+      for (const eventName of interactionEvents) {
+        window.removeEventListener(eventName, revealOnInteraction);
+      }
+      if (deferredRevealTimeout.current !== null) {
+        window.clearTimeout(deferredRevealTimeout.current);
+      }
+    };
   }, []);
+
+  useEffect(() => {
+    if (!showDeferredSections || deferredRevealTimeout.current === null) return;
+    window.clearTimeout(deferredRevealTimeout.current);
+    deferredRevealTimeout.current = null;
+  }, [showDeferredSections]);
 
   return (
     <div className="min-h-screen">
@@ -106,9 +126,10 @@ export default function SSRHomeClient() {
       <Header />
       <main>
         <Hero preloaderComplete={isPreloaderComplete} />
+        <div ref={deferredRevealRef} className="h-px w-full" aria-hidden="true" />
         {showDeferredSections ? <EditorialReveal /> : null}
         {showDeferredSections ? <JourneySection /> : null}
-        <WhatWeRenovateSplit />
+        {showDeferredSections ? <WhatWeRenovateSplit /> : null}
         {showDeferredSections ? <ProjectsTeaser /> : null}
         {showDeferredSections ? <WhyRenovate /> : null}
 

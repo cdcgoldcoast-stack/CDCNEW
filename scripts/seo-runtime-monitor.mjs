@@ -28,6 +28,25 @@ const baseUrl = process.env.SEO_MONITOR_BASE_URL || PRODUCTION_DOMAIN;
 const strictMode = parseEnvBoolean(process.env.SEO_MONITOR_STRICT, true);
 const maxSitemapChecks = Number.parseInt(process.env.SEO_MONITOR_MAX_URLS || "120", 10);
 const timeoutMs = Number.parseInt(process.env.SEO_MONITOR_TIMEOUT_MS || "12000", 10);
+const canonicalDomainUrl = (() => {
+  try {
+    return new URL(PRODUCTION_DOMAIN);
+  } catch {
+    return null;
+  }
+})();
+
+const canonicalOrigin = canonicalDomainUrl ? canonicalDomainUrl.origin : "";
+const canonicalHost = canonicalDomainUrl?.hostname || "";
+const nonCanonicalOrigin = canonicalDomainUrl?.hostname?.startsWith("www.")
+  ? `${canonicalDomainUrl.protocol}//${canonicalDomainUrl.hostname.replace(/^www\./, "")}`
+  : "";
+const CANONICAL_REDIRECT_SAMPLE_PATHS = [
+  "/",
+  "/services",
+  "/project-gallery",
+  "/renovation-projects/coastal-modern?utm_source=seo-monitor&utm_medium=canonical",
+];
 
 const REQUIRED_TWITTER_META = [
   "twitter:card",
@@ -108,6 +127,13 @@ async function fetchWithTimeout(url, options = {}) {
 function extractMetaByName(document, name) {
   const node = document.querySelector(`meta[name="${name}"]`);
   return node?.getAttribute("content")?.trim() || "";
+}
+
+function hasDescriptiveMetadataText(value) {
+  const text = `${value || ""}`.replace(/\s+/g, " ").trim();
+  if (!text) return false;
+  const wordCount = text.split(" ").filter(Boolean).length;
+  return text.length >= 24 && wordCount >= 4;
 }
 
 function collectLegacyImageSources(document, pageUrl) {
@@ -275,6 +301,7 @@ async function monitorSitemapUrls(entries, checks) {
   const canonicalMismatches = [];
   const noindexUrls = [];
   const missingTwitterMetaUrls = [];
+  const weakTwitterImageAltUrls = [];
   const legacyImageUrls = [];
 
   for (const entry of urlsToCheck) {
@@ -365,6 +392,11 @@ async function monitorSitemapUrls(entries, checks) {
         missingTwitterMetaUrls.push({ url: normalizedUrl, missingTwitterTags });
       }
 
+      const twitterImageAlt = extractMetaByName(document, "twitter:image:alt");
+      if (twitterImageAlt && !hasDescriptiveMetadataText(twitterImageAlt)) {
+        weakTwitterImageAltUrls.push({ url: normalizedUrl, twitterImageAlt });
+      }
+
       const legacyImages = collectLegacyImageSources(document, normalizedUrl);
       if (legacyImages.length > 0) {
         legacyImageUrls.push({
@@ -438,6 +470,27 @@ async function monitorSitemapUrls(entries, checks) {
     );
   }
 
+  if (weakTwitterImageAltUrls.length > 0) {
+    checks.push(
+      createCheckResult(
+        "twitter_image_alt_quality",
+        "medium",
+        "warn",
+        `twitter:image:alt is weak on ${weakTwitterImageAltUrls.length} URL(s)`,
+        { urls: weakTwitterImageAltUrls.slice(0, 20) }
+      )
+    );
+  } else {
+    checks.push(
+      createCheckResult(
+        "twitter_image_alt_quality",
+        "info",
+        "pass",
+        `twitter:image:alt is descriptive for ${urlsToCheck.length} checked sitemap URL(s)`
+      )
+    );
+  }
+
   if (legacyImageUrls.length > 0) {
     checks.push(
       createCheckResult(
@@ -469,6 +522,141 @@ async function monitorSitemapUrls(entries, checks) {
       )
     );
   }
+}
+
+async function monitorHomepageOgImage(checks) {
+  const homepageUrl = new URL("/", baseUrl).toString();
+  let homepageHtml = "";
+
+  try {
+    const response = await fetchWithTimeout(homepageUrl, { redirect: "follow" });
+    if (!response.ok) {
+      checks.push(
+        createCheckResult(
+          "homepage_og_image",
+          "high",
+          "fail",
+          `Homepage request failed with status ${response.status}`,
+          { homepageUrl }
+        )
+      );
+      return;
+    }
+
+    homepageHtml = await response.text();
+  } catch (error) {
+    checks.push(
+      createCheckResult("homepage_og_image", "high", "fail", "Homepage request failed", {
+        homepageUrl,
+        error: String(error),
+      })
+    );
+    return;
+  }
+
+  const document = new JSDOM(homepageHtml).window.document;
+  const ogImage = document.querySelector('meta[property="og:image"]')?.getAttribute("content")?.trim() || "";
+
+  if (!ogImage) {
+    checks.push(
+      createCheckResult(
+        "homepage_og_image",
+        "high",
+        "fail",
+        "Homepage is missing og:image"
+      )
+    );
+    return;
+  }
+
+  let normalizedOgImage = "";
+  try {
+    normalizedOgImage = new URL(ogImage, homepageUrl).toString();
+  } catch {
+    checks.push(
+      createCheckResult(
+        "homepage_og_image",
+        "high",
+        "fail",
+        "Homepage og:image URL is invalid",
+        { ogImage }
+      )
+    );
+    return;
+  }
+
+  let ogResponse;
+  try {
+    ogResponse = await fetchWithTimeout(normalizedOgImage, { redirect: "follow" });
+  } catch (error) {
+    checks.push(
+      createCheckResult("homepage_og_image", "high", "fail", "Homepage og:image request failed", {
+        ogImage: normalizedOgImage,
+        error: String(error),
+      })
+    );
+    return;
+  }
+
+  if (ogResponse.status !== 200) {
+    checks.push(
+      createCheckResult(
+        "homepage_og_image",
+        "high",
+        "fail",
+        `Homepage og:image returned ${ogResponse.status}`,
+        { ogImage: normalizedOgImage }
+      )
+    );
+    return;
+  }
+
+  const contentType = (ogResponse.headers.get("content-type") || "").toLowerCase();
+  if (!contentType.startsWith("image/")) {
+    checks.push(
+      createCheckResult(
+        "homepage_og_image",
+        "high",
+        "fail",
+        "Homepage og:image did not return an image content-type",
+        { ogImage: normalizedOgImage, contentType }
+      )
+    );
+    return;
+  }
+
+  const cacheControl = (ogResponse.headers.get("cache-control") || "").trim();
+  if (!cacheControl) {
+    checks.push(
+      createCheckResult(
+        "homepage_og_image_cache",
+        "medium",
+        "warn",
+        "Homepage og:image response is missing cache-control header",
+        { ogImage: normalizedOgImage }
+      )
+    );
+  } else {
+    checks.push(
+      createCheckResult(
+        "homepage_og_image_cache",
+        "info",
+        "pass",
+        "Homepage og:image has cache-control headers",
+        { ogImage: normalizedOgImage, cacheControl }
+      )
+    );
+  }
+
+  checks.push(
+    createCheckResult(
+      "homepage_og_image",
+      "info",
+      "pass",
+      "Homepage og:image URL is valid and returns an image",
+      { ogImage: normalizedOgImage, contentType }
+    )
+  );
 }
 
 async function monitorRedirectHygiene(checks) {
@@ -552,6 +740,164 @@ async function monitorRedirectHygiene(checks) {
       )
     );
   }
+}
+
+async function monitorCanonicalHostRedirect(checks) {
+  if (!canonicalOrigin || !canonicalHost) {
+    checks.push(
+      createCheckResult(
+        "canonical_host_redirect",
+        "high",
+        "fail",
+        "Canonical domain configuration is invalid",
+        { productionDomain: PRODUCTION_DOMAIN }
+      )
+    );
+    return;
+  }
+
+  if (!nonCanonicalOrigin) {
+    checks.push(
+      createCheckResult(
+        "canonical_host_redirect",
+        "medium",
+        "warn",
+        "Skipped canonical host redirect check because canonical host is not a www domain",
+        { canonicalOrigin }
+      )
+    );
+    return;
+  }
+
+  const failures = [];
+
+  for (const samplePath of CANONICAL_REDIRECT_SAMPLE_PATHS) {
+    const sourceUrl = new URL(samplePath, nonCanonicalOrigin).toString();
+
+    let response;
+    try {
+      response = await fetchWithTimeout(sourceUrl, { redirect: "manual" });
+    } catch (error) {
+      const errorText = String(error);
+      failures.push({
+        sourceUrl,
+        reason: /enotfound|getaddrinfo|dns|could not resolve/i.test(errorText)
+          ? "dns_unresolved"
+          : "request_failed",
+        error: errorText,
+      });
+      continue;
+    }
+
+    if (![301, 308].includes(response.status)) {
+      failures.push({
+        sourceUrl,
+        reason: "unexpected_status",
+        status: response.status,
+      });
+      continue;
+    }
+
+    const location = response.headers.get("location") || "";
+    if (!location) {
+      failures.push({
+        sourceUrl,
+        reason: "missing_location_header",
+        status: response.status,
+      });
+      continue;
+    }
+
+    let redirectedUrl;
+    try {
+      redirectedUrl = new URL(location, sourceUrl);
+    } catch (error) {
+      failures.push({
+        sourceUrl,
+        reason: "invalid_location_header",
+        location,
+        error: String(error),
+      });
+      continue;
+    }
+
+    if (redirectedUrl.hostname !== canonicalHost) {
+      failures.push({
+        sourceUrl,
+        reason: "destination_host_mismatch",
+        location: redirectedUrl.toString(),
+        expectedHost: canonicalHost,
+      });
+      continue;
+    }
+
+    const sourceParsed = new URL(sourceUrl);
+    const redirectedPath = normalizePath(redirectedUrl.pathname || "/");
+    const sourcePath = normalizePath(sourceParsed.pathname || "/");
+    const sourceQuery = sourceParsed.search || "";
+    const redirectedQuery = redirectedUrl.search || "";
+    if (redirectedPath !== sourcePath || redirectedQuery !== sourceQuery) {
+      failures.push({
+        sourceUrl,
+        reason: "path_or_query_not_preserved",
+        sourcePath,
+        sourceQuery,
+        redirectedPath,
+        redirectedQuery,
+      });
+      continue;
+    }
+
+    try {
+      const destinationResponse = await fetchWithTimeout(redirectedUrl.toString(), { redirect: "manual" });
+      if (destinationResponse.status >= 300 && destinationResponse.status < 400) {
+        failures.push({
+          sourceUrl,
+          reason: "redirect_chain_detected",
+          location: redirectedUrl.toString(),
+          status: destinationResponse.status,
+          nextLocation: destinationResponse.headers.get("location") || null,
+        });
+      }
+    } catch (error) {
+      failures.push({
+        sourceUrl,
+        reason: "destination_check_failed",
+        location: redirectedUrl.toString(),
+        error: String(error),
+      });
+    }
+  }
+
+  if (failures.length > 0) {
+    checks.push(
+      createCheckResult(
+        "canonical_host_redirect",
+        "high",
+        "fail",
+        `Canonical host redirect failed for ${failures.length} sample URL(s)`,
+        {
+          canonicalOrigin,
+          nonCanonicalOrigin,
+          failures: failures.slice(0, 20),
+        }
+      )
+    );
+    return;
+  }
+
+  checks.push(
+    createCheckResult(
+      "canonical_host_redirect",
+      "info",
+      "pass",
+      `Validated non-canonical host redirect to canonical host across ${CANONICAL_REDIRECT_SAMPLE_PATHS.length} sample URL(s)`,
+      {
+        canonicalOrigin,
+        nonCanonicalOrigin,
+      }
+    )
+  );
 }
 
 async function monitor404Behavior(checks) {
@@ -826,6 +1172,8 @@ async function main() {
     await monitorProjectSlugDrift(entries, checks);
     await monitorSitelinkTargets(entries, checks);
   }
+  await monitorCanonicalHostRedirect(checks);
+  await monitorHomepageOgImage(checks);
   await monitorRedirectHygiene(checks);
   await monitor404Behavior(checks);
 

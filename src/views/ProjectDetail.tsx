@@ -94,7 +94,7 @@ const ProjectDetail = () => {
 
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Renovation Projects", url: "/renovation-projects" },
+    { name: "Gold Coast Renovation Projects", url: "/renovation-projects" },
     { name: project.name, url: `/renovation-projects/${project.slug}` },
   ]);
   const categoryLabel = project.category.replace("-", " ");
@@ -107,8 +107,8 @@ const ProjectDetail = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title={`${project.name} | ${project.category.replace("-", " ")} Renovation ${project.location}`}
-        description={project.description || `${project.name} - A ${project.category.replace("-", " ")} renovation project in ${project.location}, Gold Coast by Concept Design Construct.`}
+        title={`${project.name} | ${project.category.replace("-", " ")} Renovations in ${project.location}`}
+        description={project.description || `${project.name} - A ${project.category.replace("-", " ")} renovations case study in ${project.location}, Gold Coast by Concept Design Construct.`}
         url={`/renovation-projects/${project.slug}`}
         image={project.image}
         jsonLd={[projectSchema, breadcrumbSchema]}
@@ -128,7 +128,7 @@ const ProjectDetail = () => {
             className="inline-flex items-center gap-2 text-foreground/50 hover:text-foreground transition-colors text-sm mb-10"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Projects
+            Back to Gold Coast Renovation Projects
           </Link>
 
           {/* Title Section */}

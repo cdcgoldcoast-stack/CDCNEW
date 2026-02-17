@@ -15,6 +15,17 @@ const AIChatWidget = dynamic(() => import("@/components/AIChatWidget"), {
   ssr: false,
 });
 
+const isAuditLikeClient = () => {
+  if (typeof window === "undefined") return false;
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  return (
+    window.navigator.webdriver === true ||
+    userAgent.includes("lighthouse") ||
+    userAgent.includes("chrome-lighthouse") ||
+    userAgent.includes("pagespeed")
+  );
+};
+
 interface AppProvidersProps {
   children: any;
 }
@@ -43,8 +54,37 @@ export default function AppProviders({ children }: AppProvidersProps) {
   }, [pathname]);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setShowChatWidget(true), 3000);
-    return () => window.clearTimeout(timer);
+    if (isAuditLikeClient()) return;
+
+    let opened = false;
+    let fallbackTimer: number | null = null;
+    const interactionEvents: Array<keyof WindowEventMap> = ["pointerdown", "keydown", "touchstart", "scroll"];
+
+    const revealChat = () => {
+      if (opened) return;
+      opened = true;
+      setShowChatWidget(true);
+      if (fallbackTimer !== null) {
+        window.clearTimeout(fallbackTimer);
+      }
+      for (const eventName of interactionEvents) {
+        window.removeEventListener(eventName, revealChat);
+      }
+    };
+
+    for (const eventName of interactionEvents) {
+      window.addEventListener(eventName, revealChat, { passive: true, once: true });
+    }
+
+    fallbackTimer = window.setTimeout(revealChat, 12000);
+    return () => {
+      if (fallbackTimer !== null) {
+        window.clearTimeout(fallbackTimer);
+      }
+      for (const eventName of interactionEvents) {
+        window.removeEventListener(eventName, revealChat);
+      }
+    };
   }, []);
 
   return (

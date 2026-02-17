@@ -71,7 +71,7 @@ const Footer = () => {
 
           {/* Project case studies */}
           <div className="md:col-span-3">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-4">Projects</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-4">Gold Coast Renovation Projects</p>
             <nav aria-label="Footer projects">
               <ul className="flex flex-col gap-3">
               {projectLinks.map(link => (

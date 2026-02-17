@@ -5,9 +5,9 @@ import projectSlugData from "@/generated/project-slugs.json";
 import { generateBreadcrumbSchema, generateItemListSchema } from "@/lib/structured-data";
 import { buildMetadata, titleFromSlug, DEFAULT_OG_IMAGE, generateWebPageSchema } from "@/lib/seo";
 
-const pageTitle = "Projects | Gold Coast Renovation Projects & Portfolio";
+const pageTitle = "Gold Coast Renovation Projects | Kitchen, Bathroom & Full Home Renovations";
 const pageDescription =
-  "Browse our Gold Coast renovation portfolio with completed kitchen, bathroom, and whole-home transformations across key Gold Coast suburbs.";
+  "Browse Gold Coast renovations case studies with completed kitchen, bathroom, and whole-home transformations across key Gold Coast suburbs.";
 
 export const metadata: Metadata = buildMetadata({
   title: pageTitle,
@@ -38,17 +38,21 @@ export default function Page() {
   });
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Renovation Projects", url: "/renovation-projects" },
+    { name: "Gold Coast Renovation Projects", url: "/renovation-projects" },
   ]);
 
   return (
     <>
       <JsonLd data={[webPageSchema, itemListSchema, breadcrumbSchema]} />
       <section className="sr-only" aria-label="Project route index for search crawlers">
-        <p>Gold Coast renovation project directory.</p>
+        <p>Gold Coast Renovation Case Studies.</p>
         <p>
-          Browse completed Concept Design Construct projects across kitchen, bathroom, and whole-home renovations on
-          the Gold Coast.
+          This page is a case-study index of completed Concept Design Construct renovations with real project outcomes,
+          suburb context, and detailed project pages.
+        </p>
+        <p>
+          Looking for visual inspiration only? Browse the{" "}
+          <a href="/project-gallery">Gold Coast renovation gallery</a> for room-by-room ideas.
         </p>
         <ul>
           {slugs.map((slug) => (

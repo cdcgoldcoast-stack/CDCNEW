@@ -46,7 +46,7 @@ export const buildMetadata = ({
   image = DEFAULT_OG_IMAGE,
   type = "website",
   noIndex = false,
-  keywords,
+  keywords = [],
   author = SITE_NAME,
   articlePublishedTime,
   articleModifiedTime,
@@ -55,6 +55,8 @@ export const buildMetadata = ({
   const canonical = absoluteUrl(path);
   const imageUrl = resolveImageUrl(image);
   const cleanArticleTags = articleTags.filter(Boolean);
+  const twitterImageAlt =
+    title.trim().length >= 24 ? title : `${title} | Gold Coast renovations by ${SITE_NAME}`;
   const openGraph: Metadata["openGraph"] = {
     type,
     url: canonical,
@@ -90,7 +92,7 @@ export const buildMetadata = ({
   const otherMeta: Record<string, string> = {
     "twitter:domain": SITE_HOST,
     "twitter:url": canonical,
-    "twitter:image:alt": title,
+    "twitter:image:alt": twitterImageAlt,
   };
 
   if (type === "article") {
@@ -111,7 +113,6 @@ export const buildMetadata = ({
   return {
     title,
     description,
-    keywords,
     authors: [{ name: author }],
     creator: author,
     publisher: SITE_NAME,
@@ -125,9 +126,10 @@ export const buildMetadata = ({
       canonical,
       languages: {
         "en-AU": canonical,
-        "x-default": SITE_URL,
+        "x-default": canonical,
       },
     },
+    keywords: keywords.length > 0 ? keywords : undefined,
     robots: {
       index: !noIndex,
       follow: !noIndex,

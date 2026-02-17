@@ -18,6 +18,11 @@ import {
   slugFromProjectPath,
   sameDomain,
   SITELINK_TARGET_PATHS,
+  isIndexableRoute,
+  THIN_CONTENT_MIN_WORDS,
+  DUPLICATE_SIMILARITY_THRESHOLD,
+  isThinContentExempt,
+  isDuplicateCompareExempt,
 } from "./lib/seo-utils.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -27,6 +32,8 @@ const NEXT_SERVER_APP_DIR = path.join(ROOT_DIR, ".next", "server", "app");
 const PUBLIC_SITEMAP_PATH = path.join(ROOT_DIR, "public", "sitemap.xml");
 const GENERATED_PROJECT_SLUGS_PATH = path.join(ROOT_DIR, "src", "generated", "project-slugs.json");
 const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, "vercel.json");
+const ARTIFACTS_DIR = path.join(ROOT_DIR, "artifacts");
+const CONTENT_AUDIT_REPORT_PATH = path.join(ARTIFACTS_DIR, "seo-content-audit.json");
 
 const REQUIRED_TWITTER_META = [
   "twitter:card",
@@ -221,6 +228,32 @@ const hasBrokenHeadingHierarchy = (document) => {
 
 const normalizeText = (value) => value.replace(/\s+/g, " ").trim();
 
+const hasDescriptiveMetadataText = (value) => {
+  const text = normalizeText(value || "");
+  if (!text) return false;
+  const wordCount = text.split(/\s+/).filter(Boolean).length;
+  return text.length >= 24 && wordCount >= 4;
+};
+
+const isDescriptiveHeroAlt = (value) => {
+  const text = normalizeText(value || "");
+  if (!text) return false;
+  const wordCount = text.split(/\s+/).filter(Boolean).length;
+  const hasIntentTerms = /gold coast|renovation|kitchen|bathroom|home/i.test(text);
+  return text.length >= 28 && wordCount >= 5 && hasIntentTerms;
+};
+
+const extractPrimaryContentImageAlt = (document) => {
+  const images = [...document.querySelectorAll("main img[alt]")];
+  for (const image of images) {
+    const alt = normalizeText(image.getAttribute("alt") || "");
+    if (!alt) continue;
+    if (/logo|icon|avatar/i.test(alt)) continue;
+    return alt;
+  }
+  return "";
+};
+
 const findWeakInternalAnchorText = (document) => {
   const weakAnchors = [];
   const links = [...document.querySelectorAll("a[href]")];
@@ -311,6 +344,450 @@ const collectInsecureHttpLinks = (document) => {
   }
 
   return [...new Set(offenders)];
+};
+
+const extractComparableBodyText = (document) => {
+  const body = document.body;
+  if (!body) return "";
+  const clone = body.cloneNode(true);
+
+  const selectors = [
+    "script",
+    "style",
+    "noscript",
+    "template",
+    "svg",
+    "header",
+    "footer",
+    "nav",
+    '[aria-hidden="true"]',
+    '[role="dialog"]',
+    '[data-sonner-toaster]',
+  ];
+
+  clone.querySelectorAll(selectors.join(",")).forEach((node) => node.remove());
+  return normalizeText(clone.textContent || "");
+};
+
+const tokenizeComparableText = (value) => {
+  const matches = `${value || ""}`.toLowerCase().match(/[a-z0-9]+/g) || [];
+  return matches.filter((token) => token.length >= 3);
+};
+
+const computeWordCount = (value) => tokenizeComparableText(value).length;
+
+const computeJaccardSimilarity = (leftTokens, rightTokens) => {
+  const leftSet = new Set(leftTokens);
+  const rightSet = new Set(rightTokens);
+  if (leftSet.size === 0 && rightSet.size === 0) return 1;
+  if (leftSet.size === 0 || rightSet.size === 0) return 0;
+
+  let intersection = 0;
+  for (const token of leftSet) {
+    if (rightSet.has(token)) intersection += 1;
+  }
+
+  const union = leftSet.size + rightSet.size - intersection;
+  return union === 0 ? 0 : intersection / union;
+};
+
+const routeFromRenderedHtmlPath = (absolutePath) => {
+  const relativePath = path.relative(NEXT_SERVER_APP_DIR, absolutePath);
+  const unixPath = relativePath.split(path.sep).join("/");
+  if (!unixPath.endsWith(".html")) return "";
+
+  const withoutExtension = unixPath.replace(/\.html$/i, "");
+  if (withoutExtension === "index") return "/";
+
+  const routeCandidate = `/${withoutExtension}`;
+  const normalized = normalizePath(routeCandidate);
+  if (normalized.endsWith("/index")) {
+    const trimmed = normalized.replace(/\/index$/, "");
+    return trimmed || "/";
+  }
+  return normalized;
+};
+
+const collectRenderedRoutePaths = async () => {
+  const files = [];
+
+  const walk = async (dirPath) => {
+    let entries = [];
+    try {
+      entries = await fs.readdir(dirPath, { withFileTypes: true });
+    } catch {
+      return;
+    }
+
+    await Promise.all(
+      entries.map(async (entry) => {
+        const targetPath = path.join(dirPath, entry.name);
+        if (entry.isDirectory()) {
+          await walk(targetPath);
+          return;
+        }
+        if (entry.isFile() && entry.name.endsWith(".html")) {
+          files.push(targetPath);
+        }
+      }),
+    );
+  };
+
+  await walk(NEXT_SERVER_APP_DIR);
+
+  const routes = new Set();
+  for (const filePath of files) {
+    const route = routeFromRenderedHtmlPath(filePath);
+    if (!route) continue;
+    if (route.includes("[") || route.includes("]")) continue;
+    routes.add(route);
+  }
+
+  return [...routes].sort();
+};
+
+const parseRouteLiteral = (rawPath) => {
+  const input = `${rawPath || ""}`.trim();
+  if (!input.startsWith("/")) return "";
+  const cleanPath = input.split(/[?#]/)[0] || "/";
+  return normalizePath(cleanPath);
+};
+
+const getThinContentMinimumWords = (route) => {
+  const normalized = normalizePath(route);
+  if (
+    normalized === "/" ||
+    normalized === "/about-us" ||
+    normalized === "/services" ||
+    normalized === "/life-stages"
+  ) {
+    return THIN_CONTENT_MIN_WORDS;
+  }
+
+  if (
+    normalized === "/get-quote" ||
+    normalized === "/renovation-projects" ||
+    normalized === "/renovation-design-tools" ||
+    normalized === "/renovation-design-tools/ai-generator/intro"
+  ) {
+    return 80;
+  }
+
+  if (normalized === "/project-gallery" || normalized === "/renovation-design-tools/moodboard") {
+    return 60;
+  }
+
+  if (normalized === "/renovation-design-tools/ai-generator") {
+    return 40;
+  }
+
+  return THIN_CONTENT_MIN_WORDS;
+};
+
+const collectInternalAnchorTargetsFromSource = (source) => {
+  const targets = new Set();
+  const matcher = /(?:href|to)\s*=\s*(?:\{)?["'`](\/[^"'`}]+(?:[?#][^"'`}]+)?)["'`]/g;
+  let match = matcher.exec(source);
+  while (match) {
+    const parsed = parseRouteLiteral(match[1]);
+    if (parsed) targets.add(parsed);
+    match = matcher.exec(source);
+  }
+  return targets;
+};
+
+const shouldScanNavigationSourceFile = (absolutePath) => {
+  const relativePath = path.relative(ROOT_DIR, absolutePath).split(path.sep).join("/");
+  if (!/\.(?:[cm]?[jt]sx?)$/i.test(relativePath)) return false;
+  if (!/^(app|src|components|compat)\//.test(relativePath)) return false;
+  if (relativePath.includes("/node_modules/")) return false;
+  if (relativePath.includes("/admin/")) return false;
+  if (relativePath.includes("/Auth.")) return false;
+  if (relativePath.includes("/BrandGuidelines.")) return false;
+  if (relativePath.endsWith(".d.ts")) return false;
+  return true;
+};
+
+const collectSourceFilesForNavigationAudit = async () => {
+  const candidateRoots = ["app", "src", "components", "compat"].map((segment) =>
+    path.join(ROOT_DIR, segment),
+  );
+  const files = [];
+
+  const walk = async (dirPath) => {
+    let entries = [];
+    try {
+      entries = await fs.readdir(dirPath, { withFileTypes: true });
+    } catch {
+      return;
+    }
+
+    await Promise.all(
+      entries.map(async (entry) => {
+        const targetPath = path.join(dirPath, entry.name);
+        if (entry.isDirectory()) {
+          await walk(targetPath);
+          return;
+        }
+        if (entry.isFile() && shouldScanNavigationSourceFile(targetPath)) {
+          files.push(targetPath);
+        }
+      }),
+    );
+  };
+
+  await Promise.all(candidateRoots.map((rootPath) => walk(rootPath)));
+  return [...new Set(files)].sort();
+};
+
+const extractOnClickNavigationPaths = (source) => {
+  const paths = [];
+
+  const pushPath = (rawPath, absoluteIndex) => {
+    const parsed = parseRouteLiteral(rawPath);
+    if (!parsed) return;
+    if (!isIndexableRoute(parsed)) return;
+    paths.push({ path: parsed, index: absoluteIndex });
+  };
+
+  const navigatePattern = /(?:navigate|router\.(?:push|replace))\(\s*["'`](\/[^"'`]+(?:[?#][^"'`]+)?)["'`]/g;
+  let match = navigatePattern.exec(source);
+  while (match) {
+    const snippetStart = Math.max(0, match.index - 260);
+    const snippet = source.slice(snippetStart, match.index + 80);
+    if (/onClick\s*=\s*{[\s\S]*$/m.test(snippet)) {
+      pushPath(match[1], match.index);
+    }
+    match = navigatePattern.exec(source);
+  }
+
+  const locationPattern = /window\.location\.href\s*=\s*["'`](\/[^"'`]+(?:[?#][^"'`]+)?)["'`]/g;
+  match = locationPattern.exec(source);
+  while (match) {
+    const snippetStart = Math.max(0, match.index - 260);
+    const snippet = source.slice(snippetStart, match.index + 80);
+    if (/onClick\s*=\s*{[\s\S]*$/m.test(snippet)) {
+      pushPath(match[1], match.index);
+    }
+    match = locationPattern.exec(source);
+  }
+
+  return paths;
+};
+
+const auditNonAnchorInternalNavigationSource = async () => {
+  const issues = [];
+  const files = await collectSourceFilesForNavigationAudit();
+
+  for (const absolutePath of files) {
+    let source = "";
+    try {
+      source = await fs.readFile(absolutePath, "utf8");
+    } catch {
+      continue;
+    }
+
+    const anchorTargets = collectInternalAnchorTargetsFromSource(source);
+    const onclickNavigations = extractOnClickNavigationPaths(source);
+    if (onclickNavigations.length === 0) continue;
+
+    const seen = new Set();
+    for (const navigation of onclickNavigations) {
+      if (anchorTargets.has(navigation.path)) continue;
+      const key = `${navigation.path}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+
+      const relativePath = path.relative(ROOT_DIR, absolutePath).split(path.sep).join("/");
+      issues.push(
+        `Non-anchor internal navigation detected in ${relativePath} for ${navigation.path}. Add a crawlable <a href> or <Link to>.`,
+      );
+    }
+  }
+
+  return issues;
+};
+
+const auditMetadataUniqueness = async (routes) => {
+  const issues = [];
+  const titleToRoutes = new Map();
+  const descriptionToRoutes = new Map();
+  const canonicalToRoutes = new Map();
+
+  for (const route of routes) {
+    if (!isIndexableRoute(route)) continue;
+    const htmlPath = routeToFilePath(route);
+    let html = "";
+    try {
+      html = await fs.readFile(htmlPath, "utf8");
+    } catch {
+      continue;
+    }
+
+    const document = new JSDOM(html).window.document;
+    const title = normalizeText(document.querySelector("title")?.textContent || "");
+    const description = normalizeText(extractMetaByName(document, "description"));
+    const canonical = normalizeAbsoluteUrl(
+      document.querySelector('link[rel="canonical"]')?.getAttribute("href")?.trim() || "",
+    );
+
+    if (title) {
+      const bucket = titleToRoutes.get(title) || [];
+      bucket.push(route);
+      titleToRoutes.set(title, bucket);
+    }
+
+    if (description) {
+      const bucket = descriptionToRoutes.get(description) || [];
+      bucket.push(route);
+      descriptionToRoutes.set(description, bucket);
+    }
+
+    if (canonical) {
+      const bucket = canonicalToRoutes.get(canonical) || [];
+      bucket.push(route);
+      canonicalToRoutes.set(canonical, bucket);
+    }
+  }
+
+  for (const [title, titleRoutes] of titleToRoutes.entries()) {
+    if (titleRoutes.length <= 1) continue;
+    issues.push(
+      `Duplicate title across ${titleRoutes.length} routes: "${title}" -> ${titleRoutes.join(", ")}`,
+    );
+  }
+
+  for (const [description, descriptionRoutes] of descriptionToRoutes.entries()) {
+    if (descriptionRoutes.length <= 1) continue;
+    issues.push(
+      `Duplicate meta description across ${descriptionRoutes.length} routes: "${description}" -> ${descriptionRoutes.join(", ")}`,
+    );
+  }
+
+  for (const [canonical, canonicalRoutes] of canonicalToRoutes.entries()) {
+    if (canonicalRoutes.length <= 1) continue;
+    issues.push(
+      `Duplicate canonical URL across ${canonicalRoutes.length} routes: ${canonical} -> ${canonicalRoutes.join(", ")}`,
+    );
+  }
+
+  return issues;
+};
+
+const auditThinAndDuplicateContent = async (routes) => {
+  const issues = [];
+  const routeSummaries = [];
+
+  for (const route of routes) {
+    const htmlPath = routeToFilePath(route);
+    let html = "";
+    try {
+      html = await fs.readFile(htmlPath, "utf8");
+    } catch {
+      routeSummaries.push({
+        route,
+        indexable: isIndexableRoute(route),
+        excludedReason: isIndexableRoute(route) ? null : "noindex-route",
+        readError: `missing_html:${path.relative(ROOT_DIR, htmlPath)}`,
+        wordCount: 0,
+        thinFlag: false,
+        duplicateMatches: [],
+      });
+      continue;
+    }
+
+    const document = new JSDOM(html).window.document;
+    const comparableText = extractComparableBodyText(document);
+    const wordCount = computeWordCount(comparableText);
+    const indexable = isIndexableRoute(route);
+    const thinExempt = isThinContentExempt(route);
+    const thinMinimumWords = getThinContentMinimumWords(route);
+    const thinFlag = indexable && !thinExempt && wordCount < thinMinimumWords;
+
+    routeSummaries.push({
+      route,
+      indexable,
+      excludedReason: indexable ? null : "noindex-route",
+      wordCount,
+      thinExempt,
+      duplicateExempt: isDuplicateCompareExempt(route),
+      thinMinimumWords,
+      comparableText,
+      duplicateMatches: [],
+      thinFlag,
+    });
+
+    if (thinFlag) {
+      issues.push(
+        `Thin content on indexable route ${route}: ${wordCount} words (minimum ${thinMinimumWords})`,
+      );
+    }
+  }
+
+  const comparableRoutes = routeSummaries.filter(
+    (entry) =>
+      entry.indexable &&
+      !entry.duplicateExempt &&
+      !entry.readError &&
+      `${entry.comparableText || ""}`.length > 0,
+  );
+  const duplicatePairs = [];
+
+  for (let leftIndex = 0; leftIndex < comparableRoutes.length; leftIndex += 1) {
+    for (let rightIndex = leftIndex + 1; rightIndex < comparableRoutes.length; rightIndex += 1) {
+      const left = comparableRoutes[leftIndex];
+      const right = comparableRoutes[rightIndex];
+      const similarity = computeJaccardSimilarity(
+        tokenizeComparableText(left.comparableText),
+        tokenizeComparableText(right.comparableText),
+      );
+
+      if (similarity >= DUPLICATE_SIMILARITY_THRESHOLD) {
+        duplicatePairs.push({
+          leftRoute: left.route,
+          rightRoute: right.route,
+          similarity: Number(similarity.toFixed(3)),
+        });
+        left.duplicateMatches.push({ route: right.route, similarity: Number(similarity.toFixed(3)) });
+        right.duplicateMatches.push({ route: left.route, similarity: Number(similarity.toFixed(3)) });
+        issues.push(
+          `Near-duplicate indexable routes detected (${similarity.toFixed(3)}): ${left.route} <> ${right.route}`,
+        );
+      }
+    }
+  }
+
+  const report = {
+    generatedAt: new Date().toISOString(),
+    thresholds: {
+      thinContentMinWords: THIN_CONTENT_MIN_WORDS,
+      duplicateSimilarity: DUPLICATE_SIMILARITY_THRESHOLD,
+    },
+    totals: {
+      routes: routeSummaries.length,
+      indexable: routeSummaries.filter((entry) => entry.indexable).length,
+      excluded: routeSummaries.filter((entry) => !entry.indexable).length,
+      thin: routeSummaries.filter((entry) => entry.thinFlag).length,
+      duplicatePairs: duplicatePairs.length,
+    },
+    duplicatePairs,
+    routes: routeSummaries
+      .map((entry) => ({
+        route: entry.route,
+        indexable: entry.indexable,
+        excludedReason: entry.excludedReason,
+        wordCount: entry.wordCount,
+        thinExempt: Boolean(entry.thinExempt),
+        duplicateExempt: Boolean(entry.duplicateExempt),
+        thinMinimumWords: entry.thinMinimumWords,
+        thinFlag: Boolean(entry.thinFlag),
+        readError: entry.readError || null,
+        duplicateMatches: entry.duplicateMatches.slice(0, 20),
+      }))
+      .sort((left, right) => left.route.localeCompare(right.route)),
+  };
+
+  return { issues, report };
 };
 
 const loadVercelConfig = async () => {
@@ -612,6 +1089,11 @@ const auditRouteHtml = async (route) => {
     }
   }
 
+  const twitterImageAlt = extractMetaByName(document, "twitter:image:alt");
+  if (twitterImageAlt && !hasDescriptiveMetadataText(twitterImageAlt)) {
+    issues.push("twitter:image:alt is too short or not descriptive");
+  }
+
   if (isProjectRoute) {
     const jsonLdContent = [...document.querySelectorAll('script[type="application/ld+json"]')]
       .map((script) => script.textContent || "")
@@ -716,6 +1198,15 @@ const auditRouteHtml = async (route) => {
   const oneWordAlts = collectOneWordAltTexts(document);
   if (oneWordAlts.length > 0) {
     issues.push(`One-word image alt text found (${oneWordAlts.length}): ${oneWordAlts.slice(0, 8).join(", ")}`);
+  }
+
+  if (route === "/") {
+    const primaryHeroAlt = extractPrimaryContentImageAlt(document);
+    if (!primaryHeroAlt) {
+      issues.push("Homepage primary content image is missing alt text");
+    } else if (!isDescriptiveHeroAlt(primaryHeroAlt)) {
+      issues.push(`Homepage hero image alt is not descriptive enough: "${primaryHeroAlt}"`);
+    }
   }
 
   const insecureHttpLinks = collectInsecureHttpLinks(document);
@@ -1033,6 +1524,28 @@ const main = async () => {
   if (sitelinkIssues.length > 0) {
     failures.push({ scope: "[sitelinks]", issues: sitelinkIssues });
   }
+
+  const metadataUniquenessIssues = await auditMetadataUniqueness(auditRoutes);
+  if (metadataUniquenessIssues.length > 0) {
+    failures.push({ scope: "[metadata-uniqueness]", issues: metadataUniquenessIssues });
+  }
+
+  const nonAnchorNavigationIssues = await auditNonAnchorInternalNavigationSource();
+  if (nonAnchorNavigationIssues.length > 0) {
+    failures.push({ scope: "[internal-nav]", issues: nonAnchorNavigationIssues });
+  }
+
+  const renderedRoutes = await collectRenderedRoutePaths();
+  const contentAudit = await auditThinAndDuplicateContent(renderedRoutes);
+  if (contentAudit.issues.length > 0) {
+    failures.push({ scope: "[content]", issues: contentAudit.issues });
+  }
+
+  await fs.mkdir(ARTIFACTS_DIR, { recursive: true });
+  await fs.writeFile(CONTENT_AUDIT_REPORT_PATH, `${JSON.stringify(contentAudit.report, null, 2)}\n`);
+  console.log(
+    `[seo:audit] Content report written to ${path.relative(ROOT_DIR, CONTENT_AUDIT_REPORT_PATH)}`
+  );
 
   if (performHttpChecks) {
     console.log(

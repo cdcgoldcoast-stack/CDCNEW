@@ -1,6 +1,6 @@
 import { Component, Fragment, useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -1214,8 +1214,8 @@ const buildPreferenceSentence = (
    return (
      <div className="min-h-screen bg-background overflow-hidden">
       <SEO
-        title="AI Renovation Visualiser | Gold Coast Design Preview"
-        description="Upload a room photo and preview renovation ideas while preserving your existing layout. Explore finishes, styles, and design direction in seconds."
+        title="Gold Coast Renovations AI Visualiser | Design Preview"
+        description="Upload a room photo and preview Gold Coast renovations concepts while preserving your existing layout. Explore finishes, styles, and design direction in seconds."
         url="/renovation-design-tools/ai-generator"
       />
        <Header />
@@ -1319,12 +1319,8 @@ const buildPreferenceSentence = (
                       <p className="text-sm text-foreground/70 mt-2">
                         You've used all {MAX_SESSION_GENERATIONS} previews for this session. If you'd like to explore more designs or get in touch, fill out our enquiry form.
                       </p>
-                      <Button
-                        type="button"
-                        onClick={() => navigate("/get-quote")}
-                        className="w-full h-12 text-[11px] sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase mt-4"
-                      >
-                        Get a Quote
+                      <Button type="button" asChild className="w-full h-12 text-[11px] sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase mt-4">
+                        <Link to="/get-quote">Get a Quote</Link>
                       </Button>
                     </ChatMessage>
                   )}

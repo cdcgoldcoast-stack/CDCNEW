@@ -128,8 +128,8 @@ const LifeStagesPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Life Stage Renovations | Gold Coast Homes"
-        description="Find the right Gold Coast renovation for each life stage, from first homes and growing families to accessibility upgrades that support long-term living."
+        title="Gold Coast Renovations for Every Life Stage"
+        description="Find the right Gold Coast renovations plan for each life stage, from first homes and growing families to accessibility upgrades that support long-term living."
         url="/life-stages"
         jsonLd={faqSchema}
       />

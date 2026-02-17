@@ -4,7 +4,7 @@ import { PrivacyPolicyClient } from "@/components/route-clients";
 import { generateBreadcrumbSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 
-const pageTitle = "Privacy Policy";
+const pageTitle = "Gold Coast Renovations Privacy Policy";
 const pageDescription =
   "Read how Concept Design Construct manages personal information for visitors exploring Gold Coast renovation services and requesting consultations.";
 
@@ -23,7 +23,7 @@ export default function Page() {
   });
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Privacy Policy", url: "/privacy-policy" },
+    { name: "Gold Coast Renovations Privacy Policy", url: "/privacy-policy" },
   ]);
 
   return (

@@ -4,9 +4,9 @@ import { ProjectGalleryClient } from "@/components/route-clients";
 import { generateBreadcrumbSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema, absoluteUrl } from "@/lib/seo";
 
-const pageTitle = "Gallery | Gold Coast Home Renovation Inspiration";
+const pageTitle = "Gold Coast Renovations Gallery | Kitchen, Bathroom & Home Inspiration";
 const pageDescription =
-  "Get inspired by our Gold Coast renovation gallery with kitchen, bathroom, and living space design examples by Concept Design Construct.";
+  "Explore Gold Coast renovations inspiration with kitchen, bathroom, and living space design examples by Concept Design Construct.";
 
 export const metadata: Metadata = buildMetadata({
   title: pageTitle,
@@ -28,7 +28,7 @@ export default function Page() {
   const collectionSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Gold Coast Renovation Gallery",
+    name: "Gold Coast Renovations Gallery",
     description: pageDescription,
     url: absoluteUrl("/project-gallery"),
     about: [
@@ -39,12 +39,23 @@ export default function Page() {
   };
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Project Gallery", url: "/project-gallery" },
+    { name: "Gold Coast Renovations Gallery", url: "/project-gallery" },
   ]);
 
   return (
     <>
       <JsonLd data={[webPageSchema, collectionSchema, breadcrumbSchema]} />
+      <section className="sr-only" aria-label="Gallery route summary for search crawlers">
+        <p>Gold Coast Renovation Inspiration Gallery.</p>
+        <p>
+          This gallery page is for visual inspiration across kitchens, bathrooms, living rooms, and whole-home design
+          direction.
+        </p>
+        <p>
+          Looking for complete project breakdowns and outcomes? Visit{" "}
+          <a href="/renovation-projects">Gold Coast renovation projects</a>.
+        </p>
+      </section>
       <ProjectGalleryClient />
     </>
   );

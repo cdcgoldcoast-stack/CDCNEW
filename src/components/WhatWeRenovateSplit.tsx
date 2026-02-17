@@ -4,6 +4,9 @@ import ResponsiveImage from "@/components/ResponsiveImage";
 
 const WhatWeRenovateSplit = () => {
   const { assets } = useSiteAssets();
+  const sectionImageQuality = 56;
+  const sectionBgWidths = [320, 480, 640, 800, 960] as const;
+  const sectionCardWidths = [240, 360, 480, 640, 800] as const;
 
   const services = [
     {
@@ -89,6 +92,8 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
             height={900}
             sizes="(min-width: 768px) 50vw, 100vw"
             loading="lazy"
+            quality={sectionImageQuality}
+            responsiveWidths={sectionBgWidths}
             className="absolute inset-0 w-full h-full object-cover bg-muted"
           />
         ) : (
@@ -118,6 +123,8 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
                   height={1200}
                   sizes="(min-width: 1024px) 22vw, (min-width: 640px) 48vw, 55vw"
                   loading="lazy"
+                  quality={sectionImageQuality}
+                  responsiveWidths={sectionCardWidths}
                   className="w-full h-full object-cover"
                 />
               </motion.div>
@@ -151,7 +158,7 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
         >
           {/* Label */}
           <p className="text-label text-primary mb-4 md:mb-6 uppercase tracking-wider text-xs md:text-sm">
-            Our Services
+            Our Gold Coast Renovation Services
           </p>
 
           {/* Title */}

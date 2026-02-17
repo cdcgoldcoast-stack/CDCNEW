@@ -203,16 +203,10 @@ export const generateLocalBusinessSchema = () => ({
     addressRegion: SERVICE_AREAS.state,
     addressCountry: SERVICE_AREAS.country,
   },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: BUSINESS_INFO.geo.latitude,
-    longitude: BUSINESS_INFO.geo.longitude,
-  },
   areaServed: [
     ...SERVICE_AREAS.primary.map((city) => ({ "@type": "City", name: city })),
     { "@type": "State", name: SERVICE_AREAS.state },
   ],
-  priceRange: BUSINESS_INFO.priceRange,
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
     dayOfWeek: BUSINESS_INFO.openingHours.days,

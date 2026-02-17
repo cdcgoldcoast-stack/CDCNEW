@@ -4,9 +4,9 @@ import { ServicesClient } from "@/components/route-clients";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structured-data";
 import { buildMetadata, generateServiceCatalogSchema, generateWebPageSchema } from "@/lib/seo";
 
-const pageTitle = "Gold Coast Renovation Services";
+const pageTitle = "Gold Coast Renovations | Services for Kitchen, Bathroom & Full Home";
 const pageDescription =
-  "Explore Gold Coast renovation services for kitchens, bathrooms, whole-home upgrades, and extensions with design-led planning and QBCC licensed builds.";
+  "Explore Gold Coast renovations for kitchens, bathrooms, whole-home upgrades, and extensions with design-led planning and QBCC licensed delivery.";
 const serviceFaqs = [
   {
     question: "Which renovation services does Concept Design Construct provide on the Gold Coast?",
@@ -52,7 +52,7 @@ export default function Page() {
   ]);
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Services", url: "/services" },
+    { name: "Gold Coast Renovation Services", url: "/services" },
   ]);
   const faqSchema = generateFAQSchema(serviceFaqs);
 
@@ -69,7 +69,7 @@ export default function Page() {
         </ul>
         <p>
           Start with a scope consultation through <a href="/get-quote">our renovation quote page</a> or review
-          examples in the <a href="/renovation-projects">Gold Coast project portfolio</a>.
+          examples in the <a href="/renovation-projects">Gold Coast renovations project portfolio</a>.
         </p>
       </section>
       <ServicesClient />

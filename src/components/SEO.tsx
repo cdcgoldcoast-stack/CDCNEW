@@ -51,7 +51,9 @@ export const SEO = ({
   const canonicalUrl = new URL(canonicalPath, PRODUCTION_DOMAIN).toString();
   const canonicalDomain = new URL(PRODUCTION_DOMAIN).hostname;
   const imageUrl = image.startsWith("http") ? image : `${PRODUCTION_DOMAIN}${image}`;
-  const twitterImageAlt = `${fullTitle} image`;
+  const twitterImageAlt = fullTitle.toLowerCase().includes("gold coast")
+    ? fullTitle
+    : `${fullTitle} | Gold Coast Renovations by ${SITE_NAME}`;
   const robotsContent = noIndex ? "noindex, nofollow" : "index, follow";
 
   // Handle both single object and array of JSON-LD schemas

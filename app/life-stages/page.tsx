@@ -4,9 +4,9 @@ import { LifeStagesClient } from "@/components/route-clients";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 
-const pageTitle = "Life Stage Renovations | Gold Coast Homes";
+const pageTitle = "Gold Coast Renovations for Every Life Stage";
 const pageDescription =
-  "Find the right Gold Coast renovation approach for each life stage, from first-home upgrades to future-ready living and accessibility planning.";
+  "Find the right Gold Coast renovations approach for each life stage, from first-home upgrades to future-ready living and accessibility planning.";
 
 const lifeStageFaqs = [
   {
@@ -51,7 +51,7 @@ export default function Page() {
   const faqSchema = generateFAQSchema(lifeStageFaqs);
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Life Stages", url: "/life-stages" },
+    { name: "Gold Coast Renovations by Life Stage", url: "/life-stages" },
   ]);
 
   return (

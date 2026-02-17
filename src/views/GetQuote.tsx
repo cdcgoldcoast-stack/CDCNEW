@@ -188,8 +188,8 @@ const GetQuote = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <SEO
-        title="Free Quote | Gold Coast Home Renovation Consultation"
-        description="Start your Gold Coast renovation journey. Get a free consultation and quote for your kitchen, bathroom, or whole-home renovation project."
+        title="Gold Coast Renovations Quote | Book Your Consultation"
+        description="Start your Gold Coast renovations journey. Get a consultation and quote for your kitchen, bathroom, or whole-home project."
         url="/get-quote"
         jsonLd={contactSchema}
       />
@@ -251,14 +251,14 @@ const GetQuote = () => {
                           variant="outline"
                           className="w-full sm:w-auto border-white text-white hover:bg-white hover:text-primary px-8 h-14 text-sm tracking-widest uppercase font-medium"
                         >
-                          View Our Projects
+                          View Gold Coast Renovation Projects
                         </Button>
                       </Link>
                       <Link to="/renovation-design-tools">
                         <Button
                           className="w-full sm:w-auto bg-white text-primary hover:bg-white/90 px-8 h-14 text-sm tracking-widest uppercase font-medium"
                         >
-                          Play With Design Tools
+                          Use Gold Coast Renovations Design Tools
                         </Button>
                       </Link>
                     </div>

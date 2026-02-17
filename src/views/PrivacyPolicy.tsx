@@ -6,7 +6,7 @@ const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Privacy Policy | Concept Design Construct"
+        title="Gold Coast Renovations Privacy Policy | Concept Design Construct"
         description="Read how Concept Design Construct collects, uses, stores, and protects information when you browse our site or request a Gold Coast renovation quote."
         url="/privacy-policy"
       />

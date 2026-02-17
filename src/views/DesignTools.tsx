@@ -39,8 +39,8 @@ const DesignTools = () => {
   return (
     <div className="min-h-screen bg-primary relative overflow-hidden">
       <SEO
-        title="Design Tools | Visualise Your Gold Coast Renovation"
-        description="Use our free design tools to visualise your Gold Coast renovation. AI Design Generator and Moodboard Creator to plan your dream home."
+        title="Gold Coast Renovations | Design Tools to Visualise Before You Build"
+        description="Use our free design tools to visualise Gold Coast renovations. Use the AI Design Generator and Moodboard Creator to plan your home."
         url="/renovation-design-tools"
       />
 
@@ -92,7 +92,7 @@ const DesignTools = () => {
               Welcome to the Creative Studio
             </motion.p>
             <h1 className="font-serif italic text-3xl md:text-4xl lg:text-5xl text-white">
-              Renovation Design Tools for Gold Coast Homes
+              Gold Coast Renovations Design Tools
             </h1>
           </motion.div>
         </section>

@@ -16,7 +16,7 @@ type PageProps = {
 const fallbackDescription = (slug: string) =>
   `${titleFromSlug(
     slug,
-  )} renovation project on the Gold Coast by Concept Design Construct, including planning outcomes, layout improvements, and finish direction.`;
+  )} renovations case study on the Gold Coast by Concept Design Construct, including planning outcomes, layout improvements, and finish direction.`;
 
 const findStaticProject = (slug: string) =>
   projects.find((project) => project.slug === slug || project.name.toLowerCase().replace(/\s+/g, "-") === slug);
@@ -38,8 +38,8 @@ export function generateMetadata({ params }: PageProps): Metadata {
   const categoryLabel = project ? project.category.replace("-", " ") : "home";
   const location = project?.location || "Gold Coast";
   const title = project
-    ? `${project.name} | ${categoryLabel} Renovation ${location}`
-    : `${titleFromSlug(params.slug)} | Gold Coast Renovation Project`;
+    ? `${project.name} | ${categoryLabel} Renovations in ${location}`
+    : `${titleFromSlug(params.slug)} | Gold Coast Renovations Case Study`;
   const description = project?.description || fallbackDescription(params.slug);
   const projectPublishedTime =
     normalizeIsoDate(project?.publishedAt) ||
@@ -50,9 +50,9 @@ export function generateMetadata({ params }: PageProps): Metadata {
   const projectTags = project?.tags?.length
     ? project.tags
     : [
-        "Gold Coast renovation project",
-        `${location} renovation`,
-        `${categoryLabel} renovation Gold Coast`,
+        "Gold Coast renovations project",
+        `${location} renovations`,
+        `${categoryLabel} renovations Gold Coast`,
         project?.name || titleFromSlug(params.slug),
       ];
 
@@ -102,7 +102,7 @@ export default function Page({ params }: PageProps) {
 
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Renovation Projects", url: "/renovation-projects" },
+    { name: "Gold Coast Renovation Projects", url: "/renovation-projects" },
     { name: projectName, url: `/renovation-projects/${projectSlug}` },
   ]);
 
@@ -110,8 +110,8 @@ export default function Page({ params }: PageProps) {
     <>
       <JsonLd data={[projectSchema, breadcrumbSchema]} />
       <section className="sr-only">
-        <h1>{`${projectName} Gold Coast Renovation Project`}</h1>
-        <h2>{`${projectCategory.replace("-", " ")} renovation in ${projectLocation}`}</h2>
+        <h1>{`${projectName} Gold Coast Renovations Case Study`}</h1>
+        <h2>{`${projectCategory.replace("-", " ")} renovations in ${projectLocation}`}</h2>
         <p>{projectDescription}</p>
       </section>
       <ProjectDetailClient />

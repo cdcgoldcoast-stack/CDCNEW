@@ -30,10 +30,13 @@ npm run start
 ```sh
 npm run seo:sync
 npm run seo:audit
+npm run seo:audit:live
+npm run seo:content:report
 npm run cutover:audit
 npm run seo:check
 npm run seo:ai-discovery
 npm run seo:monitor
+npm run seo:release:gate
 npm run seo:gsc:ingest -- --input <gsc-export.csv>
 npm run security:audit
 ```
@@ -45,6 +48,21 @@ Generated artifacts:
 - `public/ai-discovery.json`
 - `public/llms.txt`
 - `public/llms-full.txt`
+- `artifacts/seo-content-audit.json`
+- `artifacts/next-cutover-audit.json`
+- `artifacts/seo-monitor-report.json`
+
+Release verification (recommended):
+
+```sh
+npm run build
+npm run seo:release:gate
+```
+
+Canonical host checks:
+
+- Canonical domain is `https://www.cdconstruct.com.au`
+- `seo:monitor` validates non-www to www redirect behavior, path/query preservation, and redirect-chain hygiene on sampled routes.
 
 ## Deployment (Vercel)
 

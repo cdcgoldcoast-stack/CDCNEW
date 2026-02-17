@@ -60,8 +60,8 @@ const Services = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Gold Coast Renovation Services"
-        description="Explore Gold Coast renovation services for kitchens, bathrooms, whole-home upgrades, and extensions with design-led planning and QBCC licensed builds."
+        title="Gold Coast Renovations | Services for Kitchen, Bathroom & Full Home"
+        description="Explore Gold Coast renovations for kitchens, bathrooms, whole-home upgrades, and extensions with design-led planning and QBCC licensed delivery."
         url="/services"
       />
       <Header />

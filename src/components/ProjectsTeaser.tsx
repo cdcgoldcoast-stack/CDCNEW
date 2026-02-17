@@ -26,6 +26,8 @@ const ProjectCard = ({
         sizes="(min-width: 1024px) 320px, (min-width: 640px) 280px, 240px"
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         loading="lazy"
+        quality={58}
+        responsiveWidths={[240, 320, 420, 560, 720]}
       />
 
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-media-overlay/70 pointer-events-none" />
@@ -152,9 +154,9 @@ const ProjectsTeaser = () => {
     <section className="py-12 md:py-28 border-t border-foreground/10 bg-background relative z-10" id="projects">
       <div className="container-wide mb-8 md:mb-12 px-5 md:px-8">
         <div className="max-w-2xl mx-auto text-center mb-8 md:mb-12">
-          <p className="text-label text-foreground/60 mb-4 md:mb-6 text-xs md:text-sm">Selected Work</p>
+          <p className="text-label text-foreground/60 mb-4 md:mb-6 text-xs md:text-sm">Gold Coast Renovations Selected Work</p>
           <h2 className="text-foreground font-serif italic text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight mb-3 md:mb-4">
-            Our Construction Projects And Client Stories
+            Our Gold Coast Renovation Projects And Client Stories
           </h2>
           <p className="text-foreground/70 text-base md:text-xl leading-relaxed">Stories of life improving at home.</p>
         </div>
@@ -193,13 +195,13 @@ const ProjectsTeaser = () => {
             to="/renovation-projects"
             className="text-label text-foreground hover:opacity-60 transition-opacity border-b border-foreground pb-1 pointer-events-auto text-xs md:text-sm"
           >
-            View Complete Project Portfolio
+            View Gold Coast Renovation Project Portfolio
           </Link>
           <Link
             to="/project-gallery"
             className="text-label text-foreground hover:opacity-60 transition-opacity border-b border-foreground pb-1 pointer-events-auto text-xs md:text-sm"
           >
-            Browse Project Gallery
+            Browse Gold Coast Renovations Gallery
           </Link>
           <Link
             to="/get-quote"

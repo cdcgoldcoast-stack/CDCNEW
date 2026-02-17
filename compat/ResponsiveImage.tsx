@@ -61,7 +61,8 @@ export default function ResponsiveImage({
 
   const isSupabaseImage = isSupabaseStorageUrl(normalizedSrc);
   const computedLoading = loading ?? (priority ? "eager" : "lazy");
-  const computedFetchPriority = fetchPriority ?? (priority ? "high" : "auto");
+  const computedFetchPriority =
+    fetchPriority ?? (priority ? "high" : computedLoading === "lazy" ? "low" : "auto");
 
   const modernSrcSets = isSupabaseImage
     ? MODERN_FORMATS.map((format) => ({
@@ -74,7 +75,7 @@ export default function ResponsiveImage({
     ? buildSupabaseSrcSet(normalizedSrc, responsiveWidths, { quality })
     : undefined;
 
-  const fallbackWidth = Math.max(width, responsiveWidths[0] ?? width);
+  const fallbackWidth = responsiveWidths[0] ?? width;
   const fallbackSrc = isSupabaseImage
     ? buildSupabaseImageUrl(normalizedSrc, { width: fallbackWidth, quality })
     : normalizedSrc;

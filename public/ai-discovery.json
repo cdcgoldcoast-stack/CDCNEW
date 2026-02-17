@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-16T16:41:57.952Z",
+  "generatedAt": "2026-02-17T00:45:56.001Z",
   "domain": "https://www.cdconstruct.com.au",
   "urlCount": 27,
   "projectUrlCount": 14,
@@ -20,7 +20,6 @@
     "Answer": 3,
     "City": 4,
     "FAQPage": 3,
-    "GeoCoordinates": 1,
     "HomeAndConstructionBusiness": 3,
     "Offer": 1,
     "OfferCatalog": 1,
@@ -29,11 +28,11 @@
     "Question": 3,
     "Service": 2,
     "State": 1,
+    "WebPage": 27,
     "WebSite": 1,
     "AboutPage": 1,
     "BreadcrumbList": 26,
     "ListItem": 26,
-    "WebPage": 26,
     "CreativeWork": 15,
     "ItemList": 2,
     "Organization": 1,
@@ -47,13 +46,12 @@
     {
       "path": "/",
       "url": "https://www.cdconstruct.com.au/",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "homepage",
       "structuredDataTypes": [
         "Answer",
         "City",
         "FAQPage",
-        "GeoCoordinates",
         "HomeAndConstructionBusiness",
         "Offer",
         "OfferCatalog",
@@ -62,13 +60,14 @@
         "Question",
         "Service",
         "State",
+        "WebPage",
         "WebSite"
       ]
     },
     {
       "path": "/about-us",
       "url": "https://www.cdconstruct.com.au/about-us",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "about-page",
       "structuredDataTypes": [
         "AboutPage",
@@ -82,7 +81,7 @@
     {
       "path": "/renovation-projects",
       "url": "https://www.cdconstruct.com.au/renovation-projects",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "projects-index",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -95,7 +94,7 @@
     {
       "path": "/services",
       "url": "https://www.cdconstruct.com.au/services",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "services-page",
       "structuredDataTypes": [
         "Answer",
@@ -113,7 +112,7 @@
     {
       "path": "/life-stages",
       "url": "https://www.cdconstruct.com.au/life-stages",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "content-page",
       "structuredDataTypes": [
         "Answer",
@@ -127,7 +126,7 @@
     {
       "path": "/get-quote",
       "url": "https://www.cdconstruct.com.au/get-quote",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "contact-page",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -141,7 +140,7 @@
     {
       "path": "/project-gallery",
       "url": "https://www.cdconstruct.com.au/project-gallery",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "gallery-page",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -154,7 +153,7 @@
     {
       "path": "/renovation-design-tools",
       "url": "https://www.cdconstruct.com.au/renovation-design-tools",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "design-tools",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -165,7 +164,7 @@
     {
       "path": "/renovation-design-tools/ai-generator/intro",
       "url": "https://www.cdconstruct.com.au/renovation-design-tools/ai-generator/intro",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "design-tool",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -176,7 +175,7 @@
     {
       "path": "/renovation-design-tools/ai-generator",
       "url": "https://www.cdconstruct.com.au/renovation-design-tools/ai-generator",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "design-tool",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -187,7 +186,7 @@
     {
       "path": "/renovation-design-tools/moodboard",
       "url": "https://www.cdconstruct.com.au/renovation-design-tools/moodboard",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "design-tool",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -198,7 +197,7 @@
     {
       "path": "/privacy-policy",
       "url": "https://www.cdconstruct.com.au/privacy-policy",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "legal-page",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -209,7 +208,7 @@
     {
       "path": "/terms-conditions",
       "url": "https://www.cdconstruct.com.au/terms-conditions",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "legal-page",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -220,7 +219,7 @@
     {
       "path": "/renovation-projects/coastal-modern",
       "url": "https://www.cdconstruct.com.au/renovation-projects/coastal-modern",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -235,7 +234,7 @@
     {
       "path": "/renovation-projects/everyday-ease",
       "url": "https://www.cdconstruct.com.au/renovation-projects/everyday-ease",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -250,7 +249,7 @@
     {
       "path": "/renovation-projects/family-hub",
       "url": "https://www.cdconstruct.com.au/renovation-projects/family-hub",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -265,7 +264,7 @@
     {
       "path": "/renovation-projects/heritage-revival",
       "url": "https://www.cdconstruct.com.au/renovation-projects/heritage-revival",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -280,7 +279,7 @@
     {
       "path": "/renovation-projects/light-and-flow-house",
       "url": "https://www.cdconstruct.com.au/renovation-projects/light-and-flow-house",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -295,7 +294,7 @@
     {
       "path": "/renovation-projects/retreat-house",
       "url": "https://www.cdconstruct.com.au/renovation-projects/retreat-house",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -310,7 +309,7 @@
     {
       "path": "/renovation-projects/seamless-bathroom",
       "url": "https://www.cdconstruct.com.au/renovation-projects/seamless-bathroom",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -325,7 +324,7 @@
     {
       "path": "/renovation-projects/stone-and-light",
       "url": "https://www.cdconstruct.com.au/renovation-projects/stone-and-light",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -340,7 +339,7 @@
     {
       "path": "/renovation-projects/sunshine-retreat",
       "url": "https://www.cdconstruct.com.au/renovation-projects/sunshine-retreat",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -355,7 +354,7 @@
     {
       "path": "/renovation-projects/terrazzo-retreat",
       "url": "https://www.cdconstruct.com.au/renovation-projects/terrazzo-retreat",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -370,7 +369,7 @@
     {
       "path": "/renovation-projects/the-calm-edit",
       "url": "https://www.cdconstruct.com.au/renovation-projects/the-calm-edit",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -385,7 +384,7 @@
     {
       "path": "/renovation-projects/the-elanora-residence",
       "url": "https://www.cdconstruct.com.au/renovation-projects/the-elanora-residence",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -400,7 +399,7 @@
     {
       "path": "/renovation-projects/urban-oasis",
       "url": "https://www.cdconstruct.com.au/renovation-projects/urban-oasis",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",
@@ -415,7 +414,7 @@
     {
       "path": "/renovation-projects/warm-minimal-bathroom",
       "url": "https://www.cdconstruct.com.au/renovation-projects/warm-minimal-bathroom",
-      "lastmod": "2026-02-16",
+      "lastmod": "2026-02-17",
       "contentType": "project-detail",
       "structuredDataTypes": [
         "BreadcrumbList",

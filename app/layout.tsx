@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import AppProviders from "../components/AppProviders";
-import { DEFAULT_META, PRIMARY_KEYWORDS, PRODUCTION_DOMAIN, SITE_NAME } from "@/config/seo";
+import { DEFAULT_META, PRODUCTION_DOMAIN, SITE_NAME } from "@/config/seo";
 import "./globals.css";
 
 const SITE_URL = PRODUCTION_DOMAIN;
@@ -16,7 +16,6 @@ export const metadata: Metadata = {
   },
   description: DEFAULT_META.description,
   applicationName: SITE_NAME,
-  keywords: PRIMARY_KEYWORDS,
   authors: [{ name: SITE_NAME }],
   creator: SITE_NAME,
   publisher: SITE_NAME,

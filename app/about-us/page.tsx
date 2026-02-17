@@ -4,9 +4,9 @@ import { AboutUsClient } from "@/components/route-clients";
 import { generateAboutPageSchema, generateBreadcrumbSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 
-const pageTitle = "About Us | Gold Coast Renovation Experts Since 2000";
+const pageTitle = "About Our Gold Coast Renovation Team | Since 2000";
 const pageDescription =
-  "Meet Concept Design Construct, QBCC licensed Gold Coast renovation specialists delivering kitchen, bathroom, extension, and whole-home renovation projects since 2000.";
+  "Meet Concept Design Construct, QBCC licensed specialists delivering Gold Coast renovations across kitchen, bathroom, extension, and whole-home projects since 2000.";
 
 export const metadata: Metadata = buildMetadata({
   title: pageTitle,
@@ -28,7 +28,7 @@ export default function Page() {
   });
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "About Us", url: "/about-us" },
+    { name: "About Gold Coast Renovation Team", url: "/about-us" },
   ]);
 
   return (

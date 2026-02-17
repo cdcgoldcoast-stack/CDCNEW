@@ -60,8 +60,8 @@ const Gallery = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Gallery | Gold Coast Home Renovation Inspiration"
-        description="Get inspired by our Gold Coast renovation gallery. Browse beautiful kitchen, bathroom, and living space transformations by Concept Design Construct."
+        title="Gold Coast Renovations Gallery | Kitchen, Bathroom & Home Inspiration"
+        description="Explore Gold Coast renovations inspiration. Browse kitchen, bathroom, and living space transformations by Concept Design Construct."
         url="/project-gallery"
       />
       <Header />
@@ -72,7 +72,7 @@ const Gallery = () => {
           {/* Title */}
           <div className="text-center mb-12 md:mb-16 max-w-2xl mx-auto">
             <h1 className="font-serif italic text-4xl md:text-5xl lg:text-6xl text-primary mb-6">
-              Gold Coast Renovation Gallery
+              Gold Coast Renovations Gallery
             </h1>
             <p className="text-foreground/70 text-lg md:text-xl leading-relaxed mb-3">
               Inspiration for your next renovation.
@@ -135,8 +135,8 @@ const Gallery = () => {
           )}
 
           <BottomInvitation
-            title="Like what you see?"
-            description="Let's talk about bringing your vision to life."
+            title="Like these Gold Coast renovations?"
+            description="Let's talk about bringing your renovation vision to life."
             className="mt-16 md:mt-24 mb-0"
           />
         </div>

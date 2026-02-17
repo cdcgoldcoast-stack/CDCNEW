@@ -1388,8 +1388,8 @@ const MoodboardCreator = () => {
       )}
     >
       <SEO
-        title="Moodboard Creator | Plan Your Renovation Aesthetic"
-        description="Collect inspiration, curate colour palettes, and export a renovation moodboard to share with our Gold Coast design team."
+        title="Gold Coast Renovations Moodboard Creator | Plan Your Style"
+        description="Collect inspiration, curate colour palettes, and export a moodboard to share with our Gold Coast renovation design team."
         url="/renovation-design-tools/moodboard"
       />
       <Header />

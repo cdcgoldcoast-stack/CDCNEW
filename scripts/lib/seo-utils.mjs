@@ -45,12 +45,26 @@ export const FALLBACK_PROJECT_SLUGS = [
 ];
 
 export const NOINDEX_EXACT_ROUTES = new Set([
+  "/_not-found",
   "/404",
   "/auth",
   "/brand-guidelines",
 ]);
 
 export const NOINDEX_PREFIXES = ["/admin"];
+
+export const THIN_CONTENT_MIN_WORDS = 250;
+export const DUPLICATE_SIMILARITY_THRESHOLD = 0.85;
+
+const THIN_CONTENT_EXACT_EXEMPT_ROUTES = new Set([
+  "/privacy-policy",
+  "/terms-conditions",
+]);
+
+const DUPLICATE_EXACT_EXEMPT_ROUTES = new Set([
+  "/privacy-policy",
+  "/terms-conditions",
+]);
 
 export function parseEnvBoolean(value, defaultValue = false) {
   if (typeof value === "undefined") return defaultValue;
@@ -153,6 +167,18 @@ export function isCanonicalRoute(routePath) {
 
 export function isSitemapEligibleRoute(routePath) {
   return isIndexableRoute(routePath);
+}
+
+export function isThinContentExempt(routePath) {
+  const normalized = normalizePath(routePath);
+  if (THIN_CONTENT_EXACT_EXEMPT_ROUTES.has(normalized)) return true;
+  return isProjectDetailPath(normalized);
+}
+
+export function isDuplicateCompareExempt(routePath) {
+  const normalized = normalizePath(routePath);
+  if (DUPLICATE_EXACT_EXEMPT_ROUTES.has(normalized)) return true;
+  return isProjectDetailPath(normalized);
 }
 
 export async function loadGeneratedProjectSlugs(filePath) {

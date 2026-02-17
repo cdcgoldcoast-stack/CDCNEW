@@ -132,8 +132,8 @@ const EditorialReveal = () => {
 
   const outerTransform = `translateY(${-parallaxOffset}px)`;
   const centerTransform = `translateY(${80 + parallaxOffset}px)`;
-  const editorialImageQuality = 54;
-  const editorialResponsiveWidths = [240, 320, 480, 640, 800] as const;
+  const editorialImageQuality = 50;
+  const editorialResponsiveWidths = [200, 280, 360, 480, 640] as const;
 
   const objectPositionClass = (position?: string) =>
     position?.includes("top") ? "object-top" : "object-bottom";

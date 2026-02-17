@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,6 @@ const renovationBeforeImage =
   "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Renovaton-before.webp";
 
 const AIDesignIntro = () => {
-  const navigate = useNavigate();
   const steps = [
     {
       title: "Add your room photo",
@@ -29,8 +28,8 @@ const AIDesignIntro = () => {
   return (
     <div className="min-h-screen bg-primary text-primary-foreground">
       <SEO
-        title="AI Design Generator"
-        description="Preview your renovation style in minutes. Upload room photos, choose finishes, and generate visual concepts before planning your Gold Coast project."
+        title="Gold Coast Renovations AI Design Generator | Preview"
+        description="Preview your Gold Coast renovations style in minutes. Upload room photos, choose finishes, and generate visual concepts before planning your project."
         url="/renovation-design-tools/ai-generator/intro"
       />
       <Header />
@@ -65,15 +64,15 @@ const AIDesignIntro = () => {
             </ol>
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-              <Button
-                size="lg"
-                className="bg-primary-foreground text-primary hover:bg-primary-foreground/90"
-                onClick={() => {
-                  sessionStorage.setItem("aiGeneratorIntroSeen", "true");
-                  navigate("/renovation-design-tools/ai-generator");
-                }}
-              >
-                Continue to the generator
+              <Button size="lg" asChild className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
+                <Link
+                  to="/renovation-design-tools/ai-generator"
+                  onClick={() => {
+                    sessionStorage.setItem("aiGeneratorIntroSeen", "true");
+                  }}
+                >
+                  Continue to the generator
+                </Link>
               </Button>
               <p className="text-xs text-primary-foreground/70">
                 Best results come from bright, clutter-free photos.

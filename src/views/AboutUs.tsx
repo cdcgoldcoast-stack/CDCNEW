@@ -25,8 +25,8 @@ const AboutUs = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="About Us | Gold Coast Renovation Experts Since 2000"
-        description="Meet Concept Design Construct, QBCC licensed Gold Coast renovation specialists delivering kitchen, bathroom, extension, and full-home projects since 2000."
+        title="About Our Gold Coast Renovation Team | Since 2000"
+        description="Meet Concept Design Construct, QBCC licensed specialists delivering Gold Coast renovations across kitchen, bathroom, extension, and full-home projects since 2000."
         url="/about-us"
         jsonLd={aboutSchema}
       />
@@ -174,7 +174,7 @@ const AboutUs = () => {
       <div className="relative z-10">
         <BottomInvitation
           title="Talk Through Your Renovation"
-          description="Whether you're planning a bathroom update, a kitchen makeover, or a full property renovation - we'd love to hear about it."
+          description="Whether you're planning a bathroom update, a kitchen makeover, or full-home renovations, we'd love to hear about it."
           className="mt-0 mb-0"
         />
       </div>

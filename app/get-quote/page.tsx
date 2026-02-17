@@ -4,9 +4,9 @@ import { GetQuoteClient } from "@/components/route-clients";
 import { generateBreadcrumbSchema, generateContactPageSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 
-const pageTitle = "Free Quote | Gold Coast Home Renovation Consultation";
+const pageTitle = "Gold Coast Renovations Quote | Book Your Consultation";
 const pageDescription =
-  "Start your Gold Coast renovation with a consultation and scope discussion for kitchen, bathroom, and whole-home renovation projects.";
+  "Start your Gold Coast renovations plan with a consultation and scope discussion for kitchen, bathroom, and whole-home projects.";
 
 export const metadata: Metadata = buildMetadata({
   title: pageTitle,
@@ -28,7 +28,7 @@ export default function Page() {
   const contactSchema = generateContactPageSchema();
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Get Quote", url: "/get-quote" },
+    { name: "Gold Coast Renovations Quote", url: "/get-quote" },
   ]);
 
   return (

@@ -146,7 +146,7 @@ const Header = () => {
             className={`${ctaClass} whitespace-nowrap flex-shrink-0`}
             onClick={handleBookConsultationClick}
           >
-            Book A Consultation
+            Book A Renovation Consultation
           </Link>
           <a href="tel:1300020232" className={`${ctaClass} whitespace-nowrap flex-shrink-0`} onClick={handleCallClick}>
             1300 020 232
