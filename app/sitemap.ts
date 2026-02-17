@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { fetchProjects } from "@/data/projects";
 
 const BASE_URL = "https://www.cdconstruct.com.au";
+export const revalidate = 900;
 
 const staticRoutes: Array<{
   path: string;

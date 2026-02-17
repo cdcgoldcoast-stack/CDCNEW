@@ -18,6 +18,35 @@ export interface ProjectDetailProps {
   initialProjects?: Project[];
 }
 
+const PROJECT_FEEDBACK_BY_SLUG: Record<string, string> = {
+  "everyday-ease":
+    "The renovation removed the daily friction in our routine. Everything has a place now, and the finish feels calm and considered.",
+  "family-hub":
+    "The way the spaces connect now has changed how we live as a family. It feels open, practical, and much easier to use every day.",
+  "light-and-flow-house":
+    "Light moves through the home beautifully now. The layout feels effortless, and each room flows naturally into the next.",
+  "seamless-bathroom":
+    "The bathroom feels cohesive from every angle. It is cleaner, easier to maintain, and far more comfortable to use morning and night.",
+  "stone-and-light":
+    "The material choices gave us exactly the tone we wanted. It feels refined and warm without losing practicality.",
+  "terrazzo-retreat":
+    "The terrazzo details gave the space real character while still feeling timeless. It now feels like a retreat, not just a utility room.",
+  "the-calm-edit":
+    "The new design quietened the whole space. It feels orderly and restful, and the result is even better than we expected.",
+  "the-elanora-residence":
+    "The project balanced functionality and finish quality perfectly. Every decision feels purposeful, and the home works better in every way.",
+  "warm-minimal-bathroom":
+    "We wanted a warm, minimal look that still felt practical for daily life. The final result is simple, elegant, and very easy to live with.",
+};
+
+const getProjectFeedbackQuote = (project: Project) => {
+  const slugQuote = PROJECT_FEEDBACK_BY_SLUG[project.slug];
+  if (slugQuote) return slugQuote;
+
+  const categoryLabel = project.category.replace("-", " ");
+  return `The ${categoryLabel} renovation has made day-to-day living noticeably easier. The planning was clear, and the finish quality exceeded expectations.`;
+};
+
 const ProjectDetail = ({ initialProject, initialProjects }: ProjectDetailProps = {}) => {
   const { slug } = useParams<{ slug?: string }>();
   const [project, setProject] = useState<Project | null | undefined>(initialProject ?? undefined);
@@ -109,6 +138,7 @@ const ProjectDetail = ({ initialProject, initialProjects }: ProjectDetailProps =
     `Renovation delivered for ${project.location} conditions and lifestyle`,
     "Sequenced works coordinated with clear planning milestones",
   ];
+  const projectFeedbackQuote = getProjectFeedbackQuote(project);
 
   return (
     <div className="min-h-screen bg-background">
@@ -278,8 +308,7 @@ const ProjectDetail = ({ initialProject, initialProjects }: ProjectDetailProps =
           <aside className="border border-primary/20 bg-cream p-6 md:p-8">
             <p className="text-label text-primary mb-4">Client Feedback</p>
             <blockquote className="font-serif italic text-xl md:text-2xl text-primary leading-relaxed mb-6">
-              “The process felt structured and transparent. Every milestone was clear and the final finish quality was
-              exactly what we were hoping for.”
+              “{projectFeedbackQuote}”
             </blockquote>
             <p className="text-xs uppercase tracking-wider text-primary/70 mb-6">Renovation Client · {project.location}</p>
             <Link

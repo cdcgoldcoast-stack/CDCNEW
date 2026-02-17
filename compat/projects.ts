@@ -72,17 +72,37 @@ const REMOVED_PROJECT_SLUGS = new Set([
   "sunshine-retreat",
   "urban-oasis",
 ]);
+const PUBLIC_PROJECTS_REVALIDATE_SECONDS = 900;
+
+type SupabaseFetchMode = "public-isr" | "client-live";
+
+type SupabaseFetchOptions = {
+  mode?: SupabaseFetchMode;
+  revalidateSeconds?: number;
+};
 
 const supabaseHeaders = {
   apikey: SUPABASE_PUBLISHABLE_KEY,
   Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
 };
 
-const supabaseFetch = async <T>(path: string): Promise<T> => {
-  const response = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+const supabaseFetch = async <T>(path: string, options: SupabaseFetchOptions = {}): Promise<T> => {
+  const isServer = typeof window === "undefined";
+  const mode: SupabaseFetchMode = options.mode ?? (isServer ? "public-isr" : "client-live");
+  const revalidateSeconds = options.revalidateSeconds ?? PUBLIC_PROJECTS_REVALIDATE_SECONDS;
+  const requestOptions: RequestInit & { next?: { revalidate: number } } = {
     headers: supabaseHeaders,
-    cache: "no-store",
-  });
+  };
+
+  if (mode === "client-live") {
+    requestOptions.cache = "no-store";
+  } else {
+    if (isServer) {
+      requestOptions.next = { revalidate: revalidateSeconds };
+    }
+  }
+
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, requestOptions);
 
   if (!response.ok) {
     throw new Error(`Supabase request failed (${response.status}) for ${path}`);
@@ -270,7 +290,12 @@ export const fetchProjects = async (): Promise<Project[]> => {
   }
 
   try {
-    const dbProjects = await supabaseFetch<DbProject[]>("projects?select=*&order=created_at.desc");
+    const fetchMode: SupabaseFetchMode =
+      typeof window === "undefined" ? "public-isr" : "client-live";
+    const dbProjects = await supabaseFetch<DbProject[]>("projects?select=*&order=created_at.desc", {
+      mode: fetchMode,
+      revalidateSeconds: PUBLIC_PROJECTS_REVALIDATE_SECONDS,
+    });
 
     if (!dbProjects || dbProjects.length === 0) {
       return filteredStaticProjects;
@@ -283,6 +308,10 @@ export const fetchProjects = async (): Promise<Project[]> => {
       const inClause = projectIds.join(",");
       dbImages = await supabaseFetch<DbProjectImage[]>(
         `project_images?select=*&project_id=in.(${inClause})&order=display_order.asc`,
+        {
+          mode: fetchMode,
+          revalidateSeconds: PUBLIC_PROJECTS_REVALIDATE_SECONDS,
+        },
       );
     }
 
@@ -324,6 +353,7 @@ export const fetchHeroImageUrl = async (fallback = "/hero-bg.webp"): Promise<str
     type ImageOverride = { override_url: string; updated_at?: string };
     const rows = await supabaseFetch<ImageOverride[]>(
       `image_overrides?select=override_url,updated_at&original_path=eq.hero-bg.jpg&limit=1`,
+      { mode: "client-live" },
     );
 
     if (rows.length > 0 && rows[0].override_url) {

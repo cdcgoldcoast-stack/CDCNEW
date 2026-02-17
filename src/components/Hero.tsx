@@ -3,6 +3,8 @@ import ResponsiveImage from "@/components/ResponsiveImage";
 import GoogleReviewBadge from "@/components/GoogleReviewBadge";
 
 const revealed = "opacity-100 translate-y-0 transition-all duration-700 ease-out";
+const MOBILE_HERO_IMAGE =
+  "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Gold_Coast_renovation_builders.webp";
 
 interface HeroProps {
   /** Pre-resolved hero image URL from server to avoid client-side hook waterfall */
@@ -22,9 +24,9 @@ const Hero = ({ heroImageUrl }: HeroProps = {}) => {
       {/* Mobile layout - stacked (phones only) */}
       <div className="md:hidden min-h-screen flex flex-col pt-20">
         <div className="h-[40vh] relative">
-          {heroImage ? (
+          {MOBILE_HERO_IMAGE ? (
             <ResponsiveImage
-              src={heroImage}
+              src={MOBILE_HERO_IMAGE}
               alt="Gold Coast kitchen renovation in Helensvale by Concept Design Construct"
               className="absolute inset-0 w-full h-full object-cover bg-muted"
               width={1200}

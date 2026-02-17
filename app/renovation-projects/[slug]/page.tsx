@@ -8,6 +8,8 @@ import { generateBreadcrumbSchema, generateProjectSchema } from "@/lib/structure
 import { buildMetadata, titleFromSlug, DEFAULT_OG_IMAGE } from "@/lib/seo";
 import { SITE_NAME } from "@/config/seo";
 
+export const revalidate = 900;
+
 type PageProps = {
   params: {
     slug: string;
