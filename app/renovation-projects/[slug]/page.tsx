@@ -29,11 +29,6 @@ const normalizeIsoDate = (value?: string | null) => {
   return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString();
 };
 
-const publishedTimeFromYear = (year?: string | null) => {
-  if (!year || !/^\d{4}$/.test(year)) return undefined;
-  return `${year}-01-15T00:00:00.000Z`;
-};
-
 export function generateMetadata({ params }: PageProps): Metadata {
   const project = findStaticProject(params.slug);
   const categoryLabel = project ? project.category.replace("-", " ") : "home";
@@ -43,9 +38,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
     : `${titleFromSlug(params.slug)} | Gold Coast Renovations Case Study`;
   const description = project?.description || fallbackDescription(params.slug);
   const projectPublishedTime =
-    normalizeIsoDate(project?.publishedAt) ||
-    publishedTimeFromYear(project?.year) ||
-    DEFAULT_PROJECT_TIMESTAMP;
+    normalizeIsoDate(project?.publishedAt) || DEFAULT_PROJECT_TIMESTAMP;
   const projectModifiedTime = normalizeIsoDate(project?.modifiedAt) || projectPublishedTime;
   const projectAuthor = project?.authorName || SITE_NAME;
   const projectTags = project?.tags?.length
@@ -86,18 +79,14 @@ export default async function Page({ params }: PageProps) {
   const projectImage = project?.image || DEFAULT_OG_IMAGE;
   const projectLocation = project?.location || "Gold Coast";
   const projectCategory = project?.category || "whole-home";
-  const projectYear = project?.year || "";
   const projectSlug = project?.slug || params.slug;
   const projectPublishedTime =
-    normalizeIsoDate(project?.publishedAt) ||
-    publishedTimeFromYear(project?.year) ||
-    DEFAULT_PROJECT_TIMESTAMP;
+    normalizeIsoDate(project?.publishedAt) || DEFAULT_PROJECT_TIMESTAMP;
   const projectModifiedTime = normalizeIsoDate(project?.modifiedAt) || projectPublishedTime;
 
   const projectSchema = generateProjectSchema({
     name: projectName,
     description: projectDescription,
-    year: projectYear,
     location: projectLocation,
     image: projectImage,
     category: projectCategory,

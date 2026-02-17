@@ -6,7 +6,6 @@ import SSRHomeClient from "../components/SSRHomeClient";
 import { buildMetadata, generateWebSiteSchema } from "@/lib/seo";
 import { SITELINK_TARGETS } from "@/config/seo";
 import { fetchHeroImageUrl } from "@/data/projects";
-import { buildSupabaseSrcSet } from "@/lib/image-delivery";
 
 const homepageFAQs = [
   {
@@ -58,14 +57,10 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   const heroImageUrl = await fetchHeroImageUrl();
 
-  // Preload the resolved hero image so the browser starts downloading immediately.
-  // Include responsive srcSet so the browser picks the right size for mobile.
-  const heroSrcSet = buildSupabaseSrcSet(heroImageUrl, [320, 420, 560, 720, 860], { quality: 54 });
+  // Preload the original hero image URL without runtime transform parameters.
   ReactDOM.preload(heroImageUrl, {
     as: "image",
     fetchPriority: "high",
-    imageSrcSet: heroSrcSet || undefined,
-    imageSizes: "100vw",
   });
 
   const localBusinessSchema = generateLocalBusinessSchema();

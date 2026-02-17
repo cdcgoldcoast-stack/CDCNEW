@@ -10,7 +10,7 @@ const serviceScopes = [
   {
     title: "Kitchen Renovation Service Scope",
     summary: "Layout improvements, cabinetry planning, appliance integration, and lighting upgrades.",
-    link: "/renovation-projects/coastal-modern",
+    link: "/renovation-projects/family-hub",
     linkLabel: "View kitchen project example",
   },
   {

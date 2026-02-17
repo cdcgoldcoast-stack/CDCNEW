@@ -158,9 +158,12 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
           transition={{ duration: 0.6 }}
         >
           {/* Label */}
-          <p className="text-label text-primary mb-4 md:mb-6 uppercase tracking-wider text-xs md:text-sm">
+          <a
+            href="/renovation-services"
+            className="text-label text-primary mb-4 md:mb-6 uppercase tracking-wider text-xs md:text-sm inline-block"
+          >
             Our Gold Coast Renovation Services
-          </p>
+          </a>
 
           {/* Title */}
           <h2 className="text-foreground text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif leading-tight mb-4 md:mb-6">

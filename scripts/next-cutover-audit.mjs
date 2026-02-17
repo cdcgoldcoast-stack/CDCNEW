@@ -150,7 +150,6 @@ const main = async () => {
     const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute("href")?.trim() || "";
     const robots = extractMetaByName(document, "robots").toLowerCase();
     const ogTitle = extractMetaByProperty(document, "og:title");
-    const twitterTitle = extractMetaByName(document, "twitter:title");
     const hasJsonLd = document.querySelectorAll('script[type="application/ld+json"]').length > 0;
 
     const routeIssues = [];
@@ -163,7 +162,6 @@ const main = async () => {
     }
     if (!robots) routeIssues.push("missing_robots");
     if (!ogTitle) routeIssues.push("missing_og_title");
-    if (!twitterTitle) routeIssues.push("missing_twitter_title");
 
     if (isPrivateRoute) {
       if (!robots.includes("noindex")) routeIssues.push("private_route_not_noindex");

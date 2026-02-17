@@ -36,13 +36,24 @@ export const SITELINK_TARGET_PATHS = [
 ];
 
 export const FALLBACK_PROJECT_SLUGS = [
+  "family-hub",
+  "everyday-ease",
+  "light-and-flow-house",
+  "seamless-bathroom",
+  "stone-and-light",
+  "terrazzo-retreat",
+  "the-calm-edit",
+  "the-elanora-residence",
+  "warm-minimal-bathroom",
+];
+
+const EXCLUDED_PROJECT_SLUGS = new Set([
   "coastal-modern",
   "heritage-revival",
-  "family-hub",
   "retreat-house",
-  "urban-oasis",
   "sunshine-retreat",
-];
+  "urban-oasis",
+]);
 
 export const NOINDEX_EXACT_ROUTES = new Set([
   "/_not-found",
@@ -190,6 +201,7 @@ export async function loadGeneratedProjectSlugs(filePath) {
       slugs
         .map((slug) => `${slug}`.trim().toLowerCase())
         .filter((slug) => slug && SLUG_PATTERN.test(slug))
+        .filter((slug) => !EXCLUDED_PROJECT_SLUGS.has(slug))
     )].sort();
   } catch {
     return [...FALLBACK_PROJECT_SLUGS];

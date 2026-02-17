@@ -15,6 +15,13 @@ const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, "vercel.json");
 
 const PRODUCTION_DOMAIN = "https://www.cdconstruct.com.au";
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const EXCLUDED_PROJECT_SLUGS = new Set([
+  "coastal-modern",
+  "heritage-revival",
+  "retreat-house",
+  "sunshine-retreat",
+  "urban-oasis",
+]);
 
 const STATIC_ROUTES = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
@@ -53,6 +60,10 @@ function uniqSorted(values) {
       .map((value) => `${value}`.trim().toLowerCase())
       .filter((value) => value && SLUG_PATTERN.test(value))
   )].sort();
+}
+
+function filterExcludedSlugs(values) {
+  return values.filter((slug) => !EXCLUDED_PROJECT_SLUGS.has(slug));
 }
 
 function formatDateUTC(date = new Date()) {
@@ -227,30 +238,36 @@ async function main() {
     readPreviousGeneratedSlugs(),
   ]);
 
+  const filteredSupabaseSlugs = filterExcludedSlugs(supabaseSlugs);
+  const filteredVercelRewriteSlugs = filterExcludedSlugs(vercelRewriteSlugs);
+  const filteredPublicSiteSlugs = filterExcludedSlugs(publicSiteSlugs);
+  const filteredStaticSlugs = filterExcludedSlugs(staticSlugs);
+  const filteredPreviousSlugs = filterExcludedSlugs(previousSlugs);
+
   const authoritativeSlugs = [
-    ...supabaseSlugs,
-    ...publicSiteSlugs,
-    ...vercelRewriteSlugs,
-    ...staticSlugs,
-    ...previousSlugs,
+    ...filteredSupabaseSlugs,
+    ...filteredPublicSiteSlugs,
+    ...filteredVercelRewriteSlugs,
+    ...filteredStaticSlugs,
+    ...filteredPreviousSlugs,
   ];
 
   const mergedAuthoritativeSlugs = uniqSorted(authoritativeSlugs);
   const usedPreviousGeneratedFallback =
-    supabaseSlugs.length === 0 &&
-    publicSiteSlugs.length === 0 &&
-    vercelRewriteSlugs.length === 0 &&
-    staticSlugs.length === 0 &&
-    previousSlugs.length > 0;
+    filteredSupabaseSlugs.length === 0 &&
+    filteredPublicSiteSlugs.length === 0 &&
+    filteredVercelRewriteSlugs.length === 0 &&
+    filteredStaticSlugs.length === 0 &&
+    filteredPreviousSlugs.length > 0;
   const mergedSlugs = mergedAuthoritativeSlugs;
 
   const mergedSlugSet = new Set(mergedSlugs);
-  const vercelRewriteSlugSet = new Set(vercelRewriteSlugs);
+  const vercelRewriteSlugSet = new Set(filteredVercelRewriteSlugs);
   const missingVercelRewrites = mergedSlugs.filter((slug) => !vercelRewriteSlugSet.has(slug));
-  const staleVercelRewrites = vercelRewriteSlugs.filter((slug) => !mergedSlugSet.has(slug));
+  const staleVercelRewrites = filteredVercelRewriteSlugs.filter((slug) => !mergedSlugSet.has(slug));
 
   if (
-    vercelRewriteSlugs.length > 0 &&
+    filteredVercelRewriteSlugs.length > 0 &&
     (missingVercelRewrites.length > 0 || staleVercelRewrites.length > 0)
   ) {
     console.warn(
@@ -259,11 +276,11 @@ async function main() {
   }
 
   await writeProjectSlugArtifact(mergedSlugs, {
-    supabase: supabaseSlugs.length,
-    vercelRewrites: vercelRewriteSlugs.length,
-    publicSite: publicSiteSlugs.length,
-    staticFallback: staticSlugs.length,
-    previousGenerated: previousSlugs.length,
+    supabase: filteredSupabaseSlugs.length,
+    vercelRewrites: filteredVercelRewriteSlugs.length,
+    publicSite: filteredPublicSiteSlugs.length,
+    staticFallback: filteredStaticSlugs.length,
+    previousGenerated: filteredPreviousSlugs.length,
     usedPreviousGeneratedFallback,
   });
   await writeSitemap(mergedSlugs);

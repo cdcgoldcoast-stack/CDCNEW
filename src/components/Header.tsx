@@ -6,6 +6,17 @@ import { trackAnalyticsEvent } from "@/lib/analytics";
 import { HEADER_SITELINK_TARGETS } from "@/config/seo";
 
 const SCROLL_THRESHOLD = 10; // Minimum scroll distance to trigger hide/show
+const RENOVATION_DROPDOWN_LINKS = [
+  { label: "Renovation Projects", href: "/renovation-projects" },
+  { label: "Renovation Gallery", href: "/renovation-gallery" },
+] as const;
+const RENOVATION_DROPDOWN_PATHS: ReadonlySet<string> = new Set(
+  RENOVATION_DROPDOWN_LINKS.map((link) => link.href),
+);
+
+type DesktopNavItem =
+  | { type: "link"; label: string; href: string }
+  | { type: "dropdown"; label: string; links: readonly { label: string; href: string }[] };
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -71,7 +82,37 @@ const Header = () => {
     label: target.label,
     href: target.path,
   }));
-  const navLinks = isHome ? baseLinks : [{ label: "Home", href: "/" }, ...baseLinks];
+  const mobileNavLinks = isHome ? baseLinks : [{ label: "Home", href: "/" }, ...baseLinks];
+  const desktopBaseLinks: DesktopNavItem[] = [];
+  let hasInsertedRenovationsDropdown = false;
+
+  for (const link of baseLinks) {
+    if (RENOVATION_DROPDOWN_PATHS.has(link.href)) {
+      if (!hasInsertedRenovationsDropdown) {
+        desktopBaseLinks.push({
+          type: "dropdown",
+          label: "Renovations",
+          links: RENOVATION_DROPDOWN_LINKS,
+        });
+        hasInsertedRenovationsDropdown = true;
+      }
+      continue;
+    }
+
+    desktopBaseLinks.push({ type: "link", ...link });
+  }
+
+  if (!hasInsertedRenovationsDropdown) {
+    desktopBaseLinks.push({
+      type: "dropdown",
+      label: "Renovations",
+      links: RENOVATION_DROPDOWN_LINKS,
+    });
+  }
+
+  const desktopNavLinks: DesktopNavItem[] = isHome
+    ? desktopBaseLinks
+    : [{ type: "link", label: "Home", href: "/" }, ...desktopBaseLinks];
   
   // Always use solid header (no transparent mode)
   const shouldBeTransparent = false;
@@ -128,18 +169,59 @@ const Header = () => {
 
         {/* Desktop Navigation - only shows when viewport is wide enough */}
         <nav className="hidden min-[1440px]:flex items-center gap-5 2xl:gap-7 whitespace-nowrap">
-          {navLinks.map((link) => (
-            <Link
-              key={link.label}
-              to={link.href}
-              {...getPrefetchHandlers(link.href)}
-              className={`text-[11px] 2xl:text-xs uppercase tracking-[0.15em] transition-all duration-300 hover:opacity-60 ${
-                shouldBeTransparent ? "text-white" : "text-foreground"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {desktopNavLinks.map((item) =>
+            item.type === "link" ? (
+              <Link
+                key={item.label}
+                to={item.href}
+                {...getPrefetchHandlers(item.href)}
+                className={`text-[11px] 2xl:text-xs uppercase tracking-[0.15em] transition-all duration-300 hover:opacity-60 ${
+                  shouldBeTransparent ? "text-white" : "text-foreground"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <div
+                key={item.label}
+                className="relative group"
+                onMouseEnter={() => item.links.forEach((link) => prefetchRoute(link.href))}
+                onFocus={() => item.links.forEach((link) => prefetchRoute(link.href))}
+              >
+                <button
+                  type="button"
+                  aria-haspopup="true"
+                  className={`text-[11px] 2xl:text-xs uppercase tracking-[0.15em] transition-all duration-300 hover:opacity-60 ${
+                    shouldBeTransparent ? "text-white" : "text-foreground"
+                  }`}
+                >
+                  {item.label}
+                </button>
+                <div className="pointer-events-none absolute left-0 top-full pt-3 opacity-0 translate-y-1 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus-within:translate-y-0">
+                  <div
+                    className={`min-w-[220px] border py-2 ${
+                      shouldBeTransparent
+                        ? "bg-black/80 border-white/20"
+                        : "bg-background border-border/40 shadow-lg"
+                    }`}
+                  >
+                    {item.links.map((link) => (
+                      <Link
+                        key={link.href}
+                        to={link.href}
+                        {...getPrefetchHandlers(link.href)}
+                        className={`block px-4 py-2 text-[11px] 2xl:text-xs uppercase tracking-[0.15em] transition-all duration-300 hover:opacity-60 ${
+                          shouldBeTransparent ? "text-white" : "text-foreground"
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ),
+          )}
           <Link
             to="/book-renovation-consultation"
             {...getPrefetchHandlers("/book-renovation-consultation")}
@@ -179,7 +261,7 @@ const Header = () => {
       {isMenuOpen && (
         <nav className="min-[1440px]:hidden absolute top-full left-0 right-0 bg-background border-t border-border/30">
           <div className="container-wide py-8 flex flex-col gap-6">
-            {navLinks.map((link) => (
+            {mobileNavLinks.map((link) => (
               <Link
                 key={link.label}
                 to={link.href}

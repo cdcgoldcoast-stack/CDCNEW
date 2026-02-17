@@ -8,7 +8,6 @@ export interface FAQItem {
 export interface ProjectData {
   name: string;
   description: string;
-  year: number | string | null;
   location: string | null;
   image: string;
   category: string;
@@ -84,7 +83,6 @@ export const generateProjectSchema = (project: ProjectData) => {
       image: imageUrl,
       about: aboutTopics,
       genre: project.category,
-      dateCreated: project.year?.toString() || undefined,
       datePublished: project.publishedAt || undefined,
       dateModified: project.modifiedAt || undefined,
       mainEntityOfPage: pageUrl || undefined,

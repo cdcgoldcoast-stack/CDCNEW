@@ -32,13 +32,12 @@ describe("generateFAQSchema", () => {
 
 describe("generateProjectSchema", () => {
   const baseProject = {
-    name: "Coastal Modern",
+    name: "Family Hub",
     description: "A kitchen renovation",
-    year: "2024",
     location: "Burleigh Heads",
     image: "https://example.com/image.jpg",
     category: "kitchen",
-    path: "/renovation-projects/coastal-modern",
+    path: "/renovation-projects/family-hub",
   };
 
   it("produces WebPage with CreativeWork mainEntity", () => {
@@ -46,9 +45,9 @@ describe("generateProjectSchema", () => {
 
     expect(schema["@context"]).toBe("https://schema.org");
     expect(schema["@type"]).toBe("WebPage");
-    expect(schema.url).toBe(`${PRODUCTION_DOMAIN}/renovation-projects/coastal-modern`);
+    expect(schema.url).toBe(`${PRODUCTION_DOMAIN}/renovation-projects/family-hub`);
     expect(schema.mainEntity["@type"]).toBe("CreativeWork");
-    expect(schema.mainEntity.name).toBe("Coastal Modern");
+    expect(schema.mainEntity.name).toBe("Family Hub");
     expect(schema.mainEntity.genre).toBe("kitchen");
   });
 
@@ -86,7 +85,7 @@ describe("generateBreadcrumbSchema", () => {
     const schema = generateBreadcrumbSchema([
       { name: "Home", url: "/" },
       { name: "Projects", url: "/renovation-projects" },
-      { name: "Coastal Modern", url: "/renovation-projects/coastal-modern" },
+      { name: "Family Hub", url: "/renovation-projects/family-hub" },
     ]);
 
     expect(schema["@context"]).toBe("https://schema.org");

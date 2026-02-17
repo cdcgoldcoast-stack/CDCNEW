@@ -88,7 +88,6 @@ const ProjectDetail = ({ initialProject, initialProjects }: ProjectDetailProps =
   const projectSchema = generateProjectSchema({
     name: project.name,
     description: project.description || project.overview || "",
-    year: project.year,
     location: project.location,
     image: project.image,
     category: project.category,
@@ -108,7 +107,7 @@ const ProjectDetail = ({ initialProject, initialProjects }: ProjectDetailProps =
   const outcomePoints = [
     `Improved ${categoryLabel} usability for daily routines`,
     `Renovation delivered for ${project.location} conditions and lifestyle`,
-    `Sequenced works completed over ${project.duration || "a defined project timeline"}`,
+    "Sequenced works coordinated with clear planning milestones",
   ];
 
   return (
@@ -156,7 +155,7 @@ const ProjectDetail = ({ initialProject, initialProjects }: ProjectDetailProps =
       {/* Project Snapshot */}
       <section className="pb-16 md:pb-20">
         <div className="container-wide">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 border border-foreground/15 p-6 md:p-8 bg-cream">
+          <div className="grid md:grid-cols-2 gap-6 border border-foreground/15 p-6 md:p-8 bg-cream">
             <div>
               <p className="text-label text-foreground/50 mb-2">Category</p>
               <p className="font-serif text-xl text-primary">{categoryLabel}</p>
@@ -164,14 +163,6 @@ const ProjectDetail = ({ initialProject, initialProjects }: ProjectDetailProps =
             <div>
               <p className="text-label text-foreground/50 mb-2">Location</p>
               <p className="font-serif text-xl text-primary">{project.location}</p>
-            </div>
-            <div>
-              <p className="text-label text-foreground/50 mb-2">Timeline</p>
-              <p className="font-serif text-xl text-primary">{project.duration || "Scope dependent"}</p>
-            </div>
-            <div>
-              <p className="text-label text-foreground/50 mb-2">Year</p>
-              <p className="font-serif text-xl text-primary">{project.year || "Current"}</p>
             </div>
           </div>
         </div>

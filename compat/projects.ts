@@ -2,12 +2,10 @@ export interface Project {
   id: string;
   slug: string;
   name: string;
-  year: string;
   description: string;
   image: string;
   category: "kitchen" | "bathroom" | "whole-home";
   location: string;
-  duration: string;
   overview: string;
   challenge: string;
   solution: string;
@@ -22,11 +20,9 @@ export interface Project {
 type DbProject = {
   id: string;
   name: string;
-  year: number | string | null;
   description: string | null;
   category: string | null;
   location: string | null;
-  duration: string | null;
   overview: string | null;
   challenge: string | null;
   solution: string | null;
@@ -69,6 +65,14 @@ const toSlug = (input: string): string =>
 
 const slugMatches = (slug: string, name: string): boolean => toSlug(name) === slug;
 
+const REMOVED_PROJECT_SLUGS = new Set([
+  "coastal-modern",
+  "heritage-revival",
+  "retreat-house",
+  "sunshine-retreat",
+  "urban-oasis",
+]);
+
 const supabaseHeaders = {
   apikey: SUPABASE_PUBLISHABLE_KEY,
   Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
@@ -100,12 +104,10 @@ export const staticProjects: Project[] = [
     id: "coastal-modern",
     slug: "coastal-modern",
     name: "Coastal Modern",
-    year: "2024",
     description: "Complete kitchen and living transformation",
     image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=900&fit=crop",
     category: "kitchen",
     location: "Burleigh Heads",
-    duration: "12 weeks",
     overview:
       "A complete transformation of an outdated 1990s kitchen into a bright, functional space that embraces the coastal lifestyle.",
     challenge:
@@ -126,12 +128,10 @@ export const staticProjects: Project[] = [
     id: "heritage-revival",
     slug: "heritage-revival",
     name: "Heritage Revival",
-    year: "2024",
     description: "Preserving character while adding comfort",
     image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=900&fit=crop",
     category: "whole-home",
     location: "Southport",
-    duration: "20 weeks",
     overview:
       "A sensitive renovation of a Queenslander that honours heritage character while introducing modern comfort.",
     challenge:
@@ -149,12 +149,10 @@ export const staticProjects: Project[] = [
     id: "family-hub",
     slug: "family-hub",
     name: "Family Hub",
-    year: "2023",
     description: "Open plan living for growing families",
     image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&h=900&fit=crop",
     category: "whole-home",
     location: "Robina",
-    duration: "16 weeks",
     overview: "A family-focused transformation that improves flow and everyday usability.",
     challenge: "Small disconnected rooms made daily routines harder.",
     solution: "We created open connected zones with defined functional areas.",
@@ -169,12 +167,10 @@ export const staticProjects: Project[] = [
     id: "retreat-house",
     slug: "retreat-house",
     name: "Retreat House",
-    year: "2023",
     description: "Tranquil spaces for everyday living",
     image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600&h=900&fit=crop",
     category: "bathroom",
     location: "Palm Beach",
-    duration: "8 weeks",
     overview: "An ensuite transformation focused on calm, comfort, and practical use.",
     challenge: "A cramped layout with dated finishes and poor ventilation.",
     solution: "A reconfigured plan with better light, storage, and fixtures.",
@@ -189,12 +185,10 @@ export const staticProjects: Project[] = [
     id: "urban-oasis",
     slug: "urban-oasis",
     name: "Urban Oasis",
-    year: "2023",
     description: "Maximising light in compact spaces",
     image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&h=900&fit=crop",
     category: "kitchen",
     location: "Broadbeach",
-    duration: "10 weeks",
     overview: "A compact apartment kitchen remodel designed for efficient daily use.",
     challenge: "Limited footprint and tight circulation.",
     solution: "Custom joinery and light-focused material choices improved function.",
@@ -209,12 +203,10 @@ export const staticProjects: Project[] = [
     id: "sunshine-retreat",
     slug: "sunshine-retreat",
     name: "Sunshine Retreat",
-    year: "2023",
     description: "Bright and airy coastal renovation",
     image: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=600&h=900&fit=crop",
     category: "whole-home",
     location: "Mermaid Beach",
-    duration: "18 weeks",
     overview: "A beachside home refresh designed for indoor-outdoor living.",
     challenge: "Dark interiors and poor connection to outdoor spaces.",
     solution: "We opened the rear plan and used a light, cohesive material palette.",
@@ -227,6 +219,10 @@ export const staticProjects: Project[] = [
   },
 ];
 
+const filteredStaticProjects = staticProjects.filter(
+  (project) => !REMOVED_PROJECT_SLUGS.has(project.slug),
+);
+
 const mapDbProjects = (dbProjects: DbProject[], dbImages: DbProjectImage[]): Project[] => {
   const imagesByProject = dbImages.reduce<Record<string, DbProjectImage[]>>((acc, image) => {
     if (!acc[image.project_id]) {
@@ -236,7 +232,8 @@ const mapDbProjects = (dbProjects: DbProject[], dbImages: DbProjectImage[]): Pro
     return acc;
   }, {});
 
-  return dbProjects.map((project) => {
+  return dbProjects
+    .map((project) => {
     const images = (imagesByProject[project.id] || []).sort(
       (a, b) => (a.display_order || 0) - (b.display_order || 0),
     );
@@ -253,31 +250,30 @@ const mapDbProjects = (dbProjects: DbProject[], dbImages: DbProjectImage[]): Pro
       id: project.id,
       slug: toSlug(project.name),
       name: project.name,
-      year: project.year?.toString() || "",
       description: project.description || "",
       image: featuredImage,
       category: mapProjectCategory(project.category),
       location: project.location || "",
-      duration: project.duration || "",
       overview: project.overview || "",
       challenge: project.challenge || "",
       solution: project.solution || "",
       gallery: gallery.length > 0 ? gallery : [featuredImage].filter(Boolean),
       featuredImages,
     };
-  });
+    })
+    .filter((project) => !REMOVED_PROJECT_SLUGS.has(project.slug));
 };
 
 export const fetchProjects = async (): Promise<Project[]> => {
   if (!hasSupabaseCredentials) {
-    return staticProjects;
+    return filteredStaticProjects;
   }
 
   try {
     const dbProjects = await supabaseFetch<DbProject[]>("projects?select=*&order=created_at.desc");
 
     if (!dbProjects || dbProjects.length === 0) {
-      return staticProjects;
+      return filteredStaticProjects;
     }
 
     const projectIds = dbProjects.map((project) => project.id).filter(Boolean);
@@ -293,7 +289,7 @@ export const fetchProjects = async (): Promise<Project[]> => {
     return mapDbProjects(dbProjects, dbImages);
   } catch (error) {
     console.error("Error fetching projects:", error);
-    return staticProjects;
+    return filteredStaticProjects;
   }
 };
 
@@ -307,14 +303,14 @@ export const fetchProjectById = async (id: string): Promise<Project | undefined>
   return projects.find((project) => project.id === id);
 };
 
-export const projects = staticProjects;
+export const projects = filteredStaticProjects;
 
 export const getProjectById = (id: string): Project | undefined => {
-  return staticProjects.find((project) => project.id === id);
+  return filteredStaticProjects.find((project) => project.id === id);
 };
 
 export const getProjectsByCategory = (category: Project["category"]): Project[] => {
-  return staticProjects.filter((project) => project.category === category);
+  return filteredStaticProjects.filter((project) => project.category === category);
 };
 
 /**

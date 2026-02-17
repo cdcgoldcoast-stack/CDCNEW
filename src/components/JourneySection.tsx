@@ -108,58 +108,29 @@ const JourneySection = () => {
           </div>
         </div>
 
-        {/* Tablet: 4-column grid (first 4 top row, last 3 bottom row) */}
-        <div className="hidden md:block lg:hidden mb-6 md:mb-8">
-          <div className="grid grid-cols-4 gap-4">
+        {/* Tablet + Desktop: Shared responsive grid */}
+        <div className="hidden md:block mb-6 md:mb-8">
+          <div className="grid md:grid-cols-4 lg:grid-cols-7 gap-4 lg:gap-0">
             {steps.map((step, index) => (
               <motion.div
                 key={step.number}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                className={`border-l-2 border-primary/20 pl-4 ${index >= 4 ? 'col-span-1' : ''}`}
+                transition={{ duration: 0.45, delay: index * 0.06 }}
+                className={`border-l-2 border-primary/20 pl-4 lg:border-primary/10 lg:pl-6 lg:pr-3 xl:pl-8 xl:pr-4 ${
+                  index === 0 ? "lg:border-l-0" : "lg:border-l"
+                }`}
               >
-                <span className="font-serif text-4xl text-primary/20 block mb-3 h-[48px]">
+                <span className="block font-serif text-4xl lg:text-5xl xl:text-6xl mb-3 lg:mb-5 text-primary/20 h-12 lg:h-[60px] xl:h-[72px]">
                   {step.number}
                 </span>
-                <p className="font-serif text-sm text-primary italic mb-2 h-[40px]">
+                <h3 className="font-serif text-sm lg:text-base xl:text-lg mb-2 lg:mb-4 leading-snug text-primary italic md:h-10 lg:h-[68px] xl:h-[76px]">
                   {step.title}
-                </p>
-                <p className="text-xs leading-relaxed text-primary/70">
+                </h3>
+                <p className="text-xs lg:text-sm leading-relaxed text-primary/70 md:min-h-[6.5rem] lg:min-h-[8.5rem]">
                   {step.lines.join(" ")}
                 </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Desktop: 7-column Horizontal grid */}
-        <div className="hidden lg:block mb-6 md:mb-8">
-          <div className="grid md:grid-cols-7">
-            {steps.map((step, index) => (
-              <motion.div
-                key={step.number}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                className={`group relative ${index > 0 ? "md:border-l md:border-primary/10" : ""}`}
-              >
-                <div className="md:pl-6 lg:pl-8 md:pr-3 lg:pr-4">
-                  {/* Number - fixed height */}
-                  <span className="block font-serif text-5xl lg:text-6xl mb-5 text-primary/20 h-[60px] lg:h-[72px]">
-                    {step.number}
-                  </span>
-
-                  {/* Title - fixed height to align all titles (3 lines max) */}
-                  <h3 className="font-serif text-base lg:text-lg mb-4 leading-snug text-primary italic h-[68px] lg:h-[76px]">
-                    {step.title}
-                  </h3>
-
-                  {/* Description - single flowing paragraph with fixed height for 6 lines */}
-                  <p className="text-sm leading-relaxed text-primary/70 min-h-[8.5rem]">{step.lines.join(" ")}</p>
-                </div>
               </motion.div>
             ))}
           </div>

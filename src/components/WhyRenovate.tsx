@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 const WhyRenovate = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -100,6 +101,21 @@ const WhyRenovate = () => {
             >
               Renovation is a major decision because it affects your daily routine, your time, and your sense of control at home. Many people hesitate because they want to avoid cost surprises, unclear timelines, disruption without a plan, and too many decisions without clear direction.
             </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: 0.65 }}
+              className="mt-8 md:mt-10"
+            >
+              <Link
+                to="/renovation-life-stages"
+                className="text-white/80 text-sm border-b border-white/40 pb-1 inline-block hover:text-white transition-colors"
+              >
+                Explore Renovation Life Stages
+              </Link>
+            </motion.div>
           </div>
         </div>
       </motion.div>

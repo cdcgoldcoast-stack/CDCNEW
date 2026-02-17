@@ -38,7 +38,6 @@ const staticRoutes: Array<{
 const resolveProjectDate = (project: {
   modifiedAt?: string;
   publishedAt?: string;
-  year?: string;
 }): Date => {
   if (project.modifiedAt) {
     const d = new Date(project.modifiedAt);
@@ -47,9 +46,6 @@ const resolveProjectDate = (project: {
   if (project.publishedAt) {
     const d = new Date(project.publishedAt);
     if (!Number.isNaN(d.getTime())) return d;
-  }
-  if (project.year && /^\d{4}$/.test(project.year)) {
-    return new Date(`${project.year}-01-15T00:00:00.000Z`);
   }
   return new Date();
 };

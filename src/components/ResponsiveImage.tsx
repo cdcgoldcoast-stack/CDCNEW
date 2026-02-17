@@ -1,10 +1,6 @@
 import type { CSSProperties, ImgHTMLAttributes } from "react";
 import {
   DEFAULT_RESPONSIVE_WIDTHS,
-  buildSupabaseImageUrl,
-  buildSupabaseSrcSet,
-  isSupabaseStorageUrl,
-  type ModernImageFormat,
 } from "@/lib/image-delivery";
 import { cn } from "@/lib/utils";
 
@@ -12,6 +8,10 @@ type NativeImgProps = Omit<
   ImgHTMLAttributes<HTMLImageElement>,
   "src" | "alt" | "width" | "height" | "loading" | "decoding"
 >;
+
+const SUPABASE_RENDER_SEGMENT = "/storage/v1/render/image/public/";
+const SUPABASE_OBJECT_SEGMENT = "/storage/v1/object/public/";
+const TRANSFORM_QUERY_KEYS = new Set(["width", "height", "quality", "format", "resize"]);
 
 interface ResponsiveImageProps extends NativeImgProps {
   src: string | null | undefined;
@@ -26,9 +26,29 @@ interface ResponsiveImageProps extends NativeImgProps {
   quality?: number;
   responsiveWidths?: readonly number[];
   style?: CSSProperties;
+  fit?: "cover" | "contain";
+  position?: CSSProperties["objectPosition"];
 }
 
-const MODERN_FORMATS: ModernImageFormat[] = ["avif", "webp"];
+const normalizeSupabaseImageUrl = (url: string): string => {
+  try {
+    const parsed = new URL(url);
+    if (!parsed.hostname.endsWith(".supabase.co")) return url;
+
+    if (parsed.pathname.includes(SUPABASE_RENDER_SEGMENT)) {
+      parsed.pathname = parsed.pathname.replace(SUPABASE_RENDER_SEGMENT, SUPABASE_OBJECT_SEGMENT);
+    }
+
+    for (const key of TRANSFORM_QUERY_KEYS) {
+      parsed.searchParams.delete(key);
+    }
+
+    const query = parsed.searchParams.toString();
+    return `${parsed.origin}${parsed.pathname}${query ? `?${query}` : ""}${parsed.hash}`;
+  } catch {
+    return url;
+  }
+};
 
 const ResponsiveImage = ({
   src,
@@ -40,45 +60,29 @@ const ResponsiveImage = ({
   loading,
   decoding = "async",
   priority = false,
-  quality = 72,
-  responsiveWidths = DEFAULT_RESPONSIVE_WIDTHS,
+  quality: _quality = 72,
+  responsiveWidths: _responsiveWidths = DEFAULT_RESPONSIVE_WIDTHS,
   style,
+  fit,
+  position,
   fetchPriority,
   ...rest
 }: ResponsiveImageProps) => {
   if (!src) return null;
 
-  const isSupabaseImage = isSupabaseStorageUrl(src);
   const computedLoading = loading ?? (priority ? "eager" : "lazy");
   const computedFetchPriority =
     fetchPriority ?? (priority ? "high" : computedLoading === "lazy" ? "low" : "auto");
-
-  const modernSrcSets = isSupabaseImage
-    ? MODERN_FORMATS.map((format) => ({
-        format,
-        srcSet: buildSupabaseSrcSet(src, responsiveWidths, { format, quality }),
-      })).filter((entry) => Boolean(entry.srcSet))
-    : [];
-
-  const fallbackSrcSet = isSupabaseImage
-    ? buildSupabaseSrcSet(src, responsiveWidths, { quality })
-    : undefined;
-
-  const fallbackWidth = responsiveWidths[0] ?? width;
-  const fallbackSrc = isSupabaseImage
-    ? buildSupabaseImageUrl(src, { width: fallbackWidth, quality })
-    : src;
+  const fallbackSrcSet = undefined;
+  const fallbackSrc = normalizeSupabaseImageUrl(src);
+  const computedStyle: CSSProperties = {
+    ...style,
+    ...(fit ? { objectFit: fit } : {}),
+    ...(position ? { objectPosition: position } : {}),
+  };
 
   return (
     <picture>
-      {modernSrcSets.map((entry) => (
-        <source
-          key={entry.format}
-          type={`image/${entry.format}`}
-          srcSet={entry.srcSet}
-          sizes={sizes}
-        />
-      ))}
       <img
         src={fallbackSrc}
         srcSet={fallbackSrcSet}
@@ -90,7 +94,7 @@ const ResponsiveImage = ({
         decoding={decoding}
         fetchPriority={computedFetchPriority}
         className={cn(className)}
-        style={style}
+        style={computedStyle}
         {...rest}
       />
     </picture>

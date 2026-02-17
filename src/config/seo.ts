@@ -105,6 +105,7 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
     path: "/renovation-services",
     label: "Renovation Services",
     description: "View Gold Coast renovation services for bathrooms, kitchens, and whole-home upgrades.",
+    includeInHeader: true,
     includeInFooter: true,
   },
   {

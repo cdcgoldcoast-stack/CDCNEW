@@ -42,32 +42,6 @@ export const metadata: Metadata = {
     shortcut: ["/favicon.ico"],
     apple: [{ url: "/favicon.ico" }],
   },
-  openGraph: {
-    type: "website",
-    locale: "en_AU",
-    url: `${SITE_URL}/`,
-    siteName: SITE_NAME,
-    title: DEFAULT_META.title,
-    description: DEFAULT_META.description,
-    images: [
-      {
-        url: DEFAULT_META.image,
-        width: 1200,
-        height: 630,
-        alt: "Gold Coast renovations by Concept Design Construct",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: DEFAULT_META.title,
-    description: DEFAULT_META.description,
-    images: [DEFAULT_META.image],
-  },
-  other: {
-    "twitter:domain": "www.cdconstruct.com.au",
-    "twitter:url": `${SITE_URL}/`,
-  },
   robots: {
     index: true,
     follow: true,
@@ -102,6 +76,16 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
       <head>
         <link rel="dns-prefetch" href="//iqugsxeejieneyksfbza.supabase.co" />
         <link rel="preconnect" href="https://iqugsxeejieneyksfbza.supabase.co" crossOrigin="anonymous" />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="en_AU" />
+        <meta property="og:url" content={`${SITE_URL}/`} />
+        <meta property="og:site_name" content={SITE_NAME} />
+        <meta property="og:title" content={DEFAULT_META.title} />
+        <meta property="og:description" content={DEFAULT_META.description} />
+        <meta property="og:image" content={DEFAULT_META.image} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Gold Coast renovations by Concept Design Construct" />
       </head>
       <body>
         <AppProviders>{children}</AppProviders>

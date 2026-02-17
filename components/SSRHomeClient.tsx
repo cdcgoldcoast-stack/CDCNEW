@@ -53,12 +53,20 @@ export default function SSRHomeClient({ heroImageUrl }: SSRHomeClientProps) {
                   </li>
                   <li>Build confidence before committing to selections and scope.</li>
                 </ul>
-                <Link
-                  to="/renovation-design-tools"
-                  className="text-label bg-primary text-primary-foreground px-8 py-3 hover:opacity-90 transition-opacity inline-block"
-                >
-                  Try With Your Own Photo
-                </Link>
+                <div className="flex flex-wrap gap-3">
+                  <Link
+                    to="/renovation-design-tools"
+                    className="text-label bg-primary text-primary-foreground px-8 py-3 hover:opacity-90 transition-opacity inline-block"
+                  >
+                    Try With Your Own Photo
+                  </Link>
+                  <Link
+                    to="/renovation-ai-generator"
+                    className="text-label border border-primary/30 text-primary px-8 py-3 hover:bg-primary/5 transition-colors inline-block"
+                  >
+                    Open AI Generator
+                  </Link>
+                </div>
               </div>
               <div>
                 <ImageComparisonSlider

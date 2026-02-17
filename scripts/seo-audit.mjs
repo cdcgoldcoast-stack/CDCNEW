@@ -35,15 +35,6 @@ const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, "vercel.json");
 const ARTIFACTS_DIR = path.join(ROOT_DIR, "artifacts");
 const CONTENT_AUDIT_REPORT_PATH = path.join(ARTIFACTS_DIR, "seo-content-audit.json");
 
-const REQUIRED_TWITTER_META = [
-  "twitter:card",
-  "twitter:domain",
-  "twitter:url",
-  "twitter:title",
-  "twitter:description",
-  "twitter:image",
-  "twitter:image:alt",
-];
 const REQUIRED_OG_META = [
   "og:title",
   "og:description",
@@ -227,13 +218,6 @@ const hasBrokenHeadingHierarchy = (document) => {
 };
 
 const normalizeText = (value) => value.replace(/\s+/g, " ").trim();
-
-const hasDescriptiveMetadataText = (value) => {
-  const text = normalizeText(value || "");
-  if (!text) return false;
-  const wordCount = text.split(/\s+/).filter(Boolean).length;
-  return text.length >= 24 && wordCount >= 4;
-};
 
 const isDescriptiveHeroAlt = (value) => {
   const text = normalizeText(value || "");
@@ -1081,17 +1065,6 @@ const auditRouteHtml = async (route) => {
     if (!extractMetaByProperty(document, property)) {
       issues.push(`Missing ${property}`);
     }
-  }
-
-  for (const tagName of REQUIRED_TWITTER_META) {
-    if (!extractMetaByName(document, tagName)) {
-      issues.push(`Missing ${tagName}`);
-    }
-  }
-
-  const twitterImageAlt = extractMetaByName(document, "twitter:image:alt");
-  if (twitterImageAlt && !hasDescriptiveMetadataText(twitterImageAlt)) {
-    issues.push("twitter:image:alt is too short or not descriptive");
   }
 
   if (isProjectRoute) {

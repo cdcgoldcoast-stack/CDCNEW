@@ -14,8 +14,6 @@ const normalizePath = (path: string) => {
   return withLeadingSlash.replace(/\/+$/, "");
 };
 
-const resolveImageUrl = (image: string) => (image.startsWith("http") ? image : `${SITE_URL}${image}`);
-
 export const absoluteUrl = (path: string) => new URL(normalizePath(path), SITE_URL).toString();
 
 export const titleFromSlug = (slug: string) =>
@@ -43,7 +41,7 @@ export const buildMetadata = ({
   title,
   description,
   path,
-  image = DEFAULT_OG_IMAGE,
+  image: _image = DEFAULT_OG_IMAGE,
   type = "website",
   noIndex = false,
   keywords = [],
@@ -54,47 +52,10 @@ export const buildMetadata = ({
 }: BuildMetadataOptions): Metadata => {
   const safeTitle = formatPageTitle(title);
   const canonical = absoluteUrl(path);
-  const imageUrl = resolveImageUrl(image);
+  void _image;
   const cleanArticleTags = articleTags.filter(Boolean);
-  const openGraph: Metadata["openGraph"] = {
-    type,
-    url: canonical,
-    title: safeTitle,
-    description,
-    siteName: SITE_NAME,
-    locale: DEFAULT_LOCALE,
-    images: [
-      {
-        url: imageUrl,
-        width: 1200,
-        height: 630,
-        alt: title,
-      },
-    ],
-  };
 
-  if (type === "article") {
-    const articleOg = openGraph as Record<string, unknown>;
-    if (articlePublishedTime) {
-      articleOg.publishedTime = articlePublishedTime;
-    }
-    if (articleModifiedTime) {
-      articleOg.modifiedTime = articleModifiedTime;
-    }
-    if (author) {
-      articleOg.authors = [author];
-    }
-    if (cleanArticleTags.length > 0) {
-      articleOg.tags = cleanArticleTags;
-    }
-  }
-
-  const otherMeta: Record<string, string> = {
-    "twitter:domain": SITE_HOST,
-    "twitter:url": canonical,
-    "twitter:image:alt":
-      safeTitle.trim().length >= 24 ? safeTitle : `${safeTitle} | Gold Coast renovations by ${SITE_NAME}`,
-  };
+  const otherMeta: Record<string, string> = {};
 
   if (type === "article") {
     if (articlePublishedTime) {
@@ -141,13 +102,6 @@ export const buildMetadata = ({
         "max-image-preview": "large",
         "max-video-preview": -1,
       },
-    },
-    openGraph,
-    twitter: {
-      card: "summary_large_image",
-      title: safeTitle,
-      description,
-      images: [imageUrl],
     },
     other: otherMeta,
   };

@@ -75,8 +75,8 @@ const Work = () => {
           /* Responsive layout - single column on mobile, 3 columns on desktop */
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-4 md:gap-5 lg:gap-6 max-w-[1600px] mx-auto">
             {projects.map((project) => (
-              <Link 
-                key={project.id} 
+              <Link
+                key={project.id}
                 to={`/renovation-projects/${project.slug}`}
                 className="group relative overflow-hidden aspect-[1/1.2] sm:aspect-[1/1.5]"
               >

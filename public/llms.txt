@@ -1,5 +1,5 @@
 # www.cdconstruct.com.au AI Content Index
-Generated: 2026-02-17T02:12:27.672Z
+Generated: 2026-02-17T12:55:11.030Z
 
 ## Canonical Domain
 https://www.cdconstruct.com.au
@@ -20,17 +20,12 @@ https://www.cdconstruct.com.au
 - https://www.cdconstruct.com.au/terms-conditions
 
 ## Project Detail Pages
-- https://www.cdconstruct.com.au/renovation-projects/coastal-modern
 - https://www.cdconstruct.com.au/renovation-projects/everyday-ease
 - https://www.cdconstruct.com.au/renovation-projects/family-hub
-- https://www.cdconstruct.com.au/renovation-projects/heritage-revival
 - https://www.cdconstruct.com.au/renovation-projects/light-and-flow-house
-- https://www.cdconstruct.com.au/renovation-projects/retreat-house
 - https://www.cdconstruct.com.au/renovation-projects/seamless-bathroom
 - https://www.cdconstruct.com.au/renovation-projects/stone-and-light
-- https://www.cdconstruct.com.au/renovation-projects/sunshine-retreat
 - https://www.cdconstruct.com.au/renovation-projects/terrazzo-retreat
 - https://www.cdconstruct.com.au/renovation-projects/the-calm-edit
 - https://www.cdconstruct.com.au/renovation-projects/the-elanora-residence
-- https://www.cdconstruct.com.au/renovation-projects/urban-oasis
 - https://www.cdconstruct.com.au/renovation-projects/warm-minimal-bathroom

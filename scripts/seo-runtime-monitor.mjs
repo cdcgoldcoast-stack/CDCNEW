@@ -45,17 +45,7 @@ const CANONICAL_REDIRECT_SAMPLE_PATHS = [
   "/",
   "/renovation-services",
   "/renovation-gallery",
-  "/renovation-projects/coastal-modern?utm_source=seo-monitor&utm_medium=canonical",
-];
-
-const REQUIRED_TWITTER_META = [
-  "twitter:card",
-  "twitter:domain",
-  "twitter:url",
-  "twitter:title",
-  "twitter:description",
-  "twitter:image",
-  "twitter:image:alt",
+  "/renovation-projects/family-hub?utm_source=seo-monitor&utm_medium=canonical",
 ];
 
 const severityRank = {
@@ -127,13 +117,6 @@ async function fetchWithTimeout(url, options = {}) {
 function extractMetaByName(document, name) {
   const node = document.querySelector(`meta[name="${name}"]`);
   return node?.getAttribute("content")?.trim() || "";
-}
-
-function hasDescriptiveMetadataText(value) {
-  const text = `${value || ""}`.replace(/\s+/g, " ").trim();
-  if (!text) return false;
-  const wordCount = text.split(" ").filter(Boolean).length;
-  return text.length >= 24 && wordCount >= 4;
 }
 
 function collectLegacyImageSources(document, pageUrl) {
@@ -300,8 +283,6 @@ async function monitorSitemapUrls(entries, checks) {
   let failures = 0;
   const canonicalMismatches = [];
   const noindexUrls = [];
-  const missingTwitterMetaUrls = [];
-  const weakTwitterImageAltUrls = [];
   const legacyImageUrls = [];
 
   for (const entry of urlsToCheck) {
@@ -386,17 +367,6 @@ async function monitorSitemapUrls(entries, checks) {
         canonicalMismatches.push({ url: normalizedUrl, canonical: normalizedCanonical });
       }
 
-      const missingTwitterTags = REQUIRED_TWITTER_META.filter((tagName) => !extractMetaByName(document, tagName));
-      if (missingTwitterTags.length > 0) {
-        failures += 1;
-        missingTwitterMetaUrls.push({ url: normalizedUrl, missingTwitterTags });
-      }
-
-      const twitterImageAlt = extractMetaByName(document, "twitter:image:alt");
-      if (twitterImageAlt && !hasDescriptiveMetadataText(twitterImageAlt)) {
-        weakTwitterImageAltUrls.push({ url: normalizedUrl, twitterImageAlt });
-      }
-
       const legacyImages = collectLegacyImageSources(document, normalizedUrl);
       if (legacyImages.length > 0) {
         legacyImageUrls.push({
@@ -445,48 +415,6 @@ async function monitorSitemapUrls(entries, checks) {
         "info",
         "pass",
         `No noindex conflicts found in ${urlsToCheck.length} checked sitemap URL(s)`
-      )
-    );
-  }
-
-  if (missingTwitterMetaUrls.length > 0) {
-    checks.push(
-      createCheckResult(
-        "twitter_meta_completeness",
-        "high",
-        "fail",
-        `Missing required Twitter meta tags on ${missingTwitterMetaUrls.length} URL(s)`,
-        { missing: missingTwitterMetaUrls.slice(0, 20) }
-      )
-    );
-  } else {
-    checks.push(
-      createCheckResult(
-        "twitter_meta_completeness",
-        "info",
-        "pass",
-        `Twitter meta tags complete for ${urlsToCheck.length} checked sitemap URL(s)`
-      )
-    );
-  }
-
-  if (weakTwitterImageAltUrls.length > 0) {
-    checks.push(
-      createCheckResult(
-        "twitter_image_alt_quality",
-        "medium",
-        "warn",
-        `twitter:image:alt is weak on ${weakTwitterImageAltUrls.length} URL(s)`,
-        { urls: weakTwitterImageAltUrls.slice(0, 20) }
-      )
-    );
-  } else {
-    checks.push(
-      createCheckResult(
-        "twitter_image_alt_quality",
-        "info",
-        "pass",
-        `twitter:image:alt is descriptive for ${urlsToCheck.length} checked sitemap URL(s)`
       )
     );
   }
