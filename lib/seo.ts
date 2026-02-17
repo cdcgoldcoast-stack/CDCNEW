@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DEFAULT_META, PRODUCTION_DOMAIN, SITE_NAME, SITELINK_TARGETS } from "@/config/seo";
+import { DEFAULT_META, PRODUCTION_DOMAIN, SITE_NAME, SITELINK_TARGETS, formatPageTitle } from "@/config/seo";
 
 export const SITE_URL = PRODUCTION_DOMAIN;
 export const SITE_HOST = "www.cdconstruct.com.au";
@@ -52,15 +52,14 @@ export const buildMetadata = ({
   articleModifiedTime,
   articleTags = [],
 }: BuildMetadataOptions): Metadata => {
+  const safeTitle = formatPageTitle(title);
   const canonical = absoluteUrl(path);
   const imageUrl = resolveImageUrl(image);
   const cleanArticleTags = articleTags.filter(Boolean);
-  const twitterImageAlt =
-    title.trim().length >= 24 ? title : `${title} | Gold Coast renovations by ${SITE_NAME}`;
   const openGraph: Metadata["openGraph"] = {
     type,
     url: canonical,
-    title,
+    title: safeTitle,
     description,
     siteName: SITE_NAME,
     locale: DEFAULT_LOCALE,
@@ -93,7 +92,8 @@ export const buildMetadata = ({
   const otherMeta: Record<string, string> = {
     "twitter:domain": SITE_HOST,
     "twitter:url": canonical,
-    "twitter:image:alt": twitterImageAlt,
+    "twitter:image:alt":
+      safeTitle.trim().length >= 24 ? safeTitle : `${safeTitle} | Gold Coast renovations by ${SITE_NAME}`,
   };
 
   if (type === "article") {
@@ -112,7 +112,7 @@ export const buildMetadata = ({
   }
 
   return {
-    title,
+    title: safeTitle,
     description,
     authors: [{ name: author }],
     creator: author,
@@ -145,7 +145,7 @@ export const buildMetadata = ({
     openGraph,
     twitter: {
       card: "summary_large_image",
-      title,
+      title: safeTitle,
       description,
       images: [imageUrl],
     },

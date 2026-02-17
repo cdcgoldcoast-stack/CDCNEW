@@ -62,8 +62,12 @@ export function generateMetadata({ params }: PageProps): Metadata {
     description,
     path: `/renovation-projects/${project?.slug || params.slug}`,
     image: project?.image,
+    type: "article",
     keywords: projectTags,
     author: projectAuthor,
+    articlePublishedTime: projectPublishedTime,
+    articleModifiedTime: projectModifiedTime,
+    articleTags: projectTags,
   });
 }
 

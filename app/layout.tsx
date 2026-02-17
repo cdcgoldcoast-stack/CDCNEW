@@ -5,8 +5,6 @@ import { DEFAULT_META, PRODUCTION_DOMAIN, SITE_NAME } from "@/config/seo";
 import "./globals.css";
 
 const SITE_URL = PRODUCTION_DOMAIN;
-const DEFAULT_IMAGE =
-  "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Gold-Coast-Renovations.webp";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -53,7 +51,7 @@ export const metadata: Metadata = {
     description: DEFAULT_META.description,
     images: [
       {
-        url: DEFAULT_IMAGE,
+        url: DEFAULT_META.image,
         width: 1200,
         height: 630,
         alt: "Gold Coast renovations by Concept Design Construct",
@@ -64,7 +62,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: DEFAULT_META.title,
     description: DEFAULT_META.description,
-    images: [DEFAULT_IMAGE],
+    images: [DEFAULT_META.image],
   },
   other: {
     "twitter:domain": "www.cdconstruct.com.au",
