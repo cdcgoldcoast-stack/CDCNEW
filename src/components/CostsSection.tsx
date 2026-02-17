@@ -183,7 +183,7 @@ const CostsSection = () => {
         }} whileTap={{
           scale: 0.98
         }} className="mb-6 md:mb-8">
-            <Link to="/get-quote">
+            <Link to="/book-renovation-consultation">
               <Button variant="heroOutline" size="lg" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
                 Request Your Renovation Consultation
               </Button>

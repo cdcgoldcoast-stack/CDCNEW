@@ -13,6 +13,10 @@ export interface Project {
   solution: string;
   gallery: string[];
   featuredImages: string[];
+  publishedAt?: string;
+  modifiedAt?: string;
+  authorName?: string;
+  tags?: string[];
 }
 
 type DbProject = {

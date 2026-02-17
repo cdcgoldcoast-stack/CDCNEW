@@ -28,7 +28,7 @@ const serviceFaqs = [
 export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
-  path: "/services",
+  path: "/renovation-services",
   keywords: [
     "Gold Coast renovation services",
     "kitchen renovation Gold Coast",
@@ -40,7 +40,7 @@ export const metadata: Metadata = buildMetadata({
 
 export default function Page() {
   const webPageSchema = generateWebPageSchema({
-    path: "/services",
+    path: "/renovation-services",
     name: pageTitle,
     description: pageDescription,
   });
@@ -52,7 +52,7 @@ export default function Page() {
   ]);
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Gold Coast Renovation Services", url: "/services" },
+    { name: "Gold Coast Renovation Services", url: "/renovation-services" },
   ]);
   const faqSchema = generateFAQSchema(serviceFaqs);
 
@@ -68,7 +68,7 @@ export default function Page() {
           <li>Extension planning support where additional living space is needed.</li>
         </ul>
         <p>
-          Start with a scope consultation through <a href="/get-quote">our renovation quote page</a> or review
+          Start with a scope consultation through <a href="/book-renovation-consultation">our renovation quote page</a> or review
           examples in the <a href="/renovation-projects">Gold Coast renovations project portfolio</a>.
         </p>
       </section>

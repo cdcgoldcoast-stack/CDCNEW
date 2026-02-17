@@ -18,7 +18,7 @@ import {
   FolderOpen,
 } from "lucide-react";
 import SEO from "@/components/SEO";
-import { siteAssets, categoryLabels, SiteAsset } from "@/data/siteAssets";
+import { siteAssets, categoryLabels, resolveImageSrc, SiteAsset } from "@/data/siteAssets";
 
 // Display name without extension
 const displayName = (fileName: string): string => {
@@ -135,7 +135,7 @@ const AdminImageAssets = () => {
 
   const getCurrentImageUrl = (asset: SiteAsset): string => {
     const override = getOverrideForAsset(asset);
-    return override?.override_url || asset.importedUrl;
+    return override?.override_url || resolveImageSrc(asset.importedUrl);
   };
 
   const getPublicUrl = (fileName: string): string => {

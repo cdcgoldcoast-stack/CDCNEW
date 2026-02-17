@@ -75,21 +75,21 @@ const GENERIC_INTERNAL_ANCHOR_WORDS = new Set([
 const ROUTES_REQUIRING_LISTS = new Set([
   "/",
   "/about-us",
-  "/services",
+  "/renovation-services",
   "/renovation-design-tools",
-  "/get-quote",
-  "/life-stages",
-  "/renovation-design-tools/ai-generator/intro",
+  "/book-renovation-consultation",
+  "/renovation-life-stages",
+  "/renovation-ai-generator/intro",
 ]);
 
 const ROUTES_REQUIRING_EMPHASIS = new Set([
   "/",
   "/about-us",
-  "/services",
+  "/renovation-services",
   "/renovation-design-tools",
-  "/get-quote",
-  "/life-stages",
-  "/renovation-design-tools/ai-generator/intro",
+  "/book-renovation-consultation",
+  "/renovation-life-stages",
+  "/renovation-ai-generator/intro",
 ]);
 const ORPHAN_ROUTE_EXCEPTIONS = new Set([]);
 
@@ -98,10 +98,10 @@ const REQUIRED_SSR_CONTENT_FRAGMENTS = {
     "Gold Coast Renovations - Locally Trusted",
     "Gold Coast Renovation Services",
   ],
-  "/services": ["Gold Coast Renovation Services Built Around How You Live"],
+  "/renovation-services": ["Gold Coast Renovation Services Built Around How You Live"],
 };
 
-const GOOGLEBOT_PARITY_ROUTES = ["/", "/services"];
+const GOOGLEBOT_PARITY_ROUTES = ["/", "/renovation-services"];
 const GOOGLEBOT_USER_AGENT = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
 const STANDARD_BROWSER_USER_AGENT =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
@@ -458,26 +458,26 @@ const getThinContentMinimumWords = (route) => {
   if (
     normalized === "/" ||
     normalized === "/about-us" ||
-    normalized === "/services" ||
-    normalized === "/life-stages"
+    normalized === "/renovation-services" ||
+    normalized === "/renovation-life-stages"
   ) {
     return THIN_CONTENT_MIN_WORDS;
   }
 
   if (
-    normalized === "/get-quote" ||
+    normalized === "/book-renovation-consultation" ||
     normalized === "/renovation-projects" ||
     normalized === "/renovation-design-tools" ||
-    normalized === "/renovation-design-tools/ai-generator/intro"
+    normalized === "/renovation-ai-generator/intro"
   ) {
     return 80;
   }
 
-  if (normalized === "/project-gallery" || normalized === "/renovation-design-tools/moodboard") {
+  if (normalized === "/renovation-gallery" || normalized === "/renovation-design-tools/moodboard") {
     return 60;
   }
 
-  if (normalized === "/renovation-design-tools/ai-generator") {
+  if (normalized === "/renovation-ai-generator") {
     return 40;
   }
 

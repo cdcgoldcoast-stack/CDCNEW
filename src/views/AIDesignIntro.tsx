@@ -30,7 +30,7 @@ const AIDesignIntro = () => {
       <SEO
         title="Gold Coast Renovations AI Design Generator | Preview"
         description="Preview your Gold Coast renovations style in minutes. Upload room photos, choose finishes, and generate visual concepts before planning your project."
-        url="/renovation-design-tools/ai-generator/intro"
+        url="/renovation-ai-generator/intro"
       />
       <Header />
 
@@ -66,7 +66,7 @@ const AIDesignIntro = () => {
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               <Button size="lg" asChild className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
                 <Link
-                  to="/renovation-design-tools/ai-generator"
+                  to="/renovation-ai-generator"
                   onClick={() => {
                     sessionStorage.setItem("aiGeneratorIntroSeen", "true");
                   }}

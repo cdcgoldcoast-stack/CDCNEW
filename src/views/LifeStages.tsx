@@ -130,7 +130,7 @@ const LifeStagesPage = () => {
       <SEO
         title="Gold Coast Renovations for Every Life Stage"
         description="Find the right Gold Coast renovations plan for each life stage, from first homes and growing families to accessibility upgrades that support long-term living."
-        url="/life-stages"
+        url="/renovation-life-stages"
         jsonLd={faqSchema}
       />
       <Header />
@@ -265,8 +265,8 @@ const LifeStagesPage = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8 }}
             >
-              <motion.img 
-                src={stage.image} 
+              <motion.img
+                src={typeof stage.image === "string" ? stage.image : stage.image.src}
                 alt={`${stage.title} life stage renovation inspiration for Gold Coast homes`}
                 width={800}
                 height={533}
@@ -459,7 +459,7 @@ const LifeStagesPage = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <Link 
-                to="/get-quote"
+                to="/book-renovation-consultation"
                 className="inline-block bg-primary text-primary-foreground px-10 py-4 text-label hover:bg-primary/90 transition-colors"
               >
                 Get in Touch

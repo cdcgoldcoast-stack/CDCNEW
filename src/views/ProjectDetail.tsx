@@ -13,13 +13,20 @@ import { slugMatches } from "@/lib/slug";
 import NotFound from "@/views/NotFound";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
-const ProjectDetail = () => {
+export interface ProjectDetailProps {
+  initialProject?: Project;
+  initialProjects?: Project[];
+}
+
+const ProjectDetail = ({ initialProject, initialProjects }: ProjectDetailProps = {}) => {
   const { slug } = useParams<{ slug?: string }>();
-  const [project, setProject] = useState<Project | null | undefined>(undefined);
-  const [allProjects, setAllProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [project, setProject] = useState<Project | null | undefined>(initialProject ?? undefined);
+  const [allProjects, setAllProjects] = useState<Project[]>(initialProjects ?? []);
+  const [loading, setLoading] = useState(!initialProject);
 
   useEffect(() => {
+    if (initialProject) return;
+
     const loadData = async () => {
       if (!slug) {
         setProject(null);
@@ -37,7 +44,7 @@ const ProjectDetail = () => {
     };
 
     loadData();
-  }, [slug]);
+  }, [slug, initialProject]);
 
   if (loading) {
     return (
@@ -285,7 +292,7 @@ const ProjectDetail = () => {
             </blockquote>
             <p className="text-xs uppercase tracking-wider text-primary/70 mb-6">Renovation Client · {project.location}</p>
             <Link
-              to="/get-quote"
+              to="/book-renovation-consultation"
               className="inline-block bg-primary text-primary-foreground px-6 py-3 text-xs uppercase tracking-wider hover:opacity-90 transition-opacity"
             >
               Start Your Renovation Consultation

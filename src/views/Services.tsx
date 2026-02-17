@@ -62,7 +62,7 @@ const Services = () => {
       <SEO
         title="Gold Coast Renovations | Services for Kitchen, Bathroom & Full Home"
         description="Explore Gold Coast renovations for kitchens, bathrooms, whole-home upgrades, and extensions with design-led planning and QBCC licensed delivery."
-        url="/services"
+        url="/renovation-services"
       />
       <Header />
 
@@ -80,7 +80,7 @@ const Services = () => {
                 spaces that improve <strong>flow, comfort, and everyday routines</strong>.
               </p>
               <Link
-                to="/get-quote"
+                to="/book-renovation-consultation"
                 className="inline-block border border-foreground text-foreground px-8 py-3 text-xs uppercase tracking-wider hover:bg-foreground hover:text-background transition-colors"
               >
                 Get a Consultation
@@ -169,7 +169,7 @@ const Services = () => {
             </ul>
             <div className="flex flex-wrap gap-3">
               <Link
-                to="/get-quote"
+                to="/book-renovation-consultation"
                 className="inline-block bg-primary text-primary-foreground px-6 py-3 text-xs uppercase tracking-wider hover:opacity-90 transition-opacity"
               >
                 Book Consultation

@@ -10,7 +10,6 @@ declare global {
   interface Window {
     fbq?: FbqFunction;
     _fbq?: FbqFunction;
-    requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
   }
 }
 

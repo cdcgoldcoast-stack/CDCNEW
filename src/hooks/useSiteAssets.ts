@@ -1,5 +1,5 @@
 import { useImageOverrides } from "./useImageOverrides";
-import { siteAssets } from "@/data/siteAssets";
+import { siteAssets, resolveImageSrc } from "@/data/siteAssets";
 
 interface UseSiteAssetsOptions {
   staticFirst?: boolean;
@@ -25,7 +25,7 @@ export function useSiteAssets(options: UseSiteAssetsOptions = {}) {
   for (const asset of siteAssets) {
     if (isLoading && !isError) {
       // Allow static-first mode for critical assets (e.g. homepage hero LCP).
-      resolvedAssets[asset.id] = staticFirst ? asset.importedUrl : "";
+      resolvedAssets[asset.id] = staticFirst ? resolveImageSrc(asset.importedUrl) : "";
       continue;
     }
 
@@ -38,7 +38,7 @@ export function useSiteAssets(options: UseSiteAssetsOptions = {}) {
               )}`
             : override.override_url
         )
-      : asset.importedUrl;
+      : resolveImageSrc(asset.importedUrl);
   }
 
   return {

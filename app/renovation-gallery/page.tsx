@@ -11,7 +11,7 @@ const pageDescription =
 export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
-  path: "/project-gallery",
+  path: "/renovation-gallery",
   keywords: [
     "Gold Coast renovation gallery",
     "Gold Coast kitchen renovation inspiration",
@@ -21,7 +21,7 @@ export const metadata: Metadata = buildMetadata({
 
 export default function Page() {
   const webPageSchema = generateWebPageSchema({
-    path: "/project-gallery",
+    path: "/renovation-gallery",
     name: pageTitle,
     description: pageDescription,
   });
@@ -30,7 +30,7 @@ export default function Page() {
     "@type": "CollectionPage",
     name: "Gold Coast Renovations Gallery",
     description: pageDescription,
-    url: absoluteUrl("/project-gallery"),
+    url: absoluteUrl("/renovation-gallery"),
     about: [
       { "@type": "Thing", name: "Gold Coast kitchen renovations" },
       { "@type": "Thing", name: "Gold Coast bathroom renovations" },
@@ -39,7 +39,7 @@ export default function Page() {
   };
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Gold Coast Renovations Gallery", url: "/project-gallery" },
+    { name: "Gold Coast Renovations Gallery", url: "/renovation-gallery" },
   ]);
 
   return (

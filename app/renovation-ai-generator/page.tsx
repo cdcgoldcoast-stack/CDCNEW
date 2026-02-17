@@ -11,7 +11,7 @@ const pageDescription =
 export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
-  path: "/renovation-design-tools/ai-generator",
+  path: "/renovation-ai-generator",
   keywords: [
     "Gold Coast AI renovation visualiser",
     "AI kitchen renovation preview Gold Coast",
@@ -21,14 +21,14 @@ export const metadata: Metadata = buildMetadata({
 
 export default function Page() {
   const webPageSchema = generateWebPageSchema({
-    path: "/renovation-design-tools/ai-generator",
+    path: "/renovation-ai-generator",
     name: pageTitle,
     description: pageDescription,
   });
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
     { name: "Gold Coast Renovations Design Tools", url: "/renovation-design-tools" },
-    { name: "Gold Coast Renovations AI Visualiser", url: "/renovation-design-tools/ai-generator" },
+    { name: "Gold Coast Renovations AI Visualiser", url: "/renovation-ai-generator" },
   ]);
 
   return (

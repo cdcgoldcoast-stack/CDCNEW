@@ -52,7 +52,7 @@ export default function Page() {
         </p>
         <p>
           Looking for visual inspiration only? Browse the{" "}
-          <a href="/project-gallery">Gold Coast renovation gallery</a> for room-by-room ideas.
+          <a href="/renovation-gallery">Gold Coast renovation gallery</a> for room-by-room ideas.
         </p>
         <ul>
           {slugs.map((slug) => (

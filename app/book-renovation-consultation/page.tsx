@@ -11,7 +11,7 @@ const pageDescription =
 export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
-  path: "/get-quote",
+  path: "/book-renovation-consultation",
   keywords: [
     "Gold Coast renovation quote",
     "Gold Coast kitchen renovation quote",
@@ -21,14 +21,14 @@ export const metadata: Metadata = buildMetadata({
 
 export default function Page() {
   const webPageSchema = generateWebPageSchema({
-    path: "/get-quote",
+    path: "/book-renovation-consultation",
     name: pageTitle,
     description: pageDescription,
   });
   const contactSchema = generateContactPageSchema();
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Gold Coast Renovations Quote", url: "/get-quote" },
+    { name: "Gold Coast Renovations Quote", url: "/book-renovation-consultation" },
   ]);
 
   return (

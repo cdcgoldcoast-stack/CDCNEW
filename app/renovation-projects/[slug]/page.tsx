@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { ProjectDetailClient } from "@/components/route-clients";
 import projectSlugData from "@/generated/project-slugs.json";
-import { projects } from "@/data/projects";
+import { projects, fetchProjects } from "@/data/projects";
+import type { Project } from "@/data/projects";
 import { generateBreadcrumbSchema, generateProjectSchema } from "@/lib/structured-data";
 import { buildMetadata, titleFromSlug, DEFAULT_OG_IMAGE } from "@/lib/seo";
 import { SITE_NAME } from "@/config/seo";
@@ -71,8 +72,11 @@ export function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
-export default function Page({ params }: PageProps) {
-  const project = findStaticProject(params.slug);
+export default async function Page({ params }: PageProps) {
+  const allProjects = await fetchProjects();
+  const project =
+    allProjects.find((p) => p.slug === params.slug || p.name.toLowerCase().replace(/\s+/g, "-") === params.slug) ||
+    findStaticProject(params.slug);
   const projectName = project?.name || titleFromSlug(params.slug);
   const projectDescription = project?.description || fallbackDescription(params.slug);
   const projectImage = project?.image || DEFAULT_OG_IMAGE;
@@ -114,7 +118,7 @@ export default function Page({ params }: PageProps) {
         <h2>{`${projectCategory.replace("-", " ")} renovations in ${projectLocation}`}</h2>
         <p>{projectDescription}</p>
       </section>
-      <ProjectDetailClient />
+      <ProjectDetailClient initialProject={project ?? undefined} initialProjects={allProjects} />
     </>
   );
 }

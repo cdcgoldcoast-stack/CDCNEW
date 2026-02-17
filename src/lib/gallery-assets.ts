@@ -12,8 +12,10 @@ import editorial8 from "@/assets/editorial-8.webp";
 import editorial9 from "@/assets/editorial-9.webp";
 import editorial10 from "@/assets/editorial-10.webp";
 
+type ImageSource = string | { readonly src: string };
+
 // Mapping from legacy DB paths to actual imports
-export const assetMap: Record<string, string> = {
+export const assetMap: Record<string, ImageSource> = {
   "/src/assets/editorial-1.jpg": editorial1,
   "/src/assets/editorial-1.webp": editorial1,
   "/src/assets/editorial-2.jpg": editorial2,
@@ -39,7 +41,8 @@ export const assetMap: Record<string, string> = {
 // Resolve image URL without substituting fallback imagery.
 export function resolveImageUrl(url: string | null | undefined): string | null {
   if (!url) return null;
-  if (assetMap[url]) return assetMap[url];
+  const mapped = assetMap[url];
+  if (mapped) return typeof mapped === "string" ? mapped : mapped.src;
   if (url.startsWith("http") || url.startsWith("/") || url.startsWith("data:image/")) return url;
   return null;
 }

@@ -32,10 +32,15 @@ import serviceKitchen from "@/assets/service-kitchen.webp";
 import serviceLiving from "@/assets/service-living.webp";
 import serviceWholeHome from "@/assets/service-whole-home.webp";
 
+type ImageSource = string | { readonly src: string };
+
+export const resolveImageSrc = (source: ImageSource): string =>
+  typeof source === "string" ? source : source.src;
+
 export interface SiteAsset {
   id: string;
   path: string;
-  importedUrl: string;
+  importedUrl: ImageSource;
   label: string;
   category: "editorial" | "hero" | "lifestage" | "lifestyle" | "logo" | "service";
 }

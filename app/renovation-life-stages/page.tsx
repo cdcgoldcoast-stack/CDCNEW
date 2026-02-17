@@ -34,7 +34,7 @@ const lifeStageFaqs = [
 export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
-  path: "/life-stages",
+  path: "/renovation-life-stages",
   keywords: [
     "life stage renovations Gold Coast",
     "future ready home renovations Gold Coast",
@@ -44,14 +44,14 @@ export const metadata: Metadata = buildMetadata({
 
 export default function Page() {
   const webPageSchema = generateWebPageSchema({
-    path: "/life-stages",
+    path: "/renovation-life-stages",
     name: pageTitle,
     description: pageDescription,
   });
   const faqSchema = generateFAQSchema(lifeStageFaqs);
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
-    { name: "Gold Coast Renovations by Life Stage", url: "/life-stages" },
+    { name: "Gold Coast Renovations by Life Stage", url: "/renovation-life-stages" },
   ]);
 
   return (

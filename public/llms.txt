@@ -1,5 +1,5 @@
 # www.cdconstruct.com.au AI Content Index
-Generated: 2026-02-17T00:45:56.001Z
+Generated: 2026-02-17T02:05:56.868Z
 
 ## Canonical Domain
 https://www.cdconstruct.com.au
@@ -8,13 +8,13 @@ https://www.cdconstruct.com.au
 - https://www.cdconstruct.com.au/
 - https://www.cdconstruct.com.au/about-us
 - https://www.cdconstruct.com.au/renovation-projects
-- https://www.cdconstruct.com.au/services
-- https://www.cdconstruct.com.au/life-stages
-- https://www.cdconstruct.com.au/get-quote
-- https://www.cdconstruct.com.au/project-gallery
+- https://www.cdconstruct.com.au/renovation-services
+- https://www.cdconstruct.com.au/renovation-life-stages
+- https://www.cdconstruct.com.au/book-renovation-consultation
+- https://www.cdconstruct.com.au/renovation-gallery
 - https://www.cdconstruct.com.au/renovation-design-tools
-- https://www.cdconstruct.com.au/renovation-design-tools/ai-generator/intro
-- https://www.cdconstruct.com.au/renovation-design-tools/ai-generator
+- https://www.cdconstruct.com.au/renovation-ai-generator/intro
+- https://www.cdconstruct.com.au/renovation-ai-generator
 - https://www.cdconstruct.com.au/renovation-design-tools/moodboard
 - https://www.cdconstruct.com.au/privacy-policy
 - https://www.cdconstruct.com.au/terms-conditions

@@ -9,30 +9,30 @@ export const CORE_ROUTES = [
   "/",
   "/about-us",
   "/renovation-projects",
-  "/services",
-  "/project-gallery",
+  "/renovation-services",
+  "/renovation-gallery",
   "/renovation-design-tools",
-  "/get-quote",
-  "/life-stages",
+  "/book-renovation-consultation",
+  "/renovation-life-stages",
   "/privacy-policy",
   "/terms-conditions",
 ];
 
 export const EXTENDED_ROUTES = [
-  "/renovation-design-tools/ai-generator/intro",
-  "/renovation-design-tools/ai-generator",
+  "/renovation-ai-generator/intro",
+  "/renovation-ai-generator",
   "/renovation-design-tools/moodboard",
 ];
 
 export const SITELINK_TARGET_PATHS = [
   "/about-us",
   "/renovation-projects",
-  "/project-gallery",
-  "/services",
-  "/life-stages",
+  "/renovation-gallery",
+  "/renovation-services",
+  "/renovation-life-stages",
   "/renovation-design-tools",
-  "/renovation-design-tools/ai-generator",
-  "/get-quote",
+  "/renovation-ai-generator",
+  "/book-renovation-consultation",
 ];
 
 export const FALLBACK_PROJECT_SLUGS = [
@@ -199,9 +199,9 @@ export async function loadGeneratedProjectSlugs(filePath) {
 export function classifyContentType(routePath) {
   if (routePath === "/") return "homepage";
   if (routePath === "/about-us") return "about-page";
-  if (routePath === "/services") return "services-page";
-  if (routePath === "/get-quote") return "contact-page";
-  if (routePath === "/project-gallery") return "gallery-page";
+  if (routePath === "/renovation-services") return "services-page";
+  if (routePath === "/book-renovation-consultation") return "contact-page";
+  if (routePath === "/renovation-gallery") return "gallery-page";
   if (routePath === "/renovation-projects") return "projects-index";
   if (isProjectDetailPath(routePath)) return "project-detail";
   if (routePath === "/renovation-design-tools") return "design-tools";

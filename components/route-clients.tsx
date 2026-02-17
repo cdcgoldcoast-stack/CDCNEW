@@ -13,7 +13,7 @@ import LifeStagesPage from "@/views/LifeStages";
 import MoodboardCreatorPage from "@/views/MoodboardCreator";
 import NotFoundPage from "@/views/NotFound";
 import PrivacyPolicyPage from "@/views/PrivacyPolicy";
-import ProjectDetailPage from "@/views/ProjectDetail";
+import ProjectDetailPage, { type ProjectDetailProps } from "@/views/ProjectDetail";
 import ServicesPage from "@/views/Services";
 import TermsConditionsPage from "@/views/TermsConditions";
 import WorkPage from "@/views/Work";
@@ -74,8 +74,8 @@ export function MoodboardClient() {
   return <MoodboardCreatorPage />;
 }
 
-export function ProjectDetailClient() {
-  return <ProjectDetailPage />;
+export function ProjectDetailClient(props: ProjectDetailProps) {
+  return <ProjectDetailPage {...props} />;
 }
 
 export function NotFoundClient() {

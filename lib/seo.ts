@@ -75,17 +75,18 @@ export const buildMetadata = ({
   };
 
   if (type === "article") {
+    const articleOg = openGraph as Record<string, unknown>;
     if (articlePublishedTime) {
-      openGraph.publishedTime = articlePublishedTime;
+      articleOg.publishedTime = articlePublishedTime;
     }
     if (articleModifiedTime) {
-      openGraph.modifiedTime = articleModifiedTime;
+      articleOg.modifiedTime = articleModifiedTime;
     }
     if (author) {
-      openGraph.authors = [author];
+      articleOg.authors = [author];
     }
     if (cleanArticleTags.length > 0) {
-      openGraph.tags = cleanArticleTags;
+      articleOg.tags = cleanArticleTags;
     }
   }
 
@@ -209,7 +210,7 @@ type WebSiteSchemaOptions = {
 
 export const generateWebSiteSchema = ({
   enableSearchAction = false,
-  searchPath = "/project-gallery",
+  searchPath = "/renovation-gallery",
 }: WebSiteSchemaOptions = {}) => {
   const schema: Record<string, unknown> = {
     "@context": "https://schema.org",

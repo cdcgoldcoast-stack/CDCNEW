@@ -94,7 +94,7 @@ const BrandGuidelines = () => {
             <div className="max-w-md mb-12">
               <h3 className="mb-4 not-italic">Primary Logo</h3>
               <div className="aspect-video bg-background border border-border flex items-center justify-center p-8 mb-4">
-                <img src={logo} alt="Concept Design Construct Logo" className="max-h-full max-w-full object-contain" />
+                <img src={typeof logo === "string" ? logo : logo.src} alt="Concept Design Construct Logo" className="max-h-full max-w-full object-contain" />
               </div>
               <p className="text-sm text-muted-foreground">
                 The primary logo. Always use on light backgrounds with sufficient contrast.

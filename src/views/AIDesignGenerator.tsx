@@ -234,7 +234,7 @@ type LayoutFailureReason =
   | "room_boundaries_expanded_or_compressed";
 
 interface FunctionErrorContext {
-  clone?: () => Response;
+  clone?: () => FunctionErrorContext;
   json?: () => Promise<unknown>;
   text?: () => Promise<string>;
 }
@@ -489,7 +489,7 @@ const buildPreferenceSentence = (
 
     const hasSeenIntro = sessionStorage.getItem("aiGeneratorIntroSeen") === "true";
     if (!hasSeenIntro) {
-      navigate("/renovation-design-tools/ai-generator/intro", { replace: true });
+      navigate("/renovation-ai-generator/intro", { replace: true });
     }
   }, [navigate]);
 
@@ -645,7 +645,7 @@ const buildPreferenceSentence = (
     try {
       if (typedError.context && typeof typedError.context.json === "function") {
         const clone = typeof typedError.context.clone === "function" ? typedError.context.clone() : typedError.context;
-        return await clone.json();
+        return await clone.json!();
       }
     } catch {
       // Ignore parse errors and fall back below.
@@ -654,7 +654,7 @@ const buildPreferenceSentence = (
     try {
       if (typedError.context && typeof typedError.context.text === "function") {
         const clone = typeof typedError.context.clone === "function" ? typedError.context.clone() : typedError.context;
-        const raw = await clone.text();
+        const raw = await clone.text!();
         if (!raw) return null;
         try {
           return JSON.parse(raw);
@@ -1216,7 +1216,7 @@ const buildPreferenceSentence = (
       <SEO
         title="Gold Coast Renovations AI Visualiser | Design Preview"
         description="Upload a room photo and preview Gold Coast renovations concepts while preserving your existing layout. Explore finishes, styles, and design direction in seconds."
-        url="/renovation-design-tools/ai-generator"
+        url="/renovation-ai-generator"
       />
        <Header />
  
@@ -1320,7 +1320,7 @@ const buildPreferenceSentence = (
                         You've used all {MAX_SESSION_GENERATIONS} previews for this session. If you'd like to explore more designs or get in touch, fill out our enquiry form.
                       </p>
                       <Button type="button" asChild className="w-full h-12 text-[11px] sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase mt-4">
-                        <Link to="/get-quote">Get a Quote</Link>
+                        <Link to="/book-renovation-consultation">Get a Quote</Link>
                       </Button>
                     </ChatMessage>
                   )}

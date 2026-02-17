@@ -43,7 +43,7 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SEO from "@/components/SEO";
-import { siteAssets, categoryLabels, type SiteAsset } from "@/data/siteAssets";
+import { siteAssets, categoryLabels, resolveImageSrc, type SiteAsset } from "@/data/siteAssets";
 import { useSiteAssets } from "@/hooks/useSiteAssets";
 import { generateSlug } from "@/lib/slug";
 
@@ -54,21 +54,21 @@ interface ProjectImage {
   file?: File;
   preview: string;
   image_url?: string;
-  is_featured: boolean;
-  display_order: number;
+  is_featured: boolean | null;
+  display_order: number | null;
 }
 
 interface Project {
   id: string;
   name: string;
-  description: string;
+  description: string | null;
   category: string;
-  location: string;
-  year: number;
-  duration: string;
-  overview: string;
-  challenge: string;
-  solution: string;
+  location: string | null;
+  year: number | null;
+  duration: string | null;
+  overview: string | null;
+  challenge: string | null;
+  solution: string | null;
   is_published: boolean;
   images: ProjectImage[];
 }
@@ -343,7 +343,7 @@ const AdminProjects = () => {
     selectedSiteAssets.forEach((assetId) => {
       const asset = siteAssets.find((a) => a.id === assetId);
       if (asset) {
-        const imageUrl = resolvedAssets[asset.id] || asset.importedUrl;
+        const imageUrl = resolvedAssets[asset.id] || resolveImageSrc(asset.importedUrl);
         newImages.push({
           preview: imageUrl,
           image_url: imageUrl,
@@ -1242,7 +1242,7 @@ const AdminProjects = () => {
                     {siteAssets
                       .filter((asset) => libraryFilter === "all" || asset.category === libraryFilter)
                       .map((asset) => {
-                        const imageUrl = assetsReady ? (resolvedAssets[asset.id] || asset.importedUrl) : asset.importedUrl;
+                        const imageUrl = assetsReady ? (resolvedAssets[asset.id] || resolveImageSrc(asset.importedUrl)) : resolveImageSrc(asset.importedUrl);
                         const isSelected = selectedSiteAssets.has(asset.id);
                         return (
                           <button

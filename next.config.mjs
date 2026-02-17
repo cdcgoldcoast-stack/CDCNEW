@@ -1,70 +1,35 @@
-import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const DEFAULT_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_riMzmbUjAEXtvSij0Ho2Ew_eGK9ChO8";
 const isDevelopment = process.env.NODE_ENV === "development";
-
-const readLocalEnvValue = (key) => {
-  const envFiles = [
-    path.resolve(__dirname, ".env.local"),
-    path.resolve(__dirname, ".env"),
-  ];
-
-  for (const filePath of envFiles) {
-    if (!fs.existsSync(filePath)) continue;
-    const content = fs.readFileSync(filePath, "utf8");
-    const lines = content.split(/\r?\n/);
-
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith("#")) continue;
-      const match = trimmed.match(/^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/);
-      if (!match) continue;
-
-      const [, envKey, rawValue] = match;
-      if (envKey !== key) continue;
-
-      const value = rawValue.trim();
-      if (
-        (value.startsWith('"') && value.endsWith('"')) ||
-        (value.startsWith("'") && value.endsWith("'"))
-      ) {
-        return value.slice(1, -1);
-      }
-
-      return value;
-    }
-  }
-
-  return undefined;
-};
 
 const resolvedSupabaseUrl =
   process.env.NEXT_PUBLIC_SUPABASE_URL ||
-  process.env.VITE_SUPABASE_URL ||
-  readLocalEnvValue("NEXT_PUBLIC_SUPABASE_URL") ||
-  readLocalEnvValue("VITE_SUPABASE_URL") ||
-  "https://iqugsxeejieneyksfbza.supabase.co";
+  process.env.VITE_SUPABASE_URL;
 
 const resolvedSupabaseAnonKey =
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
   process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
   process.env.VITE_SUPABASE_ANON_KEY ||
-  process.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
-  readLocalEnvValue("NEXT_PUBLIC_SUPABASE_ANON_KEY") ||
-  readLocalEnvValue("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY") ||
-  readLocalEnvValue("VITE_SUPABASE_ANON_KEY") ||
-  readLocalEnvValue("VITE_SUPABASE_PUBLISHABLE_KEY") ||
-  DEFAULT_SUPABASE_PUBLISHABLE_KEY;
+  process.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+if (!resolvedSupabaseUrl) {
+  throw new Error(
+    "Missing NEXT_PUBLIC_SUPABASE_URL (or VITE_SUPABASE_URL). Set it in .env.local or your hosting environment.",
+  );
+}
+if (!resolvedSupabaseAnonKey) {
+  throw new Error(
+    "Missing NEXT_PUBLIC_SUPABASE_ANON_KEY (or VITE_SUPABASE_ANON_KEY). Set it in .env.local or your hosting environment.",
+  );
+}
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
-    // Temporary while legacy modules remain under src.
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   env: {
     NEXT_PUBLIC_SUPABASE_URL: resolvedSupabaseUrl,
@@ -84,8 +49,8 @@ const nextConfig = {
   },
   async headers() {
     const scriptSrc = isDevelopment
-      ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://connect.facebook.net"
-      : "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net";
+      ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://connect.facebook.net https://va.vercel-scripts.com"
+      : "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://va.vercel-scripts.com";
     const cspValue =
       `default-src 'self'; ${scriptSrc}; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; ` +
       "font-src 'self'; connect-src 'self' https://iqugsxeejieneyksfbza.supabase.co https://www.google-analytics.com https://www.facebook.com; " +
@@ -149,17 +114,17 @@ const nextConfig = {
       },
       {
         source: "/gallery",
-        destination: "/project-gallery",
+        destination: "/renovation-gallery",
         permanent: true,
       },
       {
         source: "/design-tools/ai-generator/intro",
-        destination: "/renovation-design-tools/ai-generator/intro",
+        destination: "/renovation-ai-generator/intro",
         permanent: true,
       },
       {
         source: "/design-tools/ai-generator",
-        destination: "/renovation-design-tools/ai-generator",
+        destination: "/renovation-ai-generator",
         permanent: true,
       },
       {

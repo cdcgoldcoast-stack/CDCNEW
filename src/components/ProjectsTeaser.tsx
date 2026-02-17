@@ -198,13 +198,13 @@ const ProjectsTeaser = () => {
             View Gold Coast Renovation Project Portfolio
           </Link>
           <Link
-            to="/project-gallery"
+            to="/renovation-gallery"
             className="text-label text-foreground hover:opacity-60 transition-opacity border-b border-foreground pb-1 pointer-events-auto text-xs md:text-sm"
           >
             Browse Gold Coast Renovations Gallery
           </Link>
           <Link
-            to="/get-quote"
+            to="/book-renovation-consultation"
             className="text-label bg-primary text-primary-foreground px-5 md:px-6 py-2.5 md:py-3 hover:bg-primary/90 transition-colors pointer-events-auto text-xs md:text-sm"
           >
             Let's Chat About Your Home

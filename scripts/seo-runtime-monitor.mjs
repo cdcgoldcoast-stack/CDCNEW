@@ -43,8 +43,8 @@ const nonCanonicalOrigin = canonicalDomainUrl?.hostname?.startsWith("www.")
   : "";
 const CANONICAL_REDIRECT_SAMPLE_PATHS = [
   "/",
-  "/services",
-  "/project-gallery",
+  "/renovation-services",
+  "/renovation-gallery",
   "/renovation-projects/coastal-modern?utm_source=seo-monitor&utm_medium=canonical",
 ];
 

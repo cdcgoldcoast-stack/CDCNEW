@@ -108,9 +108,9 @@ const Header = () => {
         transition: isVisible ? "transform 500ms ease-out" : "transform 300ms ease-out",
       }}
     >
-      <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-12 flex items-center justify-between h-[74px] md:h-[100px] gap-8">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-7 lg:px-8 flex items-center justify-between h-[74px] md:h-[100px]">
         {/* Logo */}
-        <Link to="/" className="flex-shrink-0 flex items-center mr-4 lg:mr-8" aria-label="Concept Design Construct home">
+        <Link to="/" className="flex-shrink-0 flex items-center mr-8" aria-label="Concept Design Construct home">
           {logoSrc ? (
             <ResponsiveImage
               src={logoSrc}
@@ -126,14 +126,14 @@ const Header = () => {
           )}
         </Link>
 
-        {/* Tablet + Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-4 lg:gap-7 xl:gap-9 whitespace-nowrap">
+        {/* Desktop Navigation - only shows when viewport is wide enough */}
+        <nav className="hidden min-[1440px]:flex items-center gap-5 2xl:gap-7 whitespace-nowrap">
           {navLinks.map((link) => (
             <Link
               key={link.label}
               to={link.href}
               {...getPrefetchHandlers(link.href)}
-              className={`text-label transition-all duration-300 hover:opacity-60 ${
+              className={`text-[11px] 2xl:text-xs uppercase tracking-[0.15em] transition-all duration-300 hover:opacity-60 ${
                 shouldBeTransparent ? "text-white" : "text-foreground"
               }`}
             >
@@ -141,20 +141,20 @@ const Header = () => {
             </Link>
           ))}
           <Link
-            to="/get-quote"
-            {...getPrefetchHandlers("/get-quote")}
-            className={`${ctaClass} whitespace-nowrap flex-shrink-0`}
+            to="/book-renovation-consultation"
+            {...getPrefetchHandlers("/book-renovation-consultation")}
+            className={`${ctaClass} whitespace-nowrap flex-shrink-0 text-[11px] 2xl:text-xs`}
             onClick={handleBookConsultationClick}
           >
             Book A Renovation Consultation
           </Link>
-          <a href="tel:1300020232" className={`${ctaClass} whitespace-nowrap flex-shrink-0`} onClick={handleCallClick}>
+          <a href="tel:1300020232" className={`${ctaClass} whitespace-nowrap flex-shrink-0 text-[11px] 2xl:text-xs`} onClick={handleCallClick}>
             1300 020 232
           </a>
         </nav>
 
-        {/* Mobile actions (phones only) */}
-        <div className="md:hidden flex items-center gap-2">
+        {/* Mobile/Tablet actions */}
+        <div className="min-[1440px]:hidden flex items-center gap-2">
           {!isHome && (
             <Link
               to="/"
@@ -175,9 +175,9 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation (phones only) */}
+      {/* Mobile/Tablet Navigation */}
       {isMenuOpen && (
-        <nav className="md:hidden absolute top-full left-0 right-0 bg-background border-t border-border/30">
+        <nav className="min-[1440px]:hidden absolute top-full left-0 right-0 bg-background border-t border-border/30">
           <div className="container-wide py-8 flex flex-col gap-6">
             {navLinks.map((link) => (
               <Link
@@ -191,8 +191,8 @@ const Header = () => {
               </Link>
             ))}
             <Link
-              to="/get-quote"
-              {...getPrefetchHandlers("/get-quote")}
+              to="/book-renovation-consultation"
+              {...getPrefetchHandlers("/book-renovation-consultation")}
               className="text-label bg-primary text-primary-foreground px-5 py-2 inline-block w-fit"
               onClick={() => {
                 handleBookConsultationClick();

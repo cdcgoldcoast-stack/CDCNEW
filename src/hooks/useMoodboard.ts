@@ -157,7 +157,7 @@ export function useMoodboard() {
               canvas_data: canvasData,
               updated_at: new Date().toISOString(),
             })
-            .eq("id", state.id);
+            .eq("id", state.id!);
 
           if (error) throw error;
         }

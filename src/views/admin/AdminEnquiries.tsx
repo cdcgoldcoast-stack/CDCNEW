@@ -40,10 +40,10 @@ interface Enquiry {
   suburb: string | null;
   state: string | null;
   postcode: string | null;
-  renovations: string[];
+  renovations: string[] | null;
   budget: string | null;
   timeline: string | null;
-  status: string;
+  status: string | null;
   created_at: string;
 }
 
@@ -266,7 +266,7 @@ const AdminEnquiries = () => {
                       </td>
                       <td className="px-4 py-4">
                         <Select
-                          value={enquiry.status}
+                          value={enquiry.status ?? undefined}
                           onValueChange={(value) =>
                             updateStatus(enquiry.id, value)
                           }

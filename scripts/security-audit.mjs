@@ -3,7 +3,7 @@ import path from "path";
 
 const ROOT = process.cwd();
 
-const CLIENT_SCAN_DIRS = ["src", "public", "dist"];
+const CLIENT_SCAN_DIRS = ["src", "public", "dist", "app", "components", "compat", "lib"];
 const CLIENT_SCAN_EXTENSIONS = new Set([
   ".js",
   ".jsx",

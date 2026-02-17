@@ -190,7 +190,7 @@ const GetQuote = () => {
       <SEO
         title="Gold Coast Renovations Quote | Book Your Consultation"
         description="Start your Gold Coast renovations journey. Get a consultation and quote for your kitchen, bathroom, or whole-home project."
-        url="/get-quote"
+        url="/book-renovation-consultation"
         jsonLd={contactSchema}
       />
       <Header />

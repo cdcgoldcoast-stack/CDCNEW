@@ -34,7 +34,7 @@ Current offers and contact:
 - Primary CTA label: Free Design Consult
 - Call now number: 1300020232
 - Phone line hours: 8AM to 5PM Monday to Friday
-- Quote page path: /get-quote
+- Quote page path: /book-renovation-consultation
 
 Design tools on site:
 - AI Renovation Generator

@@ -105,8 +105,8 @@ const TestHome = () => {
         <WhyRenovate />
 
         {/* AI Design Tool Teaser */}
-        <section className="min-h-screen bg-cream relative z-10 flex items-center">
-          <div className="container-wide py-20 md:py-0">
+        <section className="bg-cream relative z-10 flex items-center">
+          <div className="container-wide py-3 md:py-4 lg:py-5">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div>
                 <p className="text-label text-foreground/50 mb-6">AI Design Tool</p>

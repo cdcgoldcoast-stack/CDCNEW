@@ -62,7 +62,7 @@ const Gallery = () => {
       <SEO
         title="Gold Coast Renovations Gallery | Kitchen, Bathroom & Home Inspiration"
         description="Explore Gold Coast renovations inspiration. Browse kitchen, bathroom, and living space transformations by Concept Design Construct."
-        url="/project-gallery"
+        url="/renovation-gallery"
       />
       <Header />
       

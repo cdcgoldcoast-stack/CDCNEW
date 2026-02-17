@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const steps = [
   {
     number: "01",
-    title: "Contact Gold Coast Renovations Team",
+    title: "Contact Gold Coast Renovations",
     lines: [
       "Stop thinking about it and do it.",
       "Just this one step and we will take care",
@@ -152,8 +152,8 @@ const JourneySection = () => {
                     {step.number}
                   </span>
 
-                  {/* Title - fixed height to align all titles */}
-                  <h3 className="font-serif text-base lg:text-lg mb-4 leading-snug text-primary italic h-[48px]">
+                  {/* Title - fixed height to align all titles (3 lines max) */}
+                  <h3 className="font-serif text-base lg:text-lg mb-4 leading-snug text-primary italic h-[68px] lg:h-[76px]">
                     {step.title}
                   </h3>
 
@@ -180,7 +180,7 @@ const JourneySection = () => {
           <div />
           <div className="flex justify-center md:justify-end">
             <Link
-              to="/get-quote"
+              to="/book-renovation-consultation"
               className="inline-flex items-center justify-center h-11 px-7 bg-primary text-primary-foreground text-xs tracking-[0.22em] uppercase hover:bg-primary/90 transition-colors"
             >
               Get Best Offers

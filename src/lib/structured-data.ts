@@ -169,10 +169,10 @@ export const generateAboutPageSchema = () => ({
 export const generateContactPageSchema = () => ({
   "@context": "https://schema.org",
   "@type": "ContactPage",
-  "@id": `${PRODUCTION_DOMAIN}/get-quote#webpage`,
+  "@id": `${PRODUCTION_DOMAIN}/book-renovation-consultation#webpage`,
   name: "Get a Quote - Gold Coast Home Renovation",
   description: "Start your Gold Coast renovation journey. Get a free consultation and quote for your kitchen, bathroom, or whole-home renovation project.",
-  url: `${PRODUCTION_DOMAIN}/get-quote`,
+  url: `${PRODUCTION_DOMAIN}/book-renovation-consultation`,
   mainEntity: {
     "@id": ORGANIZATION_ID,
     "@type": BUSINESS_INFO.type,

@@ -2,8 +2,6 @@ declare global {
   interface Window {
     dataLayer: unknown[];
     gtag?: (...args: unknown[]) => void;
-    requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
-    cancelIdleCallback?: (id: number) => void;
   }
 }
 
@@ -29,15 +27,15 @@ const ensureGtagStub = () => {
 const configureGtag = () => {
   ensureGtagStub();
 
-  window.gtag("js", new Date());
-  window.gtag("config", GA_MEASUREMENT_ID, {
+  window.gtag!("js", new Date());
+  window.gtag!("config", GA_MEASUREMENT_ID, {
     send_page_view: false,
   });
 
   if (!lastTrackedPagePath) {
     const initialPagePath = window.location.pathname || "/";
     lastTrackedPagePath = initialPagePath;
-    window.gtag("event", "page_view", {
+    window.gtag!("event", "page_view", {
       page_path: initialPagePath,
       page_location: `${window.location.origin}${initialPagePath}`,
     });

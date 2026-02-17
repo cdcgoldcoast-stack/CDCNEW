@@ -28,8 +28,8 @@ const FALLBACK_SCHEMA_TYPES_BY_ROUTE = {
   "/": ["HomeAndConstructionBusiness", "FAQPage"],
   "/about-us": ["AboutPage"],
   "/renovation-projects": ["ItemList"],
-  "/get-quote": ["ContactPage"],
-  "/life-stages": ["FAQPage"],
+  "/book-renovation-consultation": ["ContactPage"],
+  "/renovation-life-stages": ["FAQPage"],
 };
 
 const routeToHtmlFile = (routePath) => {

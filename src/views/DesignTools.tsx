@@ -12,7 +12,7 @@ const DesignTools = () => {
       subtitle: "Visualise Your Space",
       description: "Upload a photo of your room and see it transformed with AI-powered design concepts. Explore different styles, colours, and layouts before committing.",
       features: ["Upload any room photo", "Multiple style options", "Instant results"],
-      href: "/renovation-design-tools/ai-generator/intro",
+      href: "/renovation-ai-generator/intro",
       comingSoon: false,
       icon: Sparkles,
     },
@@ -188,7 +188,7 @@ const DesignTools = () => {
               Ready to turn ideas into reality?
             </p>
             <Link
-              to="/get-quote"
+              to="/book-renovation-consultation"
               className="inline-flex items-center gap-2 bg-white text-primary px-8 py-4 text-label hover:bg-white/90 transition-colors"
             >
               Get Your Renovation Plan <ArrowRight className="w-4 h-4" />

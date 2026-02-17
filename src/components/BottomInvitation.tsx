@@ -13,7 +13,7 @@ const BottomInvitation = ({
   title,
   description,
   ctaLabel = "Get Your Renovation Plan",
-  ctaTo = "/get-quote",
+  ctaTo = "/book-renovation-consultation",
   className,
 }: BottomInvitationProps) => {
   return (
