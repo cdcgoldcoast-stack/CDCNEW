@@ -1,4 +1,3 @@
-import { useMemo, useState } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import EditorialReveal from "@/components/EditorialReveal";
@@ -12,7 +11,6 @@ import CostsSection from "@/components/CostsSection";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
-import Preloader from "@/components/Preloader";
 import ImageComparisonSlider from "@/components/ImageComparisonSlider";
 import { generateFAQSchema, generateLocalBusinessSchema } from "@/lib/structured-data";
 import { Link } from "react-router-dom";
@@ -49,46 +47,9 @@ const homepageFAQs = [
   },
 ];
 
-const isAuditLikeClient = () => {
-  if (typeof window === "undefined") return false;
-  const userAgent = navigator.userAgent.toLowerCase();
-  const automatedClient = navigator.webdriver === true;
-
-  return (
-    automatedClient ||
-    userAgent.includes("lighthouse") ||
-    userAgent.includes("chrome-lighthouse") ||
-    userAgent.includes("pagespeed")
-  );
-};
-
 const TestHome = () => {
-  const shouldShowPreloader = useMemo(() => {
-    if (typeof window === "undefined") return false;
-    if (isAuditLikeClient()) return false;
-    if (sessionStorage.getItem("home_preloader_seen") === "true") return false;
-
-    const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-    const connection = (
-      navigator as Navigator & { connection?: { effectiveType?: string; saveData?: boolean } }
-    ).connection;
-    const slowConnection = Boolean(connection?.saveData) || ["slow-2g", "2g", "3g"].includes(connection?.effectiveType || "");
-    const lowPowerDevice = typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 4;
-
-    return !prefersReducedMotion && !slowConnection && !lowPowerDevice;
-  }, []);
-  const [isPreloaderComplete, setIsPreloaderComplete] = useState(!shouldShowPreloader);
-
-  const handlePreloaderComplete = () => {
-    setIsPreloaderComplete(true);
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem("home_preloader_seen", "true");
-    }
-  };
-
   return (
     <div className="min-h-screen">
-      {shouldShowPreloader && <Preloader onComplete={handlePreloaderComplete} minDuration={320} />}
       <SEO
         title="Gold Coast Renovations | Concept Design Construct"
         description="Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations with design-led planning, QBCC licensed delivery, and timelines."
@@ -97,7 +58,7 @@ const TestHome = () => {
       />
       <Header />
       <main>
-        <Hero preloaderComplete={isPreloaderComplete} />
+        <Hero />
         <EditorialReveal />
         <JourneySection />
         <WhatWeRenovateSplit />

@@ -1,18 +1,10 @@
 import { useResolvedAsset } from "@/hooks/useSiteAssets";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
-interface HeroProps {
-  preloaderComplete?: boolean;
-}
+const revealed = "opacity-100 translate-y-0 transition-all duration-700 ease-out";
 
-const revealClass = (preloaderComplete: boolean) =>
-  preloaderComplete
-    ? "opacity-100 translate-y-0 transition-all duration-700 ease-out"
-    : "opacity-0 translate-y-4";
-
-const Hero = ({ preloaderComplete = true }: HeroProps) => {
+const Hero = () => {
   const heroImage = useResolvedAsset("hero-bg", { staticFirst: true });
-  const revealed = revealClass(preloaderComplete);
 
   return (
     <section className="min-h-screen relative z-20 overflow-hidden bg-background">
