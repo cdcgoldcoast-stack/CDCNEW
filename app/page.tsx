@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import ReactDOM from "react-dom";
 import { generateFAQSchema, generateLocalBusinessSchema } from "@/lib/structured-data";
 import JsonLd from "@/components/JsonLd";
 import SSRHomeClient from "../components/SSRHomeClient";
 import { buildMetadata, generateWebSiteSchema } from "@/lib/seo";
 import { SITELINK_TARGETS } from "@/config/seo";
+import { fetchHeroImageUrl } from "@/data/projects";
 
 const homepageFAQs = [
   {
@@ -52,7 +54,12 @@ export const metadata: Metadata = {
   }),
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const heroImageUrl = await fetchHeroImageUrl();
+
+  // Preload the resolved hero image so the browser starts downloading immediately.
+  ReactDOM.preload(heroImageUrl, { as: "image", fetchPriority: "high" });
+
   const localBusinessSchema = generateLocalBusinessSchema();
   const faqSchema = generateFAQSchema(homepageFAQs);
   const webSiteSchema = generateWebSiteSchema();
@@ -61,7 +68,7 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={[webSiteSchema, localBusinessSchema, faqSchema]} />
-      <SSRHomeClient />
+      <SSRHomeClient heroImageUrl={heroImageUrl} />
       <section className="sr-only" aria-label="Home page summary for search crawlers">
         <p>Gold Coast Renovations - Locally Trusted.</p>
         <p>

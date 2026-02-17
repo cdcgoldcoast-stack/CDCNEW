@@ -17,12 +17,16 @@ const ImageComparisonSlider = dynamic(() => import("@/components/ImageComparison
   ssr: false,
 });
 
-export default function SSRHomeClient() {
+interface SSRHomeClientProps {
+  heroImageUrl?: string;
+}
+
+export default function SSRHomeClient({ heroImageUrl }: SSRHomeClientProps) {
   return (
     <div className="min-h-screen">
       <Header />
       <main>
-        <Hero />
+        <Hero heroImageUrl={heroImageUrl} />
         <EditorialReveal />
         <JourneySection />
         <WhatWeRenovateSplit />

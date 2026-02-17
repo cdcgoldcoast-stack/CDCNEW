@@ -3,8 +3,16 @@ import ResponsiveImage from "@/components/ResponsiveImage";
 
 const revealed = "opacity-100 translate-y-0 transition-all duration-700 ease-out";
 
-const Hero = () => {
-  const heroImage = useResolvedAsset("hero-bg", { staticFirst: true });
+interface HeroProps {
+  /** Pre-resolved hero image URL from server to avoid client-side hook waterfall */
+  heroImageUrl?: string;
+}
+
+const Hero = ({ heroImageUrl }: HeroProps = {}) => {
+  const resolvedAsset = useResolvedAsset("hero-bg", { staticFirst: true });
+  // Server-provided URL already includes the correct override (fetched server-side).
+  // The hook is a fallback for client-side navigation where no server prop is available.
+  const heroImage = heroImageUrl || resolvedAsset;
 
   return (
     <section className="min-h-screen relative z-20 overflow-hidden bg-background">
@@ -163,9 +171,9 @@ const Hero = () => {
                 width={1200}
                 height={800}
                 sizes="(min-width: 768px) 50vw, 100vw"
-                loading="lazy"
+                loading="eager"
                 decoding="async"
-                fetchPriority="low"
+                priority
                 quality={60}
                 responsiveWidths={[640, 800, 960, 1200]}
               />

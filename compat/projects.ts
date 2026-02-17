@@ -316,3 +316,29 @@ export const getProjectById = (id: string): Project | undefined => {
 export const getProjectsByCategory = (category: Project["category"]): Project[] => {
   return staticProjects.filter((project) => project.category === category);
 };
+
+/**
+ * Fetch the hero image URL server-side, checking for admin overrides.
+ * Returns the override URL if one exists, otherwise the static fallback.
+ */
+export const fetchHeroImageUrl = async (fallback = "/hero-bg.webp"): Promise<string> => {
+  if (!hasSupabaseCredentials) return fallback;
+
+  try {
+    type ImageOverride = { override_url: string; updated_at?: string };
+    const rows = await supabaseFetch<ImageOverride[]>(
+      `image_overrides?select=override_url,updated_at&original_path=eq.hero-bg.jpg&limit=1`,
+    );
+
+    if (rows.length > 0 && rows[0].override_url) {
+      const { override_url, updated_at } = rows[0];
+      return updated_at
+        ? `${override_url}${override_url.includes("?") ? "&" : "?"}v=${encodeURIComponent(updated_at)}`
+        : override_url;
+    }
+
+    return fallback;
+  } catch {
+    return fallback;
+  }
+};
