@@ -2,6 +2,8 @@ import type { CSSProperties, ImgHTMLAttributes } from "react";
 import type { StaticImageData } from "next/image";
 import {
   DEFAULT_RESPONSIVE_WIDTHS,
+  buildSupabaseImageUrl,
+  buildSupabaseSrcSet,
 } from "@/lib/image-delivery";
 import { cn } from "@/lib/utils";
 
@@ -11,10 +13,6 @@ type NativeImgProps = Omit<
   ImgHTMLAttributes<HTMLImageElement>,
   "src" | "alt" | "width" | "height" | "loading" | "decoding"
 >;
-
-const SUPABASE_RENDER_SEGMENT = "/storage/v1/render/image/public/";
-const SUPABASE_OBJECT_SEGMENT = "/storage/v1/object/public/";
-const TRANSFORM_QUERY_KEYS = new Set(["width", "height", "quality", "format", "resize"]);
 
 interface ResponsiveImageProps extends NativeImgProps {
   src: NormalizedSrc;
@@ -40,26 +38,6 @@ const resolveSrc = (src: NormalizedSrc): string | null => {
   return null;
 };
 
-const normalizeSupabaseImageUrl = (url: string): string => {
-  try {
-    const parsed = new URL(url);
-    if (!parsed.hostname.endsWith(".supabase.co")) return url;
-
-    if (parsed.pathname.includes(SUPABASE_RENDER_SEGMENT)) {
-      parsed.pathname = parsed.pathname.replace(SUPABASE_RENDER_SEGMENT, SUPABASE_OBJECT_SEGMENT);
-    }
-
-    for (const key of TRANSFORM_QUERY_KEYS) {
-      parsed.searchParams.delete(key);
-    }
-
-    const query = parsed.searchParams.toString();
-    return `${parsed.origin}${parsed.pathname}${query ? `?${query}` : ""}${parsed.hash}`;
-  } catch {
-    return url;
-  }
-};
-
 export default function ResponsiveImage({
   src,
   alt,
@@ -80,12 +58,18 @@ export default function ResponsiveImage({
 }: ResponsiveImageProps) {
   const normalizedSrc = resolveSrc(src);
   if (!normalizedSrc) return null;
+  const maxResponsiveWidth =
+    _responsiveWidths.length > 0 ? Math.max(..._responsiveWidths) : width;
+  const selectedSourceWidth = Math.max(width, maxResponsiveWidth);
 
   const computedLoading = loading ?? (priority ? "eager" : "lazy");
   const computedFetchPriority =
     fetchPriority ?? (priority ? "high" : computedLoading === "lazy" ? "low" : "auto");
-  const fallbackSrcSet = undefined;
-  const fallbackSrc = normalizeSupabaseImageUrl(normalizedSrc);
+  const fallbackSrcSet = buildSupabaseSrcSet(normalizedSrc, _responsiveWidths, { quality: _quality });
+  const fallbackSrc = buildSupabaseImageUrl(normalizedSrc, {
+    width: selectedSourceWidth,
+    quality: _quality,
+  });
   const computedStyle: CSSProperties = {
     ...style,
     ...(fit ? { objectFit: fit } : {}),

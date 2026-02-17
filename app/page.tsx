@@ -6,9 +6,12 @@ import SSRHomeClient from "../components/SSRHomeClient";
 import { buildMetadata, generateWebSiteSchema } from "@/lib/seo";
 import { SITELINK_TARGETS } from "@/config/seo";
 import { fetchHeroImageUrl } from "@/data/projects";
+import { buildSupabaseImageUrl, buildSupabaseSrcSet } from "@/lib/image-delivery";
 
 const MOBILE_HERO_IMAGE =
   "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Gold_Coast_renovation_builders.webp";
+const MOBILE_HERO_QUALITY = 54;
+const MOBILE_HERO_RESPONSIVE_WIDTHS = [320, 420, 560, 720, 860] as const;
 
 const homepageFAQs = [
   {
@@ -59,6 +62,13 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const heroImageUrl = await fetchHeroImageUrl();
+  const mobileHeroImageSrcSet = buildSupabaseSrcSet(MOBILE_HERO_IMAGE, MOBILE_HERO_RESPONSIVE_WIDTHS, {
+    quality: MOBILE_HERO_QUALITY,
+  });
+  const mobileHeroPreloadSrc = buildSupabaseImageUrl(MOBILE_HERO_IMAGE, {
+    width: MOBILE_HERO_RESPONSIVE_WIDTHS[MOBILE_HERO_RESPONSIVE_WIDTHS.length - 1],
+    quality: MOBILE_HERO_QUALITY,
+  });
 
   // Preload breakpoint-specific hero assets so mobile and desktop each prioritize
   // only the image they actually render as LCP.
@@ -67,10 +77,12 @@ export default async function HomePage() {
     fetchPriority: "high",
     media: "(min-width: 768px)",
   });
-  ReactDOM.preload(MOBILE_HERO_IMAGE, {
+  ReactDOM.preload(mobileHeroPreloadSrc, {
     as: "image",
     fetchPriority: "high",
     media: "(max-width: 767px)",
+    imageSrcSet: mobileHeroImageSrcSet,
+    imageSizes: "100vw",
   });
 
   const localBusinessSchema = generateLocalBusinessSchema();
