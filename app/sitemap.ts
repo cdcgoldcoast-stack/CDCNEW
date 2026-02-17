@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import projectSlugData from "@/generated/project-slugs.json";
+import { fetchProjects } from "@/data/projects";
 
 const BASE_URL = "https://www.cdconstruct.com.au";
 
@@ -35,9 +35,28 @@ const staticRoutes: Array<{
   { path: "/terms-conditions", changeFrequency: "yearly", priority: 0.3 },
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+const resolveProjectDate = (project: {
+  modifiedAt?: string;
+  publishedAt?: string;
+  year?: string;
+}): Date => {
+  if (project.modifiedAt) {
+    const d = new Date(project.modifiedAt);
+    if (!Number.isNaN(d.getTime())) return d;
+  }
+  if (project.publishedAt) {
+    const d = new Date(project.publishedAt);
+    if (!Number.isNaN(d.getTime())) return d;
+  }
+  if (project.year && /^\d{4}$/.test(project.year)) {
+    return new Date(`${project.year}-01-15T00:00:00.000Z`);
+  }
+  return new Date();
+};
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const projectSlugs = Array.isArray(projectSlugData?.slugs) ? projectSlugData.slugs : [];
+  const projects = await fetchProjects();
 
   const baseEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
     url: `${BASE_URL}${route.path}`,
@@ -46,9 +65,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route.priority,
   }));
 
-  const projectEntries: MetadataRoute.Sitemap = projectSlugs.map((slug) => ({
-    url: `${BASE_URL}/renovation-projects/${slug}`,
-    lastModified: now,
+  const projectEntries: MetadataRoute.Sitemap = projects.map((project) => ({
+    url: `${BASE_URL}/renovation-projects/${project.slug}`,
+    lastModified: resolveProjectDate(project),
     changeFrequency: "monthly",
     priority: 0.7,
   }));

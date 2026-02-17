@@ -1,83 +1,83 @@
 # www.cdconstruct.com.au Full AI Content Inventory
-Generated: 2026-02-17T02:05:56.868Z
+Generated: 2026-02-17T02:12:27.672Z
 
 ## /
 URL: https://www.cdconstruct.com.au/
 Type: homepage
 Last-Modified: 2026-02-17
-Structured-Data-Types: HomeAndConstructionBusiness, FAQPage
+Structured-Data-Types: Answer, City, FAQPage, HomeAndConstructionBusiness, Offer, OfferCatalog, OpeningHoursSpecification, PostalAddress, Question, Service, State, WebPage, WebSite
 
 ## /about-us
 URL: https://www.cdconstruct.com.au/about-us
 Type: about-page
 Last-Modified: 2026-02-17
-Structured-Data-Types: AboutPage
+Structured-Data-Types: AboutPage, BreadcrumbList, City, HomeAndConstructionBusiness, ListItem, WebPage
 
 ## /renovation-projects
 URL: https://www.cdconstruct.com.au/renovation-projects
 Type: projects-index
 Last-Modified: 2026-02-17
-Structured-Data-Types: ItemList
+Structured-Data-Types: BreadcrumbList, CreativeWork, ItemList, ListItem, WebPage
 
 ## /renovation-services
 URL: https://www.cdconstruct.com.au/renovation-services
 Type: services-page
 Last-Modified: 2026-02-17
-Structured-Data-Types: none
+Structured-Data-Types: Answer, BreadcrumbList, City, FAQPage, ItemList, ListItem, Organization, Question, Service, WebPage
 
 ## /renovation-life-stages
 URL: https://www.cdconstruct.com.au/renovation-life-stages
 Type: content-page
 Last-Modified: 2026-02-17
-Structured-Data-Types: FAQPage
+Structured-Data-Types: Answer, BreadcrumbList, FAQPage, ListItem, Question, WebPage
 
 ## /book-renovation-consultation
 URL: https://www.cdconstruct.com.au/book-renovation-consultation
 Type: contact-page
 Last-Modified: 2026-02-17
-Structured-Data-Types: ContactPage
+Structured-Data-Types: BreadcrumbList, City, ContactPage, HomeAndConstructionBusiness, ListItem, WebPage
 
 ## /renovation-gallery
 URL: https://www.cdconstruct.com.au/renovation-gallery
 Type: gallery-page
 Last-Modified: 2026-02-17
-Structured-Data-Types: none
+Structured-Data-Types: BreadcrumbList, CollectionPage, ListItem, Thing, WebPage
 
 ## /renovation-design-tools
 URL: https://www.cdconstruct.com.au/renovation-design-tools
 Type: design-tools
 Last-Modified: 2026-02-17
-Structured-Data-Types: none
+Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /renovation-ai-generator/intro
 URL: https://www.cdconstruct.com.au/renovation-ai-generator/intro
 Type: content-page
 Last-Modified: 2026-02-17
-Structured-Data-Types: none
+Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /renovation-ai-generator
 URL: https://www.cdconstruct.com.au/renovation-ai-generator
 Type: content-page
 Last-Modified: 2026-02-17
-Structured-Data-Types: none
+Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /renovation-design-tools/moodboard
 URL: https://www.cdconstruct.com.au/renovation-design-tools/moodboard
 Type: design-tool
 Last-Modified: 2026-02-17
-Structured-Data-Types: none
+Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /privacy-policy
 URL: https://www.cdconstruct.com.au/privacy-policy
 Type: legal-page
 Last-Modified: 2026-02-17
-Structured-Data-Types: none
+Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /terms-conditions
 URL: https://www.cdconstruct.com.au/terms-conditions
 Type: legal-page
 Last-Modified: 2026-02-17
-Structured-Data-Types: none
+Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /renovation-projects/coastal-modern
 URL: https://www.cdconstruct.com.au/renovation-projects/coastal-modern
