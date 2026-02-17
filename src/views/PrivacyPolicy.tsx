@@ -15,7 +15,7 @@ const PrivacyPolicy = () => {
         <div className="max-w-3xl mx-auto px-5 md:px-8">
           <h1 className="text-h1 mb-8">Privacy Policy</h1>
           <p className="text-body text-muted-foreground mb-8">
-            Last updated: {new Date().toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })}
+            Last updated: 17 February 2026
           </p>
 
           <div className="prose prose-neutral max-w-none space-y-8">

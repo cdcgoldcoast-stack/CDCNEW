@@ -148,7 +148,7 @@ const Footer = () => {
         {/* Divider + bottom bar */}
         <div className="border-t border-foreground/10 mt-12 md:mt-16 pt-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <p className="text-xs uppercase tracking-widest text-foreground/40">
+            <p className="text-xs uppercase tracking-widest text-foreground/40" suppressHydrationWarning>
               &copy; {currentYear} Concept Design Construct
             </p>
             <ul className="flex items-center gap-6">
