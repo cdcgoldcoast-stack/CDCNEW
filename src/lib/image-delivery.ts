@@ -1,4 +1,5 @@
-const SUPABASE_STORAGE_SEGMENT = "/storage/v1/object/public/";
+const SUPABASE_OBJECT_SEGMENT = "/storage/v1/object/public/";
+const SUPABASE_RENDER_SEGMENT = "/storage/v1/render/image/public/";
 
 export const DEFAULT_RESPONSIVE_WIDTHS = [320, 480, 640, 768, 960, 1200] as const;
 
@@ -32,9 +33,18 @@ const splitHash = (url: string): { urlWithoutHash: string; hash: string } => {
   };
 };
 
+const isSupabaseCoHost = (url: string): boolean => {
+  try {
+    const { hostname } = new URL(url);
+    return hostname.endsWith(".supabase.co");
+  } catch {
+    return false;
+  }
+};
+
 export const isSupabaseStorageUrl = (url: string | null | undefined): boolean => {
   if (!url) return false;
-  return url.includes(SUPABASE_STORAGE_SEGMENT);
+  return url.includes(SUPABASE_OBJECT_SEGMENT) || url.includes(SUPABASE_RENDER_SEGMENT);
 };
 
 export const buildSupabaseImageUrl = (
@@ -46,6 +56,13 @@ export const buildSupabaseImageUrl = (
   const { urlWithoutHash, hash } = splitHash(originalUrl);
   const [basePath, queryString = ""] = urlWithoutHash.split("?");
   const params = new URLSearchParams(queryString);
+
+  // Use Supabase Image Transforms: rewrite /object/public/ → /render/image/public/
+  // Only for *.supabase.co hosts (the transform endpoint only works there)
+  let transformedPath = basePath;
+  if (isSupabaseCoHost(originalUrl) && basePath.includes(SUPABASE_OBJECT_SEGMENT)) {
+    transformedPath = basePath.replace(SUPABASE_OBJECT_SEGMENT, SUPABASE_RENDER_SEGMENT);
+  }
 
   if (options.width) {
     params.set("width", String(Math.max(1, Math.round(options.width))));
@@ -61,7 +78,7 @@ export const buildSupabaseImageUrl = (
   }
 
   const nextQuery = params.toString();
-  return `${basePath}${nextQuery ? `?${nextQuery}` : ""}${hash}`;
+  return `${transformedPath}${nextQuery ? `?${nextQuery}` : ""}${hash}`;
 };
 
 export const buildSupabaseSrcSet = (

@@ -87,12 +87,6 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: "/favicon.ico",
-        destination:
-          "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Master-Builders.webp",
-        permanent: true,
-      },
-      {
         source: "/:path+/",
         destination: "/:path+",
         permanent: true,

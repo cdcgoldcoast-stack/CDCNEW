@@ -15,14 +15,19 @@ const Footer = () => {
   }));
 
   const projectLinks = [
+    { label: "Coastal Modern", href: "/renovation-projects/coastal-modern" },
     { label: "Everyday Ease", href: "/renovation-projects/everyday-ease" },
     { label: "Family Hub", href: "/renovation-projects/family-hub" },
+    { label: "Heritage Revival", href: "/renovation-projects/heritage-revival" },
     { label: "Light and Flow House", href: "/renovation-projects/light-and-flow-house" },
+    { label: "Retreat House", href: "/renovation-projects/retreat-house" },
     { label: "Seamless Bathroom", href: "/renovation-projects/seamless-bathroom" },
     { label: "Stone and Light", href: "/renovation-projects/stone-and-light" },
+    { label: "Sunshine Retreat", href: "/renovation-projects/sunshine-retreat" },
     { label: "Terrazzo Retreat", href: "/renovation-projects/terrazzo-retreat" },
     { label: "The Calm Edit", href: "/renovation-projects/the-calm-edit" },
     { label: "The Elanora Residence", href: "/renovation-projects/the-elanora-residence" },
+    { label: "Urban Oasis", href: "/renovation-projects/urban-oasis" },
     { label: "Warm Minimal Bathroom", href: "/renovation-projects/warm-minimal-bathroom" },
   ];
 

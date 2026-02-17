@@ -99,6 +99,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en-AU">
+      <head>
+        <link rel="dns-prefetch" href="//iqugsxeejieneyksfbza.supabase.co" />
+        <link rel="preconnect" href="https://iqugsxeejieneyksfbza.supabase.co" crossOrigin="anonymous" />
+      </head>
       <body>
         <AppProviders>{children}</AppProviders>
       </body>
