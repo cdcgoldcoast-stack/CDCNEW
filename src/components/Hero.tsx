@@ -117,9 +117,8 @@ const Hero = ({ heroImageUrl }: HeroProps = {}) => {
                 width={1200}
                 height={800}
                 sizes="(min-width: 768px) 50vw, 100vw"
-                loading="eager"
+                loading="lazy"
                 decoding="async"
-                priority
                 quality={60}
                 responsiveWidths={[640, 800, 960, 1200]}
               />

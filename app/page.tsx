@@ -7,6 +7,9 @@ import { buildMetadata, generateWebSiteSchema } from "@/lib/seo";
 import { SITELINK_TARGETS } from "@/config/seo";
 import { fetchHeroImageUrl } from "@/data/projects";
 
+const MOBILE_HERO_IMAGE =
+  "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Gold_Coast_renovation_builders.webp";
+
 const homepageFAQs = [
   {
     question: "How long does a kitchen renovation take?",
@@ -57,10 +60,17 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   const heroImageUrl = await fetchHeroImageUrl();
 
-  // Preload the original hero image URL without runtime transform parameters.
+  // Preload breakpoint-specific hero assets so mobile and desktop each prioritize
+  // only the image they actually render as LCP.
   ReactDOM.preload(heroImageUrl, {
     as: "image",
     fetchPriority: "high",
+    media: "(min-width: 768px)",
+  });
+  ReactDOM.preload(MOBILE_HERO_IMAGE, {
+    as: "image",
+    fetchPriority: "high",
+    media: "(max-width: 767px)",
   });
 
   const localBusinessSchema = generateLocalBusinessSchema();
