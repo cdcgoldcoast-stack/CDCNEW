@@ -257,25 +257,29 @@ serve(async (req) => {
         clientHashPrefix: clientHash.slice(0, 12),
       });
 
-      const suspiciousRateLimit = await enforceRateLimit({
-        req,
-        endpoint: "generate-design-suspicious",
-        limit: SUSPICIOUS_LIMIT,
-        windowSeconds: SUSPICIOUS_WINDOW_SECONDS,
-        clientHash,
-      });
-
-      if (!suspiciousRateLimit.allowed) {
-        return jsonResponse(
+      try {
+        const suspiciousRateLimit = await enforceRateLimit({
           req,
-          429,
-          {
-            error: "Suspicious traffic limit reached. Please wait and try again later.",
-            remaining: suspiciousRateLimit.remaining,
-            resetAt: suspiciousRateLimit.resetAt,
-          },
-          { "Retry-After": String(SUSPICIOUS_WINDOW_SECONDS) },
-        );
+          endpoint: "generate-design-suspicious",
+          limit: SUSPICIOUS_LIMIT,
+          windowSeconds: SUSPICIOUS_WINDOW_SECONDS,
+          clientHash,
+        });
+
+        if (!suspiciousRateLimit.allowed) {
+          return jsonResponse(
+            req,
+            429,
+            {
+              error: "Suspicious traffic limit reached. Please wait and try again later.",
+              remaining: suspiciousRateLimit.remaining,
+              resetAt: suspiciousRateLimit.resetAt,
+            },
+            { "Retry-After": String(SUSPICIOUS_WINDOW_SECONDS) },
+          );
+        }
+      } catch (error) {
+        console.error("Rate limit check failed (suspicious). Continuing.", error);
       }
     }
 
@@ -310,19 +314,25 @@ serve(async (req) => {
     // Check current usage for this IP today
     const today = new Date().toISOString().split('T')[0];
 
-    const { data: usageData, error: usageError } = await supabase
-      .from('design_generation_usage')
-      .select('generation_count')
-      .eq('ip_address', clientHash)
-      .eq('usage_date', today)
-      .maybeSingle();
+    let usageData: { generation_count?: number } | null = null;
+    let currentCount = 0;
+    try {
+      const usageResult = await supabase
+        .from('design_generation_usage')
+        .select('generation_count')
+        .eq('ip_address', clientHash)
+        .eq('usage_date', today)
+        .maybeSingle();
 
-    if (usageError) {
-      console.error("Error checking usage:", usageError);
-      throw new Error("Failed to check usage limits");
+      if (usageResult.error) {
+        console.error("Error checking usage. Continuing without hard usage gate:", usageResult.error);
+      } else {
+        usageData = usageResult.data;
+        currentCount = usageData?.generation_count || 0;
+      }
+    } catch (error) {
+      console.error("Usage query failed unexpectedly. Continuing without hard usage gate:", error);
     }
-
-    const currentCount = usageData?.generation_count || 0;
 
     if (currentCount >= DAILY_LIMIT) {
       return jsonResponse(req, 429, {
@@ -547,7 +557,21 @@ serve(async (req) => {
       );
     }
 
-    const rawData = await response.json();
+    let rawData: any;
+    try {
+      rawData = await response.json();
+    } catch (error) {
+      console.error("AI gateway returned a non-JSON success response", error);
+      return jsonResponse(
+        req,
+        502,
+        {
+          error: "AI returned an unexpected response. Please try again shortly.",
+          retryable: true,
+        },
+        { "Retry-After": "45" },
+      );
+    }
 
     // Check for blocked or empty responses
     if (!rawData.candidates || rawData.candidates.length === 0) {
@@ -625,7 +649,25 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error('Error in generate-design function:', error);
-    return jsonResponse(req, 500, { error: "Internal server error" });
+    const message = error instanceof Error ? error.message : String(error);
+    console.error('Error in generate-design function:', { message, error });
+
+    if (/GEMINI_API_KEY is not configured/i.test(message)) {
+      return jsonResponse(req, 500, { error: "AI service key is missing on the server." });
+    }
+
+    if (/Supabase service configuration missing/i.test(message)) {
+      return jsonResponse(req, 500, { error: "Server configuration is incomplete for AI generation." });
+    }
+
+    return jsonResponse(
+      req,
+      503,
+      {
+        error: "AI service is temporarily unavailable. Please try again in about a minute.",
+        retryable: true,
+      },
+      { "Retry-After": "60" },
+    );
   }
 });
