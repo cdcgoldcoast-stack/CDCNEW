@@ -84,7 +84,9 @@ const ImageComparisonSlider = ({
           decoding="async"
           quality={58}
           responsiveWidths={[320, 480, 640, 800, 960]}
-          className="w-full h-full object-cover"
+          className="w-full h-full bg-muted/10"
+          fit="contain"
+          position="center"
         />
       </div>
 
@@ -103,7 +105,9 @@ const ImageComparisonSlider = ({
           decoding="async"
           quality={58}
           responsiveWidths={[320, 480, 640, 800, 960]}
-          className="w-full h-full object-cover"
+          className="w-full h-full bg-muted/10"
+          fit="contain"
+          position="center"
         />
       </div>
 

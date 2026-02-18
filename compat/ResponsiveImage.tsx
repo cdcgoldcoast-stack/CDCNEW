@@ -26,6 +26,7 @@ interface ResponsiveImageProps extends NativeImgProps {
   priority?: boolean;
   quality?: number;
   responsiveWidths?: readonly number[];
+  useSupabaseTransform?: boolean;
   style?: CSSProperties;
   fit?: "cover" | "contain";
   position?: CSSProperties["objectPosition"];
@@ -50,6 +51,7 @@ export default function ResponsiveImage({
   priority = false,
   quality: _quality = 72,
   responsiveWidths: _responsiveWidths = DEFAULT_RESPONSIVE_WIDTHS,
+  useSupabaseTransform = false,
   style,
   fit,
   position,
@@ -65,11 +67,15 @@ export default function ResponsiveImage({
   const computedLoading = loading ?? (priority ? "eager" : "lazy");
   const computedFetchPriority =
     fetchPriority ?? (priority ? "high" : computedLoading === "lazy" ? "low" : "auto");
-  const fallbackSrcSet = buildSupabaseSrcSet(normalizedSrc, _responsiveWidths, { quality: _quality });
-  const fallbackSrc = buildSupabaseImageUrl(normalizedSrc, {
-    width: selectedSourceWidth,
-    quality: _quality,
-  });
+  const fallbackSrcSet = useSupabaseTransform
+    ? buildSupabaseSrcSet(normalizedSrc, _responsiveWidths, { quality: _quality })
+    : undefined;
+  const fallbackSrc = useSupabaseTransform
+    ? buildSupabaseImageUrl(normalizedSrc, {
+        width: selectedSourceWidth,
+        quality: _quality,
+      })
+    : normalizedSrc;
   const computedStyle: CSSProperties = {
     ...style,
     ...(fit ? { objectFit: fit } : {}),
