@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound, redirect } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import { ProjectDetailClient } from "@/components/route-clients";
 import projectSlugData from "@/generated/project-slugs.json";
@@ -24,6 +25,17 @@ const fallbackDescription = (slug: string) =>
 const findStaticProject = (slug: string) =>
   projects.find((project) => project.slug === slug || project.name.toLowerCase().replace(/\s+/g, "-") === slug);
 const DEFAULT_PROJECT_TIMESTAMP = "2024-01-15T00:00:00.000Z";
+const REMOVED_PROJECT_SLUGS = new Set([
+  "coastal-modern",
+  "heritage-revival",
+  "retreat-house",
+  "sunshine-retreat",
+  "urban-oasis",
+]);
+
+const findProject = (allProjects: Project[], slug: string) =>
+  allProjects.find((project) => project.slug === slug || project.name.toLowerCase().replace(/\s+/g, "-") === slug) ||
+  findStaticProject(slug);
 
 const normalizeIsoDate = (value?: string | null) => {
   if (!value) return undefined;
@@ -31,32 +43,49 @@ const normalizeIsoDate = (value?: string | null) => {
   return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString();
 };
 
-export function generateMetadata({ params }: PageProps): Metadata {
-  const project = findStaticProject(params.slug);
-  const categoryLabel = project ? project.category.replace("-", " ") : "home";
-  const location = project?.location || "Gold Coast";
-  const title = project
-    ? `${project.name} | ${categoryLabel} Renovations in ${location}`
-    : `${titleFromSlug(params.slug)} | Gold Coast Renovations Case Study`;
-  const description = project?.description || fallbackDescription(params.slug);
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  if (REMOVED_PROJECT_SLUGS.has(params.slug)) {
+    return buildMetadata({
+      title: "Project Not Found",
+      description: "This renovation project is no longer available.",
+      path: "/_not-found",
+      noIndex: true,
+    });
+  }
+
+  const allProjects = await fetchProjects();
+  const project = findProject(allProjects, params.slug);
+  if (!project) {
+    return buildMetadata({
+      title: "Project Not Found",
+      description: "This renovation project could not be found.",
+      path: "/_not-found",
+      noIndex: true,
+    });
+  }
+
+  const categoryLabel = project.category.replace("-", " ");
+  const location = project.location || "Gold Coast";
+  const title = `${project.name} | ${categoryLabel} Renovations in ${location}`;
+  const description = project.description || fallbackDescription(params.slug);
   const projectPublishedTime =
-    normalizeIsoDate(project?.publishedAt) || DEFAULT_PROJECT_TIMESTAMP;
-  const projectModifiedTime = normalizeIsoDate(project?.modifiedAt) || projectPublishedTime;
-  const projectAuthor = project?.authorName || SITE_NAME;
-  const projectTags = project?.tags?.length
+    normalizeIsoDate(project.publishedAt) || DEFAULT_PROJECT_TIMESTAMP;
+  const projectModifiedTime = normalizeIsoDate(project.modifiedAt) || projectPublishedTime;
+  const projectAuthor = project.authorName || SITE_NAME;
+  const projectTags = project.tags?.length
     ? project.tags
     : [
         "Gold Coast renovations project",
         `${location} renovations`,
         `${categoryLabel} renovations Gold Coast`,
-        project?.name || titleFromSlug(params.slug),
+        project.name || titleFromSlug(params.slug),
       ];
 
   return buildMetadata({
     title,
     description,
-    path: `/renovation-projects/${project?.slug || params.slug}`,
-    image: project?.image,
+    path: `/renovation-projects/${project.slug}`,
+    image: project.image,
     type: "article",
     keywords: projectTags,
     author: projectAuthor,
@@ -73,18 +102,24 @@ export function generateStaticParams() {
 
 export default async function Page({ params }: PageProps) {
   const allProjects = await fetchProjects();
-  const project =
-    allProjects.find((p) => p.slug === params.slug || p.name.toLowerCase().replace(/\s+/g, "-") === params.slug) ||
-    findStaticProject(params.slug);
-  const projectName = project?.name || titleFromSlug(params.slug);
-  const projectDescription = project?.description || fallbackDescription(params.slug);
-  const projectImage = project?.image || DEFAULT_OG_IMAGE;
-  const projectLocation = project?.location || "Gold Coast";
-  const projectCategory = project?.category || "whole-home";
-  const projectSlug = project?.slug || params.slug;
+  const project = findProject(allProjects, params.slug);
+
+  if (!project) {
+    if (REMOVED_PROJECT_SLUGS.has(params.slug)) {
+      redirect("/renovation-projects");
+    }
+    notFound();
+  }
+
+  const projectName = project.name;
+  const projectDescription = project.description || fallbackDescription(params.slug);
+  const projectImage = project.image || DEFAULT_OG_IMAGE;
+  const projectLocation = project.location || "Gold Coast";
+  const projectCategory = project.category || "whole-home";
+  const projectSlug = project.slug;
   const projectPublishedTime =
-    normalizeIsoDate(project?.publishedAt) || DEFAULT_PROJECT_TIMESTAMP;
-  const projectModifiedTime = normalizeIsoDate(project?.modifiedAt) || projectPublishedTime;
+    normalizeIsoDate(project.publishedAt) || DEFAULT_PROJECT_TIMESTAMP;
+  const projectModifiedTime = normalizeIsoDate(project.modifiedAt) || projectPublishedTime;
 
   const projectSchema = generateProjectSchema({
     name: projectName,
@@ -95,8 +130,8 @@ export default async function Page({ params }: PageProps) {
     path: `/renovation-projects/${projectSlug}`,
     publishedAt: projectPublishedTime,
     modifiedAt: projectModifiedTime,
-    authorName: project?.authorName || SITE_NAME,
-    tags: project?.tags,
+    authorName: project.authorName || SITE_NAME,
+    tags: project.tags,
   });
 
   const breadcrumbSchema = generateBreadcrumbSchema([
@@ -113,7 +148,7 @@ export default async function Page({ params }: PageProps) {
         <h2>{`${projectCategory.replace("-", " ")} renovations in ${projectLocation}`}</h2>
         <p>{projectDescription}</p>
       </section>
-      <ProjectDetailClient initialProject={project ?? undefined} initialProjects={allProjects} />
+      <ProjectDetailClient initialProject={project} initialProjects={allProjects} />
     </>
   );
 }

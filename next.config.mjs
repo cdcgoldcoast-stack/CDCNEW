@@ -92,6 +92,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/services",
+        destination: "/renovation-services",
+        permanent: true,
+      },
+      {
         source: "/our-story",
         destination: "/about-us",
         permanent: true,
@@ -103,6 +108,56 @@ const nextConfig = {
       },
       {
         source: "/projects",
+        destination: "/renovation-projects",
+        permanent: true,
+      },
+      {
+        source: "/building-your-dream-home",
+        destination: "/renovation-projects",
+        permanent: true,
+      },
+      {
+        source: "/custom-home-builders",
+        destination: "/renovation-services",
+        permanent: true,
+      },
+      {
+        source: "/custom-new-builds",
+        destination: "/renovation-services",
+        permanent: true,
+      },
+      {
+        source: "/home-extensions",
+        destination: "/renovation-services",
+        permanent: true,
+      },
+      {
+        source: "/extensions",
+        destination: "/renovation-services",
+        permanent: true,
+      },
+      {
+        source: "/architectural-drafting-melbourne",
+        destination: "/renovation-services",
+        permanent: true,
+      },
+      {
+        source: "/architectural-drafting-services",
+        destination: "/renovation-services",
+        permanent: true,
+      },
+      {
+        source: "/service_type/custom-new-builds",
+        destination: "/renovation-services",
+        permanent: true,
+      },
+      {
+        source: "/portfolio-items",
+        destination: "/renovation-projects",
+        permanent: true,
+      },
+      {
+        source: "/renovation-projects/sunshine-retreat",
         destination: "/renovation-projects",
         permanent: true,
       },

@@ -12,6 +12,50 @@
       ],
       "destination": "https://www.cdconstruct.com.au/:path*",
       "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "cdcconstruct.com.au"
+        }
+      ],
+      "destination": "https://www.cdconstruct.com.au/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.cdcconstruct.com.au"
+        }
+      ],
+      "destination": "https://www.cdconstruct.com.au/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "conceptdesignconstruct.com.au"
+        }
+      ],
+      "destination": "https://www.cdconstruct.com.au/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.conceptdesignconstruct.com.au"
+        }
+      ],
+      "destination": "https://www.cdconstruct.com.au/:path*",
+      "permanent": true
     }
   ]
 }
