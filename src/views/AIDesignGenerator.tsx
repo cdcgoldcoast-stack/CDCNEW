@@ -678,6 +678,8 @@ const buildPreferenceSentence = (
     return null;
   };
 
+  const waitForRetry = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
   const extractGatewayErrorMessage = (rawMessage: string) => {
     const match = rawMessage.match(/^AI error \d+:\s*(\{[\s\S]*\})$/i);
     if (!match) return rawMessage;
@@ -700,8 +702,10 @@ const buildPreferenceSentence = (
 
   const isRetryableAiOutage = (status: number | undefined, message: string, retryable?: boolean) => {
     if (retryable) return true;
-    if (status === 503 || status === 502 || status === 504) return true;
-    return /high demand|unavailable|try again later|temporarily unavailable|resource exhausted/i.test(message);
+    if (status === 500 || status === 503 || status === 502 || status === 504) return true;
+    return /high demand|unavailable|try again later|temporarily unavailable|resource exhausted|internal server error/i.test(
+      message
+    );
   };
 
   const describeLayoutFailureReason = (reason: LayoutFailureReason) => {
@@ -983,19 +987,55 @@ const buildPreferenceSentence = (
     setGenerationGuardrailMessage(null);
 
     try {
-      const { data, error } = await supabase.functions.invoke("generate-design", {
-        body: {
-          imageBase64: uploadedImage,
-          prompt: finalPrompt,
-          spaceType: spaceType,
-          imageWidth: imageDimensions?.width,
-          imageHeight: imageDimensions?.height,
-        },
-      });
+      const maxAttempts = 2;
+      let data: any = null;
+      let error: any = null;
+      let payload: any = null;
+      let status: number | undefined;
+
+      for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+        const invokeResult = await supabase.functions.invoke("generate-design", {
+          body: {
+            imageBase64: uploadedImage,
+            prompt: finalPrompt,
+            spaceType: spaceType,
+            imageWidth: imageDimensions?.width,
+            imageHeight: imageDimensions?.height,
+          },
+        });
+
+        data = invokeResult.data;
+        error = invokeResult.error;
+
+        if (!error) break;
+
+        payload = await parseFunctionErrorPayload(error);
+        status = (error as FunctionInvokeErrorLike | null)?.context?.status;
+        const payloadError =
+          payload && typeof payload === "object" && payload !== null && "error" in payload && typeof payload.error === "string"
+            ? payload.error
+            : "";
+        const retryable =
+          payload && typeof payload === "object" && payload !== null && "retryable" in payload && payload.retryable === true;
+        const limitReached =
+          payload && typeof payload === "object" && payload !== null && "limitReached" in payload && payload.limitReached === true;
+
+        const shouldRetry =
+          attempt < maxAttempts && !limitReached && isRetryableAiOutage(status, payloadError, retryable);
+
+        if (shouldRetry) {
+          await waitForRetry(800 * attempt);
+          continue;
+        }
+
+        break;
+      }
 
       if (error) {
-        const payload = await parseFunctionErrorPayload(error);
-        const status = (error as FunctionInvokeErrorLike | null)?.context?.status;
+        if (!payload) {
+          payload = await parseFunctionErrorPayload(error);
+        }
+        status = (error as FunctionInvokeErrorLike | null)?.context?.status;
         const payloadError =
           payload && typeof payload === "object" && payload !== null && "error" in payload && typeof payload.error === "string"
             ? payload.error
