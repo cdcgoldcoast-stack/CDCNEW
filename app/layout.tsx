@@ -25,10 +25,10 @@ export const metadata: Metadata = {
     telephone: false,
   },
   alternates: {
-    canonical: `${SITE_URL}/`,
+    canonical: SITE_URL,
     languages: {
-      "en-AU": `${SITE_URL}/`,
-      "x-default": `${SITE_URL}/`,
+      "en-AU": SITE_URL,
+      "x-default": SITE_URL,
     },
   },
   manifest: "/manifest.webmanifest",
@@ -79,7 +79,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <link rel="preconnect" href="https://iqugsxeejieneyksfbza.supabase.co" crossOrigin="anonymous" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en_AU" />
-        <meta property="og:url" content={`${SITE_URL}/`} />
+        <meta property="og:url" content={SITE_URL} />
         <meta property="og:site_name" content={SITE_NAME} />
         <meta property="og:title" content={DEFAULT_META.title} />
         <meta property="og:description" content={DEFAULT_META.description} />

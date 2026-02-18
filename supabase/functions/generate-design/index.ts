@@ -27,6 +27,17 @@ const BURST_LIMIT = Number(Deno.env.get("DESIGN_BURST_LIMIT") ?? "4");
 const BURST_WINDOW_SECONDS = Number(Deno.env.get("DESIGN_BURST_WINDOW_SECONDS") ?? "900");
 const SUSPICIOUS_LIMIT = Number(Deno.env.get("DESIGN_SUSPICIOUS_LIMIT") ?? "2");
 const SUSPICIOUS_WINDOW_SECONDS = Number(Deno.env.get("DESIGN_SUSPICIOUS_WINDOW_SECONDS") ?? "3600");
+const AI_MODEL = Deno.env.get("GEMINI_IMAGE_MODEL") ?? "gemini-3-pro-image-preview";
+const AI_MAX_ATTEMPTS = Math.max(1, Number(Deno.env.get("DESIGN_AI_MAX_ATTEMPTS") ?? "2"));
+const AI_REQUEST_TIMEOUT_MS = Math.max(20_000, Number(Deno.env.get("DESIGN_AI_TIMEOUT_MS") ?? "55_000"));
+
+interface GeminiErrorEnvelope {
+  error?: {
+    code?: number;
+    message?: string;
+    status?: string;
+  };
+}
 
 interface GenerateDesignRequest {
   imageBase64?: string;
@@ -203,6 +214,23 @@ REMINDER:
 - Keep all fixtures in the same positions.
 - Modernize fixtures and joinery in place (basin/toilet/vanity/drawers/handles).
 - Add visible ambient LED lighting (mirror backlight and/or under-vanity strip) without changing layout.`;
+}
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function parseGeminiErrorEnvelope(raw: string): GeminiErrorEnvelope | null {
+  if (!raw || !raw.trim().startsWith("{")) return null;
+  try {
+    return JSON.parse(raw) as GeminiErrorEnvelope;
+  } catch {
+    return null;
+  }
+}
+
+function isRetryableUpstreamFailure(status: number, parsedError: GeminiErrorEnvelope | null): boolean {
+  if ([429, 500, 502, 503, 504].includes(status)) return true;
+  const upstreamStatus = parsedError?.error?.status;
+  return ["UNAVAILABLE", "RESOURCE_EXHAUSTED", "DEADLINE_EXCEEDED", "INTERNAL"].includes(`${upstreamStatus || ""}`);
 }
 
 serve(async (req) => {
@@ -385,49 +413,138 @@ serve(async (req) => {
     const mimeMatch = imageBase64.match(/^data:([^;]+);/);
     const mimeType = mimeMatch ? mimeMatch[1] : "image/jpeg";
 
-    const abortController = new AbortController();
-    const fetchTimeout = setTimeout(() => abortController.abort(), 55_000);
-
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent?key=${GEMINI_API_KEY}`, {
-      method: "POST",
-      signal: abortController.signal,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        contents: [
-          {
-            role: "user",
-            parts: [
-              { text: `${SYSTEM_PROMPT}\n\n${promptText}` },
-              {
-                inlineData: {
-                  mimeType,
-                  data: base64Data,
-                },
+    const requestBody = JSON.stringify({
+      contents: [
+        {
+          role: "user",
+          parts: [
+            { text: `${SYSTEM_PROMPT}\n\n${promptText}` },
+            {
+              inlineData: {
+                mimeType,
+                data: base64Data,
               },
-            ],
-          },
-        ],
-        generationConfig: {
-          responseModalities: ["TEXT", "IMAGE"],
+            },
+          ],
         },
-      }),
+      ],
+      generationConfig: {
+        responseModalities: ["TEXT", "IMAGE"],
+      },
     });
-    clearTimeout(fetchTimeout);
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("AI gateway error:", response.status, errorText);
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${AI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 
-      if (response.status === 429) {
+    let response: Response | null = null;
+    let lastErrorText = "";
+    let lastParsedError: GeminiErrorEnvelope | null = null;
+
+    for (let attempt = 1; attempt <= AI_MAX_ATTEMPTS; attempt += 1) {
+      const abortController = new AbortController();
+      const fetchTimeout = setTimeout(() => abortController.abort(), AI_REQUEST_TIMEOUT_MS);
+
+      try {
+        response = await fetch(endpoint, {
+          method: "POST",
+          signal: abortController.signal,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: requestBody,
+        });
+      } catch (error) {
+        clearTimeout(fetchTimeout);
+        const isTimeout = error instanceof DOMException && error.name === "AbortError";
+        const canRetry = attempt < AI_MAX_ATTEMPTS;
+
+        console.error(`AI gateway request failed (attempt ${attempt}/${AI_MAX_ATTEMPTS})`, {
+          isTimeout,
+          message: error instanceof Error ? error.message : String(error),
+        });
+
+        if (canRetry) {
+          await sleep(700 * attempt);
+          continue;
+        }
+
+        if (isTimeout) {
+          return jsonResponse(
+            req,
+            503,
+            {
+              error: "AI is taking longer than expected right now. Please try again in about a minute.",
+              retryable: true,
+            },
+            { "Retry-After": "60" },
+          );
+        }
+
+        return jsonResponse(
+          req,
+          503,
+          {
+            error: "Could not reach the AI service right now. Please try again shortly.",
+            retryable: true,
+          },
+          { "Retry-After": "45" },
+        );
+      } finally {
+        clearTimeout(fetchTimeout);
+      }
+
+      if (!response.ok) {
+        lastErrorText = await response.text();
+        lastParsedError = parseGeminiErrorEnvelope(lastErrorText);
+        const canRetry = attempt < AI_MAX_ATTEMPTS;
+        const retryable = isRetryableUpstreamFailure(response.status, lastParsedError);
+
+        console.error(`AI gateway error (attempt ${attempt}/${AI_MAX_ATTEMPTS})`, {
+          status: response.status,
+          upstreamStatus: lastParsedError?.error?.status ?? null,
+          upstreamCode: lastParsedError?.error?.code ?? null,
+          errorMessage: (lastParsedError?.error?.message || lastErrorText || "").slice(0, 240),
+        });
+
+        if (canRetry && retryable) {
+          await sleep(700 * attempt);
+          continue;
+        }
+      }
+
+      break;
+    }
+
+    if (!response || !response.ok) {
+      const status = response?.status ?? 503;
+      const upstreamStatus = lastParsedError?.error?.status ?? "";
+
+      if (status === 429) {
         return jsonResponse(req, 429, { error: "Rate limit exceeded. Please wait a moment and try again." });
       }
-      if (response.status === 402) {
+      if (status === 402) {
         return jsonResponse(req, 402, { error: "Usage limit reached. Please add credits to continue." });
       }
+      if (status === 503 || upstreamStatus === "UNAVAILABLE") {
+        return jsonResponse(
+          req,
+          503,
+          {
+            error: "AI is currently busy with high demand. Please try again in about a minute.",
+            retryable: true,
+          },
+          { "Retry-After": "60" },
+        );
+      }
 
-      return jsonResponse(req, 500, { error: `AI error ${response.status}: ${errorText.slice(0, 200)}` });
+      return jsonResponse(
+        req,
+        502,
+        {
+          error: "AI service is temporarily unavailable. Please try again shortly.",
+          retryable: true,
+        },
+        { "Retry-After": "45" },
+      );
     }
 
     const rawData = await response.json();

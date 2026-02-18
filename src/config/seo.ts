@@ -140,7 +140,9 @@ export const FOOTER_SITELINK_TARGETS = SITELINK_TARGETS.filter((target) => targe
 
 // Helper function to get full URL
 export const getFullUrl = (path: string = "/") => {
-  return `${PRODUCTION_DOMAIN}${path}`;
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  if (normalizedPath === "/") return PRODUCTION_DOMAIN;
+  return `${PRODUCTION_DOMAIN}${normalizedPath.replace(/\/+$/, "")}`;
 };
 
 const truncateTitle = (title: string) => {

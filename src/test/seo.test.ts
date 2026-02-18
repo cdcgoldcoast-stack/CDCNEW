@@ -13,11 +13,11 @@ describe("getFullUrl", () => {
   });
 
   it("returns production domain for root", () => {
-    expect(getFullUrl("/")).toBe(`${PRODUCTION_DOMAIN}/`);
+    expect(getFullUrl("/")).toBe(PRODUCTION_DOMAIN);
   });
 
   it("returns production domain with root when no argument given", () => {
-    expect(getFullUrl()).toBe(`${PRODUCTION_DOMAIN}/`);
+    expect(getFullUrl()).toBe(PRODUCTION_DOMAIN);
   });
 });
 

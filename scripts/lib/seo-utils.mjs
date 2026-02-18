@@ -89,7 +89,10 @@ export function normalizePath(value) {
 }
 
 export function canonicalForPath(path, domain = PRODUCTION_DOMAIN) {
-  return new URL(normalizePath(path), domain).toString();
+  const baseDomain = `${domain}`.replace(/\/+$/, "");
+  const normalizedPath = normalizePath(path);
+  if (normalizedPath === "/") return baseDomain;
+  return new URL(normalizedPath, `${baseDomain}/`).toString();
 }
 
 export function normalizeAbsoluteUrl(value) {

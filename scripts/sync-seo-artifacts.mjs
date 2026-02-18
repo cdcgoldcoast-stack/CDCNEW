@@ -70,6 +70,12 @@ function formatDateUTC(date = new Date()) {
   return date.toISOString().slice(0, 10);
 }
 
+function toAbsoluteCanonicalUrl(pathname) {
+  const normalizedPath = normalizePath(pathname);
+  if (normalizedPath === "/") return PRODUCTION_DOMAIN;
+  return `${PRODUCTION_DOMAIN}${normalizedPath}`;
+}
+
 async function readStaticProjectSlugs() {
   try {
     const source = await fs.readFile(PROJECT_DATA_PATH, "utf8");
@@ -202,7 +208,7 @@ function buildSitemapXml(projectSlugs) {
 
   for (const entry of entries) {
     lines.push("  <url>");
-    lines.push(`    <loc>${PRODUCTION_DOMAIN}${entry.path}</loc>`);
+    lines.push(`    <loc>${toAbsoluteCanonicalUrl(entry.path)}</loc>`);
     lines.push(`    <lastmod>${lastmod}</lastmod>`);
     lines.push(`    <changefreq>${entry.changefreq}</changefreq>`);
     lines.push(`    <priority>${entry.priority}</priority>`);

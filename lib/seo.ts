@@ -14,7 +14,12 @@ const normalizePath = (path: string) => {
   return withLeadingSlash.replace(/\/+$/, "");
 };
 
-export const absoluteUrl = (path: string) => new URL(normalizePath(path), SITE_URL).toString();
+export const absoluteUrl = (path: string) => {
+  const baseDomain = SITE_URL.replace(/\/+$/, "");
+  const normalizedPath = normalizePath(path);
+  if (normalizedPath === "/") return baseDomain;
+  return new URL(normalizedPath, `${baseDomain}/`).toString();
+};
 
 export const titleFromSlug = (slug: string) =>
   slug

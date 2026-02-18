@@ -34,6 +34,10 @@ const resolvePath = (url: string) => {
 };
 
 const normalizeDescription = (value: string) => value.trim().replace(/\s+/g, " ");
+const toCanonicalUrl = (path: string) => {
+  if (path === "/") return PRODUCTION_DOMAIN;
+  return new URL(path, PRODUCTION_DOMAIN).toString();
+};
 
 export const SEO = ({
   title,
@@ -48,7 +52,7 @@ export const SEO = ({
   const fullTitle = formatPageTitle(title);
   const fullDescription = normalizeDescription(description || DEFAULT_META.description);
   const canonicalPath = normalizeCanonicalPath(resolvePath(url || location.pathname || "/"));
-  const canonicalUrl = new URL(canonicalPath, PRODUCTION_DOMAIN).toString();
+  const canonicalUrl = toCanonicalUrl(canonicalPath);
   const imageUrl = image.startsWith("http") ? image : `${PRODUCTION_DOMAIN}${image}`;
   const robotsContent = noIndex ? "noindex, nofollow" : "index, follow";
 

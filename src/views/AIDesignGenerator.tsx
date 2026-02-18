@@ -234,6 +234,7 @@ type LayoutFailureReason =
   | "room_boundaries_expanded_or_compressed";
 
 interface FunctionErrorContext {
+  status?: number;
   clone?: () => FunctionErrorContext;
   json?: () => Promise<unknown>;
   text?: () => Promise<string>;
@@ -677,6 +678,32 @@ const buildPreferenceSentence = (
     return null;
   };
 
+  const extractGatewayErrorMessage = (rawMessage: string) => {
+    const match = rawMessage.match(/^AI error \d+:\s*(\{[\s\S]*\})$/i);
+    if (!match) return rawMessage;
+
+    try {
+      const parsed = JSON.parse(match[1]) as {
+        error?: {
+          message?: string;
+        };
+      };
+      if (typeof parsed?.error?.message === "string" && parsed.error.message.trim()) {
+        return parsed.error.message.trim();
+      }
+    } catch {
+      // Ignore and fall through to default below.
+    }
+
+    return "AI service is temporarily unavailable. Please try again shortly.";
+  };
+
+  const isRetryableAiOutage = (status: number | undefined, message: string, retryable?: boolean) => {
+    if (retryable) return true;
+    if (status === 503 || status === 502 || status === 504) return true;
+    return /high demand|unavailable|try again later|temporarily unavailable|resource exhausted/i.test(message);
+  };
+
   const describeLayoutFailureReason = (reason: LayoutFailureReason) => {
     switch (reason) {
       case "structural_edges_changed":
@@ -968,6 +995,13 @@ const buildPreferenceSentence = (
 
       if (error) {
         const payload = await parseFunctionErrorPayload(error);
+        const status = (error as FunctionInvokeErrorLike | null)?.context?.status;
+        const payloadError =
+          payload && typeof payload === "object" && payload !== null && "error" in payload && typeof payload.error === "string"
+            ? payload.error
+            : "";
+        const retryable =
+          payload && typeof payload === "object" && payload !== null && "retryable" in payload && payload.retryable === true;
 
         if (payload?.needClearerPhoto) {
           const warning = payload.error || "Please upload a clearer photo that shows the full room boundaries.";
@@ -998,6 +1032,13 @@ const buildPreferenceSentence = (
           return;
         }
 
+        if (isRetryableAiOutage(status, payloadError, retryable)) {
+          const warning = "AI is busy right now. Please wait about a minute and try again.";
+          setGenerationGuardrailMessage(warning);
+          toast.error(warning);
+          return;
+        }
+
         if (payload?.error) {
           if (payload?.limitReached) {
             const warning =
@@ -1007,12 +1048,18 @@ const buildPreferenceSentence = (
             toast.error(warning);
             return;
           }
-          throw new Error(payload.error);
+          throw new Error(extractGatewayErrorMessage(payload.error));
         }
 
-        const status = error?.context?.status;
         if (status === 429) {
           const warning = "Daily limit reached for today. Please come back tomorrow for more generations.";
+          setGenerationGuardrailMessage(warning);
+          toast.error(warning);
+          return;
+        }
+
+        if (status === 503 || status === 502 || status === 504) {
+          const warning = "AI is busy right now. Please wait about a minute and try again.";
           setGenerationGuardrailMessage(warning);
           toast.error(warning);
           return;

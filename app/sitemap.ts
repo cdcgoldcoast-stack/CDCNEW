@@ -4,6 +4,11 @@ import { fetchProjects } from "@/data/projects";
 const BASE_URL = "https://www.cdconstruct.com.au";
 export const revalidate = 900;
 
+const toAbsoluteCanonicalUrl = (pathname: string) => {
+  if (pathname === "/") return BASE_URL;
+  return `${BASE_URL}${pathname}`;
+};
+
 const staticRoutes: Array<{
   path: string;
   changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
@@ -56,14 +61,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const projects = await fetchProjects();
 
   const baseEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
-    url: `${BASE_URL}${route.path}`,
+    url: toAbsoluteCanonicalUrl(route.path),
     lastModified: now,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));
 
   const projectEntries: MetadataRoute.Sitemap = projects.map((project) => ({
-    url: `${BASE_URL}/renovation-projects/${project.slug}`,
+    url: toAbsoluteCanonicalUrl(`/renovation-projects/${project.slug}`),
     lastModified: resolveProjectDate(project),
     changeFrequency: "monthly",
     priority: 0.7,
