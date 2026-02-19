@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
+import { useEffect, useState } from "react";
 
 const EditorialReveal = dynamic(() => import("@/components/EditorialReveal"));
 const JourneySection = dynamic(() => import("@/components/JourneySection"));
@@ -14,6 +15,25 @@ const CostsSection = dynamic(() => import("@/components/CostsSection"));
 const ImageComparisonSlider = dynamic(() => import("@/components/ImageComparisonSlider"), {
   ssr: false,
 });
+
+// Mobile-optimized deferred loader for below-fold heavy components
+function MobileDeferred({ children, placeholder }: { children: React.ReactNode; placeholder?: React.ReactNode }) {
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    // Skip on desktop
+    if (window.innerWidth >= 768) {
+      setIsVisible(true);
+      return;
+    }
+    // Defer slightly on mobile to prioritize LCP
+    const timer = setTimeout(() => setIsVisible(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+  
+  if (!isVisible) return placeholder || null;
+  return <>{children}</>;
+}
 
 export default function SSRHomeClient() {
   return (
@@ -60,14 +80,14 @@ export default function SSRHomeClient() {
                   </Link>
                 </div>
               </div>
-              <div>
+              <MobileDeferred placeholder={<div className="aspect-[4/3] bg-muted/50" />}>
                 <ImageComparisonSlider
                   beforeImage="https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Renovaton-before.webp"
                   afterImage="https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/RenovationAI.webp"
                   beforeLabel="Before"
                   afterLabel="AI Visualisation"
                 />
-              </div>
+              </MobileDeferred>
             </div>
           </div>
         </section>

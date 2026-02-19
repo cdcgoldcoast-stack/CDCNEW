@@ -77,6 +77,8 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <link rel="icon" type="image/png" href="/favicon-v2.png" />
         <link rel="dns-prefetch" href="//iqugsxeejieneyksfbza.supabase.co" />
         <link rel="preconnect" href="https://iqugsxeejieneyksfbza.supabase.co" crossOrigin="anonymous" />
+        {/* Preload mobile hero image for fast LCP */}
+        <link rel="preload" as="image" href="https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Gold_Coast_renovation_builders.webp" type="image/webp" fetchPriority="high" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en_AU" />
         <meta property="og:url" content={SITE_URL} />

@@ -28,8 +28,8 @@ const Hero = ({ desktopHeroImageUrl }: HeroProps) => {
             fetchPriority="high"
             decoding="async"
             priority
-            quality={54}
-            responsiveWidths={[320, 420, 560, 720, 860]}
+            quality={48}
+            responsiveWidths={[320, 420, 560, 720]}
             useSupabaseTransform
           />
         </div>

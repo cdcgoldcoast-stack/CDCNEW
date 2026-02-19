@@ -28,8 +28,8 @@ const Header = () => {
   const location = useLocation();
   const isHome = location.pathname === "/";
 
-  // Get logo with potential override
-  const logoSrc = useResolvedAsset("logo");
+  // Get logo with potential override - staticFirst for mobile to prevent skeleton flash
+  const logoSrc = useResolvedAsset("logo", { staticFirst: true });
 
   useEffect(() => {
     const handleScroll = () => {
