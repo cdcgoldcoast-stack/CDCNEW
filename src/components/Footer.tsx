@@ -104,11 +104,11 @@ const Footer = () => {
               
               {/* Phone */}
               <a
-                href="tel:0756121881"
+                href="tel:1300020232"
                 className="flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-foreground/80 hover:text-primary transition-colors duration-300 mb-3"
               >
                 <Phone className="w-3.5 h-3.5" />
-                (07) 5612 1881
+                1300 020 232
               </a>
               
               {/* Email */}
