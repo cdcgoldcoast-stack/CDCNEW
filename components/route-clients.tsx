@@ -66,6 +66,10 @@ const AdminSiteImagesPage = dynamic(() => import("@/views/admin/AdminSiteImages"
   ssr: false,
 });
 
+const BurleighHeadsPage = dynamic(() => import("@/views/BurleighHeads"), {
+  ssr: false,
+});
+
 export function AboutUsClient() {
   return <AboutUsPage />;
 }
@@ -120,6 +124,10 @@ export function ProjectDetailClient(props: ProjectDetailProps) {
 
 export function NotFoundClient() {
   return <NotFoundPage />;
+}
+
+export function BurleighHeadsClient() {
+  return <BurleighHeadsPage />;
 }
 
 export function AuthClient() {
