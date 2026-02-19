@@ -1,4 +1,11 @@
-import { PRODUCTION_DOMAIN, SITE_NAME, BUSINESS_INFO, SERVICE_AREAS } from "@/config/seo";
+import {
+  PRODUCTION_DOMAIN,
+  SITE_NAME,
+  SITE_ALTERNATE_NAME,
+  BUSINESS_INFO,
+  SERVICE_AREAS,
+  withBrandDescription,
+} from "@/config/seo";
 
 export interface FAQItem {
   question: string;
@@ -149,7 +156,9 @@ export const generateAboutPageSchema = () => ({
   "@type": "AboutPage",
   "@id": `${PRODUCTION_DOMAIN}/about-us#webpage`,
   name: `About ${SITE_NAME}`,
-  description: `Learn about ${SITE_NAME}'s mission to deliver quality service with quality outcomes for Gold Coast home renovations.`,
+  description: withBrandDescription(
+    `Learn about ${SITE_NAME}'s mission to deliver quality service with quality outcomes for Gold Coast home renovations.`,
+  ),
   url: `${PRODUCTION_DOMAIN}/about-us`,
   mainEntity: {
     "@id": ORGANIZATION_ID,
@@ -169,7 +178,9 @@ export const generateContactPageSchema = () => ({
   "@type": "ContactPage",
   "@id": `${PRODUCTION_DOMAIN}/book-renovation-consultation#webpage`,
   name: "Get a Quote - Gold Coast Home Renovation",
-  description: "Start your Gold Coast renovation journey. Get a free consultation and quote for your kitchen, bathroom, or whole-home renovation project.",
+  description: withBrandDescription(
+    "Start your Gold Coast renovation journey. Get a free consultation and quote for your kitchen, bathroom, or whole-home renovation project.",
+  ),
   url: `${PRODUCTION_DOMAIN}/book-renovation-consultation`,
   mainEntity: {
     "@id": ORGANIZATION_ID,
@@ -188,9 +199,15 @@ export const generateLocalBusinessSchema = () => ({
   "@type": BUSINESS_INFO.type,
   "@id": ORGANIZATION_ID,
   name: SITE_NAME,
-  alternateName: "CD Construct",
-  description:
+  legalName: SITE_NAME,
+  alternateName: SITE_ALTERNATE_NAME,
+  brand: {
+    "@type": "Brand",
+    name: SITE_ALTERNATE_NAME,
+  },
+  description: withBrandDescription(
     "Gold Coast renovation builders for kitchens, bathrooms, and whole homes. Design-led, QBCC licensed. Free consultation.",
+  ),
   url: PRODUCTION_DOMAIN,
   logo: `${PRODUCTION_DOMAIN}/logo.webp`,
   image: `${PRODUCTION_DOMAIN}/og-image.jpg`,

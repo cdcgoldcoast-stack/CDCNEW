@@ -12,6 +12,7 @@ import BottomInvitation from "@/components/BottomInvitation";
 import { slugMatches } from "@/lib/slug";
 import NotFound from "@/views/NotFound";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import { buildProjectMetaDescription } from "@/config/seo";
 
 export interface ProjectDetailProps {
   initialProject?: Project;
@@ -139,12 +140,18 @@ const ProjectDetail = ({ initialProject, initialProjects }: ProjectDetailProps =
     "Sequenced works coordinated with clear planning milestones",
   ];
   const projectFeedbackQuote = getProjectFeedbackQuote(project);
+  const seoDescription = buildProjectMetaDescription({
+    projectName: project.name,
+    category: project.category,
+    location: project.location,
+    summary: project.description || project.overview || "",
+  });
 
   return (
     <div className="min-h-screen bg-background">
       <SEO
         title={`${project.name} | ${project.category.replace("-", " ")} Renovations in ${project.location}`}
-        description={project.description || `${project.name} - A ${project.category.replace("-", " ")} renovations case study in ${project.location}, Gold Coast by Concept Design Construct.`}
+        description={seoDescription}
         url={`/renovation-projects/${project.slug}`}
         image={project.image}
         jsonLd={[projectSchema, breadcrumbSchema]}

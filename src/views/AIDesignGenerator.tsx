@@ -12,7 +12,9 @@ import { supabase } from "@/integrations/supabase/client";
 import ImageComparisonSlider from "@/components/ImageComparisonSlider";
 import { cn } from "@/lib/utils";
 import { useResolvedAsset } from "@/hooks/useSiteAssets";
+import { useDesignGeneration } from "@/hooks/useDesignGeneration";
 import SEO from "@/components/SEO";
+import type { DesignGenerationError, DesignGenerationSpaceType } from "@/types/ai";
 
 const ChatMessage = ({
   role,
@@ -227,24 +229,6 @@ type HistoryEntry = {
 
 type PostGenerationAction = "make_changes" | "generate_more" | null;
 
-type LayoutFailureReason =
-  | "structural_edges_changed"
-  | "camera_or_geometry_shifted"
-  | "fixtures_or_openings_moved"
-  | "room_boundaries_expanded_or_compressed";
-
-interface FunctionErrorContext {
-  status?: number;
-  clone?: () => FunctionErrorContext;
-  json?: () => Promise<unknown>;
-  text?: () => Promise<string>;
-}
-
-interface FunctionInvokeErrorLike {
-  message?: string;
-  context?: FunctionErrorContext;
-}
-
 const SPACE_TYPES = [
   { value: "bathroom", label: "Bathroom", icon: "🛁" },
   { value: "kitchen", label: "Kitchen", icon: "🍳" },
@@ -341,6 +325,7 @@ const buildPreferenceSentence = (
   const [pendingAction, setPendingAction] = useState<PostGenerationAction>(null);
   const [sessionEnded, setSessionEnded] = useState(false);
   const MAX_SESSION_GENERATIONS = 4;
+  const { generateDesign } = useDesignGeneration();
   const [leadForm, setLeadForm] = useState({
     fullName: "",
     email: "",
@@ -389,6 +374,40 @@ const buildPreferenceSentence = (
 
   const getSpaceLabel = (type: SpaceType) =>
     type ? SPACE_TYPES.find((space) => space.value === type)?.label ?? "" : "";
+
+  const toDesignSpaceType = (value: SpaceType): DesignGenerationSpaceType | null => {
+    if (!value) return null;
+    return value;
+  };
+
+  const getGenerationErrorMessage = (result: DesignGenerationError) => {
+    switch (result.code) {
+      case "LIMIT_REACHED":
+        return (
+          result.error ||
+          "Daily limit reached for today. Please come back tomorrow for more generations."
+        );
+      case "IMAGE_UNCLEAR":
+        return (
+          result.error ||
+          "Please upload a clearer, front-on image with full walls, doors, and windows visible."
+        );
+      case "BUSY": {
+        if (result.retryAfterSeconds && result.retryAfterSeconds > 0) {
+          return `${result.error} Please wait about ${result.retryAfterSeconds} seconds and try again.`;
+        }
+        return result.error || "AI is busy right now. Please wait about a minute and try again.";
+      }
+      case "INVALID_INPUT":
+        return result.error || "Please review your image and prompt details before trying again.";
+      case "UPSTREAM_BLOCKED":
+        return result.error || "This photo could not be processed. Please try a different image.";
+      case "CONFIG_ERROR":
+        return "AI service is temporarily unavailable. Please try again shortly.";
+      default:
+        return result.error || "Failed to generate design. Please try again.";
+    }
+  };
 
   const loadingMessages = [
     "Magic happening…",
@@ -637,89 +656,6 @@ const buildPreferenceSentence = (
       toast.error("Could not save your details. Please try again.");
     } finally {
       setLeadSubmitting(false);
-    }
-  };
-
-  const parseFunctionErrorPayload = async (invokeError: unknown) => {
-    const typedError = invokeError as FunctionInvokeErrorLike;
-
-    try {
-      if (typedError.context && typeof typedError.context.json === "function") {
-        const clone = typeof typedError.context.clone === "function" ? typedError.context.clone() : typedError.context;
-        return await clone.json!();
-      }
-    } catch {
-      // Ignore parse errors and fall back below.
-    }
-
-    try {
-      if (typedError.context && typeof typedError.context.text === "function") {
-        const clone = typeof typedError.context.clone === "function" ? typedError.context.clone() : typedError.context;
-        const raw = await clone.text!();
-        if (!raw) return null;
-        try {
-          return JSON.parse(raw);
-        } catch {
-          return { error: raw };
-        }
-      }
-    } catch {
-      // Ignore parse errors and fall back below.
-    }
-
-    if (typeof typedError.message === "string") {
-      try {
-        return JSON.parse(typedError.message);
-      } catch {
-        return null;
-      }
-    }
-
-    return null;
-  };
-
-  const waitForRetry = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-  const extractGatewayErrorMessage = (rawMessage: string) => {
-    const match = rawMessage.match(/^AI error \d+:\s*(\{[\s\S]*\})$/i);
-    if (!match) return rawMessage;
-
-    try {
-      const parsed = JSON.parse(match[1]) as {
-        error?: {
-          message?: string;
-        };
-      };
-      if (typeof parsed?.error?.message === "string" && parsed.error.message.trim()) {
-        return parsed.error.message.trim();
-      }
-    } catch {
-      // Ignore and fall through to default below.
-    }
-
-    return "AI service is temporarily unavailable. Please try again shortly.";
-  };
-
-  const isRetryableAiOutage = (status: number | undefined, message: string, retryable?: boolean) => {
-    if (retryable) return true;
-    if (status === 500 || status === 503 || status === 502 || status === 504) return true;
-    return /high demand|unavailable|try again later|temporarily unavailable|resource exhausted|internal server error/i.test(
-      message
-    );
-  };
-
-  const describeLayoutFailureReason = (reason: LayoutFailureReason) => {
-    switch (reason) {
-      case "structural_edges_changed":
-        return "major structural edges shifted";
-      case "camera_or_geometry_shifted":
-        return "camera perspective or room geometry shifted";
-      case "fixtures_or_openings_moved":
-        return "doors, windows, or fixtures moved";
-      case "room_boundaries_expanded_or_compressed":
-        return "room boundaries expanded or compressed";
-      default:
-        return "layout lock failed";
     }
   };
 
@@ -987,136 +923,28 @@ const buildPreferenceSentence = (
     setGenerationGuardrailMessage(null);
 
     try {
-      const maxAttempts = 2;
-      let data: any = null;
-      let error: any = null;
-      let payload: any = null;
-      let status: number | undefined;
-
-      for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-        const invokeResult = await supabase.functions.invoke("generate-design", {
-          body: {
-            imageBase64: uploadedImage,
-            prompt: finalPrompt,
-            spaceType: spaceType,
-            imageWidth: imageDimensions?.width,
-            imageHeight: imageDimensions?.height,
-          },
-        });
-
-        data = invokeResult.data;
-        error = invokeResult.error;
-
-        if (!error) break;
-
-        payload = await parseFunctionErrorPayload(error);
-        status = (error as FunctionInvokeErrorLike | null)?.context?.status;
-        const payloadError =
-          payload && typeof payload === "object" && payload !== null && "error" in payload && typeof payload.error === "string"
-            ? payload.error
-            : "";
-        const retryable =
-          payload && typeof payload === "object" && payload !== null && "retryable" in payload && payload.retryable === true;
-        const limitReached =
-          payload && typeof payload === "object" && payload !== null && "limitReached" in payload && payload.limitReached === true;
-
-        const shouldRetry =
-          attempt < maxAttempts && !limitReached && isRetryableAiOutage(status, payloadError, retryable);
-
-        if (shouldRetry) {
-          await waitForRetry(800 * attempt);
-          continue;
-        }
-
-        break;
-      }
-
-      if (error) {
-        if (!payload) {
-          payload = await parseFunctionErrorPayload(error);
-        }
-        status = (error as FunctionInvokeErrorLike | null)?.context?.status;
-        const payloadError =
-          payload && typeof payload === "object" && payload !== null && "error" in payload && typeof payload.error === "string"
-            ? payload.error
-            : "";
-        const retryable =
-          payload && typeof payload === "object" && payload !== null && "retryable" in payload && payload.retryable === true;
-
-        if (payload?.needClearerPhoto) {
-          const warning = payload.error || "Please upload a clearer photo that shows the full room boundaries.";
-          setGenerationGuardrailMessage(warning);
-          toast.error(warning);
-          return;
-        }
-
-        if (payload?.layoutChanged || (Array.isArray(payload?.layoutFailureReasons) && payload.layoutFailureReasons.length > 0)) {
-          const reasonSummary = Array.isArray(payload?.layoutFailureReasons)
-            ? payload.layoutFailureReasons
-                .map((reason: LayoutFailureReason) => describeLayoutFailureReason(reason))
-                .join(", ")
-            : "";
-          const warning = payload?.error || "I could not preserve the exact room layout in that result.";
-          const fullWarning = reasonSummary
-            ? `${warning} Detected issues: ${reasonSummary}.`
-            : `${warning} Please upload a clearer, front-on image with full walls, doors, and windows visible.`;
-          setGenerationGuardrailMessage(fullWarning);
-          toast.error(warning);
-          return;
-        }
-
-        if (payload?.changeTooSubtle) {
-          const warning = payload.error || "The result was too subtle. Try stronger style directions.";
-          setGenerationGuardrailMessage(warning);
-          toast.error(warning);
-          return;
-        }
-
-        if (isRetryableAiOutage(status, payloadError, retryable)) {
-          const warning = "AI is busy right now. Please wait about a minute and try again.";
-          setGenerationGuardrailMessage(warning);
-          toast.error(warning);
-          return;
-        }
-
-        if (payload?.error) {
-          if (payload?.limitReached) {
-            const warning =
-              payload.error ||
-              "Daily limit reached for today. Please come back tomorrow for more generations.";
-            setGenerationGuardrailMessage(warning);
-            toast.error(warning);
-            return;
-          }
-          throw new Error(extractGatewayErrorMessage(payload.error));
-        }
-
-        if (status === 429) {
-          const warning = "Daily limit reached for today. Please come back tomorrow for more generations.";
-          setGenerationGuardrailMessage(warning);
-          toast.error(warning);
-          return;
-        }
-
-        if (status === 503 || status === 502 || status === 504) {
-          const warning = "AI is busy right now. Please wait about a minute and try again.";
-          setGenerationGuardrailMessage(warning);
-          toast.error(warning);
-          return;
-        }
-
-        throw error;
-      }
-
-      if (data?.needClearerPhoto) {
-        const warning = data.error || "Please upload a clearer photo that shows the full room boundaries.";
+      const mappedSpaceType = toDesignSpaceType(spaceType);
+      if (!mappedSpaceType) {
+        const warning = "Please select a valid space type.";
         setGenerationGuardrailMessage(warning);
         toast.error(warning);
         return;
       }
 
-      if (data?.error) throw new Error(data.error);
-      if (!data?.imageUrl) throw new Error("No image was returned. Please try again.");
+      const result = await generateDesign({
+        imageBase64: uploadedImage,
+        prompt: finalPrompt,
+        spaceType: mappedSpaceType,
+        imageWidth: imageDimensions?.width,
+        imageHeight: imageDimensions?.height,
+      });
+
+      if (!result.ok) {
+        const warning = getGenerationErrorMessage(result);
+        setGenerationGuardrailMessage(warning);
+        toast.error(warning);
+        return;
+      }
 
       const id =
         typeof crypto !== "undefined" && "randomUUID" in crypto
@@ -1125,14 +953,14 @@ const buildPreferenceSentence = (
       const userNote = pendingUserNote ?? null;
       const applySuccessState = () => {
         setLastGeneratedPrompt(finalPrompt);
-        setGeneratedImage(data.imageUrl);
+        setGeneratedImage(result.imageUrl);
         setViewMode("result");
         setGenerationHistory((prev) => [
           ...prev,
           {
             id,
             beforeImage: uploadedImage,
-            afterImage: data.imageUrl,
+            afterImage: result.imageUrl,
             prompt: finalPrompt,
             userNote,
             spaceType,
@@ -1144,10 +972,14 @@ const buildPreferenceSentence = (
         setIsNewImageFlow(false);
         setPendingUserNote(null);
         setGenerationGuardrailMessage(null);
-        toast.success("Design generated successfully!");
+        if (result.degraded) {
+          toast.success("Design generated successfully! Output quality was optimized for completion.");
+        } else {
+          toast.success("Design generated successfully!");
+        }
       };
 
-      if (data.imageUrl && imageDimensions) {
+      if (result.imageUrl && imageDimensions) {
         const resultImg = new Image();
         resultImg.onload = () => {
           const resultWidth = resultImg.naturalWidth;
@@ -1164,7 +996,7 @@ const buildPreferenceSentence = (
         resultImg.onerror = () => {
           applySuccessState();
         };
-        resultImg.src = data.imageUrl;
+        resultImg.src = result.imageUrl;
       } else {
         applySuccessState();
       }

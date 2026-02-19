@@ -11,12 +11,10 @@ import {
   rejectDisallowedOrigin,
 } from "../_shared/security.ts";
 
-// Function to calculate GCD for aspect ratio
 function gcd(a: number, b: number): number {
   return b === 0 ? a : gcd(b, a % b);
 }
 
-// Function to simplify aspect ratio
 function getAspectRatio(width: number, height: number): string {
   const divisor = gcd(width, height);
   return `${width / divisor}:${height / divisor}`;
@@ -28,8 +26,19 @@ const BURST_WINDOW_SECONDS = Number(Deno.env.get("DESIGN_BURST_WINDOW_SECONDS") 
 const SUSPICIOUS_LIMIT = Number(Deno.env.get("DESIGN_SUSPICIOUS_LIMIT") ?? "2");
 const SUSPICIOUS_WINDOW_SECONDS = Number(Deno.env.get("DESIGN_SUSPICIOUS_WINDOW_SECONDS") ?? "3600");
 const AI_MODEL = Deno.env.get("GEMINI_IMAGE_MODEL") ?? "gemini-3-pro-image-preview";
-const AI_MAX_ATTEMPTS = Math.max(1, Number(Deno.env.get("DESIGN_AI_MAX_ATTEMPTS") ?? "2"));
-const AI_REQUEST_TIMEOUT_MS = Math.max(20_000, Number(Deno.env.get("DESIGN_AI_TIMEOUT_MS") ?? "55_000"));
+const AI_MAX_ATTEMPTS = Math.max(1, Number(Deno.env.get("DESIGN_AI_MAX_ATTEMPTS") ?? "4"));
+const AI_REQUEST_TIMEOUT_MS = Math.max(20_000, Number(Deno.env.get("DESIGN_AI_TIMEOUT_MS") ?? "70_000"));
+
+type DesignErrorCode =
+  | "BUSY"
+  | "LIMIT_REACHED"
+  | "INVALID_INPUT"
+  | "IMAGE_UNCLEAR"
+  | "UPSTREAM_BLOCKED"
+  | "CONFIG_ERROR"
+  | "UNKNOWN";
+
+type SpaceType = "bathroom" | "kitchen" | "laundry" | "open-plan";
 
 interface GeminiErrorEnvelope {
   error?: {
@@ -49,7 +58,30 @@ interface GenerateDesignRequest {
   fixtureFinish?: string | null;
   imageWidth?: number;
   imageHeight?: number;
+  clientRequestId?: string;
 }
+
+interface NormalizedGatewayError {
+  code: DesignErrorCode;
+  error: string;
+  retryable: boolean;
+  retryAfterSeconds?: number;
+  status: number;
+}
+
+interface GatewaySuccess {
+  ok: true;
+  rawData: unknown;
+  attempts: number;
+}
+
+interface GatewayFailure {
+  ok: false;
+  attempts: number;
+  issue: NormalizedGatewayError;
+}
+
+type GatewayResult = GatewaySuccess | GatewayFailure;
 
 const STRICT_LAYOUT_SUFFIX = `
 
@@ -72,6 +104,16 @@ RENOVATION IMPACT: CLEAR AND REALISTIC
 - Add visible modern mood lighting (mirror backlight, under-vanity toe-kick glow, or subtle wall sconce).
 - Keep layout identical. Do NOT move walls, windows, doors, or fixtures.
 - Preserve all doors and windows exactly in place (frames, handles, openings unchanged).
+`;
+
+const COMPLETION_FIRST_RETRY_SUFFIX = `
+
+RETRY MODE - COMPLETION FIRST:
+- Produce a finished renovation preview for this same room photo.
+- Keep the room clearly recognizable and preserve major structure.
+- Prioritize a usable final image over strict refusal.
+- Keep doors, windows, and key fixtures in broadly the same positions.
+- Make renovation changes visibly stronger than a subtle color tweak.
 `;
 
 const SYSTEM_PROMPT = `CRITICAL INSTRUCTION - READ FIRST
@@ -128,7 +170,12 @@ Do not generate an image in this case.
 OUTPUT:
 Return the edited photo. The room structure, layout, camera angle, orientation, and dimensions must be IDENTICAL to the original.`;
 
-// Build dimension constraint text to inject into prompts
+function buildRequestId(): string {
+  return typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+    ? crypto.randomUUID()
+    : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
 function buildDimensionConstraint(width: number, height: number): string {
   const isPortrait = height > width;
   const isLandscape = width > height;
@@ -159,14 +206,13 @@ ABSOLUTE PROHIBITION:
 `;
 }
 
-// Build user prompt for "style" method
 function buildStylePrompt(
   spaceLabel: string,
   designStyle: string,
   colorTone: string | null,
   materialFeel: string | null,
   fixtureFinish: string | null,
-  dimensionConstraint: string
+  dimensionConstraint: string,
 ): string {
   const colorInstruction = colorTone ? `Use a ${colorTone.toLowerCase()} color palette.` : "";
   const materialInstruction = materialFeel ? `Feature ${materialFeel.toLowerCase()} materials.` : "";
@@ -195,7 +241,6 @@ ABSOLUTE REQUIREMENT:
 - Add visible ambient LED lighting (mirror backlight and/or under-vanity strip) without changing layout.`;
 }
 
-// Build user prompt for "describe" method
 function buildDescribePrompt(spaceLabel: string, userDescription: string, dimensionConstraint: string): string {
   return `${dimensionConstraint}
 
@@ -216,6 +261,19 @@ REMINDER:
 - Add visible ambient LED lighting (mirror backlight and/or under-vanity strip) without changing layout.`;
 }
 
+function normalizeSpaceType(rawSpaceType: string): SpaceType | null {
+  if (rawSpaceType === "living-open-plan") return "open-plan";
+  if (["bathroom", "kitchen", "laundry", "open-plan"].includes(rawSpaceType)) {
+    return rawSpaceType as SpaceType;
+  }
+  return null;
+}
+
+function sanitizePrompt(value: unknown): string {
+  if (typeof value !== "string") return "";
+  return value.trim();
+}
+
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function parseGeminiErrorEnvelope(raw: string): GeminiErrorEnvelope | null {
@@ -227,18 +285,375 @@ function parseGeminiErrorEnvelope(raw: string): GeminiErrorEnvelope | null {
   }
 }
 
-function isRetryableUpstreamFailure(status: number, parsedError: GeminiErrorEnvelope | null): boolean {
-  if ([429, 500, 502, 503, 504].includes(status)) return true;
-  const upstreamStatus = parsedError?.error?.status;
-  return ["UNAVAILABLE", "RESOURCE_EXHAUSTED", "DEADLINE_EXCEEDED", "INTERNAL"].includes(`${upstreamStatus || ""}`);
+function classifyUpstreamError(status: number, parsedError: GeminiErrorEnvelope | null): NormalizedGatewayError {
+  const upstreamStatus = `${parsedError?.error?.status || ""}`;
+
+  if (status === 429) {
+    return {
+      status,
+      code: "BUSY",
+      error: "AI is currently busy with high demand. Please try again shortly.",
+      retryable: true,
+      retryAfterSeconds: 45,
+    };
+  }
+
+  if (status === 402) {
+    return {
+      status,
+      code: "CONFIG_ERROR",
+      error: "AI service is currently unavailable due to account limits.",
+      retryable: false,
+    };
+  }
+
+  if (
+    [500, 502, 503, 504].includes(status) ||
+    ["UNAVAILABLE", "RESOURCE_EXHAUSTED", "DEADLINE_EXCEEDED", "INTERNAL"].includes(upstreamStatus)
+  ) {
+    return {
+      status,
+      code: "BUSY",
+      error: "AI service is temporarily unavailable. Please try again in about a minute.",
+      retryable: true,
+      retryAfterSeconds: 60,
+    };
+  }
+
+  return {
+    status,
+    code: "UNKNOWN",
+    error: "AI service returned an unexpected response.",
+    retryable: false,
+  };
+}
+
+function shouldRetryGatewayIssue(issue: NormalizedGatewayError): boolean {
+  return issue.retryable && issue.code === "BUSY";
+}
+
+function buildBackoffMs(attempt: number): number {
+  const base = [700, 1500, 2800, 4500][Math.min(attempt - 1, 3)] ?? 4500;
+  const jitter = Math.floor(Math.random() * 250);
+  return base + jitter;
+}
+
+function normalizeDimension(value: unknown): number | null {
+  if (typeof value !== "number" || Number.isNaN(value) || !Number.isFinite(value)) return null;
+  const rounded = Math.round(value);
+  if (rounded <= 0 || rounded > 12_000) return null;
+  return rounded;
+}
+
+function normalizeGatewayError(status: number, parsedError: GeminiErrorEnvelope | null): NormalizedGatewayError {
+  return classifyUpstreamError(status, parsedError);
+}
+
+function errorResponse(
+  req: Request,
+  status: number,
+  requestId: string,
+  code: DesignErrorCode,
+  error: string,
+  options: {
+    retryable?: boolean;
+    retryAfterSeconds?: number;
+    remaining?: number;
+    limitReached?: boolean;
+    needClearerPhoto?: boolean;
+    reason?: string;
+  } = {},
+): Response {
+  const retryable = options.retryable ?? false;
+  const retryAfterSeconds = options.retryAfterSeconds;
+
+  const headers: Record<string, string> = {};
+  if (retryAfterSeconds && retryAfterSeconds > 0) {
+    headers["Retry-After"] = String(retryAfterSeconds);
+  }
+
+  return jsonResponse(
+    req,
+    status,
+    {
+      ok: false,
+      requestId,
+      code,
+      error,
+      retryable,
+      retryAfterSeconds,
+      remaining: options.remaining,
+      limitReached: options.limitReached ?? code === "LIMIT_REACHED",
+      needClearerPhoto: options.needClearerPhoto ?? code === "IMAGE_UNCLEAR",
+      reason: options.reason,
+    },
+    headers,
+  );
+}
+
+function successResponse(
+  req: Request,
+  payload: {
+    requestId: string;
+    imageUrl: string;
+    description: string;
+    remaining: number;
+    degraded: boolean;
+  },
+): Response {
+  return jsonResponse(req, 200, {
+    ok: true,
+    requestId: payload.requestId,
+    imageUrl: payload.imageUrl,
+    description: payload.description,
+    remaining: payload.remaining,
+    degraded: payload.degraded,
+  });
+}
+
+function buildGeminiRequestBody(args: {
+  systemPrompt: string;
+  userPrompt: string;
+  mimeType: string;
+  base64Data: string;
+}): string {
+  return JSON.stringify({
+    contents: [
+      {
+        role: "user",
+        parts: [
+          { text: `${args.systemPrompt}\n\n${args.userPrompt}` },
+          {
+            inlineData: {
+              mimeType: args.mimeType,
+              data: args.base64Data,
+            },
+          },
+        ],
+      },
+    ],
+    generationConfig: {
+      responseModalities: ["TEXT", "IMAGE"],
+    },
+  });
+}
+
+async function callGeminiWithRetries(args: {
+  endpoint: string;
+  requestBody: string;
+  requestId: string;
+  maxAttempts: number;
+  timeoutMs: number;
+  requestLabel: "primary" | "salvage";
+}): Promise<GatewayResult> {
+  let lastIssue: NormalizedGatewayError = {
+    status: 503,
+    code: "BUSY",
+    error: "AI service is temporarily unavailable.",
+    retryable: true,
+    retryAfterSeconds: 45,
+  };
+
+  for (let attempt = 1; attempt <= args.maxAttempts; attempt += 1) {
+    const abortController = new AbortController();
+    const timeoutHandle = setTimeout(() => abortController.abort(), args.timeoutMs);
+
+    try {
+      const response = await fetch(args.endpoint, {
+        method: "POST",
+        signal: abortController.signal,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: args.requestBody,
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        const parsedError = parseGeminiErrorEnvelope(errorText);
+        const issue = normalizeGatewayError(response.status, parsedError);
+        lastIssue = issue;
+
+        console.error("generate-design gateway error", {
+          requestId: args.requestId,
+          requestLabel: args.requestLabel,
+          attempt,
+          maxAttempts: args.maxAttempts,
+          status: response.status,
+          issueCode: issue.code,
+          retryable: issue.retryable,
+          upstreamStatus: parsedError?.error?.status ?? null,
+          upstreamCode: parsedError?.error?.code ?? null,
+          upstreamMessage: (parsedError?.error?.message || errorText || "").slice(0, 240),
+        });
+
+        if (attempt < args.maxAttempts && shouldRetryGatewayIssue(issue)) {
+          await sleep(buildBackoffMs(attempt));
+          continue;
+        }
+
+        return { ok: false, attempts: attempt, issue };
+      }
+
+      let rawData: unknown;
+      try {
+        rawData = await response.json();
+      } catch (parseError) {
+        console.error("generate-design gateway returned non-json", {
+          requestId: args.requestId,
+          requestLabel: args.requestLabel,
+          attempt,
+          error: parseError instanceof Error ? parseError.message : String(parseError),
+        });
+
+        lastIssue = {
+          status: 502,
+          code: "BUSY",
+          error: "AI returned an unexpected response. Please try again shortly.",
+          retryable: true,
+          retryAfterSeconds: 45,
+        };
+
+        if (attempt < args.maxAttempts) {
+          await sleep(buildBackoffMs(attempt));
+          continue;
+        }
+
+        return { ok: false, attempts: attempt, issue: lastIssue };
+      }
+
+      return { ok: true, attempts: attempt, rawData };
+    } catch (error) {
+      const isTimeout = error instanceof DOMException && error.name === "AbortError";
+      lastIssue = isTimeout
+        ? {
+            status: 503,
+            code: "BUSY",
+            error: "AI is taking longer than expected right now. Please try again in about a minute.",
+            retryable: true,
+            retryAfterSeconds: 60,
+          }
+        : {
+            status: 503,
+            code: "BUSY",
+            error: "Could not reach the AI service right now. Please try again shortly.",
+            retryable: true,
+            retryAfterSeconds: 45,
+          };
+
+      console.error("generate-design gateway request failed", {
+        requestId: args.requestId,
+        requestLabel: args.requestLabel,
+        attempt,
+        maxAttempts: args.maxAttempts,
+        isTimeout,
+        error: error instanceof Error ? error.message : String(error),
+      });
+
+      if (attempt < args.maxAttempts) {
+        await sleep(buildBackoffMs(attempt));
+        continue;
+      }
+
+      return { ok: false, attempts: attempt, issue: lastIssue };
+    } finally {
+      clearTimeout(timeoutHandle);
+    }
+  }
+
+  return { ok: false, attempts: args.maxAttempts, issue: lastIssue };
+}
+
+function parseGeminiGeneration(rawData: unknown): {
+  imageUrl: string | null;
+  textResponse: string;
+  needClearerPhoto: boolean;
+  clearerPhotoReason: string | null;
+  blockedReason: string | null;
+} {
+  const data = rawData as {
+    candidates?: Array<{
+      finishReason?: string;
+      content?: {
+        parts?: Array<{
+          text?: string;
+          inlineData?: {
+            mimeType?: string;
+            data?: string;
+          };
+        }>;
+      };
+    }>;
+    promptFeedback?: {
+      blockReason?: string;
+    };
+  };
+
+  const candidates = Array.isArray(data?.candidates) ? data.candidates : [];
+
+  if (candidates.length === 0) {
+    return {
+      imageUrl: null,
+      textResponse: "",
+      needClearerPhoto: false,
+      clearerPhotoReason: null,
+      blockedReason: data?.promptFeedback?.blockReason || "no_candidates",
+    };
+  }
+
+  const finishReason = `${candidates[0]?.finishReason || ""}`;
+  if (finishReason === "SAFETY" || finishReason === "RECITATION") {
+    return {
+      imageUrl: null,
+      textResponse: "",
+      needClearerPhoto: false,
+      clearerPhotoReason: null,
+      blockedReason: finishReason,
+    };
+  }
+
+  const parts = Array.isArray(candidates[0]?.content?.parts) ? candidates[0].content?.parts ?? [] : [];
+
+  let textResponse = "";
+  let generatedImageUrl: string | null = null;
+
+  for (const part of parts) {
+    if (typeof part?.text === "string") {
+      textResponse += part.text;
+    }
+
+    if (typeof part?.inlineData?.data === "string" && typeof part?.inlineData?.mimeType === "string") {
+      generatedImageUrl = `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
+    }
+  }
+
+  const normalizedText = textResponse.trim();
+  const needsClearer = normalizedText.toUpperCase().startsWith("NEED_CLEARER_PHOTO");
+
+  return {
+    imageUrl: generatedImageUrl,
+    textResponse,
+    needClearerPhoto: needsClearer,
+    clearerPhotoReason: needsClearer
+      ? normalizedText.replace(/^NEED_CLEARER_PHOTO:/i, "").trim() || null
+      : null,
+    blockedReason: null,
+  };
+}
+
+function shouldApplySuspiciousGate(assessment: { score: number; reasons: string[] }): boolean {
+  if (assessment.score >= 6) return true;
+  return assessment.score >= 4 && assessment.reasons.includes("automation_user_agent");
 }
 
 serve(async (req) => {
   const corsHeaders = buildCorsHeaders(req);
+  const requestId = buildRequestId();
+
   const methodResponse = requireMethod(req, ["POST", "OPTIONS"]);
   if (methodResponse) return methodResponse;
 
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
@@ -247,11 +662,11 @@ serve(async (req) => {
 
   try {
     const clientHash = await getClientHash(req);
-    console.log("Client hash prefix:", clientHash.slice(0, 12));
     const suspiciousTraffic = assessSuspiciousTraffic(req);
 
-    if (suspiciousTraffic.isSuspicious) {
+    if (shouldApplySuspiciousGate(suspiciousTraffic)) {
       console.warn("Suspicious generate-design traffic detected", {
+        requestId,
         score: suspiciousTraffic.score,
         reasons: suspiciousTraffic.reasons,
         clientHashPrefix: clientHash.slice(0, 12),
@@ -267,19 +682,17 @@ serve(async (req) => {
         });
 
         if (!suspiciousRateLimit.allowed) {
-          return jsonResponse(
-            req,
-            429,
-            {
-              error: "Suspicious traffic limit reached. Please wait and try again later.",
-              remaining: suspiciousRateLimit.remaining,
-              resetAt: suspiciousRateLimit.resetAt,
-            },
-            { "Retry-After": String(SUSPICIOUS_WINDOW_SECONDS) },
-          );
+          return errorResponse(req, 429, requestId, "BUSY", "Suspicious traffic limit reached. Please wait and try again later.", {
+            retryable: true,
+            retryAfterSeconds: SUSPICIOUS_WINDOW_SECONDS,
+            remaining: suspiciousRateLimit.remaining,
+          });
         }
-      } catch (error) {
-        console.error("Rate limit check failed (suspicious). Continuing.", error);
+      } catch (rateError) {
+        console.error("Rate limit check failed (suspicious). Continuing.", {
+          requestId,
+          error: rateError instanceof Error ? rateError.message : String(rateError),
+        });
       }
     }
 
@@ -293,56 +706,64 @@ serve(async (req) => {
       });
 
       if (!burstRateLimit.allowed) {
-        return jsonResponse(
-          req,
-          429,
-          {
-            error: "Too many generation attempts. Please wait and try again.",
-            remaining: burstRateLimit.remaining,
-            resetAt: burstRateLimit.resetAt,
-          },
-          { "Retry-After": String(BURST_WINDOW_SECONDS) },
-        );
+        return errorResponse(req, 429, requestId, "BUSY", "Too many generation attempts. Please wait and try again.", {
+          retryable: true,
+          retryAfterSeconds: BURST_WINDOW_SECONDS,
+          remaining: burstRateLimit.remaining,
+        });
       }
-    } catch (error) {
-      console.error("Rate limit check failed (burst). Continuing with daily limit only.", error);
-    }
-
-    // Initialize Supabase client with service role for bypassing RLS
-    const supabase = createServiceClient();
-
-    // Check current usage for this IP today
-    const today = new Date().toISOString().split('T')[0];
-
-    let usageData: { generation_count?: number } | null = null;
-    let currentCount = 0;
-    try {
-      const usageResult = await supabase
-        .from('design_generation_usage')
-        .select('generation_count')
-        .eq('ip_address', clientHash)
-        .eq('usage_date', today)
-        .maybeSingle();
-
-      if (usageResult.error) {
-        console.error("Error checking usage. Continuing without hard usage gate:", usageResult.error);
-      } else {
-        usageData = usageResult.data;
-        currentCount = usageData?.generation_count || 0;
-      }
-    } catch (error) {
-      console.error("Usage query failed unexpectedly. Continuing without hard usage gate:", error);
-    }
-
-    if (currentCount >= DAILY_LIMIT) {
-      return jsonResponse(req, 429, {
-        error: `Daily limit reached. You can generate up to ${DAILY_LIMIT} designs per day. Please try again tomorrow.`,
-        limitReached: true,
-        remaining: 0,
+    } catch (rateError) {
+      console.error("Rate limit check failed (burst). Continuing.", {
+        requestId,
+        error: rateError instanceof Error ? rateError.message : String(rateError),
       });
     }
 
-    // Parse request fields
+    const supabase = createServiceClient();
+    const today = new Date().toISOString().split("T")[0];
+
+    let usageData: { generation_count?: number } | null = null;
+    let currentCount = 0;
+
+    try {
+      const usageResult = await supabase
+        .from("design_generation_usage")
+        .select("generation_count")
+        .eq("ip_address", clientHash)
+        .eq("usage_date", today)
+        .maybeSingle();
+
+      if (!usageResult.error) {
+        usageData = usageResult.data;
+        currentCount = usageData?.generation_count || 0;
+      } else {
+        console.error("Error checking usage. Continuing without hard usage gate", {
+          requestId,
+          error: usageResult.error.message,
+        });
+      }
+    } catch (usageError) {
+      console.error("Usage query failed unexpectedly. Continuing without hard usage gate", {
+        requestId,
+        error: usageError instanceof Error ? usageError.message : String(usageError),
+      });
+    }
+
+    if (currentCount >= DAILY_LIMIT) {
+      return errorResponse(
+        req,
+        429,
+        requestId,
+        "LIMIT_REACHED",
+        `Daily limit reached. You can generate up to ${DAILY_LIMIT} designs per day. Please try again tomorrow.`,
+        {
+          retryable: false,
+          remaining: 0,
+          limitReached: true,
+        },
+      );
+    }
+
     const bodyResult = await requireJsonBody<GenerateDesignRequest>(req, 17_000_000);
     if ("response" in bodyResult) {
       return bodyResult.response;
@@ -358,316 +779,270 @@ serve(async (req) => {
       fixtureFinish,
       imageWidth,
       imageHeight,
+      clientRequestId,
     } = bodyResult.data;
 
-    console.log("Design generation request:", {
-      spaceType,
-      designStyle: designStyle || "N/A",
-      promptLength: prompt?.length || 0,
-      imageDimensions: imageWidth && imageHeight ? `${imageWidth}x${imageHeight}` : "N/A"
-    });
+    const safeClientRequestId = typeof clientRequestId === "string" ? clientRequestId.trim().slice(0, 80) : "";
 
-    // Validate required fields
     if (!imageBase64 || typeof imageBase64 !== "string") {
-      return jsonResponse(req, 400, { error: "Please upload an image" });
+      return errorResponse(req, 400, requestId, "INVALID_INPUT", "Please upload an image", { retryable: false });
     }
 
     if (imageBase64.length > 16_000_000) {
-      return jsonResponse(req, 413, { error: "Image is too large. Please upload a smaller file." });
+      return errorResponse(req, 413, requestId, "INVALID_INPUT", "Image is too large. Please upload a smaller file.", {
+        retryable: false,
+      });
     }
 
-    if (!spaceType) {
-      return jsonResponse(req, 400, { error: "Please select a space type" });
+    if (!spaceType || typeof spaceType !== "string") {
+      return errorResponse(req, 400, requestId, "INVALID_INPUT", "Please select a space type", { retryable: false });
     }
 
-    if (!["bathroom", "kitchen", "laundry", "living-open-plan", "open-plan"].includes(spaceType)) {
-      return jsonResponse(req, 400, { error: "Invalid space type selected" });
+    const normalizedSpaceType = normalizeSpaceType(spaceType);
+    if (!normalizedSpaceType) {
+      return errorResponse(req, 400, requestId, "INVALID_INPUT", "Invalid space type selected", { retryable: false });
     }
 
-    const hasPrompt = typeof prompt === "string" && prompt.trim().length > 0;
-    if (typeof prompt === "string" && prompt.length > 2000) {
-      return jsonResponse(req, 400, { error: "Prompt is too long" });
+    const trimmedPrompt = sanitizePrompt(prompt);
+    if (trimmedPrompt.length > 2000) {
+      return errorResponse(req, 400, requestId, "INVALID_INPUT", "Prompt is too long", { retryable: false });
     }
 
-    if (!designStyle && !hasPrompt) {
-      return jsonResponse(req, 400, { error: "Please add your design preferences" });
+    if (!trimmedPrompt && !designStyle) {
+      return errorResponse(req, 400, requestId, "INVALID_INPUT", "Please add your design preferences", { retryable: false });
     }
 
-    if (!imageWidth || !imageHeight) {
-      console.warn("Image dimensions not provided - orientation enforcement will be limited");
-    }
+    const normalizedWidth = normalizeDimension(imageWidth);
+    const normalizedHeight = normalizeDimension(imageHeight);
+    const dimensionConstraint =
+      normalizedWidth && normalizedHeight ? buildDimensionConstraint(normalizedWidth, normalizedHeight) : "";
 
     const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
     if (!GEMINI_API_KEY) {
-      throw new Error("GEMINI_API_KEY is not configured");
+      return errorResponse(req, 500, requestId, "CONFIG_ERROR", "AI service key is missing on the server.", {
+        retryable: false,
+      });
     }
 
-    // Build the user prompt
-    const spaceLabel = spaceType ? spaceType.replace("-", " ") : "space";
-    const dimensionConstraint = imageWidth && imageHeight
-      ? buildDimensionConstraint(imageWidth, imageHeight)
-      : "";
+    const spaceLabel = normalizedSpaceType.replace("-", " ");
+    const basePrompt = designStyle
+      ? buildStylePrompt(spaceLabel, designStyle, colorTone || null, materialFeel || null, fixtureFinish || null, dimensionConstraint)
+      : buildDescribePrompt(spaceLabel, trimmedPrompt, dimensionConstraint);
 
-    let userPrompt: string;
-    if (designStyle) {
-      userPrompt = buildStylePrompt(spaceLabel, designStyle, colorTone, materialFeel, fixtureFinish, dimensionConstraint);
-    } else {
-      userPrompt = buildDescribePrompt(spaceLabel, prompt, dimensionConstraint);
-    }
+    const primaryPrompt = `${basePrompt}${STRICT_LAYOUT_SUFFIX}${STRONG_RENOVATION_SUFFIX}`;
+    const salvagePrompt = `${basePrompt}${STRONG_RENOVATION_SUFFIX}${COMPLETION_FIRST_RETRY_SUFFIX}`;
 
-    const promptText = `${userPrompt}${STRICT_LAYOUT_SUFFIX}${STRONG_RENOVATION_SUFFIX}`;
-    console.log("Calling Gemini API...");
-
-    // Strip data URL prefix to get raw base64 for Gemini native API
     const base64Data = imageBase64.includes(",") ? imageBase64.split(",")[1] : imageBase64;
     const mimeMatch = imageBase64.match(/^data:([^;]+);/);
     const mimeType = mimeMatch ? mimeMatch[1] : "image/jpeg";
 
-    const requestBody = JSON.stringify({
-      contents: [
-        {
-          role: "user",
-          parts: [
-            { text: `${SYSTEM_PROMPT}\n\n${promptText}` },
-            {
-              inlineData: {
-                mimeType,
-                data: base64Data,
-              },
-            },
-          ],
-        },
-      ],
-      generationConfig: {
-        responseModalities: ["TEXT", "IMAGE"],
-      },
-    });
-
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${AI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 
-    let response: Response | null = null;
-    let lastErrorText = "";
-    let lastParsedError: GeminiErrorEnvelope | null = null;
+    console.log("generate-design started", {
+      requestId,
+      clientRequestId: safeClientRequestId || null,
+      clientHashPrefix: clientHash.slice(0, 12),
+      spaceType: normalizedSpaceType,
+      promptLength: trimmedPrompt.length,
+      hasDesignStyle: Boolean(designStyle),
+      imageDimensions:
+        normalizedWidth && normalizedHeight ? `${normalizedWidth}x${normalizedHeight}` : "unknown",
+    });
 
-    for (let attempt = 1; attempt <= AI_MAX_ATTEMPTS; attempt += 1) {
-      const abortController = new AbortController();
-      const fetchTimeout = setTimeout(() => abortController.abort(), AI_REQUEST_TIMEOUT_MS);
+    const primaryResult = await callGeminiWithRetries({
+      endpoint,
+      requestBody: buildGeminiRequestBody({
+        systemPrompt: SYSTEM_PROMPT,
+        userPrompt: primaryPrompt,
+        mimeType,
+        base64Data,
+      }),
+      requestId,
+      maxAttempts: AI_MAX_ATTEMPTS,
+      timeoutMs: AI_REQUEST_TIMEOUT_MS,
+      requestLabel: "primary",
+    });
 
-      try {
-        response = await fetch(endpoint, {
-          method: "POST",
-          signal: abortController.signal,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: requestBody,
-        });
-      } catch (error) {
-        clearTimeout(fetchTimeout);
-        const isTimeout = error instanceof DOMException && error.name === "AbortError";
-        const canRetry = attempt < AI_MAX_ATTEMPTS;
-
-        console.error(`AI gateway request failed (attempt ${attempt}/${AI_MAX_ATTEMPTS})`, {
-          isTimeout,
-          message: error instanceof Error ? error.message : String(error),
-        });
-
-        if (canRetry) {
-          await sleep(700 * attempt);
-          continue;
-        }
-
-        if (isTimeout) {
-          return jsonResponse(
-            req,
-            503,
-            {
-              error: "AI is taking longer than expected right now. Please try again in about a minute.",
-              retryable: true,
-            },
-            { "Retry-After": "60" },
-          );
-        }
-
-        return jsonResponse(
-          req,
-          503,
-          {
-            error: "Could not reach the AI service right now. Please try again shortly.",
-            retryable: true,
-          },
-          { "Retry-After": "45" },
-        );
-      } finally {
-        clearTimeout(fetchTimeout);
-      }
-
-      if (!response.ok) {
-        lastErrorText = await response.text();
-        lastParsedError = parseGeminiErrorEnvelope(lastErrorText);
-        const canRetry = attempt < AI_MAX_ATTEMPTS;
-        const retryable = isRetryableUpstreamFailure(response.status, lastParsedError);
-
-        console.error(`AI gateway error (attempt ${attempt}/${AI_MAX_ATTEMPTS})`, {
-          status: response.status,
-          upstreamStatus: lastParsedError?.error?.status ?? null,
-          upstreamCode: lastParsedError?.error?.code ?? null,
-          errorMessage: (lastParsedError?.error?.message || lastErrorText || "").slice(0, 240),
-        });
-
-        if (canRetry && retryable) {
-          await sleep(700 * attempt);
-          continue;
-        }
-      }
-
-      break;
-    }
-
-    if (!response || !response.ok) {
-      const status = response?.status ?? 503;
-      const upstreamStatus = lastParsedError?.error?.status ?? "";
-
-      if (status === 429) {
-        return jsonResponse(req, 429, { error: "Rate limit exceeded. Please wait a moment and try again." });
-      }
-      if (status === 402) {
-        return jsonResponse(req, 402, { error: "Usage limit reached. Please add credits to continue." });
-      }
-      if (status === 503 || upstreamStatus === "UNAVAILABLE") {
-        return jsonResponse(
-          req,
-          503,
-          {
-            error: "AI is currently busy with high demand. Please try again in about a minute.",
-            retryable: true,
-          },
-          { "Retry-After": "60" },
-        );
-      }
-
-      return jsonResponse(
+    if (!primaryResult.ok) {
+      return errorResponse(
         req,
-        502,
+        primaryResult.issue.status,
+        requestId,
+        primaryResult.issue.code,
+        primaryResult.issue.error,
         {
-          error: "AI service is temporarily unavailable. Please try again shortly.",
-          retryable: true,
+          retryable: primaryResult.issue.retryable,
+          retryAfterSeconds: primaryResult.issue.retryAfterSeconds,
         },
-        { "Retry-After": "45" },
       );
     }
 
-    let rawData: any;
-    try {
-      rawData = await response.json();
-    } catch (error) {
-      console.error("AI gateway returned a non-JSON success response", error);
-      return jsonResponse(
-        req,
-        502,
-        {
-          error: "AI returned an unexpected response. Please try again shortly.",
-          retryable: true,
-        },
-        { "Retry-After": "45" },
-      );
-    }
+    let parsed = parseGeminiGeneration(primaryResult.rawData);
+    let degraded = false;
 
-    // Check for blocked or empty responses
-    if (!rawData.candidates || rawData.candidates.length === 0) {
-      const blockReason = rawData.promptFeedback?.blockReason || "unknown";
-      console.error("Gemini returned no candidates. Block reason:", blockReason, JSON.stringify(rawData).slice(0, 500));
-      return jsonResponse(req, 422, { error: `The AI could not process this image (blocked: ${blockReason}). Try a different photo.` });
-    }
-
-    const finishReason = rawData.candidates[0].finishReason;
-    if (finishReason === "SAFETY" || finishReason === "RECITATION") {
-      console.error("Gemini blocked response. Finish reason:", finishReason);
-      return jsonResponse(req, 422, { error: "The AI flagged this image. Please try a different photo." });
-    }
-
-    // Extract text and image from response
-    const parts = rawData.candidates[0]?.content?.parts || [];
-    let textResponse = "";
-    let generatedImageUrl = "";
-
-    for (const part of parts) {
-      if (part.text) {
-        textResponse += part.text;
-      }
-      if (part.inlineData) {
-        generatedImageUrl = `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
-      }
-    }
-
-    console.log("AI response received");
-
-    if (textResponse.startsWith("NEED_CLEARER_PHOTO")) {
-      const reason = textResponse.replace("NEED_CLEARER_PHOTO:", "").trim();
-      return jsonResponse(req, 400, {
-        error: "Please upload a clearer photo that shows the full room boundaries.",
-        reason,
+    if (parsed.needClearerPhoto) {
+      return errorResponse(req, 400, requestId, "IMAGE_UNCLEAR", "Please upload a clearer photo that shows full room boundaries.", {
+        retryable: true,
         needClearerPhoto: true,
+        reason: parsed.clearerPhotoReason || undefined,
       });
     }
 
-    if (!generatedImageUrl) {
-      return jsonResponse(req, 422, {
-        error: "The AI could not generate an image for this photo. Please try a different image or adjust your preferences.",
-      });
+    if (parsed.blockedReason) {
+      return errorResponse(
+        req,
+        422,
+        requestId,
+        "UPSTREAM_BLOCKED",
+        `The AI could not process this image (blocked: ${parsed.blockedReason}). Try a different photo.`,
+        { retryable: false },
+      );
     }
 
-    // Update usage count after successful generation
+    if (!parsed.imageUrl) {
+      const salvageResult = await callGeminiWithRetries({
+        endpoint,
+        requestBody: buildGeminiRequestBody({
+          systemPrompt: SYSTEM_PROMPT,
+          userPrompt: salvagePrompt,
+          mimeType,
+          base64Data,
+        }),
+        requestId,
+        maxAttempts: Math.min(2, AI_MAX_ATTEMPTS),
+        timeoutMs: AI_REQUEST_TIMEOUT_MS,
+        requestLabel: "salvage",
+      });
+
+      if (!salvageResult.ok) {
+        return errorResponse(
+          req,
+          salvageResult.issue.status,
+          requestId,
+          salvageResult.issue.code,
+          salvageResult.issue.error,
+          {
+            retryable: salvageResult.issue.retryable,
+            retryAfterSeconds: salvageResult.issue.retryAfterSeconds,
+          },
+        );
+      }
+
+      const salvageParsed = parseGeminiGeneration(salvageResult.rawData);
+
+      if (salvageParsed.needClearerPhoto) {
+        return errorResponse(req, 400, requestId, "IMAGE_UNCLEAR", "Please upload a clearer photo that shows full room boundaries.", {
+          retryable: true,
+          needClearerPhoto: true,
+          reason: salvageParsed.clearerPhotoReason || undefined,
+        });
+      }
+
+      if (salvageParsed.blockedReason) {
+        return errorResponse(
+          req,
+          422,
+          requestId,
+          "UPSTREAM_BLOCKED",
+          `The AI could not process this image (blocked: ${salvageParsed.blockedReason}). Try a different photo.`,
+          { retryable: false },
+        );
+      }
+
+      if (!salvageParsed.imageUrl) {
+        return errorResponse(
+          req,
+          503,
+          requestId,
+          "BUSY",
+          "I could not generate a stable preview this time. Please try again in about a minute.",
+          {
+            retryable: true,
+            retryAfterSeconds: 60,
+          },
+        );
+      }
+
+      parsed = salvageParsed;
+      degraded = true;
+    }
+
+    if (!parsed.imageUrl) {
+      return errorResponse(
+        req,
+        503,
+        requestId,
+        "BUSY",
+        "I could not generate a preview right now. Please try again shortly.",
+        { retryable: true, retryAfterSeconds: 45 },
+      );
+    }
+
     if (usageData) {
       const { error: updateError } = await supabase
-        .from('design_generation_usage')
+        .from("design_generation_usage")
         .update({ generation_count: currentCount + 1 })
-        .eq('ip_address', clientHash)
-        .eq('usage_date', today);
+        .eq("ip_address", clientHash)
+        .eq("usage_date", today);
 
       if (updateError) {
-        console.error("Error updating usage:", updateError);
+        console.error("Error updating usage", {
+          requestId,
+          error: updateError.message,
+        });
       }
     } else {
       const { error: insertError } = await supabase
-        .from('design_generation_usage')
+        .from("design_generation_usage")
         .insert({ ip_address: clientHash, usage_date: today, generation_count: 1 });
 
       if (insertError) {
-        console.error("Error inserting usage:", insertError);
+        console.error("Error inserting usage", {
+          requestId,
+          error: insertError.message,
+        });
       }
     }
 
-    const remaining = DAILY_LIMIT - (currentCount + 1);
+    const remaining = Math.max(0, DAILY_LIMIT - (currentCount + 1));
 
-    return new Response(
-      JSON.stringify({
-        imageUrl: generatedImageUrl,
-        description: textResponse,
-        remaining,
-      }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    console.log("generate-design success", {
+      requestId,
+      clientRequestId: safeClientRequestId || null,
+      remaining,
+      degraded,
+    });
+
+    return successResponse(req, {
+      requestId,
+      imageUrl: parsed.imageUrl,
+      description: parsed.textResponse,
+      remaining,
+      degraded,
+    });
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    console.error('Error in generate-design function:', { message, error });
-
-    if (/GEMINI_API_KEY is not configured/i.test(message)) {
-      return jsonResponse(req, 500, { error: "AI service key is missing on the server." });
-    }
+    console.error("Error in generate-design function", {
+      requestId,
+      message,
+    });
 
     if (/Supabase service configuration missing/i.test(message)) {
-      return jsonResponse(req, 500, { error: "Server configuration is incomplete for AI generation." });
+      return errorResponse(req, 500, requestId, "CONFIG_ERROR", "Server configuration is incomplete for AI generation.", {
+        retryable: false,
+      });
     }
 
-    return jsonResponse(
+    return errorResponse(
       req,
       503,
+      requestId,
+      "BUSY",
+      "AI service is temporarily unavailable. Please try again in about a minute.",
       {
-        error: "AI service is temporarily unavailable. Please try again in about a minute.",
         retryable: true,
+        retryAfterSeconds: 60,
       },
-      { "Retry-After": "60" },
     );
   }
 });

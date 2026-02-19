@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
-import { DEFAULT_META, PRODUCTION_DOMAIN, SITE_NAME, SITELINK_TARGETS, formatPageTitle } from "@/config/seo";
+import {
+  DEFAULT_META,
+  PRODUCTION_DOMAIN,
+  SITE_NAME,
+  SITE_ALTERNATE_NAME,
+  SITELINK_TARGETS,
+  formatPageTitle,
+  withBrandDescription,
+} from "@/config/seo";
 
 export const SITE_URL = PRODUCTION_DOMAIN;
 export const SITE_HOST = "www.cdconstruct.com.au";
@@ -56,6 +64,17 @@ export const buildMetadata = ({
   articleTags = [],
 }: BuildMetadataOptions): Metadata => {
   const safeTitle = formatPageTitle(title);
+  const normalizedPath = normalizePath(path);
+  const isInternalRoute = normalizedPath.startsWith("/admin") || normalizedPath.startsWith("/auth");
+  const safeDescription = noIndex || isInternalRoute ? description : withBrandDescription(description);
+  const baseKeywords = noIndex || isInternalRoute ? [] : [SITE_NAME, SITE_ALTERNATE_NAME];
+  const allKeywords = Array.from(
+    new Set(
+      [...keywords, ...baseKeywords]
+        .map((keyword) => keyword.trim())
+        .filter(Boolean),
+    ),
+  );
   const canonical = absoluteUrl(path);
   void _image;
   const cleanArticleTags = articleTags.filter(Boolean);
@@ -79,7 +98,7 @@ export const buildMetadata = ({
 
   return {
     title: safeTitle,
-    description,
+    description: safeDescription,
     authors: [{ name: author }],
     creator: author,
     publisher: SITE_NAME,
@@ -96,7 +115,7 @@ export const buildMetadata = ({
         "x-default": canonical,
       },
     },
-    keywords: keywords.length > 0 ? keywords : undefined,
+    keywords: allKeywords.length > 0 ? allKeywords : undefined,
     robots: {
       index: !noIndex,
       follow: !noIndex,
@@ -125,7 +144,7 @@ export const generateWebPageSchema = ({
   "@type": "WebPage",
   "@id": `${absoluteUrl(path)}#webpage`,
   name,
-  description,
+  description: withBrandDescription(description),
   url: absoluteUrl(path),
   inLanguage: "en-AU",
   isPartOf: {
@@ -176,9 +195,16 @@ export const generateWebSiteSchema = ({
     "@type": "WebSite",
     "@id": `${SITE_URL}#website`,
     name: SITE_NAME,
-    alternateName: "CD Construct",
+    alternateName: SITE_ALTERNATE_NAME,
     url: SITE_URL,
     inLanguage: "en-AU",
+    keywords: [
+      "Concept Design Construct",
+      "CD Construct",
+      "Concept Design Construct Gold Coast",
+      "CD Construct Gold Coast",
+      "Gold Coast renovations",
+    ],
     publisher: {
       "@id": `${SITE_URL}#organization`,
     },

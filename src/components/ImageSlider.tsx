@@ -114,10 +114,11 @@ const ImageSlider = ({ images, projectName }: ImageSliderProps) => {
           <div
             key={`${image}-${index}`}
             className="flex-shrink-0 h-full w-[80vw] md:w-[50vw] lg:w-[35vw]"
+            aria-hidden={index >= images.length}
           >
             <ResponsiveImage
               src={image}
-              alt={`${projectName} ${(index % images.length) + 1}`}
+              alt={index < images.length ? `${projectName} ${index + 1}` : ""}
               width={1600}
               height={900}
               sizes="(min-width: 1024px) 35vw, (min-width: 768px) 50vw, 80vw"

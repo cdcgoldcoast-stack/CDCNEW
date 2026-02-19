@@ -6,7 +6,7 @@ import {
   generateItemListSchema,
   generateLocalBusinessSchema,
 } from "@/lib/structured-data";
-import { PRODUCTION_DOMAIN, SITE_NAME } from "@/config/seo";
+import { PRODUCTION_DOMAIN, SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
 describe("generateFAQSchema", () => {
   it("produces valid FAQPage schema", () => {
@@ -119,6 +119,12 @@ describe("generateLocalBusinessSchema", () => {
 
     expect(schema["@context"]).toBe("https://schema.org");
     expect(schema.name).toBe(SITE_NAME);
+    expect(schema.legalName).toBe(SITE_NAME);
+    expect(schema.alternateName).toBe(SITE_ALTERNATE_NAME);
+    expect(schema.brand).toBeDefined();
+    expect(schema.brand.name).toBe(SITE_ALTERNATE_NAME);
+    expect(schema.description).toContain(SITE_NAME);
+    expect(schema.description).toContain(SITE_ALTERNATE_NAME);
     expect(schema.url).toBe(PRODUCTION_DOMAIN);
     expect(schema.areaServed).toBeDefined();
     expect(schema.openingHoursSpecification).toBeDefined();

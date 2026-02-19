@@ -80,6 +80,20 @@ Supported Supabase env names:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
+AI generator (Supabase Edge Function `generate-design`) env names:
+
+- `GEMINI_API_KEY`
+- `GEMINI_IMAGE_MODEL` (optional, defaults to `gemini-3-pro-image-preview`)
+- `DESIGN_AI_MAX_ATTEMPTS` (optional, defaults to `4`)
+- `DESIGN_AI_TIMEOUT_MS` (optional, defaults to `70000`)
+- `DESIGN_DAILY_LIMIT` (optional, defaults to `8`)
+- `DESIGN_BURST_LIMIT` (optional, defaults to `4`)
+- `DESIGN_BURST_WINDOW_SECONDS` (optional, defaults to `900`)
+- `DESIGN_SUSPICIOUS_LIMIT` (optional, defaults to `2`)
+- `DESIGN_SUSPICIOUS_WINDOW_SECONDS` (optional, defaults to `3600`)
+- `RATE_LIMIT_SALT` (recommended for stable rate-limit hashing)
+- `ALLOWED_ORIGINS` (recommended comma-separated allowed frontend origins)
+
 Search verification env names (optional but recommended):
 
 - `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`

@@ -11,14 +11,15 @@ export const PRODUCTION_DOMAIN = "https://www.cdconstruct.com.au";
 // Site branding
 export const SITE_NAME = "Concept Design Construct";
 export const SITE_TAGLINE = "Gold Coast Home Renovations";
+export const SITE_ALTERNATE_NAME = "CD Construct";
 const TITLE_MAX_LENGTH = 60;
 const TITLE_ELLIPSIS = "...";
 
 // Default meta content
 export const DEFAULT_META = {
-  title: "Gold Coast Renovations | Concept Design Construct",
+  title: "Concept Design Construct (CD Construct) | Gold Coast",
   description:
-    "Concept Design Construct (CD Construct) are Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations with design-led planning, QBCC licensed delivery, and timelines.",
+    "Concept Design Construct (CD Construct) are Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations with design-led planning, QBCC licensed delivery, and clear timelines.",
   image: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Gold-Coast-Renovations.webp",
 };
 
@@ -66,9 +67,38 @@ export const PRIMARY_KEYWORDS = [
   "Gold Coast builders",
   "QBCC licensed builder Gold Coast",
   "Concept Design Construct",
-  "CD Construct",
+  SITE_ALTERNATE_NAME,
+  "Concept Design Construct Gold Coast",
   "CD Construct Gold Coast",
 ];
+
+const normalizeSentence = (value: string) => value.trim().replace(/\s+/g, " ").replace(/[.,;:!?]+$/g, "");
+
+const hasKeyword = (value: string, keyword: string) => value.toLowerCase().includes(keyword.toLowerCase());
+
+export const withBrandDescription = (description: string) => {
+  const cleanDescription = normalizeSentence(description);
+  if (!cleanDescription) {
+    return `${SITE_NAME} (${SITE_ALTERNATE_NAME}) delivers Gold Coast renovations.`;
+  }
+
+  const hasPrimaryBrand = hasKeyword(cleanDescription, SITE_NAME);
+  const hasAlternateBrand = hasKeyword(cleanDescription, SITE_ALTERNATE_NAME);
+
+  if (hasPrimaryBrand && hasAlternateBrand) {
+    return `${cleanDescription}.`;
+  }
+
+  if (!hasPrimaryBrand && !hasAlternateBrand) {
+    return `${cleanDescription} by ${SITE_NAME} (${SITE_ALTERNATE_NAME}).`;
+  }
+
+  if (hasPrimaryBrand) {
+    return `${cleanDescription} (${SITE_ALTERNATE_NAME}).`;
+  }
+
+  return `${cleanDescription} (${SITE_NAME}).`;
+};
 
 export type SitelinkTarget = {
   path: string;
@@ -83,54 +113,62 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
   {
     path: "/about-us",
     label: "About Us",
-    description: "Meet the team behind Concept Design Construct Gold Coast renovations.",
+    description: withBrandDescription("Meet the team behind Gold Coast renovations."),
     includeInHeader: true,
     includeInFooter: true,
   },
   {
     path: "/renovation-projects",
     label: "Renovation Projects",
-    description: "Browse completed Gold Coast renovations across kitchens, bathrooms, and full-home upgrades.",
+    description: withBrandDescription(
+      "Browse completed Gold Coast renovations across kitchens, bathrooms, and full-home upgrades.",
+    ),
     includeInHeader: true,
     includeInFooter: true,
   },
   {
     path: "/renovation-gallery",
     label: "Renovation Gallery",
-    description: "Explore Gold Coast renovations inspiration across kitchens, bathrooms, and living spaces.",
+    description: withBrandDescription(
+      "Explore Gold Coast renovations inspiration across kitchens, bathrooms, and living spaces.",
+    ),
     includeInHeader: true,
     includeInFooter: true,
   },
   {
     path: "/renovation-services",
     label: "Renovation Services",
-    description: "View Gold Coast renovation services for bathrooms, kitchens, and whole-home upgrades.",
+    description: withBrandDescription(
+      "View Gold Coast renovation services for bathrooms, kitchens, and whole-home upgrades.",
+    ),
     includeInHeader: true,
     includeInFooter: true,
   },
   {
     path: "/renovation-life-stages",
     label: "Renovation Life Stages",
-    description: "Plan Gold Coast renovations priorities around family stages, comfort, and long-term value.",
+    description: withBrandDescription(
+      "Plan Gold Coast renovations priorities around family stages, comfort, and long-term value.",
+    ),
     includeInFooter: true,
   },
   {
     path: "/renovation-design-tools",
     label: "Renovation Design Tools",
-    description: "Use Gold Coast renovation design tools to plan style, scope, and layout direction.",
+    description: withBrandDescription("Use Gold Coast renovation design tools to plan style, scope, and layout direction."),
     includeInHeader: true,
     includeInFooter: true,
   },
   {
     path: "/renovation-ai-generator",
     label: "Renovation AI Generator",
-    description: "Preview Gold Coast renovations directions with AI before-and-after concept visuals.",
+    description: withBrandDescription("Preview Gold Coast renovations directions with AI before-and-after concept visuals."),
     includeInFooter: true,
   },
   {
     path: "/book-renovation-consultation",
     label: "Book Renovation Consultation",
-    description: "Start your Gold Coast renovation quote and consultation process.",
+    description: withBrandDescription("Start your Gold Coast renovation quote and consultation process."),
     includeInFooter: true,
   },
 ];
@@ -143,6 +181,47 @@ export const getFullUrl = (path: string = "/") => {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   if (normalizedPath === "/") return PRODUCTION_DOMAIN;
   return `${PRODUCTION_DOMAIN}${normalizedPath.replace(/\/+$/, "")}`;
+};
+
+type ProjectMetaDescriptionInput = {
+  projectName: string;
+  category: string;
+  location?: string | null;
+  summary?: string | null;
+};
+
+export const buildProjectMetaDescription = ({
+  projectName,
+  category,
+  location,
+  summary,
+}: ProjectMetaDescriptionInput) => {
+  const safeName = projectName.trim();
+  const safeCategory = (category || "renovation").replace(/-/g, " ").trim();
+  const safeLocation = (location || "Gold Coast").trim();
+  const cleanSummary = normalizeSentence(summary || "");
+  const brandTail = `by ${SITE_NAME} (${SITE_ALTERNATE_NAME})`;
+  const contextualTail = `${safeName} is a ${safeCategory} renovation project in ${safeLocation} ${brandTail}`;
+
+  if (!cleanSummary) {
+    return `${contextualTail}.`;
+  }
+
+  const lowerSummary = cleanSummary.toLowerCase();
+  const hasName = lowerSummary.includes(safeName.toLowerCase());
+  const hasLocation = lowerSummary.includes(safeLocation.toLowerCase()) || lowerSummary.includes("gold coast");
+  const hasPrimaryBrand = hasKeyword(lowerSummary, SITE_NAME);
+  const hasAlternateBrand = hasKeyword(lowerSummary, SITE_ALTERNATE_NAME);
+
+  if (hasName && hasLocation && hasPrimaryBrand && hasAlternateBrand) {
+    return `${cleanSummary}.`;
+  }
+
+  if (hasName && hasLocation) {
+    return `${cleanSummary}. Project delivered ${brandTail}.`;
+  }
+
+  return `${cleanSummary}. ${contextualTail}.`;
 };
 
 const truncateTitle = (title: string) => {

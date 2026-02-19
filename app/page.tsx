@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import SSRHomeClient from "../components/SSRHomeClient";
 import { buildMetadata, generateWebSiteSchema } from "@/lib/seo";
-import { SITELINK_TARGETS } from "@/config/seo";
+import { PRIMARY_KEYWORDS, SITELINK_TARGETS } from "@/config/seo";
 import { fetchHeroImageUrl } from "@/data/projects";
 
 const homepageFAQs = [
@@ -48,10 +48,11 @@ const homepageFAQs = [
 
 export const metadata: Metadata = {
   ...buildMetadata({
-    title: "Gold Coast Renovations | Concept Design Construct",
+    title: "Concept Design Construct (CD Construct) | Gold Coast",
     description:
-      "Concept Design Construct (CD Construct) are Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations with design-led planning, QBCC licensed delivery, and timelines.",
+      "Concept Design Construct (CD Construct) are Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations with design-led planning, QBCC licensed delivery, and clear timelines.",
     path: "/",
+    keywords: PRIMARY_KEYWORDS,
   }),
 };
 
@@ -73,6 +74,10 @@ export default async function HomePage() {
       </div>
       <section className="sr-only" aria-label="Home page summary for search crawlers">
         <p>Gold Coast Renovations - Locally Trusted.</p>
+        <p>
+          Concept Design Construct, also known as CD Construct, delivers design-led home renovations across the Gold
+          Coast.
+        </p>
         <p>
           Clear communication, realistic timelines, and quality results for kitchens, bathrooms, and
           whole-home renovations across the Gold Coast.

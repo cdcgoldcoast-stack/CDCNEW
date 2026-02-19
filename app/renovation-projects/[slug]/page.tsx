@@ -7,7 +7,7 @@ import { projects, fetchProjects } from "@/data/projects";
 import type { Project } from "@/data/projects";
 import { generateBreadcrumbSchema, generateProjectSchema } from "@/lib/structured-data";
 import { buildMetadata, titleFromSlug, DEFAULT_OG_IMAGE } from "@/lib/seo";
-import { SITE_NAME } from "@/config/seo";
+import { buildProjectMetaDescription, SITE_NAME } from "@/config/seo";
 
 export const revalidate = 900;
 
@@ -67,7 +67,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const categoryLabel = project.category.replace("-", " ");
   const location = project.location || "Gold Coast";
   const title = `${project.name} | ${categoryLabel} Renovations in ${location}`;
-  const description = project.description || fallbackDescription(params.slug);
+  const description = buildProjectMetaDescription({
+    projectName: project.name,
+    category: project.category,
+    location: project.location,
+    summary: project.description || fallbackDescription(params.slug),
+  });
   const projectPublishedTime =
     normalizeIsoDate(project.publishedAt) || DEFAULT_PROJECT_TIMESTAMP;
   const projectModifiedTime = normalizeIsoDate(project.modifiedAt) || projectPublishedTime;
@@ -144,8 +149,8 @@ export default async function Page({ params }: PageProps) {
     <>
       <JsonLd data={[projectSchema, breadcrumbSchema]} />
       <section className="sr-only">
-        <h1>{`${projectName} Gold Coast Renovations Case Study`}</h1>
-        <h2>{`${projectCategory.replace("-", " ")} renovations in ${projectLocation}`}</h2>
+        <p>{`${projectName} Gold Coast Renovations Case Study`}</p>
+        <p>{`${projectCategory.replace("-", " ")} renovations in ${projectLocation}`}</p>
         <p>{projectDescription}</p>
       </section>
       <ProjectDetailClient initialProject={project} initialProjects={allProjects} />
