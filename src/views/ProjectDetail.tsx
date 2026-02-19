@@ -328,6 +328,68 @@ const ProjectDetail = ({ initialProject, initialProjects }: ProjectDetailProps =
         </div>
       </section>
 
+      {/* SEO Content Section - Project Details */}
+      <section className="pb-16 md:pb-24 bg-cream/30">
+        <div className="container-wide">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="font-serif italic text-2xl md:text-3xl text-primary mb-8 text-center">
+              About This {project.location} Renovation Project
+            </h2>
+            
+            <div className="prose prose-lg max-w-none text-primary/80 space-y-6">
+              <p>
+                This {project.category.replace("-", " ")} renovation in {project.location} demonstrates 
+                the design-led approach that Concept Design Construct brings to every Gold Coast renovation project. 
+                Located in one of the Gold Coast&apos;s sought-after suburbs, this home improvement project reflects 
+                both the local character and the homeowner&apos;s vision for modern, functional living spaces.
+              </p>
+              
+              <p>
+                As QBCC-licensed builders serving the Gold Coast region, we managed every aspect of this renovation 
+                from initial concept through to final completion. The project timeline was carefully planned to 
+                minimise disruption while ensuring quality craftsmanship at every stage. Our integrated design and 
+                construction approach meant that the vision established in early planning sessions was realised 
+                accurately in the finished result.
+              </p>
+              
+              <p>
+                {project.location} properties present unique opportunities and considerations for renovation work. 
+                Local climate conditions, council requirements, and the specific characteristics of Gold Coast 
+                architecture all informed the design decisions for this project. The result is a space that works 
+                beautifully for the homeowners while respecting the context of the neighbourhood.
+              </p>
+              
+              <h3 className="font-serif italic text-xl md:text-2xl text-primary mt-8 mb-4">
+                Design and Material Selections
+              </h3>
+              <p>
+                Material choices for this renovation were selected for both aesthetic appeal and long-term durability 
+                in the Gold Coast climate. The finishes and fixtures specified complement the overall design direction 
+                while ensuring the space remains practical for everyday use. Lighting design, storage solutions, and 
+                spatial flow were all carefully considered to maximise the functionality of the renovated space.
+              </p>
+              
+              <h3 className="font-serif italic text-xl md:text-2xl text-primary mt-8 mb-4">
+                Working with Concept Design Construct
+              </h3>
+              <p>
+                Every renovation project we undertake begins with understanding how you want to live in your space. 
+                For this {project.location} home, that meant creating a {project.category.replace("-", " ")} that 
+                balances beautiful design with practical functionality. From the initial consultation through to the 
+                final walkthrough, our team ensures clear communication and transparent progress updates.
+              </p>
+              
+              <p>
+                If you are considering a renovation in {project.location} or elsewhere on the Gold Coast, we invite 
+                you to browse our portfolio of completed projects or book a consultation to discuss your vision. 
+                Whether it is a {project.category.replace("-", " ")} transformation or a whole-home renovation, 
+                our design-led approach ensures results that exceed expectations.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Project Metadata - Bottom */}
       <section className="pb-16 md:pb-20">
         <div className="container-wide">

@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { generateFAQSchema, generateLocalBusinessSchema } from "@/lib/structured-data";
+
+// Force static generation for homepage SEO - hero image uses fallback during build
+export const dynamic = "force-static";
+export const revalidate = 900;
 import JsonLd from "@/components/JsonLd";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";

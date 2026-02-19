@@ -209,7 +209,7 @@ export const generateLocalBusinessSchema = () => ({
     "Gold Coast renovation builders for kitchens, bathrooms, and whole homes. Design-led, QBCC licensed. Free consultation.",
   ),
   url: PRODUCTION_DOMAIN,
-  logo: `${PRODUCTION_DOMAIN}/logo.webp`,
+  logo: `${PRODUCTION_DOMAIN}/assets/logo.webp`,
   image: `${PRODUCTION_DOMAIN}/og-image.jpg`,
   email: BUSINESS_INFO.email,
   address: {
