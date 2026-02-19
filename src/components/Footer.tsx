@@ -1,7 +1,7 @@
 import { useResolvedAsset } from "@/hooks/useSiteAssets";
 import masterBuildersLogo from "@/assets/master-builders.webp";
 import qbccLogo from "@/assets/qbcc.webp";
-import { Facebook, Instagram } from "lucide-react";
+import { Facebook, Instagram, MapPin, Phone } from "lucide-react";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { FOOTER_SITELINK_TARGETS } from "@/config/seo";
 
@@ -92,13 +92,40 @@ const Footer = () => {
           <div className="md:col-span-3 flex flex-col gap-6">
             <div>
               <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-4">Contact</p>
+              
+              {/* Address */}
+              <div className="flex items-start gap-2 mb-3">
+                <MapPin className="w-3.5 h-3.5 text-primary/60 mt-0.5 flex-shrink-0" />
+                <address className="not-italic text-xs text-foreground/70 leading-relaxed">
+                  1907/22 Surf Parade<br />
+                  Broadbeach, QLD 4218
+                </address>
+              </div>
+              
+              {/* Phone */}
               <a
-                className="text-xs uppercase tracking-[0.15em] text-foreground/80 hover:text-primary transition-colors duration-300 block mb-3"
+                href="tel:0756121881"
+                className="flex items-center gap-2 text-xs uppercase tracking-[0.15em] text-foreground/80 hover:text-primary transition-colors duration-300 mb-3"
+              >
+                <Phone className="w-3.5 h-3.5" />
+                (07) 5612 1881
+              </a>
+              
+              {/* Email */}
+              <a
+                className="text-xs uppercase tracking-[0.15em] text-foreground/80 hover:text-primary transition-colors duration-300 block mb-4"
                 href="mailto:info@cdconstruct.com.au"
               >
                 info@cdconstruct.com.au
               </a>
-              <div className="flex items-center gap-3">
+              
+              {/* Service Areas */}
+              <p className="text-[10px] text-foreground/50 mb-2">Serving:</p>
+              <p className="text-[10px] text-foreground/60 leading-relaxed">
+                Broadbeach, Burleigh Heads, Mermaid Beach, Robina, Southport, Palm Beach, Elanora, Helensvale, Hope Island & all Gold Coast suburbs
+              </p>
+              
+              <div className="flex items-center gap-3 mt-4">
                 <a
                   href="https://www.instagram.com/conceptdesignconstruct_"
                   target="_blank"
