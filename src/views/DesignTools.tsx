@@ -4,8 +4,11 @@ import { ArrowRight, Sparkles, Palette, HelpCircle } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const DesignTools = () => {
+  const shouldReduceMotion = useReducedMotion();
+  
   const tools = [
     {
       title: "AI Design Generator",
@@ -44,33 +47,35 @@ const DesignTools = () => {
         url="/renovation-design-tools"
       />
 
-      {/* Decorative elements for creative feel */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-20 left-10 w-64 h-64 rounded-full bg-white/5 blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3]
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute bottom-40 right-20 w-96 h-96 rounded-full bg-white/5 blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.2, 0.4, 0.2]
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="absolute top-1/2 left-1/3 w-48 h-48 rounded-full bg-white/5 blur-2xl"
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0.2, 0.3, 0.2]
-          }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </div>
+      {/* Decorative elements for creative feel - disabled on mobile */}
+      {!shouldReduceMotion && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            className="absolute top-20 left-10 w-64 h-64 rounded-full bg-white/5 blur-3xl"
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute bottom-40 right-20 w-96 h-96 rounded-full bg-white/5 blur-3xl"
+            animate={{
+              scale: [1.2, 1, 1.2],
+              opacity: [0.2, 0.4, 0.2]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute top-1/2 left-1/3 w-48 h-48 rounded-full bg-white/5 blur-2xl"
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0.2, 0.3, 0.2]
+            }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+      )}
 
       <Header />
 

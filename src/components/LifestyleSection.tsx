@@ -1,24 +1,33 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useSiteAssets } from "@/hooks/useSiteAssets";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
 const LifestyleSection = () => {
   const [activeIndex, setActiveIndex] = useState(2); // Start with center image active
+  const [isMobile, setIsMobile] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
   const { assets, ready } = useSiteAssets();
   const shouldLoadImages = useInView(sectionRef, { margin: "200px 0px", once: true });
 
-  // Track scroll progress for parallax effect
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Track scroll progress for parallax effect - only on desktop
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
   });
 
   // Subtle parallax: header moves slower, panels move slightly faster
-  const headerY = useTransform(scrollYProgress, [0, 1], [40, -40]);
-  const panelsY = useTransform(scrollYProgress, [0, 1], [60, -60]);
-  const quoteY = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  // Disable on mobile for performance
+  const headerY = useTransform(scrollYProgress, [0, 1], isMobile ? [0, 0] : [40, -40]);
+  const panelsY = useTransform(scrollYProgress, [0, 1], isMobile ? [0, 0] : [60, -60]);
+  const quoteY = useTransform(scrollYProgress, [0, 1], isMobile ? [0, 0] : [30, -30]);
 
   const benefits = [
     {
