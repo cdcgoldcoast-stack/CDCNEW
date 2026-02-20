@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { fetchProjects } from "@/data/projects";
+import { getAllPublishedPosts } from "@/lib/blog";
 
 const BASE_URL = "https://www.cdconstruct.com.au";
 export const revalidate = 900;
@@ -47,6 +48,7 @@ const staticRoutes: Array<{
     changeFrequency: "monthly",
     priority: 0.5,
   },
+  { path: "/blog", changeFrequency: "weekly", priority: 0.75 },
   { path: "/privacy-policy", changeFrequency: "yearly", priority: 0.3 },
   { path: "/terms-conditions", changeFrequency: "yearly", priority: 0.3 },
 ];
@@ -69,6 +71,7 @@ const resolveProjectDate = (project: {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const projects = await fetchProjects();
+  const blogPosts = await getAllPublishedPosts();
 
   const baseEntries: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
     url: toAbsoluteCanonicalUrl(route.path),
@@ -84,5 +87,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  return [...baseEntries, ...projectEntries];
+  const blogEntries: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+    url: toAbsoluteCanonicalUrl(post.url),
+    lastModified: post.updatedAt ? new Date(post.updatedAt) : new Date(post.publishedAt),
+    changeFrequency: "monthly",
+    priority: 0.65,
+  }));
+
+  return [...baseEntries, ...projectEntries, ...blogEntries];
 }

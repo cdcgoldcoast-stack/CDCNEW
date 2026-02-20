@@ -12,9 +12,11 @@ const PROJECT_DATA_PATH = path.join(ROOT_DIR, "src", "data", "projects.ts");
 const GENERATED_SLUGS_PATH = path.join(ROOT_DIR, "src", "generated", "project-slugs.json");
 const SITEMAP_PATH = path.join(ROOT_DIR, "public", "sitemap.xml");
 const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, "vercel.json");
+const BLOG_CONTENT_PATH = path.join(ROOT_DIR, "content", "blog");
 
 const PRODUCTION_DOMAIN = "https://www.cdconstruct.com.au";
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const BLOG_SLUG_PATTERN = /^[a-z0-9]+(?:[/-][a-z0-9]+)*$/;
 const EXCLUDED_PROJECT_SLUGS = new Set([
   "coastal-modern",
   "heritage-revival",
@@ -26,8 +28,18 @@ const EXCLUDED_PROJECT_SLUGS = new Set([
 const STATIC_ROUTES = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
   { path: "/about-us", changefreq: "monthly", priority: "0.8" },
+  { path: "/blog", changefreq: "weekly", priority: "0.75" },
   { path: "/renovation-projects", changefreq: "weekly", priority: "0.9" },
   { path: "/renovation-services", changefreq: "monthly", priority: "0.8" },
+  { path: "/kitchen-renovations-gold-coast", changefreq: "weekly", priority: "0.9" },
+  { path: "/bathroom-renovations-gold-coast", changefreq: "weekly", priority: "0.9" },
+  { path: "/whole-home-renovations-gold-coast", changefreq: "weekly", priority: "0.9" },
+  { path: "/broadbeach-renovations", changefreq: "weekly", priority: "0.85" },
+  { path: "/mermaid-beach-renovations", changefreq: "weekly", priority: "0.85" },
+  { path: "/palm-beach-renovations", changefreq: "weekly", priority: "0.85" },
+  { path: "/robina-renovations", changefreq: "weekly", priority: "0.85" },
+  { path: "/southport-renovations", changefreq: "weekly", priority: "0.85" },
+  { path: "/renovations/burleigh-heads", changefreq: "weekly", priority: "0.85" },
   { path: "/renovation-life-stages", changefreq: "monthly", priority: "0.7" },
   { path: "/book-renovation-consultation", changefreq: "monthly", priority: "0.9" },
   { path: "/renovation-gallery", changefreq: "weekly", priority: "0.7" },
@@ -42,6 +54,11 @@ const STATIC_ROUTES = [
 const PROJECT_META = {
   changefreq: "monthly",
   priority: "0.7",
+};
+
+const BLOG_META = {
+  changefreq: "monthly",
+  priority: "0.65",
 };
 
 function generateSlug(name) {
@@ -59,6 +76,14 @@ function uniqSorted(values) {
     values
       .map((value) => `${value}`.trim().toLowerCase())
       .filter((value) => value && SLUG_PATTERN.test(value))
+  )].sort();
+}
+
+function uniqSortedBlogSlugs(values) {
+  return [...new Set(
+    values
+      .map((value) => `${value}`.trim().toLowerCase())
+      .filter((value) => value && BLOG_SLUG_PATTERN.test(value))
   )].sort();
 }
 
@@ -178,7 +203,70 @@ async function readVercelRewriteProjectSlugs() {
   }
 }
 
-function buildSitemapXml(projectSlugs) {
+function extractFrontmatter(source) {
+  const match = source.match(/^---\n([\s\S]*?)\n---/);
+  return match?.[1] || "";
+}
+
+function readFrontmatterValue(frontmatter, fieldName) {
+  const match = frontmatter.match(new RegExp(`^${fieldName}:\\s*(.+)$`, "mi"));
+  if (!match?.[1]) return "";
+  return match[1].trim().replace(/^['"]|['"]$/g, "");
+}
+
+function isDraftPost(frontmatter) {
+  const draftValue = readFrontmatterValue(frontmatter, "draft");
+  return draftValue.toLowerCase() === "true";
+}
+
+function isFuturePost(frontmatter) {
+  const publishedAtValue = readFrontmatterValue(frontmatter, "publishedAt");
+  if (!publishedAtValue) return false;
+  const timestamp = new Date(publishedAtValue).getTime();
+  if (Number.isNaN(timestamp)) return false;
+  return timestamp > Date.now();
+}
+
+async function readBlogPostSlugsInDirectory(directoryPath) {
+  const entries = await fs.readdir(directoryPath, { withFileTypes: true });
+  const slugs = [];
+
+  for (const entry of entries) {
+    const absoluteEntryPath = path.join(directoryPath, entry.name);
+    if (entry.isDirectory()) {
+      const nestedSlugs = await readBlogPostSlugsInDirectory(absoluteEntryPath);
+      slugs.push(...nestedSlugs);
+      continue;
+    }
+
+    if (!entry.isFile() || !entry.name.endsWith(".mdx")) {
+      continue;
+    }
+
+    const source = await fs.readFile(absoluteEntryPath, "utf8");
+    const frontmatter = extractFrontmatter(source);
+    if (isDraftPost(frontmatter) || isFuturePost(frontmatter)) {
+      continue;
+    }
+
+    const relative = path.relative(BLOG_CONTENT_PATH, absoluteEntryPath).replace(/\\/g, "/");
+    const slug = relative.replace(/\.mdx$/i, "");
+    slugs.push(slug);
+  }
+
+  return slugs;
+}
+
+async function readBlogPostSlugs() {
+  try {
+    const slugs = await readBlogPostSlugsInDirectory(BLOG_CONTENT_PATH);
+    return uniqSortedBlogSlugs(slugs);
+  } catch {
+    return [];
+  }
+}
+
+function buildSitemapXml(projectSlugs, blogSlugs) {
   const lastmod = formatDateUTC();
 
   const rawEntries = [
@@ -187,6 +275,11 @@ function buildSitemapXml(projectSlugs) {
       path: `/renovation-projects/${slug}`,
       changefreq: PROJECT_META.changefreq,
       priority: PROJECT_META.priority,
+    })),
+    ...blogSlugs.map((slug) => ({
+      path: `/blog/${slug}`,
+      changefreq: BLOG_META.changefreq,
+      priority: BLOG_META.priority,
     })),
   ];
 
@@ -230,18 +323,19 @@ async function writeProjectSlugArtifact(slugs, sourceCounts) {
   await fs.writeFile(GENERATED_SLUGS_PATH, `${JSON.stringify(payload, null, 2)}\n`);
 }
 
-async function writeSitemap(projectSlugs) {
-  const sitemapXml = buildSitemapXml(projectSlugs);
+async function writeSitemap(projectSlugs, blogSlugs) {
+  const sitemapXml = buildSitemapXml(projectSlugs, blogSlugs);
   await fs.writeFile(SITEMAP_PATH, sitemapXml);
 }
 
 async function main() {
-  const [supabaseSlugs, vercelRewriteSlugs, publicSiteSlugs, staticSlugs, previousSlugs] = await Promise.all([
+  const [supabaseSlugs, vercelRewriteSlugs, publicSiteSlugs, staticSlugs, previousSlugs, blogSlugs] = await Promise.all([
     readSupabaseProjectSlugs(),
     readVercelRewriteProjectSlugs(),
     readPublicSiteProjectSlugs(),
     readStaticProjectSlugs(),
     readPreviousGeneratedSlugs(),
+    readBlogPostSlugs(),
   ]);
 
   const filteredSupabaseSlugs = filterExcludedSlugs(supabaseSlugs);
@@ -289,9 +383,10 @@ async function main() {
     previousGenerated: filteredPreviousSlugs.length,
     usedPreviousGeneratedFallback,
   });
-  await writeSitemap(mergedSlugs);
+  await writeSitemap(mergedSlugs, blogSlugs);
 
   console.log(`[seo:sync] Project slugs: ${mergedSlugs.length}`);
+  console.log(`[seo:sync] Blog slugs: ${blogSlugs.length}`);
   console.log(`[seo:sync] Updated ${path.relative(ROOT_DIR, GENERATED_SLUGS_PATH)}`);
   console.log(`[seo:sync] Updated ${path.relative(ROOT_DIR, SITEMAP_PATH)}`);
 }

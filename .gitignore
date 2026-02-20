@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 .next
+.contentlayer
 *.local
 
 # Editor directories and files

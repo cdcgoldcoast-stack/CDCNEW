@@ -8,6 +8,7 @@ export const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 export const CORE_ROUTES = [
   "/",
   "/about-us",
+  "/blog",
   "/renovation-projects",
   "/renovation-services",
   "/renovation-gallery",
@@ -19,6 +20,15 @@ export const CORE_ROUTES = [
 ];
 
 export const EXTENDED_ROUTES = [
+  "/kitchen-renovations-gold-coast",
+  "/bathroom-renovations-gold-coast",
+  "/whole-home-renovations-gold-coast",
+  "/broadbeach-renovations",
+  "/mermaid-beach-renovations",
+  "/palm-beach-renovations",
+  "/robina-renovations",
+  "/southport-renovations",
+  "/renovations/burleigh-heads",
   "/renovation-ai-generator/intro",
   "/renovation-ai-generator",
   "/renovation-design-tools/moodboard",
@@ -26,6 +36,7 @@ export const EXTENDED_ROUTES = [
 
 export const SITELINK_TARGET_PATHS = [
   "/about-us",
+  "/blog",
   "/renovation-projects",
   "/renovation-gallery",
   "/renovation-services",
@@ -214,6 +225,8 @@ export async function loadGeneratedProjectSlugs(filePath) {
 export function classifyContentType(routePath) {
   if (routePath === "/") return "homepage";
   if (routePath === "/about-us") return "about-page";
+  if (routePath === "/blog") return "blog-index";
+  if (routePath.startsWith("/blog/")) return "blog-post";
   if (routePath === "/renovation-services") return "services-page";
   if (routePath === "/book-renovation-consultation") return "contact-page";
   if (routePath === "/renovation-gallery") return "gallery-page";

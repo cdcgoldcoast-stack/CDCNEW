@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -28,7 +28,7 @@ const isAuditLikeClient = () => {
 };
 
 interface AppProvidersProps {
-  children: any;
+  children: ReactNode;
 }
 
 export default function AppProviders({ children }: AppProvidersProps) {

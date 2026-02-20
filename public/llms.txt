@@ -1,5 +1,5 @@
 # www.cdconstruct.com.au AI Content Index
-Generated: 2026-02-20T10:47:50.355Z
+Generated: 2026-02-20T23:49:56.649Z
 
 ## Canonical Domain
 https://www.cdconstruct.com.au
@@ -7,8 +7,18 @@ https://www.cdconstruct.com.au
 ## Primary Public Pages
 - https://www.cdconstruct.com.au
 - https://www.cdconstruct.com.au/about-us
+- https://www.cdconstruct.com.au/blog
 - https://www.cdconstruct.com.au/renovation-projects
 - https://www.cdconstruct.com.au/renovation-services
+- https://www.cdconstruct.com.au/kitchen-renovations-gold-coast
+- https://www.cdconstruct.com.au/bathroom-renovations-gold-coast
+- https://www.cdconstruct.com.au/whole-home-renovations-gold-coast
+- https://www.cdconstruct.com.au/broadbeach-renovations
+- https://www.cdconstruct.com.au/mermaid-beach-renovations
+- https://www.cdconstruct.com.au/palm-beach-renovations
+- https://www.cdconstruct.com.au/robina-renovations
+- https://www.cdconstruct.com.au/southport-renovations
+- https://www.cdconstruct.com.au/renovations/burleigh-heads
 - https://www.cdconstruct.com.au/renovation-life-stages
 - https://www.cdconstruct.com.au/book-renovation-consultation
 - https://www.cdconstruct.com.au/renovation-gallery
@@ -18,6 +28,9 @@ https://www.cdconstruct.com.au
 - https://www.cdconstruct.com.au/renovation-design-tools/moodboard
 - https://www.cdconstruct.com.au/privacy-policy
 - https://www.cdconstruct.com.au/terms-conditions
+- https://www.cdconstruct.com.au/blog/bathroom-renovation-timeline-what-to-expect
+- https://www.cdconstruct.com.au/blog/first-renovation-planning-checklist-gold-coast
+- https://www.cdconstruct.com.au/blog/kitchen-renovation-budget-breakdown-gold-coast
 
 ## Project Detail Pages
 - https://www.cdconstruct.com.au/renovation-projects/everyday-ease

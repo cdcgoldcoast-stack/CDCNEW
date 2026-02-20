@@ -118,6 +118,15 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
     includeInFooter: true,
   },
   {
+    path: "/blog",
+    label: "Renovation Blog",
+    description: withBrandDescription(
+      "Read Gold Coast renovation planning guides, design advice, and practical build insights.",
+    ),
+    includeInHeader: true,
+    includeInFooter: true,
+  },
+  {
     path: "/renovation-projects",
     label: "Renovation Projects",
     description: withBrandDescription(

@@ -25,6 +25,17 @@ export interface ProjectData {
   tags?: string[];
 }
 
+export interface BlogPostingData {
+  title: string;
+  description: string;
+  path: string;
+  publishedAt: string;
+  modifiedAt?: string;
+  authorName?: string;
+  image?: string;
+  tags?: string[];
+}
+
 const ORGANIZATION_ID = `${PRODUCTION_DOMAIN}#organization`;
 
 /**
@@ -109,6 +120,43 @@ export const generateProjectSchema = (project: ProjectData) => {
       },
       keywords: project.tags?.length ? project.tags.join(", ") : undefined,
     },
+  };
+};
+
+/**
+ * Generate BlogPosting structured data for blog detail pages.
+ */
+export const generateBlogPostingSchema = (post: BlogPostingData) => {
+  const pageUrl = `${PRODUCTION_DOMAIN}${post.path}`;
+  const imageUrl = post.image
+    ? (post.image.startsWith("http") ? post.image : `${PRODUCTION_DOMAIN}${post.image}`)
+    : undefined;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${pageUrl}#blogposting`,
+    headline: post.title,
+    description: post.description,
+    url: pageUrl,
+    mainEntityOfPage: pageUrl,
+    datePublished: post.publishedAt,
+    dateModified: post.modifiedAt || post.publishedAt,
+    image: imageUrl,
+    author: {
+      "@type": "Person",
+      name: post.authorName || SITE_NAME,
+    },
+    publisher: {
+      "@id": ORGANIZATION_ID,
+    },
+    isPartOf: {
+      "@type": "Blog",
+      "@id": `${PRODUCTION_DOMAIN}/blog#blog`,
+      url: `${PRODUCTION_DOMAIN}/blog`,
+      name: `${SITE_NAME} Blog`,
+    },
+    keywords: post.tags?.length ? post.tags.join(", ") : undefined,
   };
 };
 

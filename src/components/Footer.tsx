@@ -26,8 +26,14 @@ const Footer = () => {
 
   const companyLinks = [
     { label: "About Us", href: "/about-us" },
+    { label: "Renovation Blog", href: "/blog" },
     { label: "Our Projects", href: "/renovation-projects" },
     { label: "Gallery", href: "/renovation-gallery" },
+    { label: "Life Stages", href: "/renovation-life-stages" },
+    { label: "Design Tools", href: "/renovation-design-tools" },
+    { label: "AI Preview Intro", href: "/renovation-ai-generator/intro" },
+    { label: "AI Generator", href: "/renovation-ai-generator" },
+    { label: "Moodboard Tool", href: "/renovation-design-tools/moodboard" },
     { label: "Contact Us", href: "/book-renovation-consultation" },
   ];
 
