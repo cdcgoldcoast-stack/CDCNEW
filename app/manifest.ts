@@ -13,9 +13,14 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: "en-AU",
     icons: [
       {
-        src: "/favicon-v2.png",
+        src: "/favicon-v2.png?v=2",
         sizes: "256x256",
         type: "image/png",
+      },
+      {
+        src: "/favicon.ico?v=2",
+        sizes: "48x48 32x32 16x16",
+        type: "image/x-icon",
       },
     ],
   };

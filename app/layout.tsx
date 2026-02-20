@@ -38,9 +38,9 @@ export const metadata: Metadata = {
     title: SITE_NAME,
   },
   icons: {
-    icon: [{ url: "/favicon-v2.png", type: "image/png" }],
-    shortcut: ["/favicon-v2.png"],
-    apple: [{ url: "/favicon-v2.png" }],
+    icon: [{ url: "/favicon-v2.png?v=2", type: "image/png", sizes: "256x256" }],
+    shortcut: [{ url: "/favicon-v2.png?v=2", type: "image/png" }],
+    apple: [{ url: "/favicon-v2.png?v=2", type: "image/png", sizes: "256x256" }],
   },
   robots: {
     index: true,
@@ -74,7 +74,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     <html lang="en-AU">
       <head>
-        <link rel="icon" type="image/png" href="/favicon-v2.png" />
+        <link rel="icon" type="image/png" href="/favicon-v2.png?v=2" sizes="256x256" />
         <link rel="dns-prefetch" href="//iqugsxeejieneyksfbza.supabase.co" />
         <link rel="preconnect" href="https://iqugsxeejieneyksfbza.supabase.co" crossOrigin="anonymous" />
         {/* Preload mobile hero image for fast LCP */}
