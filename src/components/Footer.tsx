@@ -9,9 +9,9 @@ const Footer = () => {
   const logo = useResolvedAsset("logo");
 
   const serviceLinks = [
-    { label: "Kitchen", href: "/kitchen-renovations-gold-coast" },
-    { label: "Bathroom", href: "/bathroom-renovations-gold-coast" },
-    { label: "Whole-Home", href: "/whole-home-renovations-gold-coast" },
+    { label: "Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+    { label: "Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
+    { label: "Whole-Home Renovations", href: "/whole-home-renovations-gold-coast" },
     { label: "All Services", href: "/renovation-services" },
   ];
 
@@ -25,10 +25,10 @@ const Footer = () => {
   ];
 
   const companyLinks = [
-    { label: "About", href: "/about-us" },
-    { label: "Projects", href: "/renovation-projects" },
+    { label: "About Us", href: "/about-us" },
+    { label: "Our Projects", href: "/renovation-projects" },
     { label: "Gallery", href: "/renovation-gallery" },
-    { label: "Contact", href: "/book-renovation-consultation" },
+    { label: "Contact Us", href: "/book-renovation-consultation" },
   ];
 
   return (
