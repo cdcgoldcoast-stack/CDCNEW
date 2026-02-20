@@ -1,5 +1,8 @@
--- Fix: Allow both anon and authenticated users to submit popup responses
+-- Fix: Allow both anon and authenticated users to submit popup responses.
+-- Keep this migration idempotent in environments where policies may already exist.
 DROP POLICY IF EXISTS "Allow anonymous inserts" ON public.popup_responses;
+DROP POLICY IF EXISTS "Allow all inserts" ON public.popup_responses;
+DROP POLICY IF EXISTS "Allow authenticated inserts" ON public.popup_responses;
 
 -- Create policy to allow inserts from anyone (anon or authenticated)
 CREATE POLICY "Allow all inserts" ON public.popup_responses

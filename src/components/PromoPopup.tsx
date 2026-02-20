@@ -64,7 +64,7 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
     }
 
     // Basic phone validation
-    const phoneRegex = /^[\d\s\+\-\(\)]{8,}$/;
+    const phoneRegex = /^[\d\s+()-]{8,}$/;
     if (!phoneRegex.test(formData.phone)) {
       setError("Please enter a valid phone number");
       return;
@@ -73,19 +73,34 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
     setIsSubmitting(true);
 
     try {
-      const { error: supabaseError } = await supabase
-        .from("popup_responses")
-        .insert([
-          {
-            name: formData.name.trim(),
-            phone: formData.phone.trim(),
-            source: "promo_popup",
-            page_url: window.location.href,
-            user_agent: navigator.userAgent,
-          },
-        ]);
+      const { data, error: invokeError } = await supabase.functions.invoke<{
+        success?: boolean;
+        id?: string;
+        deduped?: boolean;
+        error?: string;
+      }>("save-popup-response", {
+        body: {
+          name: formData.name.trim(),
+          phone: formData.phone.trim(),
+          source: "promo_popup",
+          pageUrl: window.location.href,
+          userAgent: navigator.userAgent,
+          website: "",
+        },
+      });
 
-      if (supabaseError) throw supabaseError;
+      if (invokeError) {
+        const context = (invokeError as { context?: { json?: () => Promise<unknown> } }).context;
+        if (context?.json) {
+          const body = await context.json();
+          const message = (body as { error?: string })?.error;
+          if (message) throw new Error(message);
+        }
+        throw invokeError;
+      }
+
+      if (data?.error) throw new Error(data.error);
+      if (!data?.success) throw new Error("Could not save popup response.");
 
       setIsSubmitted(true);
       sessionStorage.setItem("promoPopupInteracted", "submitted");

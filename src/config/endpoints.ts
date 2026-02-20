@@ -7,6 +7,7 @@ export const SUPABASE_FUNCTIONS_BASE_URL = `${SUPABASE_URL}/functions/v1`;
 export const FUNCTION_ENDPOINTS = {
   chat: `${SUPABASE_FUNCTIONS_BASE_URL}/chat`,
   saveChatInquiry: `${SUPABASE_FUNCTIONS_BASE_URL}/save-chat-inquiry`,
+  savePopupResponse: `${SUPABASE_FUNCTIONS_BASE_URL}/save-popup-response`,
   imageProxy: `${SUPABASE_FUNCTIONS_BASE_URL}/image-proxy`,
 } as const;
 

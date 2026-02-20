@@ -9,6 +9,9 @@ verify_jwt = false
 [functions.save-chat-inquiry]
 verify_jwt = false
 
+[functions.save-popup-response]
+verify_jwt = false
+
 [functions.chat]
 verify_jwt = false
 
