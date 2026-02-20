@@ -74,11 +74,11 @@ const serviceFaqs = [
 ];
 
 const wholeHomeImages = {
-  hero: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/service-bg-whole-home.webp",
+  hero: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Living-renovation-Helensvale.webp",
   openPlan: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Full_House_Renovation_Gold_Coast_fireplace.webp",
-  extension: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/service-bg-extensions.webp",
+  extension: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/hallway-renovation-southport-gold-coast-concept-design-construct.webp",
   character: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Elanora-House-Renovations.webp",
-  living: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/service-living.webp",
+  living: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/laundry-renovation-bundall-concept-design-construct.webp",
   portfolio: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Helensvale-full-house-renovations.webp",
 };
 
