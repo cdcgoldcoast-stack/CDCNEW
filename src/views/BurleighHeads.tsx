@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ResponsiveImage from "@/components/ResponsiveImage";
 import { Link } from "react-router-dom";
 
 const faqs = [
@@ -25,46 +26,71 @@ const faqs = [
   },
 ];
 
+// Burleigh renovation images
+const burleighImages = {
+  hero: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/editorial-4.webp",
+  street: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/editorial-1.webp",
+  kitchen: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Helensvale-Gold-Coast-Kitchen-Renovations.webp",
+  bathroom: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Elanora-Bathroom-Renovations-Gold-Coast.webp",
+  living: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Full_House_Renovation_Gold_Coast_fireplace.webp",
+  coastal: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/editorial-5.webp",
+};
+
 export default function BurleighHeads() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
 
-      {/* Hero */}
+      {/* Hero with Image */}
       <section className="pt-32 pb-20 md:pt-40 md:pb-28 bg-cream">
         <div className="container-wide">
-          <div className="max-w-3xl">
-            <p className="text-label text-primary mb-4">Local Renovation Builders</p>
-            <h1 className="font-serif text-h1-mobile md:text-h1 text-foreground leading-tight mb-6">
-              Burleigh Heads Renovations
-            </h1>
-            <p className="text-lg md:text-xl text-foreground/80 leading-relaxed mb-8">
-              Kitchen, bathroom and whole-home renovations in Burleigh Heads. We understand the
-              unique character of these homes - from original beach shacks to modern hillside
-              architecture. Based in Broadbeach, we're locals too.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link
-                to="/book-renovation-consultation"
-                className="text-label bg-primary text-primary-foreground px-8 py-3 hover:opacity-90 transition-opacity inline-block"
-              >
-                Book a Burleigh Consultation
-              </Link>
-              <a
-                href="tel:1300020232"
-                className="text-label border border-primary/30 text-primary px-8 py-3 hover:bg-primary/5 transition-colors inline-block"
-              >
-                Call 1300 020 232
-              </a>
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div>
+              <p className="text-label text-primary mb-4">Local Renovation Builders</p>
+              <h1 className="font-serif text-h1-mobile md:text-h1 text-foreground leading-tight mb-6">
+                Burleigh Heads Renovations
+              </h1>
+              <p className="text-lg md:text-xl text-foreground/80 leading-relaxed mb-8">
+                Kitchen, bathroom and whole-home renovations in Burleigh Heads. We understand the
+                unique character of these homes - from original beach shacks to modern hillside
+                architecture. Based in Broadbeach, we're locals too.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  to="/book-renovation-consultation"
+                  className="text-label bg-primary text-primary-foreground px-8 py-3 hover:opacity-90 transition-opacity inline-block"
+                >
+                  Book a Burleigh Consultation
+                </Link>
+                <a
+                  href="tel:1300020232"
+                  className="text-label border border-primary/30 text-primary px-8 py-3 hover:bg-primary/5 transition-colors inline-block"
+                >
+                  Call 1300 020 232
+                </a>
+              </div>
+            </div>
+            <div className="aspect-[4/3] overflow-hidden bg-muted">
+              <ResponsiveImage
+                src={burleighImages.hero}
+                alt="Burleigh Heads home renovation by Concept Design Construct"
+                width={800}
+                height={600}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                loading="eager"
+                priority
+                quality={62}
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Why Burleigh is Unique */}
+      {/* Why Burleigh is Unique with Image */}
       <section className="py-16 md:py-24">
         <div className="container-wide">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start mb-16">
             <div>
               <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
                 Renovating in Burleigh Heads
@@ -90,77 +116,147 @@ export default function BurleighHeads() {
                 </p>
               </div>
             </div>
-            <div className="bg-cream p-8">
-              <h3 className="font-serif italic text-xl text-primary mb-4">
-                Common Burleigh Renovations
-              </h3>
-              <ul className="space-y-3 text-foreground/70">
-                <li className="flex items-start gap-3">
-                  <span className="text-primary font-medium">•</span>
-                  Opening up 70s/80s brick homes for modern living
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-primary font-medium">•</span>
-                  Coastal kitchen renovations with natural materials
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-primary font-medium">•</span>
-                  Adding decks and outdoor kitchens for the Burleigh climate
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-primary font-medium">•</span>
-                  Updating bathrooms with stone and quality fixtures
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-primary font-medium">•</span>
-                  Full character home renovations respecting original features
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-primary font-medium">•</span>
-                  Hillside home structural work and retaining walls
-                </li>
-              </ul>
+            <div className="space-y-6">
+              <div className="aspect-[4/3] overflow-hidden bg-muted">
+                <ResponsiveImage
+                  src={burleighImages.street}
+                  alt="Burleigh Heads streetscape and local homes"
+                  width={600}
+                  height={450}
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  loading="lazy"
+                  quality={60}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="bg-cream p-8">
+                <h3 className="font-serif italic text-xl text-primary mb-4">
+                  Common Burleigh Renovations
+                </h3>
+                <ul className="space-y-3 text-foreground/70">
+                  <li className="flex items-start gap-3">
+                    <span className="text-primary font-medium">•</span>
+                    Opening up 70s/80s brick homes for modern living
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-primary font-medium">•</span>
+                    Coastal kitchen renovations with natural materials
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-primary font-medium">•</span>
+                    Adding decks and outdoor kitchens for the Burleigh climate
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-primary font-medium">•</span>
+                    Updating bathrooms with stone and quality fixtures
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-primary font-medium">•</span>
+                    Full character home renovations respecting original features
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-primary font-medium">•</span>
+                    Hillside home structural work and retaining walls
+                  </li>
+                </ul>
+              </div>
             </div>
+          </div>
+
+          {/* Coastal Living Image */}
+          <div className="aspect-[21/9] overflow-hidden bg-muted">
+            <ResponsiveImage
+              src={burleighImages.coastal}
+              alt="Coastal living and indoor-outdoor flow in Burleigh Heads renovations"
+              width={1200}
+              height={514}
+              sizes="100vw"
+              loading="lazy"
+              quality={60}
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
       </section>
 
-      {/* Services */}
+      {/* Services with Images */}
       <section className="py-16 md:py-24 bg-cream">
         <div className="container-wide">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-12 text-center">
             What We Renovate in Burleigh
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-background p-8">
-              <h3 className="font-serif italic text-xl text-primary mb-3">Kitchen Renovations</h3>
-              <p className="text-foreground/70 mb-4">
-                Open-plan kitchen renovations that work with Burleigh's indoor-outdoor lifestyle.
-                Island benches, quality appliances, and finishes that handle the coastal climate.
-              </p>
-              <Link to="/renovation-services" className="text-label text-primary hover:underline">
-                Learn more →
-              </Link>
+            <div className="bg-background overflow-hidden">
+              <div className="aspect-[4/3] overflow-hidden bg-muted">
+                <ResponsiveImage
+                  src={burleighImages.kitchen}
+                  alt="Kitchen renovation in Burleigh Heads"
+                  width={600}
+                  height={450}
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  loading="lazy"
+                  quality={60}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-8">
+                <h3 className="font-serif italic text-xl text-primary mb-3">Kitchen Renovations</h3>
+                <p className="text-foreground/70 mb-4">
+                  Open-plan kitchen renovations that work with Burleigh's indoor-outdoor lifestyle.
+                  Island benches, quality appliances, and finishes that handle the coastal climate.
+                </p>
+                <Link to="/kitchen-renovations-gold-coast" className="text-label text-primary hover:underline">
+                  Learn more →
+                </Link>
+              </div>
             </div>
-            <div className="bg-background p-8">
-              <h3 className="font-serif italic text-xl text-primary mb-3">Bathroom Renovations</h3>
-              <p className="text-foreground/70 mb-4">
-                Spa-like bathrooms with natural stone, quality fixtures, and smart storage.
-                Designed for the humidity and salt air of coastal living.
-              </p>
-              <Link to="/renovation-services" className="text-label text-primary hover:underline">
-                Learn more →
-              </Link>
+            <div className="bg-background overflow-hidden">
+              <div className="aspect-[4/3] overflow-hidden bg-muted">
+                <ResponsiveImage
+                  src={burleighImages.bathroom}
+                  alt="Bathroom renovation in Burleigh Heads"
+                  width={600}
+                  height={450}
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  loading="lazy"
+                  quality={60}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-8">
+                <h3 className="font-serif italic text-xl text-primary mb-3">Bathroom Renovations</h3>
+                <p className="text-foreground/70 mb-4">
+                  Spa-like bathrooms with natural stone, quality fixtures, and smart storage.
+                  Designed for the humidity and salt air of coastal living.
+                </p>
+                <Link to="/bathroom-renovations-gold-coast" className="text-label text-primary hover:underline">
+                  Learn more →
+                </Link>
+              </div>
             </div>
-            <div className="bg-background p-8">
-              <h3 className="font-serif italic text-xl text-primary mb-3">Whole Home Renovations</h3>
-              <p className="text-foreground/70 mb-4">
-                Transform your entire home while keeping what makes it Burleigh - the character,
-                the light, the connection to the outdoors.
-              </p>
-              <Link to="/renovation-services" className="text-label text-primary hover:underline">
-                Learn more →
-              </Link>
+            <div className="bg-background overflow-hidden">
+              <div className="aspect-[4/3] overflow-hidden bg-muted">
+                <ResponsiveImage
+                  src={burleighImages.living}
+                  alt="Whole home renovation in Burleigh Heads"
+                  width={600}
+                  height={450}
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  loading="lazy"
+                  quality={60}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-8">
+                <h3 className="font-serif italic text-xl text-primary mb-3">Whole Home Renovations</h3>
+                <p className="text-foreground/70 mb-4">
+                  Transform your entire home while keeping what makes it Burleigh - the character,
+                  the light, the connection to the outdoors.
+                </p>
+                <Link to="/renovation-services" className="text-label text-primary hover:underline">
+                  Learn more →
+                </Link>
+              </div>
             </div>
           </div>
         </div>

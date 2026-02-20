@@ -73,11 +73,19 @@ const serviceFaqs = [
   },
 ];
 
+// Bathroom project images
+const bathroomImages = {
+  hero: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/lifestyle-bathroom.webp",
+  ensuite: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Elanora-Bathroom-Renovations-Gold-Coast.webp",
+  family: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Helensvale-Renovation-Bathroom.webp",
+  luxury: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/bathroom-upgrade-maudsland-concept-design-construct.webp",
+  process: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Elanora-Gold-Coast-Bathroom-Renovations.webp",
+  portfolio: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Elanora-Bathroom-Renovations.webp",
+};
+
 const BathroomRenovations = () => {
   const { assets } = useSiteAssets();
-  // Use bathroom-related images from assets or fallback
-  const heroImage = assets["bathroom-hero"] || 
-    "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Renovaton-before.webp";
+  const heroImage = assets["service-bg-bathroom"] || bathroomImages.hero;
 
   return (
     <div className="min-h-screen bg-background">
@@ -144,11 +152,23 @@ const BathroomRenovations = () => {
         </div>
       </section>
 
-      {/* Waterproofing Section */}
+      {/* Waterproofing Section with Image */}
       <section className="py-16 md:py-24 bg-primary text-primary-foreground relative z-10">
         <div className="container-wide">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-            <div>
+            <div className="order-2 lg:order-1 aspect-[4/3] overflow-hidden bg-primary-foreground/10">
+              <ResponsiveImage
+                src={bathroomImages.process}
+                alt="Bathroom waterproofing and tiling process"
+                width={800}
+                height={600}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                loading="lazy"
+                quality={60}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="order-1 lg:order-2">
               <div className="inline-flex items-center gap-2 bg-primary-foreground/10 px-4 py-2 mb-6">
                 <Shield className="w-5 h-5" />
                 <span className="text-xs uppercase tracking-wider">10-Year Waterproofing Warranty</span>
@@ -177,14 +197,11 @@ const BathroomRenovations = () => {
                 ))}
               </ul>
             </div>
-            <div className="bg-primary-foreground/10 aspect-[4/3] flex items-center justify-center">
-              <p className="text-primary-foreground/50 text-sm">Waterproofing Process Illustration</p>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Bathroom Types Section */}
+      {/* Bathroom Types Section with Images */}
       <section className="py-16 md:py-24 bg-background relative z-10">
         <div className="container-wide">
           <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
@@ -203,25 +220,42 @@ const BathroomRenovations = () => {
               {
                 title: "Ensuite Renovations",
                 description: "Transform your private retreat with smart storage, quality fixtures, and spa-like features designed for relaxation.",
+                image: bathroomImages.ensuite,
               },
               {
                 title: "Family Bathrooms",
                 description: "Durable, practical spaces that handle busy mornings with ease. Double vanities, ample storage, and easy-clean surfaces.",
+                image: bathroomImages.family,
               },
               {
-                title: "Powder Rooms",
-                description: "Make a statement with compact luxury. Perfect for impressing guests while maximising limited space.",
+                title: "Luxury Bathrooms",
+                description: "Make a statement with high-end finishes, freestanding baths, and premium fixtures for a truly indulgent experience.",
+                image: bathroomImages.luxury,
               },
             ].map((type) => (
-              <article key={type.title} className="border border-foreground/15 p-6 md:p-8 bg-background">
-                <h3 className="font-serif text-xl md:text-2xl text-primary mb-4">{type.title}</h3>
-                <p className="text-foreground/75 leading-relaxed mb-6">{type.description}</p>
-                <Link
-                  to="/book-renovation-consultation"
-                  className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-primary hover:opacity-70 transition-opacity"
-                >
-                  Discuss Your Project <ArrowRight className="w-4 h-4" />
-                </Link>
+              <article key={type.title} className="group bg-background border border-foreground/10 overflow-hidden">
+                <div className="aspect-[4/3] overflow-hidden bg-muted">
+                  <ResponsiveImage
+                    src={type.image}
+                    alt={`${type.title} by Concept Design Construct`}
+                    width={600}
+                    height={450}
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    loading="lazy"
+                    quality={60}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-serif text-xl md:text-2xl text-primary mb-3">{type.title}</h3>
+                  <p className="text-foreground/75 leading-relaxed mb-4">{type.description}</p>
+                  <Link
+                    to="/book-renovation-consultation"
+                    className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-primary hover:opacity-70 transition-opacity"
+                  >
+                    Discuss Your Project <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
               </article>
             ))}
           </div>
@@ -254,11 +288,11 @@ const BathroomRenovations = () => {
         </div>
       </section>
 
-      {/* Related Projects CTA */}
+      {/* Related Projects CTA with Image */}
       <section className="py-16 md:py-24 bg-background relative z-10">
         <div className="container-wide">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-            <div>
+            <div className="order-2 lg:order-1">
               <p className="text-label text-primary mb-4">Portfolio</p>
               <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-5">
                 See Our Bathroom Renovations
@@ -274,8 +308,17 @@ const BathroomRenovations = () => {
                 View Bathroom Projects <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            <div className="bg-muted aspect-[4/3] flex items-center justify-center">
-              <p className="text-foreground/40 text-sm">Bathroom Project Gallery Preview</p>
+            <div className="order-1 lg:order-2 aspect-[4/3] overflow-hidden bg-muted">
+              <ResponsiveImage
+                src={bathroomImages.portfolio}
+                alt="Portfolio of Gold Coast bathroom renovations"
+                width={800}
+                height={600}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                loading="lazy"
+                quality={60}
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>

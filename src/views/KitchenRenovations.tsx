@@ -73,11 +73,19 @@ const serviceFaqs = [
   },
 ];
 
+// Kitchen project images
+const kitchenImages = {
+  hero: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Gold_Coast_renovation_builders.webp",
+  modern: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Elanora-Kitchen-Renovations.webp",
+  hamptons: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Helensvale-Gold-Coast-Kitchen-Renovations.webp",
+  coastal: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Elanora-Kitchen-Gold-Coast-Renovations.webp",
+  process: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/kitchen-upgrade-varsity-lakes-gold-coast-concept-design-construct.webp",
+  portfolio: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Helensvale-Renovations-Kitchen.webp",
+};
+
 const KitchenRenovations = () => {
   const { assets } = useSiteAssets();
-  // Use kitchen-related images from assets or fallback to gallery images
-  const heroImage = assets["kitchen-hero"] || 
-    "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Gold_Coast_renovation_builders.webp";
+  const heroImage = assets["service-bg-kitchen"] || kitchenImages.hero;
 
   return (
     <div className="min-h-screen bg-background">
@@ -144,7 +152,7 @@ const KitchenRenovations = () => {
         </div>
       </section>
 
-      {/* Kitchen Styles Section */}
+      {/* Kitchen Styles Section with Images */}
       <section className="py-16 md:py-24 bg-background relative z-10">
         <div className="container-wide">
           <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
@@ -163,43 +171,74 @@ const KitchenRenovations = () => {
               {
                 title: "Modern & Minimalist",
                 description: "Clean lines, handle-less cabinetry, and integrated appliances for a sleek contemporary look.",
+                image: kitchenImages.modern,
               },
               {
                 title: "Hamptons Style",
                 description: "Shaker cabinets, marble-look surfaces, and classic detailing for timeless elegance.",
+                image: kitchenImages.hamptons,
               },
               {
                 title: "Coastal Contemporary",
                 description: "Light, airy spaces with natural textures perfect for Gold Coast living.",
+                image: kitchenImages.coastal,
               },
             ].map((style) => (
-              <article key={style.title} className="border border-foreground/15 p-6 md:p-8 bg-background">
-                <h3 className="font-serif text-xl md:text-2xl text-primary mb-4">{style.title}</h3>
-                <p className="text-foreground/75 leading-relaxed mb-6">{style.description}</p>
-                <Link
-                  to="/renovation-projects"
-                  className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-primary hover:opacity-70 transition-opacity"
-                >
-                  View Projects <ArrowRight className="w-4 h-4" />
-                </Link>
+              <article key={style.title} className="group bg-background border border-foreground/10 overflow-hidden">
+                <div className="aspect-[4/3] overflow-hidden bg-muted">
+                  <ResponsiveImage
+                    src={style.image}
+                    alt={`${style.title} kitchen renovation on the Gold Coast`}
+                    width={600}
+                    height={450}
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    loading="lazy"
+                    quality={60}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-serif text-xl md:text-2xl text-primary mb-3">{style.title}</h3>
+                  <p className="text-foreground/75 leading-relaxed mb-4">{style.description}</p>
+                  <Link
+                    to="/renovation-projects"
+                    className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-primary hover:opacity-70 transition-opacity"
+                  >
+                    View Projects <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Process Section */}
+      {/* Process Section with Image */}
       <section className="py-16 md:py-24 bg-cream relative z-10">
         <div className="container-wide">
-          <div className="max-w-3xl mb-12 md:mb-16">
-            <p className="text-label text-primary mb-4">Our Process</p>
-            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-5">
-              How We Deliver Your Dream Kitchen
-            </h2>
-            <p className="text-foreground/70 leading-relaxed">
-              A proven process that keeps your kitchen renovation on track, on budget, 
-              and aligned with your vision from day one.
-            </p>
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-12 md:mb-16">
+            <div>
+              <p className="text-label text-primary mb-4">Our Process</p>
+              <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-5">
+                How We Deliver Your Dream Kitchen
+              </h2>
+              <p className="text-foreground/70 leading-relaxed">
+                A proven process that keeps your kitchen renovation on track, on budget, 
+                and aligned with your vision from day one.
+              </p>
+            </div>
+            <div className="aspect-[4/3] overflow-hidden bg-muted">
+              <ResponsiveImage
+                src={kitchenImages.process}
+                alt="Kitchen renovation process by Concept Design Construct"
+                width={800}
+                height={600}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                loading="lazy"
+                quality={60}
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
@@ -214,11 +253,23 @@ const KitchenRenovations = () => {
         </div>
       </section>
 
-      {/* Related Projects CTA */}
+      {/* Related Projects CTA with Image */}
       <section className="py-16 md:py-24 bg-background relative z-10">
         <div className="container-wide">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-            <div>
+            <div className="order-2 lg:order-1 aspect-[4/3] overflow-hidden bg-muted">
+              <ResponsiveImage
+                src={kitchenImages.portfolio}
+                alt="Portfolio of Gold Coast kitchen renovations"
+                width={800}
+                height={600}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                loading="lazy"
+                quality={60}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="order-1 lg:order-2">
               <p className="text-label text-primary mb-4">Portfolio</p>
               <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-5">
                 See Our Kitchen Renovations
@@ -233,9 +284,6 @@ const KitchenRenovations = () => {
               >
                 View Kitchen Projects <ArrowRight className="w-4 h-4" />
               </Link>
-            </div>
-            <div className="bg-muted aspect-[4/3] flex items-center justify-center">
-              <p className="text-foreground/40 text-sm">Kitchen Project Gallery Preview</p>
             </div>
           </div>
         </div>
