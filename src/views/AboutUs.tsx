@@ -19,14 +19,37 @@ const AboutUs = () => {
     "Kitchen renovations",
     "Laundry renovations"
   ];
+
+  const teamImages = [
+    {
+      src: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/team-on-site-signage-beenleigh-concept-design-construct.webp",
+      alt: "CD Construct renovation team on site in Beenleigh with company signage",
+      caption: "On Site"
+    },
+    {
+      src: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/team-celebration-project-completion-gold-coast-concept-design-construct.webp",
+      alt: "CD Construct team celebrating project completion on the Gold Coast",
+      caption: "Celebrating Success"
+    },
+    {
+      src: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/construction-team-on-site-gold-coast.webp",
+      alt: "CD Construct construction team working on a renovation project",
+      caption: "Working Together"
+    },
+    {
+      src: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/construction-team-gold-coast-concept-design-construct.webp",
+      alt: "CD Construct builders and tradespeople on a Gold Coast building site",
+      caption: "The Team"
+    }
+  ];
   
   const aboutSchema = generateAboutPageSchema();
   
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="About Our Gold Coast Renovation Team | Since 2000"
-        description="Meet Concept Design Construct, QBCC licensed specialists delivering Gold Coast renovations across kitchen, bathroom, extension, and full-home projects since 2000."
+        title="Meet Our Team | Gold Coast Renovation Builders | CD Construct"
+        description="Meet the Concept Design Construct team - QBCC licensed Gold Coast renovation builders with 25+ years experience. Kitchen, bathroom & home renovation specialists."
         url="/about-us"
         jsonLd={aboutSchema}
       />
@@ -141,6 +164,87 @@ const AboutUs = () => {
             <p className="text-background/70 leading-relaxed">
               Low staff turnover means the same people work on your project from start to finish. You'll get to know us, and we'll get to know what matters to you.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 4b. MEET THE TEAM - Gallery */}
+      <section className="py-20 md:py-28 bg-background relative z-10" itemScope itemType="https://schema.org/Organization">
+        {/* Hidden semantic content for SEO */}
+        <div className="sr-only">
+          <h2>Meet the Concept Design Construct Team</h2>
+          <p>
+            Our Gold Coast renovation team includes licensed builders, project managers, 
+            carpenters, plumbers, electricians, and specialist tradespeople. With over 25 years 
+            of combined experience, we've completed 100+ renovation projects across the Gold Coast 
+            including Broadbeach, Burleigh Heads, Mermaid Beach, Robina, Southport, and Palm Beach.
+          </p>
+          <ul>
+            <li>QBCC Licensed Builders</li>
+            <li>Master Builders Association Members</li>
+            <li>Licensed Plumbers and Electricians</li>
+            <li>Experienced Project Managers</li>
+            <li>Specialist Renovation Tradespeople</li>
+          </ul>
+        </div>
+        <meta itemProp="name" content="Concept Design Construct" />
+        <div className="container-wide">
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <p className="text-label text-foreground/60 mb-4">Meet The Team</p>
+            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-6">
+              The People Behind Your Renovation
+            </h2>
+            <p className="text-foreground/70 leading-relaxed">
+              Our experienced team of licensed builders, project managers, and tradespeople work together 
+              to deliver exceptional results across the Gold Coast. <strong itemProp="areaServed">QBCC licensed</strong> and committed to quality.
+            </p>
+          </div>
+          
+          {/* Team Gallery Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            {teamImages.map((image, index) => (
+              <figure 
+                key={index} 
+                className="group relative aspect-[4/3] overflow-hidden bg-muted"
+                itemProp="employee" 
+                itemScope 
+                itemType="https://schema.org/Person"
+              >
+                <ResponsiveImage
+                  src={image.src}
+                  alt={image.alt}
+                  width={600}
+                  height={450}
+                  sizes="(min-width: 1024px) 25vw, 50vw"
+                  loading="lazy"
+                  quality={65}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <figcaption className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                  <p className="text-background text-sm font-medium">{image.caption}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+
+          {/* Team Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-16 border-t border-foreground/10">
+            <div className="text-center" itemProp="foundingDate" content="2000">
+              <span className="text-4xl md:text-5xl font-serif text-primary block mb-2">25+</span>
+              <p className="text-sm text-foreground/60">Years Experience</p>
+            </div>
+            <div className="text-center">
+              <span className="text-4xl md:text-5xl font-serif text-primary block mb-2">100+</span>
+              <p className="text-sm text-foreground/60">Projects Completed</p>
+            </div>
+            <div className="text-center">
+              <span className="text-4xl md:text-5xl font-serif text-primary block mb-2">15+</span>
+              <p className="text-sm text-foreground/60">Team Members</p>
+            </div>
+            <div className="text-center">
+              <span className="text-4xl md:text-5xl font-serif text-primary block mb-2">QBCC</span>
+              <p className="text-sm text-foreground/60">Licensed Builders</p>
+            </div>
           </div>
         </div>
       </section>
