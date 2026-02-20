@@ -27,6 +27,31 @@ const BathroomRenovationsPage = dynamic(() => import("@/views/BathroomRenovation
   loading: () => <div className="min-h-screen bg-background animate-pulse" />,
 });
 
+const WholeHomeRenovationsPage = dynamic(() => import("@/views/WholeHomeRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+// Location pages
+const BroadbeachRenovationsPage = dynamic(() => import("@/views/BroadbeachRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const MermaidBeachRenovationsPage = dynamic(() => import("@/views/MermaidBeachRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const PalmBeachRenovationsPage = dynamic(() => import("@/views/PalmBeachRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const RobinaRenovationsPage = dynamic(() => import("@/views/RobinaRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const SouthportRenovationsPage = dynamic(() => import("@/views/SouthportRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
 // Heavy pages - dynamic imports with loading states
 const AIDesignGeneratorPage = dynamic(() => import("@/views/AIDesignGenerator"), {
   loading: () => <div className="min-h-screen bg-background animate-pulse" />,
@@ -221,4 +246,29 @@ export function KitchenRenovationsClient() {
 
 export function BathroomRenovationsClient() {
   return <BathroomRenovationsPage />;
+}
+
+export function WholeHomeRenovationsClient() {
+  return <WholeHomeRenovationsPage />;
+}
+
+// Location pages
+export function BroadbeachRenovationsClient() {
+  return <BroadbeachRenovationsPage />;
+}
+
+export function MermaidBeachRenovationsClient() {
+  return <MermaidBeachRenovationsPage />;
+}
+
+export function PalmBeachRenovationsClient() {
+  return <PalmBeachRenovationsPage />;
+}
+
+export function RobinaRenovationsClient() {
+  return <RobinaRenovationsPage />;
+}
+
+export function SouthportRenovationsClient() {
+  return <SouthportRenovationsPage />;
 }

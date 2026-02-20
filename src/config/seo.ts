@@ -185,6 +185,49 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
     includeInHeader: false,
     includeInFooter: true,
   },
+  {
+    path: "/whole-home-renovations-gold-coast",
+    label: "Whole-Home Renovations",
+    description: withBrandDescription("Gold Coast whole-home renovations and complete house transformations."),
+    includeInHeader: false,
+    includeInFooter: true,
+  },
+  // Location pages
+  {
+    path: "/broadbeach-renovations",
+    label: "Broadbeach Renovations",
+    description: withBrandDescription("Renovation builders in Broadbeach. Based locally."),
+    includeInHeader: false,
+    includeInFooter: true,
+  },
+  {
+    path: "/mermaid-beach-renovations",
+    label: "Mermaid Beach Renovations",
+    description: withBrandDescription("Coastal home renovations in Mermaid Beach."),
+    includeInHeader: false,
+    includeInFooter: true,
+  },
+  {
+    path: "/palm-beach-renovations",
+    label: "Palm Beach Renovations",
+    description: withBrandDescription("Family home renovations in Palm Beach."),
+    includeInHeader: false,
+    includeInFooter: true,
+  },
+  {
+    path: "/robina-renovations",
+    label: "Robina Renovations",
+    description: withBrandDescription("90s home modernisation in Robina."),
+    includeInHeader: false,
+    includeInFooter: true,
+  },
+  {
+    path: "/southport-renovations",
+    label: "Southport Renovations",
+    description: withBrandDescription("Character home renovations in Southport."),
+    includeInHeader: false,
+    includeInFooter: true,
+  },
 ];
 
 export const HEADER_SITELINK_TARGETS = SITELINK_TARGETS.filter((target) => target.includeInHeader);
