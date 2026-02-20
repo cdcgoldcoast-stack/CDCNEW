@@ -171,6 +171,20 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
     description: withBrandDescription("Start your Gold Coast renovation quote and consultation process."),
     includeInFooter: true,
   },
+  {
+    path: "/kitchen-renovations-gold-coast",
+    label: "Kitchen Renovations",
+    description: withBrandDescription("Gold Coast kitchen renovations with bespoke designs and quality craftsmanship."),
+    includeInHeader: false,
+    includeInFooter: true,
+  },
+  {
+    path: "/bathroom-renovations-gold-coast",
+    label: "Bathroom Renovations",
+    description: withBrandDescription("Gold Coast bathroom renovations with waterproofing-led construction."),
+    includeInHeader: false,
+    includeInFooter: true,
+  },
 ];
 
 export const HEADER_SITELINK_TARGETS = SITELINK_TARGETS.filter((target) => target.includeInHeader);

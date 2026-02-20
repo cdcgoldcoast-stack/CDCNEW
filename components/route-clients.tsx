@@ -18,6 +18,15 @@ import ServicesPage from "@/views/Services";
 import TermsConditionsPage from "@/views/TermsConditions";
 import WorkPage from "@/views/Work";
 
+// Service pages - dynamic imports
+const KitchenRenovationsPage = dynamic(() => import("@/views/KitchenRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const BathroomRenovationsPage = dynamic(() => import("@/views/BathroomRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
 // Heavy pages - dynamic imports with loading states
 const AIDesignGeneratorPage = dynamic(() => import("@/views/AIDesignGenerator"), {
   loading: () => <div className="min-h-screen bg-background animate-pulse" />,
@@ -204,4 +213,12 @@ export function AdminSettingsClient() {
       <AdminSettingsPage />
     </RequireAdmin>
   );
+}
+
+export function KitchenRenovationsClient() {
+  return <KitchenRenovationsPage />;
+}
+
+export function BathroomRenovationsClient() {
+  return <BathroomRenovationsPage />;
 }

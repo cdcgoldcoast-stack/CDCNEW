@@ -18,6 +18,8 @@ const staticRoutes: Array<{
   { path: "/about-us", changeFrequency: "monthly", priority: 0.8 },
   { path: "/renovation-projects", changeFrequency: "weekly", priority: 0.9 },
   { path: "/renovation-services", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/kitchen-renovations-gold-coast", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/bathroom-renovations-gold-coast", changeFrequency: "weekly", priority: 0.9 },
   { path: "/renovation-life-stages", changeFrequency: "monthly", priority: 0.7 },
   { path: "/book-renovation-consultation", changeFrequency: "monthly", priority: 0.9 },
   { path: "/renovation-gallery", changeFrequency: "weekly", priority: 0.7 },
