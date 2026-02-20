@@ -127,6 +127,28 @@ export const buildMetadata = ({
         "max-video-preview": -1,
       },
     },
+    openGraph: {
+      type: type === "article" ? "article" : "website",
+      url: canonical,
+      siteName: SITE_NAME,
+      title: safeTitle,
+      description: safeDescription,
+      images: [
+        {
+          url: DEFAULT_OG_IMAGE,
+          width: 1200,
+          height: 630,
+          alt: `${SITE_NAME} - Gold Coast Renovations`,
+        },
+      ],
+      locale: "en_AU",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: safeTitle,
+      description: safeDescription,
+      images: [DEFAULT_OG_IMAGE],
+    },
     other: otherMeta,
   };
 };
