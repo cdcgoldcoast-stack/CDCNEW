@@ -32,10 +32,10 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="py-12 md:py-16 bg-background relative z-10">
+    <footer className="py-16 md:py-20 bg-background relative z-10">
       <div className="container-wide px-6 md:px-10 lg:px-12">
-        {/* Main footer - responsive grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 lg:gap-10">
+        {/* Main footer grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-8 gap-y-10 lg:gap-12">
           
           {/* Column 1: Logo & Contact */}
           <div className="col-span-2 md:col-span-1">
@@ -46,40 +46,38 @@ const Footer = () => {
               height={131}
               sizes="144px"
               loading="lazy"
-              className="h-auto w-36 md:w-44 mb-4"
+              className="h-auto w-36 mb-5"
             />
-            <p className="text-label text-primary mb-6">
+            <p className="text-label text-primary mb-8">
               Gold Coast Renovations
             </p>
             
             {/* Contact */}
-            <div className="space-y-3 mb-6">
+            <div className="space-y-4">
               <a
                 href="tel:1300020232"
-                className="flex items-center gap-2 text-sm text-foreground/80 hover:text-primary transition-colors"
+                className="flex items-center gap-3 text-sm text-foreground/80 hover:text-primary transition-colors"
               >
                 <Phone className="w-4 h-4" />
                 1300 020 232
               </a>
               <a
                 href="mailto:info@cdconstruct.com.au"
-                className="flex items-center gap-2 text-sm text-foreground/80 hover:text-primary transition-colors"
+                className="flex items-center gap-3 text-sm text-foreground/80 hover:text-primary transition-colors"
               >
                 <Mail className="w-4 h-4" />
                 info@cdconstruct.com.au
               </a>
-            </div>
-
-            {/* Address */}
-            <div className="flex items-start gap-2 text-sm text-foreground/70 mb-6">
-              <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
-              <address className="not-italic">
-                1907/22 Surf Parade, Broadbeach
-              </address>
+              <div className="flex items-start gap-3 text-sm text-foreground/70">
+                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                <address className="not-italic">
+                  1907/22 Surf Parade, Broadbeach
+                </address>
+              </div>
             </div>
 
             {/* Social */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 mt-8">
               <a
                 href="https://www.instagram.com/conceptdesignconstruct_"
                 target="_blank"
@@ -103,9 +101,9 @@ const Footer = () => {
 
           {/* Column 2: Services */}
           <div>
-            <p className="text-label text-foreground/50 mb-4">Services</p>
+            <p className="text-label text-foreground/50 mb-6">Services</p>
             <nav aria-label="Footer services">
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-4">
                 {serviceLinks.map(link => (
                   <li key={link.href}>
                     <a
@@ -122,9 +120,9 @@ const Footer = () => {
 
           {/* Column 3: Locations */}
           <div>
-            <p className="text-label text-foreground/50 mb-4">Locations</p>
+            <p className="text-label text-foreground/50 mb-6">Locations</p>
             <nav aria-label="Footer locations">
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-4">
                 {locationLinks.map(link => (
                   <li key={link.href}>
                     <a
@@ -141,9 +139,9 @@ const Footer = () => {
 
           {/* Column 4: Company */}
           <div>
-            <p className="text-label text-foreground/50 mb-4">Company</p>
+            <p className="text-label text-foreground/50 mb-6">Company</p>
             <nav aria-label="Footer company">
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-4">
                 {companyLinks.map(link => (
                   <li key={link.href}>
                     <a
@@ -158,10 +156,10 @@ const Footer = () => {
             </nav>
           </div>
 
-          {/* Column 5: Accreditation (desktop only) */}
-          <div className="hidden lg:block">
-            <p className="text-label text-foreground/50 mb-4">Accreditation</p>
-            <div className="flex flex-col gap-4">
+          {/* Column 5: Accreditation */}
+          <div>
+            <p className="text-label text-foreground/50 mb-6">Accreditation</p>
+            <div className="flex flex-col gap-5">
               <ResponsiveImage
                 src={qbccLogo}
                 alt="QBCC Licensed"
@@ -169,7 +167,7 @@ const Footer = () => {
                 height={1080}
                 sizes="56px"
                 loading="lazy"
-                className="h-12 w-auto"
+                className="h-14 w-auto"
               />
               <ResponsiveImage
                 src={masterBuildersLogo}
@@ -178,39 +176,14 @@ const Footer = () => {
                 height={1080}
                 sizes="56px"
                 loading="lazy"
-                className="h-12 w-auto"
+                className="h-14 w-auto"
               />
             </div>
           </div>
         </div>
 
-        {/* Accreditation - mobile/tablet */}
-        <div className="lg:hidden mt-10 pt-8 border-t border-foreground/10">
-          <p className="text-label text-foreground/50 mb-4">Accreditation</p>
-          <div className="flex items-center gap-6">
-            <ResponsiveImage
-              src={qbccLogo}
-              alt="QBCC Licensed"
-              width={1080}
-              height={1080}
-              sizes="56px"
-              loading="lazy"
-              className="h-12 w-auto"
-            />
-            <ResponsiveImage
-              src={masterBuildersLogo}
-              alt="Master Builders"
-              width={1080}
-              height={1080}
-              sizes="56px"
-              loading="lazy"
-              className="h-12 w-auto"
-            />
-          </div>
-        </div>
-
         {/* Service areas */}
-        <div className="mt-10 pt-8 border-t border-foreground/10">
+        <div className="mt-16 pt-8 border-t border-foreground/10">
           <p className="text-sm text-foreground/50 text-center">
             Serving: Broadbeach, Burleigh Heads, Mermaid Beach, Robina, Southport, Palm Beach, 
             Elanora, Helensvale, Hope Island & all Gold Coast suburbs
@@ -219,7 +192,7 @@ const Footer = () => {
 
         {/* Bottom bar */}
         <div className="mt-8 pt-6 border-t border-foreground/10">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <p className="text-xs uppercase tracking-widest text-foreground/40" suppressHydrationWarning>
               &copy; {currentYear} Concept Design Construct
             </p>
