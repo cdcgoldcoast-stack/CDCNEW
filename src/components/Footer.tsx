@@ -8,61 +8,52 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   const logo = useResolvedAsset("logo");
 
-  const mainLinks = [
-    { label: "About Us", href: "/about-us" },
-    { label: "Renovation Projects", href: "/renovation-projects" },
-    { label: "Renovation Gallery", href: "/renovation-gallery" },
-    { label: "Book Consultation", href: "/book-renovation-consultation" },
-  ];
-
   const serviceLinks = [
-    { label: "Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
-    { label: "Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
-    { label: "Whole-Home Renovations", href: "/whole-home-renovations-gold-coast" },
+    { label: "Kitchen", href: "/kitchen-renovations-gold-coast" },
+    { label: "Bathroom", href: "/bathroom-renovations-gold-coast" },
+    { label: "Whole-Home", href: "/whole-home-renovations-gold-coast" },
     { label: "All Services", href: "/renovation-services" },
   ];
 
   const locationLinks = [
     { label: "Broadbeach", href: "/broadbeach-renovations" },
-    { label: "Burleigh Heads", href: "/renovations/burleigh-heads" },
+    { label: "Burleigh", href: "/renovations/burleigh-heads" },
     { label: "Mermaid Beach", href: "/mermaid-beach-renovations" },
     { label: "Palm Beach", href: "/palm-beach-renovations" },
     { label: "Robina", href: "/robina-renovations" },
     { label: "Southport", href: "/southport-renovations" },
   ];
 
-  const featuredProjects = [
-    { label: "Family Hub", href: "/renovation-projects/family-hub" },
-    { label: "Light and Flow House", href: "/renovation-projects/light-and-flow-house" },
-    { label: "The Elanora Residence", href: "/renovation-projects/the-elanora-residence" },
-    { label: "View All Projects →", href: "/renovation-projects" },
+  const companyLinks = [
+    { label: "About", href: "/about-us" },
+    { label: "Projects", href: "/renovation-projects" },
+    { label: "Gallery", href: "/renovation-gallery" },
+    { label: "Contact", href: "/book-renovation-consultation" },
   ];
 
   return (
     <footer className="py-10 md:py-14 bg-background relative z-10">
       <div className="container-wide px-6 md:px-10 lg:px-12">
-        {/* Main footer grid - 5 columns on desktop */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-6">
-          {/* Logo & contact - spans 2 columns on mobile, 1 on desktop */}
-          <div className="col-span-2 md:col-span-1 lg:col-span-2">
+        {/* Main footer - responsive grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 lg:gap-10">
+          
+          {/* Column 1: Logo & Contact */}
+          <div className="col-span-2 md:col-span-1">
             <ResponsiveImage
               src={logo}
-              alt="Concept Design Construct Gold Coast renovation builders logo"
+              alt="Concept Design Construct"
               width={701}
               height={131}
-              sizes="(min-width: 768px) 176px, 144px"
+              sizes="144px"
               loading="lazy"
-              className="h-auto w-36 md:w-44 mb-4"
+              className="h-auto w-32 mb-3"
             />
-            <strong className="text-xs uppercase tracking-widest text-primary block mb-1">
+            <p className="text-[10px] uppercase tracking-widest text-primary mb-4">
               Gold Coast Renovations
-            </strong>
-            <span className="text-[10px] text-foreground/50 block mb-4">
-              Based in Broadbeach
-            </span>
+            </p>
             
-            {/* Contact info */}
-            <div className="space-y-2">
+            {/* Contact */}
+            <div className="space-y-2 mb-4">
               <a
                 href="tel:1300020232"
                 className="flex items-center gap-2 text-xs text-foreground/80 hover:text-primary transition-colors"
@@ -76,17 +67,18 @@ const Footer = () => {
               >
                 info@cdconstruct.com.au
               </a>
-              <div className="flex items-start gap-2 text-xs text-foreground/70">
-                <MapPin className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
-                <address className="not-italic">
-                  1907/22 Surf Parade<br />
-                  Broadbeach, QLD 4218
-                </address>
-              </div>
             </div>
 
-            {/* Social icons */}
-            <div className="flex items-center gap-3 mt-4">
+            {/* Address */}
+            <div className="flex items-start gap-2 text-xs text-foreground/70 mb-4">
+              <MapPin className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
+              <address className="not-italic">
+                1907/22 Surf Parade, Broadbeach
+              </address>
+            </div>
+
+            {/* Social */}
+            <div className="flex items-center gap-3">
               <a
                 href="https://www.instagram.com/conceptdesignconstruct_"
                 target="_blank"
@@ -108,8 +100,8 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Services */}
-          <div className="col-span-1">
+          {/* Column 2: Services */}
+          <div>
             <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-3">Services</p>
             <nav aria-label="Footer services">
               <ul className="flex flex-col gap-2">
@@ -127,8 +119,8 @@ const Footer = () => {
             </nav>
           </div>
 
-          {/* Locations */}
-          <div className="col-span-1">
+          {/* Column 3: Locations */}
+          <div>
             <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-3">Locations</p>
             <nav aria-label="Footer locations">
               <ul className="flex flex-col gap-2">
@@ -146,35 +138,12 @@ const Footer = () => {
             </nav>
           </div>
 
-          {/* Featured Projects */}
-          <div className="col-span-1">
-            <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-3">Featured Projects</p>
-            <nav aria-label="Footer projects">
-              <ul className="flex flex-col gap-2">
-                {featuredProjects.map(link => (
-                  <li key={link.href}>
-                    <a
-                      href={link.href}
-                      className={`text-xs transition-colors ${
-                        link.label.includes("View All") 
-                          ? "text-primary hover:text-primary/80 font-medium" 
-                          : "text-foreground/80 hover:text-primary"
-                      }`}
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
-
-          {/* Company & Accreditation */}
-          <div className="col-span-1">
+          {/* Column 4: Company */}
+          <div>
             <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-3">Company</p>
-            <nav aria-label="Footer company" className="mb-6">
+            <nav aria-label="Footer company">
               <ul className="flex flex-col gap-2">
-                {mainLinks.map(link => (
+                {companyLinks.map(link => (
                   <li key={link.href}>
                     <a
                       href={link.href}
@@ -186,9 +155,12 @@ const Footer = () => {
                 ))}
               </ul>
             </nav>
+          </div>
 
+          {/* Column 5: Accreditation (desktop only) */}
+          <div className="hidden lg:block">
             <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-3">Accreditation</p>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col gap-3">
               <ResponsiveImage
                 src={qbccLogo}
                 alt="QBCC Licensed"
@@ -211,7 +183,32 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Service areas summary */}
+        {/* Accreditation - mobile/tablet */}
+        <div className="lg:hidden mt-8 pt-6 border-t border-foreground/10">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/40 mb-3">Accreditation</p>
+          <div className="flex items-center gap-4">
+            <ResponsiveImage
+              src={qbccLogo}
+              alt="QBCC Licensed"
+              width={1080}
+              height={1080}
+              sizes="48px"
+              loading="lazy"
+              className="h-10 w-auto"
+            />
+            <ResponsiveImage
+              src={masterBuildersLogo}
+              alt="Master Builders"
+              width={1080}
+              height={1080}
+              sizes="48px"
+              loading="lazy"
+              className="h-10 w-auto"
+            />
+          </div>
+        </div>
+
+        {/* Service areas */}
         <div className="mt-8 pt-6 border-t border-foreground/10">
           <p className="text-[10px] text-foreground/50 text-center">
             Serving: Broadbeach, Burleigh Heads, Mermaid Beach, Robina, Southport, Palm Beach, 
@@ -221,7 +218,7 @@ const Footer = () => {
 
         {/* Bottom bar */}
         <div className="mt-6 pt-4 border-t border-foreground/10">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <p className="text-[10px] uppercase tracking-widest text-foreground/40" suppressHydrationWarning>
               &copy; {currentYear} Concept Design Construct
             </p>
