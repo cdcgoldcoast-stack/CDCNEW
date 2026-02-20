@@ -14,6 +14,7 @@ import {
   ImagePlus,
   Replace,
   Settings,
+  Gift,
 } from "lucide-react";
 
 interface AdminLayoutProps {
@@ -24,6 +25,7 @@ const navItems = [
   { label: "Projects", href: "/admin/projects", icon: FolderOpen },
   { label: "Enquiries", href: "/admin/enquiries", icon: MessageSquare },
   { label: "Chat Inquiries", href: "/admin/chat-inquiries", icon: MessageCircle },
+  { label: "Pop-up Responses", href: "/admin/popup-responses", icon: Gift },
   { label: "Gallery", href: "/admin/gallery", icon: Images },
   { label: "Site Images", href: "/admin/site-images", icon: ImagePlus },
   { label: "Image Assets", href: "/admin/image-assets", icon: Replace },

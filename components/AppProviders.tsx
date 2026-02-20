@@ -9,6 +9,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { initGoogleAnalytics, trackPageView } from "@/lib/analytics";
+import PromoPopup from "@/components/PromoPopup";
 import { initMetaPixel, trackMetaPixelPageView } from "@/lib/metaPixel";
 
 const AIChatWidget = dynamic(() => import("@/components/AIChatWidget"), {
@@ -93,6 +94,7 @@ export default function AppProviders({ children }: AppProvidersProps) {
         <TooltipProvider>
           {children}
           {showChatWidget ? <AIChatWidget /> : null}
+          <PromoPopup delay={7} />
           <Toaster />
           <SpeedInsights />
         </TooltipProvider>

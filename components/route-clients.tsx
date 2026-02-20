@@ -96,6 +96,10 @@ const AdminProjectsPage = dynamic(() => import("@/views/admin/AdminProjects"), {
 const AdminSettingsPage = dynamic(() => import("@/views/admin/AdminSettings"), {
   ssr: false,
 });
+
+const AdminPopupResponsesPage = dynamic(() => import("@/views/admin/AdminPopupResponses"), {
+  ssr: false,
+});
 const AdminSiteImagesPage = dynamic(() => import("@/views/admin/AdminSiteImages"), {
   ssr: false,
 });
@@ -236,6 +240,14 @@ export function AdminSettingsClient() {
   return (
     <RequireAdmin>
       <AdminSettingsPage />
+    </RequireAdmin>
+  );
+}
+
+export function AdminPopupResponsesClient() {
+  return (
+    <RequireAdmin>
+      <AdminPopupResponsesPage />
     </RequireAdmin>
   );
 }

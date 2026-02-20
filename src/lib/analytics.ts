@@ -119,7 +119,7 @@ const pruneEventDedupeCache = (now: number) => {
 export type AnalyticsEvent = {
   event_name: string;
   page_path?: string;
-  cta_location?: "header" | "hero" | "footer" | "form" | "tool" | "content" | "unknown";
+  cta_location?: "header" | "hero" | "footer" | "form" | "tool" | "content" | "popup" | "unknown";
   lead_type?: string;
   value?: number;
   [key: string]: unknown;
