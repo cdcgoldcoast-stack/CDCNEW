@@ -1,7 +1,7 @@
 import { useResolvedAsset } from "@/hooks/useSiteAssets";
 import masterBuildersLogo from "@/assets/master-builders.webp";
 import qbccLogo from "@/assets/qbcc.webp";
-import { Facebook, Instagram, MapPin, Phone } from "lucide-react";
+import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
 const Footer = () => {
@@ -63,8 +63,9 @@ const Footer = () => {
               </a>
               <a
                 href="mailto:info@cdconstruct.com.au"
-                className="text-sm text-foreground/80 hover:text-primary transition-colors block"
+                className="flex items-center gap-2 text-sm text-foreground/80 hover:text-primary transition-colors"
               >
+                <Mail className="w-4 h-4" />
                 info@cdconstruct.com.au
               </a>
             </div>
