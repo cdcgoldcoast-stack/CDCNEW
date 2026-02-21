@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
+import MarkdownContent from "@/components/blog/MarkdownContent";
 import { DEFAULT_META, SITE_NAME } from "@/config/seo";
 import { getAllBlogSlugs, getPostBySlug, getAllPublishedPosts, formatBlogDate } from "@/lib/blog";
 import { buildMetadata } from "@/lib/seo";
@@ -119,16 +121,42 @@ export default async function BlogPostPage({ params }: PageProps) {
           </div>
         </article>
 
+        {/* Featured Image */}
+        {post.image && (
+          <section className="pb-16 md:pb-20">
+            <div className="container-wide max-w-5xl">
+              <div className="aspect-[21/9] bg-muted overflow-hidden relative">
+                <Image
+                  src={post.image}
+                  alt={post.title}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Article Content */}
         <section className="pb-20 md:pb-28">
-          <div className="container-wide max-w-3xl">
-            <div className="whitespace-pre-wrap text-foreground/70 leading-relaxed">
-              {post.body}
-            </div>
+          <div className="container-wide">
+            <MarkdownContent content={post.body} />
 
-            <div className="mt-16 pt-8 border-t border-border">
-              <p className="text-label text-foreground/50 mb-2">Written by</p>
-              <p className="font-serif text-h4 text-foreground">{post.author || SITE_NAME}</p>
+            {/* Author Box */}
+            <div className="mt-16 pt-8 border-t border-border max-w-3xl">
+              <div className="flex items-start gap-4">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="font-serif text-2xl text-primary">CDC</span>
+                </div>
+                <div>
+                  <p className="text-label text-foreground/50 mb-1">Written by</p>
+                  <p className="font-serif text-h4 text-foreground">{post.author || SITE_NAME}</p>
+                  <p className="text-foreground/60 text-sm mt-2">
+                    Gold Coast renovation specialists. QBCC licensed builders for kitchens, bathrooms, and whole-home transformations.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -147,6 +175,16 @@ export default async function BlogPostPage({ params }: PageProps) {
                   .map((relatedPost) => (
                     <article key={relatedPost.slug}>
                       <Link href={relatedPost.url} className="block group">
+                        {relatedPost.image && (
+                          <div className="aspect-[16/10] bg-muted mb-4 overflow-hidden relative">
+                            <Image
+                              src={relatedPost.image}
+                              alt={relatedPost.title}
+                              fill
+                              className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                          </div>
+                        )}
                         <p className="text-label text-foreground/50 mb-2">
                           {formatBlogDate(relatedPost.publishedAt)}
                         </p>

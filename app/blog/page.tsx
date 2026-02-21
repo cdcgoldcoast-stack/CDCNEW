@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
@@ -78,6 +79,23 @@ export default async function BlogPage() {
                 {posts.map((post) => (
                   <article key={post.slug}>
                     <Link href={post.url} className="block group">
+                      {/* Image */}
+                      <div className="aspect-[16/10] bg-muted mb-6 overflow-hidden relative">
+                        {post.image ? (
+                          <Image
+                            src={post.image}
+                            alt={post.title}
+                            fill
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-muted flex items-center justify-center">
+                            <span className="font-serif text-4xl text-foreground/20">CDC</span>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Content */}
                       <p className="text-label text-foreground/50 mb-3">
                         {formatBlogDate(post.publishedAt)} · {post.readingTime}
                       </p>
