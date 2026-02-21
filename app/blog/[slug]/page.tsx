@@ -124,14 +124,15 @@ export default async function BlogPostPage({ params }: PageProps) {
         {/* Featured Image */}
         {post.image && (
           <section className="pb-16 md:pb-20">
-            <div className="container-wide max-w-5xl">
-              <div className="aspect-[21/9] bg-muted overflow-hidden relative">
+            <div className="container-wide">
+              <div className="aspect-[16/9] md:aspect-[2/1] bg-muted overflow-hidden relative max-w-6xl mx-auto">
                 <Image
                   src={post.image}
                   alt={post.title}
                   fill
                   className="object-cover"
                   priority
+                  sizes="(max-width: 1200px) 100vw, 1200px"
                 />
               </div>
             </div>
