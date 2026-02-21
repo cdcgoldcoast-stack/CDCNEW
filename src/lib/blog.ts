@@ -1,11 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import matter from "gray-matter";
-import { cache } from "react";
-import readingTime from "reading-time";
 
 const BLOG_CONTENT_DIR = path.join(process.cwd(), "content", "blog");
-const BLOG_FILE_EXTENSION = ".mdx";
 
 export type BlogPost = {
   slug: string;
@@ -23,127 +19,125 @@ export type BlogPost = {
   body: string;
 };
 
-const toTimestamp = (value: string) => {
-  const timestamp = new Date(value).getTime();
-  return Number.isFinite(timestamp) ? timestamp : 0;
-};
+function calculateReadingTime(text: string): { text: string; minutes: number } {
+  const wordsPerMinute = 200;
+  const words = text.trim().split(/\s+/).length;
+  const minutes = Math.ceil(words / wordsPerMinute);
+  return { text: `${minutes} min read`, minutes };
+}
 
-const toIsoDateOrUndefined = (value: unknown) => {
-  if (typeof value !== "string" || !value.trim()) return undefined;
-  const timestamp = toTimestamp(value);
-  if (!timestamp) return undefined;
-  return new Date(timestamp).toISOString();
-};
-
-const toTagList = (value: unknown) => {
-  if (Array.isArray(value)) {
-    return value
-      .map((tag) => `${tag}`.trim())
-      .filter(Boolean);
-  }
-  if (typeof value === "string" && value.trim()) {
-    return value
-      .split(",")
-      .map((tag) => tag.trim())
-      .filter(Boolean);
-  }
-  return [];
-};
-
-const normalizeSlug = (absoluteFilePath: string) =>
-  path
-    .relative(BLOG_CONTENT_DIR, absoluteFilePath)
-    .replace(/\\/g, "/")
-    .replace(/\.mdx$/i, "")
-    .trim()
-    .toLowerCase();
-
-const walkMdxFiles = async (directoryPath: string): Promise<string[]> => {
-  const entries = await fs.readdir(directoryPath, { withFileTypes: true });
-  const files: string[] = [];
-
-  for (const entry of entries) {
-    const absoluteEntryPath = path.join(directoryPath, entry.name);
-    if (entry.isDirectory()) {
-      const nestedFiles = await walkMdxFiles(absoluteEntryPath);
-      files.push(...nestedFiles);
-      continue;
+function parseFrontmatter(content: string): { data: Record<string, any>; body: string } {
+  const lines = content.split('\n');
+  const data: Record<string, any> = {};
+  let bodyStart = 0;
+  
+  if (lines[0] === '---') {
+    let i = 1;
+    while (i < lines.length && lines[i] !== '---') {
+      const line = lines[i];
+      const colonIndex = line.indexOf(':');
+      if (colonIndex > 0) {
+        const key = line.slice(0, colonIndex).trim();
+        let value: any = line.slice(colonIndex + 1).trim();
+        
+        // Remove quotes if present
+        if (value.startsWith('"') && value.endsWith('"')) {
+          value = value.slice(1, -1);
+        }
+        
+        // Handle comma-separated values (tags)
+        if (key === 'tags' && typeof value === 'string' && value.includes(',')) {
+          value = value.split(',').map((v: string) => v.trim()).filter(Boolean);
+        }
+        
+        data[key] = value;
+      }
+      i++;
     }
-
-    if (entry.isFile() && entry.name.endsWith(BLOG_FILE_EXTENSION)) {
-      files.push(absoluteEntryPath);
-    }
+    bodyStart = i + 1;
   }
+  
+  const body = lines.slice(bodyStart).join('\n').trim();
+  return { data, body };
+}
 
-  return files;
-};
-
-const readBlogPostFromFile = async (absoluteFilePath: string): Promise<BlogPost | null> => {
-  const source = await fs.readFile(absoluteFilePath, "utf8");
-  const { data, content } = matter(source);
-  const title = typeof data.title === "string" ? data.title.trim() : "";
-  const description = typeof data.description === "string" ? data.description.trim() : "";
-  const publishedAt = toIsoDateOrUndefined(data.publishedAt);
-
+async function readBlogPostFromFile(filePath: string): Promise<BlogPost | null> {
+  const source = await fs.readFile(filePath, "utf8");
+  const { data, body } = parseFrontmatter(source);
+  
+  const title = data.title || "";
+  const description = data.description || "";
+  const publishedAt = data.publishedAt || "";
+  
   if (!title || !description || !publishedAt) {
     return null;
   }
-
-  const slug = normalizeSlug(absoluteFilePath);
-  const stats = readingTime(content);
-
+  
+  const slug = path.basename(filePath, ".mdx");
+  const stats = calculateReadingTime(body);
+  
   return {
     slug,
     url: `/blog/${slug}`,
     title,
     description,
-    publishedAt,
-    updatedAt: toIsoDateOrUndefined(data.updatedAt),
-    author: typeof data.author === "string" ? data.author.trim() : undefined,
-    image: typeof data.image === "string" ? data.image.trim() : undefined,
-    tags: toTagList(data.tags),
-    draft: data.draft === true,
+    publishedAt: new Date(publishedAt).toISOString(),
+    updatedAt: data.updatedAt ? new Date(data.updatedAt).toISOString() : undefined,
+    author: data.author,
+    image: data.image,
+    tags: Array.isArray(data.tags) ? data.tags : [],
+    draft: data.draft === "true",
     readingTime: stats.text,
-    readingMinutes: Math.max(1, Math.round(stats.minutes)),
-    body: content,
+    readingMinutes: stats.minutes,
+    body,
   };
-};
+}
 
-const isPublishedPost = (post: BlogPost) => {
-  if (post.draft) return false;
-  return toTimestamp(post.publishedAt) <= Date.now();
-};
-
-export const getAllBlogPosts = cache(async () => {
+async function walkMdxFiles(directoryPath: string): Promise<string[]> {
   try {
-    const files = await walkMdxFiles(BLOG_CONTENT_DIR);
-    const posts = await Promise.all(files.map((filePath) => readBlogPostFromFile(filePath)));
-    return posts
-      .filter((post): post is BlogPost => Boolean(post))
-      .sort((a, b) => toTimestamp(b.publishedAt) - toTimestamp(a.publishedAt));
+    const entries = await fs.readdir(directoryPath, { withFileTypes: true });
+    const files: string[] = [];
+    
+    for (const entry of entries) {
+      const fullPath = path.join(directoryPath, entry.name);
+      if (entry.isFile() && entry.name.endsWith(".mdx")) {
+        files.push(fullPath);
+      }
+    }
+    
+    return files;
   } catch {
     return [];
   }
-});
+}
 
-export const getAllPublishedPosts = cache(async () => {
+export async function getAllBlogPosts(): Promise<BlogPost[]> {
+  const files = await walkMdxFiles(BLOG_CONTENT_DIR);
+  const posts = await Promise.all(files.map(readBlogPostFromFile));
+  return posts
+    .filter((post): post is BlogPost => Boolean(post))
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+}
+
+export async function getAllPublishedPosts(): Promise<BlogPost[]> {
   const posts = await getAllBlogPosts();
-  return posts.filter(isPublishedPost);
-});
+  return posts.filter((post) => !post.draft && new Date(post.publishedAt) <= new Date());
+}
 
-export const getPostBySlug = async (slug: string) => {
+export async function getPostBySlug(slug: string): Promise<BlogPost | undefined> {
   const posts = await getAllPublishedPosts();
   return posts.find((post) => post.slug === slug);
-};
+}
 
-export const getAllBlogSlugs = async () => {
+export async function getAllBlogSlugs(): Promise<string[]> {
   const posts = await getAllPublishedPosts();
   return posts.map((post) => post.slug);
-};
+}
 
-export const formatBlogDate = (value: string) =>
-  new Intl.DateTimeFormat("en-AU", {
+export function formatBlogDate(value: string): string {
+  return new Date(value).toLocaleDateString("en-AU", {
     day: "numeric",
     month: "long",
     year: "numeric",
-  }).format(new Date(value));
+  });
+}
