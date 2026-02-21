@@ -11,6 +11,7 @@ const SCROLL_THRESHOLD = 10; // Minimum scroll distance to trigger hide/show
 const RENOVATION_DROPDOWN_LINKS = [
   { label: "Renovation Projects", href: "/renovation-projects" },
   { label: "Renovation Gallery", href: "/renovation-gallery" },
+  { label: "Renovation Blog", href: "/blog" },
 ] as const;
 const RENOVATION_DROPDOWN_PATHS: ReadonlySet<string> = new Set(
   RENOVATION_DROPDOWN_LINKS.map((link) => link.href),
