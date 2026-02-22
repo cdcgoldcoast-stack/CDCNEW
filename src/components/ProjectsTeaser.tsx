@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Pause, Play } from "lucide-react";
-import { fetchProjects, Project } from "@/data/projects";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import { HOME_PROJECT_TEASERS, type HomeProjectTeaser } from "@/data/homeProjectTeasers";
 
 const ProjectCard = ({
   project,
   isDuplicate = false,
 }: {
-  project: Project;
+  project: HomeProjectTeaser;
   isDuplicate?: boolean;
 }) => (
   <Link
@@ -55,19 +55,11 @@ const ProjectsTeaser = () => {
   const scrollPosRef = useRef(0);
   const loopWidthRef = useRef(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [projects, setProjects] = useState<Project[]>([]);
+  const projects = HOME_PROJECT_TEASERS;
   const [isInViewport, setIsInViewport] = useState(true);
   const [isDocumentVisible, setIsDocumentVisible] = useState(
     typeof document === "undefined" ? true : !document.hidden,
   );
-
-  useEffect(() => {
-    const loadProjects = async () => {
-      const data = await fetchProjects();
-      setProjects(data);
-    };
-    loadProjects();
-  }, []);
 
   const updateLoopWidth = useCallback(() => {
     const scrollContainer = scrollRef.current;

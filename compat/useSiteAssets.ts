@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 
 interface UseSiteAssetsOptions {
   staticFirst?: boolean;
+  deferRemoteOverrides?: boolean;
 }
 
 interface SiteAsset {
@@ -32,6 +33,8 @@ const SUPABASE_PUBLISHABLE_KEY =
 const hasSupabaseCredentials =
   SUPABASE_PUBLISHABLE_KEY.length > 0 &&
   SUPABASE_PUBLISHABLE_KEY !== "public-anon-key-placeholder";
+const DEFER_EVENTS: Array<keyof WindowEventMap> = ["pointerdown", "keydown", "touchstart", "scroll"];
+const DEFER_OVERRIDE_FALLBACK_MS = 9000;
 
 const defaultOverrideByPath: Record<string, string> = {
   "editorial-1.jpg":
@@ -147,16 +150,61 @@ const fetchImageOverrides = async (): Promise<ImageOverride[]> => {
 };
 
 export function useSiteAssets(options: UseSiteAssetsOptions = {}) {
-  const { staticFirst = false } = options;
+  const { staticFirst = false, deferRemoteOverrides = false } = options;
   const [overrides, setOverrides] = useState<ImageOverride[] | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(hasSupabaseCredentials);
   const [isError, setIsError] = useState(false);
+  const [isFetchEnabled, setIsFetchEnabled] = useState(!deferRemoteOverrides);
+
+  useEffect(() => {
+    if (!deferRemoteOverrides || typeof window === "undefined") {
+      setIsFetchEnabled(true);
+      return;
+    }
+
+    let enabled = false;
+    let fallbackTimer: number | null = null;
+
+    const enableFetch = () => {
+      if (enabled) return;
+      enabled = true;
+      setIsFetchEnabled(true);
+      if (fallbackTimer !== null) {
+        window.clearTimeout(fallbackTimer);
+      }
+      for (const eventName of DEFER_EVENTS) {
+        window.removeEventListener(eventName, enableFetch);
+      }
+    };
+
+    setIsFetchEnabled(false);
+    for (const eventName of DEFER_EVENTS) {
+      window.addEventListener(eventName, enableFetch, { passive: true, once: true });
+    }
+    fallbackTimer = window.setTimeout(enableFetch, DEFER_OVERRIDE_FALLBACK_MS);
+
+    return () => {
+      if (fallbackTimer !== null) {
+        window.clearTimeout(fallbackTimer);
+      }
+      for (const eventName of DEFER_EVENTS) {
+        window.removeEventListener(eventName, enableFetch);
+      }
+    };
+  }, [deferRemoteOverrides]);
 
   useEffect(() => {
     let cancelled = false;
 
     if (!hasSupabaseCredentials) {
       setIsLoading(false);
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    if (!isFetchEnabled) {
+      setIsLoading(true);
       return () => {
         cancelled = true;
       };
@@ -185,7 +233,7 @@ export function useSiteAssets(options: UseSiteAssetsOptions = {}) {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [isFetchEnabled]);
 
   const overrideByPath = useMemo(() => {
     const map = new Map<string, ImageOverride>();

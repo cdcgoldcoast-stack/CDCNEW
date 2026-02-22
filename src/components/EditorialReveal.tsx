@@ -8,7 +8,7 @@ const EditorialReveal = () => {
   const [blackOverlay, setBlackOverlay] = useState(0);
   const [parallaxOffset, setParallaxOffset] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const { assets } = useSiteAssets();
+  const { assets } = useSiteAssets({ staticFirst: true, deferRemoteOverrides: true });
   const sectionRef = useRef<HTMLElement>(null);
   const shouldLoadImages = useInView(sectionRef, { margin: "200px 0px", once: true });
 

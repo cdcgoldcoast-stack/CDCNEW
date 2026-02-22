@@ -3,6 +3,7 @@ import { siteAssets, resolveImageSrc } from "@/data/siteAssets";
 
 interface UseSiteAssetsOptions {
   staticFirst?: boolean;
+  deferRemoteOverrides?: boolean;
 }
 
 /**
@@ -14,7 +15,7 @@ interface UseSiteAssetsOptions {
  */
 export function useSiteAssets(options: UseSiteAssetsOptions = {}) {
   const { data: overrides, isLoading, isError } = useImageOverrides();
-  const { staticFirst = false } = options;
+  const staticFirst = options.staticFirst ?? false;
 
   // Ready means we've finished loading (success or error)
   const ready = !isLoading;

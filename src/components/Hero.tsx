@@ -1,15 +1,16 @@
+import Image from "next/image";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import GoogleReviewBadge from "@/components/GoogleReviewBadge";
 
 const revealed = "opacity-100 translate-y-0 transition-all duration-700 ease-out";
-const MOBILE_HERO_IMAGE =
-  "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Gold_Coast_renovation_builders.webp";
+const MOBILE_HERO_IMAGE = "/home/hero-mobile-lcp.webp";
 
 interface HeroProps {
   desktopHeroImageUrl: string;
+  mobileHeroImageUrl?: string;
 }
 
-const Hero = ({ desktopHeroImageUrl }: HeroProps) => {
+const Hero = ({ desktopHeroImageUrl, mobileHeroImageUrl = MOBILE_HERO_IMAGE }: HeroProps) => {
   return (
     <section className="min-h-screen relative z-20 overflow-hidden bg-background">
       <p className="sr-only">Gold Coast renovations by Concept Design Construct.</p>
@@ -17,20 +18,15 @@ const Hero = ({ desktopHeroImageUrl }: HeroProps) => {
       {/* Mobile layout - stacked (phones only) */}
       <div className="md:hidden min-h-screen flex flex-col pt-20">
         <div className="h-[40vh] relative">
-          <ResponsiveImage
-            src={MOBILE_HERO_IMAGE}
+          <Image
+            src={mobileHeroImageUrl}
             alt="Gold Coast kitchen renovation in Helensvale by Concept Design Construct"
+            fill
             className="absolute inset-0 w-full h-full object-cover bg-muted"
-            width={1200}
-            height={800}
             sizes="100vw"
-            loading="eager"
-            fetchPriority="high"
-            decoding="async"
             priority
-            quality={48}
-            responsiveWidths={[320, 420, 560, 720]}
-            useSupabaseTransform
+            fetchPriority="high"
+            quality={60}
           />
         </div>
 

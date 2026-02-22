@@ -8,7 +8,7 @@ import ResponsiveImage from "@/components/ResponsiveImage";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const logo = useResolvedAsset("logo");
+  const logo = useResolvedAsset("logo", { staticFirst: true, deferRemoteOverrides: true });
 
   const serviceLinks = [
     { label: "Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },

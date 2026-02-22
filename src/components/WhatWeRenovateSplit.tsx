@@ -7,7 +7,7 @@ const sectionBgWidths = [320, 480, 640, 800, 960] as const;
 const sectionCardWidths = [240, 360, 480, 640, 800] as const;
 
 const WhatWeRenovateSplit = () => {
-  const { assets } = useSiteAssets();
+  const { assets } = useSiteAssets({ staticFirst: true, deferRemoteOverrides: true });
 
   const services = [
     {
