@@ -1,16 +1,10 @@
 import Image from "next/image";
-import ResponsiveImage from "@/components/ResponsiveImage";
 import GoogleReviewBadge from "@/components/GoogleReviewBadge";
 
 const revealed = "opacity-100 translate-y-0 transition-all duration-700 ease-out";
-const MOBILE_HERO_IMAGE = "/home/hero-mobile-lcp.webp";
+const HERO_IMAGE = "/home/hero-unified.webp";
 
-interface HeroProps {
-  desktopHeroImageUrl: string;
-  mobileHeroImageUrl?: string;
-}
-
-const Hero = ({ desktopHeroImageUrl, mobileHeroImageUrl = MOBILE_HERO_IMAGE }: HeroProps) => {
+const Hero = () => {
   return (
     <section className="min-h-screen relative z-20 overflow-hidden bg-background">
       <p className="sr-only">Gold Coast renovations by Concept Design Construct.</p>
@@ -19,7 +13,7 @@ const Hero = ({ desktopHeroImageUrl, mobileHeroImageUrl = MOBILE_HERO_IMAGE }: H
       <div className="md:hidden min-h-screen flex flex-col pt-20">
         <div className="h-[40vh] relative">
           <Image
-            src={mobileHeroImageUrl}
+            src={HERO_IMAGE}
             alt="Gold Coast kitchen renovation in Helensvale by Concept Design Construct"
             fill
             className="absolute inset-0 w-full h-full object-cover bg-muted"
@@ -96,8 +90,8 @@ const Hero = ({ desktopHeroImageUrl, mobileHeroImageUrl = MOBILE_HERO_IMAGE }: H
           </div>
 
           <div className="flex items-center justify-center">
-            <ResponsiveImage
-              src={desktopHeroImageUrl}
+            <Image
+              src={HERO_IMAGE}
               alt="Gold Coast home renovation interior by Concept Design Construct"
               className="w-full max-w-[600px] h-[65vh] max-h-[680px] object-cover bg-muted"
               width={1200}
@@ -105,10 +99,7 @@ const Hero = ({ desktopHeroImageUrl, mobileHeroImageUrl = MOBILE_HERO_IMAGE }: H
               sizes="(min-width: 768px) 50vw, 100vw"
               loading="lazy"
               fetchPriority="low"
-              decoding="async"
               quality={60}
-              responsiveWidths={[640, 800, 960, 1200]}
-              useSupabaseTransform
             />
           </div>
         </div>

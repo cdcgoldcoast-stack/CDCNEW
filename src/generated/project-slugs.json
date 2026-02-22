@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-02-21T07:24:29.275Z",
+  "generatedAt": "2026-02-22T05:40:25.374Z",
   "domain": "https://www.cdconstruct.com.au",
   "slugs": [
     "everyday-ease",
@@ -16,7 +16,7 @@
     "supabase": 0,
     "vercelRewrites": 0,
     "publicSite": 9,
-    "staticFallback": 1,
+    "staticFallback": 0,
     "previousGenerated": 9,
     "usedPreviousGeneratedFallback": false
   }

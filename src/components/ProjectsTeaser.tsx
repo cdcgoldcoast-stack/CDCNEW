@@ -2,7 +2,9 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Pause, Play } from "lucide-react";
 import ResponsiveImage from "@/components/ResponsiveImage";
-import { HOME_PROJECT_TEASERS, type HomeProjectTeaser } from "@/data/homeProjectTeasers";
+import { fetchProjects, type Project } from "@/data/projects";
+
+type HomeProjectTeaser = Pick<Project, "id" | "slug" | "name" | "location" | "image">;
 
 const ProjectCard = ({
   project,
@@ -55,22 +57,51 @@ const ProjectsTeaser = () => {
   const scrollPosRef = useRef(0);
   const loopWidthRef = useRef(0);
   const [isPaused, setIsPaused] = useState(false);
-  const projects = HOME_PROJECT_TEASERS;
+  const [projects, setProjects] = useState<HomeProjectTeaser[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [isInViewport, setIsInViewport] = useState(true);
   const [isDocumentVisible, setIsDocumentVisible] = useState(
     typeof document === "undefined" ? true : !document.hidden,
   );
 
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadProjects = async () => {
+      const projectRows = await fetchProjects();
+      if (!isMounted) return;
+
+      const teaserProjects = projectRows
+        .filter((project) => Boolean(project.image?.trim()))
+        .slice(0, 8)
+        .map((project) => ({
+          id: project.id,
+          slug: project.slug,
+          name: project.name,
+          location: project.location || "Gold Coast",
+          image: project.image,
+        }));
+
+      setProjects(teaserProjects);
+      setIsLoaded(true);
+    };
+
+    void loadProjects();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const updateLoopWidth = useCallback(() => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
-    loopWidthRef.current = scrollContainer.scrollWidth / 2;
+    loopWidthRef.current = projects.length > 1 ? scrollContainer.scrollWidth / 2 : scrollContainer.scrollWidth;
     if (scrollPosRef.current >= loopWidthRef.current) {
       scrollPosRef.current = 0;
       scrollContainer.scrollLeft = 0;
     }
-  }, []);
+  }, [projects.length]);
 
   useEffect(() => {
     if (!projects.length) return;
@@ -116,7 +147,7 @@ const ProjectsTeaser = () => {
     animationRef.current = requestAnimationFrame(animate);
   }, []);
 
-  const shouldAnimate = !isPaused && projects.length > 0 && isInViewport && isDocumentVisible;
+  const shouldAnimate = !isPaused && projects.length > 1 && isInViewport && isDocumentVisible;
 
   useEffect(() => {
     if (!shouldAnimate) {
@@ -140,7 +171,11 @@ const ProjectsTeaser = () => {
     setIsPaused((current) => !current);
   };
 
-  const duplicatedProjects = [...projects, ...projects];
+  const duplicatedProjects = projects.length > 1 ? [...projects, ...projects] : projects;
+
+  if (!isLoaded || projects.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-12 md:py-28 border-t border-foreground/10 bg-background relative z-10" id="projects">
@@ -155,17 +190,19 @@ const ProjectsTeaser = () => {
       </div>
 
       <div className="relative">
-        <button
-          onClick={togglePause}
-          className="absolute left-3 md:left-4 bottom-3 md:bottom-4 z-10 bg-background/80 backdrop-blur-sm border border-foreground/20 rounded-full p-3 md:p-4 hover:bg-background transition-colors"
-          aria-label={isPaused ? "Play carousel" : "Pause carousel"}
-        >
-          {isPaused ? (
-            <Play className="w-5 h-5 md:w-8 md:h-8 text-foreground" />
-          ) : (
-            <Pause className="w-5 h-5 md:w-8 md:h-8 text-foreground" />
-          )}
-        </button>
+        {projects.length > 1 ? (
+          <button
+            onClick={togglePause}
+            className="absolute left-3 md:left-4 bottom-3 md:bottom-4 z-10 bg-background/80 backdrop-blur-sm border border-foreground/20 rounded-full p-3 md:p-4 hover:bg-background transition-colors"
+            aria-label={isPaused ? "Play carousel" : "Pause carousel"}
+          >
+            {isPaused ? (
+              <Play className="w-5 h-5 md:w-8 md:h-8 text-foreground" />
+            ) : (
+              <Pause className="w-5 h-5 md:w-8 md:h-8 text-foreground" />
+            )}
+          </button>
+        ) : null}
 
         <div
           ref={scrollRef}

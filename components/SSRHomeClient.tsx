@@ -19,7 +19,7 @@ const ImageComparisonSlider = dynamic(() => import("@/components/ImageComparison
 // Mobile-optimized deferred loader for below-fold heavy components
 function MobileDeferred({ children, placeholder }: { children: React.ReactNode; placeholder?: React.ReactNode }) {
   const [isVisible, setIsVisible] = useState(false);
-  
+
   useEffect(() => {
     // Skip on desktop
     if (window.innerWidth >= 768) {
@@ -30,7 +30,7 @@ function MobileDeferred({ children, placeholder }: { children: React.ReactNode; 
     const timer = setTimeout(() => setIsVisible(true), 100);
     return () => clearTimeout(timer);
   }, []);
-  
+
   if (!isVisible) return placeholder || null;
   return <>{children}</>;
 }

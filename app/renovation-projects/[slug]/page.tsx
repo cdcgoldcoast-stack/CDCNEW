@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import { ProjectDetailClient } from "@/components/route-clients";
 import projectSlugData from "@/generated/project-slugs.json";
-import { projects, fetchProjects } from "@/data/projects";
+import { fetchProjects } from "@/data/projects";
 import type { Project } from "@/data/projects";
 import { generateBreadcrumbSchema, generateProjectSchema } from "@/lib/structured-data";
 import { buildMetadata, titleFromSlug, DEFAULT_OG_IMAGE } from "@/lib/seo";
@@ -22,8 +22,6 @@ const fallbackDescription = (slug: string) =>
     slug,
   )} renovations case study on the Gold Coast by Concept Design Construct, including planning outcomes, layout improvements, and finish direction.`;
 
-const findStaticProject = (slug: string) =>
-  projects.find((project) => project.slug === slug || project.name.toLowerCase().replace(/\s+/g, "-") === slug);
 const DEFAULT_PROJECT_TIMESTAMP = "2024-01-15T00:00:00.000Z";
 const REMOVED_PROJECT_SLUGS = new Set([
   "coastal-modern",
@@ -34,8 +32,7 @@ const REMOVED_PROJECT_SLUGS = new Set([
 ]);
 
 const findProject = (allProjects: Project[], slug: string) =>
-  allProjects.find((project) => project.slug === slug || project.name.toLowerCase().replace(/\s+/g, "-") === slug) ||
-  findStaticProject(slug);
+  allProjects.find((project) => project.slug === slug || project.name.toLowerCase().replace(/\s+/g, "-") === slug);
 
 const normalizeIsoDate = (value?: string | null) => {
   if (!value) return undefined;

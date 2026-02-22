@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { X, Gift } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { trackAnalyticsEvent } from "@/lib/analytics";
@@ -9,6 +9,59 @@ interface PromoPopupProps {
   delay?: number; // in seconds
 }
 
+const playPopupArrivalSound = async () => {
+  if (typeof window === "undefined") return;
+
+  const audioContextConstructor =
+    window.AudioContext ||
+    (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+
+  if (!audioContextConstructor) return;
+
+  let audioContext: AudioContext | null = null;
+  try {
+    audioContext = new audioContextConstructor();
+
+    // Some browsers start in "suspended" state until user interaction.
+    if (audioContext.state === "suspended") {
+      await audioContext.resume();
+    }
+
+    const notes = [
+      { frequency: 880, startOffset: 0, duration: 0.08 },
+      { frequency: 1174, startOffset: 0.11, duration: 0.12 },
+    ];
+    const startTime = audioContext.currentTime;
+
+    for (const note of notes) {
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      const noteStart = startTime + note.startOffset;
+      const noteEnd = noteStart + note.duration;
+
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(note.frequency, noteStart);
+      gainNode.gain.setValueAtTime(0.0001, noteStart);
+      gainNode.gain.exponentialRampToValueAtTime(0.06, noteStart + 0.02);
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, noteEnd);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      oscillator.start(noteStart);
+      oscillator.stop(noteEnd);
+    }
+
+    const totalDurationMs = 400;
+    window.setTimeout(() => {
+      void audioContext?.close();
+    }, totalDurationMs);
+  } catch {
+    if (audioContext) {
+      void audioContext.close();
+    }
+  }
+};
+
 const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -16,6 +69,7 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
   const [formData, setFormData] = useState({ name: "", phone: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const hasPlayedArrivalSound = useRef(false);
 
   useEffect(() => {
     // Check if user has already seen/submitted popup in this session
@@ -33,6 +87,12 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
 
     return () => clearTimeout(timer);
   }, [delay]);
+
+  useEffect(() => {
+    if (!isVisible || hasPlayedArrivalSound.current) return;
+    hasPlayedArrivalSound.current = true;
+    void playPopupArrivalSound();
+  }, [isVisible]);
 
   const handleClose = () => {
     setIsVisible(false);

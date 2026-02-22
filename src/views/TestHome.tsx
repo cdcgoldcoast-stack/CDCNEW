@@ -58,7 +58,7 @@ const TestHome = () => {
       />
       <Header />
       <main>
-        <Hero desktopHeroImageUrl="/hero-bg.webp" />
+        <Hero />
         <EditorialReveal />
         <JourneySection />
         <WhatWeRenovateSplit />

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { generateFAQSchema, generateLocalBusinessSchema } from "@/lib/structured-data";
 
-// Force static generation for homepage SEO - hero image uses fallback during build
+// Force static generation for homepage SEO
 export const dynamic = "force-static";
 export const revalidate = 900;
 import JsonLd from "@/components/JsonLd";
@@ -10,7 +10,6 @@ import Hero from "@/components/Hero";
 import SSRHomeClient from "../components/SSRHomeClient";
 import { buildMetadata, generateWebSiteSchema } from "@/lib/seo";
 import { PRIMARY_KEYWORDS, SITELINK_TARGETS } from "@/config/seo";
-import { fetchHeroImageUrl } from "@/data/projects";
 
 const homepageFAQs = [
   {
@@ -60,9 +59,7 @@ export const metadata: Metadata = {
   }),
 };
 
-export default async function HomePage() {
-  const heroImageUrl = await fetchHeroImageUrl();
-
+export default function HomePage() {
   const localBusinessSchema = generateLocalBusinessSchema();
   const faqSchema = generateFAQSchema(homepageFAQs);
   const webSiteSchema = generateWebSiteSchema();
@@ -73,7 +70,7 @@ export default async function HomePage() {
       <JsonLd data={[webSiteSchema, localBusinessSchema, faqSchema]} />
       <div className="min-h-screen">
         <Header />
-        <Hero desktopHeroImageUrl={heroImageUrl} />
+        <Hero />
         <SSRHomeClient />
       </div>
       <section className="sr-only" aria-label="Home page summary for search crawlers">
