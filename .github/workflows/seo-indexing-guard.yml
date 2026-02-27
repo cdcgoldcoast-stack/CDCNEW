@@ -1,0 +1,57 @@
+name: SEO Indexing Guard
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * *"
+
+jobs:
+  static-guard:
+    name: Static Guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (includes metadata-source assertion)
+        run: npm run build
+
+      - name: Redirect and canonical coverage audit
+        run: npm run cutover:audit
+
+      - name: Upload SEO artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: seo-artifacts
+          path: |
+            artifacts/next-cutover-audit.json
+            artifacts/seo-sitemap-inventory.json
+          if-no-files-found: warn
+
+  live-smoke:
+    name: Live Smoke
+    needs: static-guard
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Production indexing smoke checks
+        run: bash scripts/live-indexing-smoke.sh

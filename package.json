@@ -16,6 +16,7 @@
     "seo:ai-discovery": "node scripts/generate-ai-discovery.mjs",
     "seo:monitor": "node scripts/seo-runtime-monitor.mjs",
     "seo:assert:metadata-source": "node scripts/assert-metadata-source.mjs",
+    "seo:check:live": "bash scripts/live-indexing-smoke.sh",
     "seo:release:gate": "npm run seo:audit && npm run cutover:audit && npm run seo:monitor",
     "seo:gsc:ingest": "node scripts/ingest-gsc-report.mjs",
     "seo:check": "npm run seo:sync && npm run seo:audit",
