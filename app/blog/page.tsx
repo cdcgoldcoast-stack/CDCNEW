@@ -67,6 +67,35 @@ export default async function BlogPage() {
           </div>
         </section>
 
+        {/* SEO-friendly overview copy */}
+        <section className="pb-10 md:pb-12">
+          <div className="container-wide max-w-3xl text-foreground/70 text-base leading-relaxed space-y-4">
+            <p>
+              This journal is written for homeowners planning Gold Coast renovations who want calm,
+              realistic guidance rather than hype. Articles cover kitchen, bathroom, and whole-home
+              projects, with a focus on timelines, budgeting, and the decisions that actually move
+              a renovation forward.
+            </p>
+            <p>
+              You can use these guides to understand what happens before demolition starts, how
+              approvals and selections fit together, and what trade sequencing looks like on a
+              typical project. They are designed to complement a consultation, helping you arrive
+              with better questions and a clearer idea of priorities.
+            </p>
+            <p>
+              Topics include renovation timelines, budget breakdowns for different room types, first
+              renovation checklists, and how to plan work in stages across life events. New posts
+              are added over time as the team sees recurring questions from Gold Coast clients.
+            </p>
+            <p>
+              If you want guidance tied to your own home rather than generic advice, use the blog as
+              a starting point and then move into a scoped discussion with the team. That way, the
+              ideas you save are connected to practical next steps around budget, staging, and
+              builder coordination.
+            </p>
+          </div>
+        </section>
+
         {/* Blog Posts Grid */}
         <section className="pb-20 md:pb-28">
           <div className="container-wide">
