@@ -175,10 +175,10 @@ const Services = () => {
                 Book Consultation
               </Link>
               <a
-                href="tel:1300020232"
+                href="tel:0413468928"
                 className="inline-block border border-foreground/40 text-foreground px-6 py-3 text-xs uppercase tracking-wider hover:bg-foreground hover:text-background transition-colors"
               >
-                Call 1300 020 232
+                Call 0413 468 928
               </a>
             </div>
           </aside>

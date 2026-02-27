@@ -126,11 +126,11 @@ const BathroomRenovations = () => {
                   Get a Bathroom Quote
                 </Link>
                 <a
-                  href="tel:1300020232"
+                  href="tel:0413468928"
                   className="inline-flex items-center gap-2 border border-foreground text-foreground px-6 py-3 text-xs uppercase tracking-wider hover:bg-foreground hover:text-background transition-colors"
                 >
                   <Phone className="w-4 h-4" />
-                  1300 020 232
+                  0413 468 928
                 </a>
               </div>
             </div>
@@ -360,11 +360,11 @@ const BathroomRenovations = () => {
               Book Free Consultation
             </Link>
             <a
-              href="tel:1300020232"
+              href="tel:0413468928"
               className="inline-flex items-center gap-2 border border-primary-foreground/30 text-primary-foreground px-6 py-3 text-xs uppercase tracking-wider hover:bg-primary-foreground/10 transition-colors"
             >
               <Phone className="w-4 h-4" />
-              Call 1300 020 232
+              Call 0413 468 928
             </a>
           </div>
         </div>

@@ -234,8 +234,8 @@ const Header = () => {
           >
             Book A Renovation Consultation
           </Link>
-          <a href="tel:1300020232" className={`${ctaClass} whitespace-nowrap flex-shrink-0 text-[11px] 2xl:text-xs`} onClick={handleCallClick}>
-            1300 020 232
+          <a href="tel:0413468928" className={`${ctaClass} whitespace-nowrap flex-shrink-0 text-[11px] 2xl:text-xs`} onClick={handleCallClick}>
+            0413 468 928
           </a>
         </nav>
 
@@ -288,7 +288,7 @@ const Header = () => {
               Book A Renovation Consultation
             </Link>
             <a
-              href="tel:1300020232"
+              href="tel:0413468928"
               className="text-label bg-primary text-primary-foreground px-5 py-2 inline-block w-fit"
               onClick={() => {
                 handleCallClick();

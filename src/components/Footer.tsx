@@ -59,11 +59,11 @@ const Footer = () => {
             {/* Contact */}
             <div className="space-y-4">
               <a
-                href="tel:1300020232"
+                href="tel:0413468928"
                 className="flex items-center gap-3 text-sm text-foreground/80 hover:text-primary transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                1300 020 232
+                0413 468 928
               </a>
               <a
                 href="mailto:info@cdconstruct.com.au"

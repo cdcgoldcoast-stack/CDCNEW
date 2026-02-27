@@ -70,10 +70,10 @@ export default function MermaidBeachRenovations() {
                   Book a Mermaid Beach Consultation
                 </Link>
                 <a
-                  href="tel:1300020232"
+                  href="tel:0413468928"
                   className="text-label border border-primary/30 text-primary px-8 py-3 hover:bg-primary/5 transition-colors inline-block"
                 >
-                  Call 1300 020 232
+                  Call 0413 468 928
                 </a>
               </div>
             </div>
@@ -286,10 +286,10 @@ export default function MermaidBeachRenovations() {
               Book Your Free Consultation
             </Link>
             <a
-              href="tel:1300020232"
+              href="tel:0413468928"
               className="text-label border border-primary/30 text-primary px-8 py-3 hover:bg-primary/5 transition-colors inline-block"
             >
-              Call 1300 020 232
+              Call 0413 468 928
             </a>
           </div>
         </div>

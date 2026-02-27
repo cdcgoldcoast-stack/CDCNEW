@@ -19,7 +19,7 @@ export default function Page() {
     description:
       "Kitchen, bathroom and whole-home renovation builders servicing Burleigh Heads and surrounding Gold Coast suburbs.",
     url: "https://www.cdconstruct.com.au/renovations/burleigh-heads",
-    telephone: "1300-020-232",
+    telephone: "0413468928",
     address: {
       "@type": "PostalAddress",
       streetAddress: "1907/22 Surf Parade",

@@ -403,7 +403,7 @@ const GetQuote = () => {
                             Want to skip the queue?
                           </p>
                           <a
-                            href="tel:1300020232"
+                            href="tel:0413468928"
                             className="inline-flex items-center justify-center text-xs font-semibold tracking-wider uppercase px-5 py-2.5 bg-white text-primary hover:bg-white/90 transition-all duration-300 rounded"
                           >
                             Call Now
@@ -488,10 +488,10 @@ const GetQuote = () => {
                             Want to skip the queue?
                           </p>
                           <a
-                            href="tel:1300020232"
+                            href="tel:0413468928"
                             className="inline-flex items-center justify-center text-xs font-semibold tracking-wider uppercase px-5 py-2.5 bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 rounded"
                           >
-                            1300 020 232
+                            0413 468 928
                           </a>
                         </div>
                         <p className="text-primary/50 text-xs">
