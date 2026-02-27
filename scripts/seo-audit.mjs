@@ -29,6 +29,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
 const NEXT_SERVER_APP_DIR = path.join(ROOT_DIR, ".next", "server", "app");
+const SITEMAP_INVENTORY_PATH = path.join(ROOT_DIR, "artifacts", "seo-sitemap-inventory.json");
 const PUBLIC_SITEMAP_PATH = path.join(ROOT_DIR, "public", "sitemap.xml");
 const GENERATED_PROJECT_SLUGS_PATH = path.join(ROOT_DIR, "src", "generated", "project-slugs.json");
 const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, "vercel.json");
@@ -1201,6 +1202,21 @@ const auditRouteHtml = async (route) => {
 };
 
 const readSitemapEntries = async () => {
+  try {
+    const source = await fs.readFile(SITEMAP_INVENTORY_PATH, "utf8");
+    const parsed = JSON.parse(source);
+    if (Array.isArray(parsed?.entries)) {
+      return parsed.entries
+        .map((entry) => ({
+          loc: `${entry?.url || ""}`.trim(),
+          lastmod: `${entry?.lastmod || ""}`.trim() || null,
+        }))
+        .filter((entry) => Boolean(entry.loc));
+    }
+  } catch {
+    // Fallback for environments that still materialize public/sitemap.xml.
+  }
+
   const xml = await fs.readFile(PUBLIC_SITEMAP_PATH, "utf8");
   return parseSitemapEntries(xml);
 };

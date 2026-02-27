@@ -88,6 +88,19 @@ const readVercelRedirects = async () => {
 
 const readNextRedirects = async () => {
   try {
+    // next.config.mjs validates Supabase env vars on import, but redirect checks do not need real credentials.
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL && !process.env.VITE_SUPABASE_URL) {
+      process.env.NEXT_PUBLIC_SUPABASE_URL = "https://example.supabase.co";
+    }
+    if (
+      !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY &&
+      !process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY &&
+      !process.env.VITE_SUPABASE_ANON_KEY &&
+      !process.env.VITE_SUPABASE_PUBLISHABLE_KEY
+    ) {
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = "placeholder-anon-key";
+    }
+
     const mod = await import(pathToFileURL(NEXT_CONFIG_PATH).href);
     const config = mod?.default || {};
     if (typeof config.redirects !== "function") return [];

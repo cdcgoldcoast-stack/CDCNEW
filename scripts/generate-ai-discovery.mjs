@@ -17,6 +17,7 @@ const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
 const NEXT_SERVER_APP_DIR = path.join(ROOT_DIR, ".next", "server", "app");
 const PUBLIC_DIR = path.join(ROOT_DIR, "public");
+const SITEMAP_INVENTORY_PATH = path.join(ROOT_DIR, "artifacts", "seo-sitemap-inventory.json");
 const PUBLIC_SITEMAP_PATH = path.join(PUBLIC_DIR, "sitemap.xml");
 const GENERATED_PROJECT_SLUGS_PATH = path.join(ROOT_DIR, "src", "generated", "project-slugs.json");
 
@@ -158,15 +159,34 @@ function buildLlmsFullText({ generatedAt, domain, routes }) {
   return `${lines.join("\n")}\n`;
 }
 
+async function readLocalSitemapEntries() {
+  try {
+    const source = await fs.readFile(SITEMAP_INVENTORY_PATH, "utf8");
+    const parsed = JSON.parse(source);
+    if (Array.isArray(parsed?.entries) && parsed.entries.length > 0) {
+      return parsed.entries
+        .map((entry) => ({
+          loc: `${entry?.url || ""}`.trim(),
+          lastmod: `${entry?.lastmod || ""}`.trim() || null,
+        }))
+        .filter((entry) => Boolean(entry.loc));
+    }
+  } catch {
+    // Fallback for legacy environments still using a generated public sitemap.xml.
+  }
+
+  const sitemapXml = await fs.readFile(PUBLIC_SITEMAP_PATH, "utf8");
+  return parseSitemapEntries(sitemapXml);
+}
+
 async function main() {
-  const [sitemapXml, generatedProjectSlugs] = await Promise.all([
-    fs.readFile(PUBLIC_SITEMAP_PATH, "utf8"),
+  const [entries, generatedProjectSlugs] = await Promise.all([
+    readLocalSitemapEntries(),
     loadGeneratedProjectSlugs(GENERATED_PROJECT_SLUGS_PATH),
   ]);
 
-  const entries = parseSitemapEntries(sitemapXml);
   if (entries.length === 0) {
-    throw new Error("sitemap.xml has no URL entries. Run `npm run seo:sync` first.");
+    throw new Error("Sitemap inventory has no URL entries. Run `npm run seo:sync` first.");
   }
 
   const routeInventory = [];

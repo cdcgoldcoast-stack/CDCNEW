@@ -10,7 +10,8 @@ const ROOT_DIR = path.resolve(__dirname, "..");
 
 const PROJECT_DATA_PATH = path.join(ROOT_DIR, "src", "data", "projects.ts");
 const GENERATED_SLUGS_PATH = path.join(ROOT_DIR, "src", "generated", "project-slugs.json");
-const SITEMAP_PATH = path.join(ROOT_DIR, "public", "sitemap.xml");
+const ARTIFACTS_DIR = path.join(ROOT_DIR, "artifacts");
+const SITEMAP_INVENTORY_PATH = path.join(ARTIFACTS_DIR, "seo-sitemap-inventory.json");
 const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, "vercel.json");
 const BLOG_CONTENT_PATH = path.join(ROOT_DIR, "content", "blog");
 
@@ -266,7 +267,7 @@ async function readBlogPostSlugs() {
   }
 }
 
-function buildSitemapXml(projectSlugs, blogSlugs) {
+function buildSitemapEntries(projectSlugs, blogSlugs) {
   const lastmod = formatDateUTC();
 
   const rawEntries = [
@@ -294,22 +295,12 @@ function buildSitemapXml(projectSlugs, blogSlugs) {
     entries.push({
       ...entry,
       path: normalizedPath,
+      url: toAbsoluteCanonicalUrl(normalizedPath),
+      lastmod,
     });
   }
 
-  const lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'];
-
-  for (const entry of entries) {
-    lines.push("  <url>");
-    lines.push(`    <loc>${toAbsoluteCanonicalUrl(entry.path)}</loc>`);
-    lines.push(`    <lastmod>${lastmod}</lastmod>`);
-    lines.push(`    <changefreq>${entry.changefreq}</changefreq>`);
-    lines.push(`    <priority>${entry.priority}</priority>`);
-    lines.push("  </url>");
-  }
-
-  lines.push("</urlset>");
-  return `${lines.join("\n")}\n`;
+  return entries;
 }
 
 async function writeProjectSlugArtifact(slugs, sourceCounts) {
@@ -323,9 +314,16 @@ async function writeProjectSlugArtifact(slugs, sourceCounts) {
   await fs.writeFile(GENERATED_SLUGS_PATH, `${JSON.stringify(payload, null, 2)}\n`);
 }
 
-async function writeSitemap(projectSlugs, blogSlugs) {
-  const sitemapXml = buildSitemapXml(projectSlugs, blogSlugs);
-  await fs.writeFile(SITEMAP_PATH, sitemapXml);
+async function writeSitemapInventory(projectSlugs, blogSlugs) {
+  const entries = buildSitemapEntries(projectSlugs, blogSlugs);
+  const payload = {
+    generatedAt: new Date().toISOString(),
+    domain: PRODUCTION_DOMAIN,
+    entryCount: entries.length,
+    entries,
+  };
+  await fs.mkdir(ARTIFACTS_DIR, { recursive: true });
+  await fs.writeFile(SITEMAP_INVENTORY_PATH, `${JSON.stringify(payload, null, 2)}\n`);
 }
 
 async function main() {
@@ -383,12 +381,12 @@ async function main() {
     previousGenerated: filteredPreviousSlugs.length,
     usedPreviousGeneratedFallback,
   });
-  await writeSitemap(mergedSlugs, blogSlugs);
+  await writeSitemapInventory(mergedSlugs, blogSlugs);
 
   console.log(`[seo:sync] Project slugs: ${mergedSlugs.length}`);
   console.log(`[seo:sync] Blog slugs: ${blogSlugs.length}`);
   console.log(`[seo:sync] Updated ${path.relative(ROOT_DIR, GENERATED_SLUGS_PATH)}`);
-  console.log(`[seo:sync] Updated ${path.relative(ROOT_DIR, SITEMAP_PATH)}`);
+  console.log(`[seo:sync] Updated ${path.relative(ROOT_DIR, SITEMAP_INVENTORY_PATH)}`);
 }
 
 main().catch((error) => {

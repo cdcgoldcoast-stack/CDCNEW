@@ -1111,7 +1111,7 @@ const AdminProjects = () => {
                       <Pencil className="w-4 h-4 mr-1" />
                       Edit
                     </Button>
-                    <Link to={`/projects/${generateSlug(project.name)}`}>
+                    <Link to={`/renovation-projects/${generateSlug(project.name)}`}>
                       <Button variant="ghost" size="sm">
                         <Eye className="w-4 h-4 mr-1" />
                         View

@@ -13,6 +13,7 @@ import {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
+const SITEMAP_INVENTORY_PATH = path.join(ROOT_DIR, "artifacts", "seo-sitemap-inventory.json");
 const PUBLIC_SITEMAP_PATH = path.join(ROOT_DIR, "public", "sitemap.xml");
 const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, "vercel.json");
 const DEFAULT_OUTPUT_PATH = path.join(ROOT_DIR, "artifacts", "seo-gsc-correlation.json");
@@ -185,6 +186,21 @@ function recommendAction({ normalizedReason, inSitemap, isRedirectSource, isNoin
 
 async function loadSitemapPathSet() {
   try {
+    const source = await fs.readFile(SITEMAP_INVENTORY_PATH, "utf8");
+    const parsed = JSON.parse(source);
+    if (Array.isArray(parsed?.entries)) {
+      return new Set(
+        parsed.entries
+          .map((entry) => `${entry?.url || ""}`.trim())
+          .map((url) => pathFromUrl(url, PRODUCTION_DOMAIN))
+          .filter(Boolean)
+      );
+    }
+  } catch {
+    // Fall through to legacy XML fallback.
+  }
+
+  try {
     const xml = await fs.readFile(PUBLIC_SITEMAP_PATH, "utf8");
     return new Set(parseSitemapUrls(xml).map((url) => pathFromUrl(url, PRODUCTION_DOMAIN)).filter(Boolean));
   } catch {
@@ -241,10 +257,16 @@ async function main() {
   // Keep parsed entries for traceability in the report metadata.
   let sitemapEntryCount = 0;
   try {
-    const xml = await fs.readFile(PUBLIC_SITEMAP_PATH, "utf8");
-    sitemapEntryCount = parseSitemapEntries(xml).length;
+    const source = await fs.readFile(SITEMAP_INVENTORY_PATH, "utf8");
+    const parsed = JSON.parse(source);
+    sitemapEntryCount = Array.isArray(parsed?.entries) ? parsed.entries.length : 0;
   } catch {
-    sitemapEntryCount = 0;
+    try {
+      const xml = await fs.readFile(PUBLIC_SITEMAP_PATH, "utf8");
+      sitemapEntryCount = parseSitemapEntries(xml).length;
+    } catch {
+      sitemapEntryCount = 0;
+    }
   }
 
   const correlated = rows.map((row, index) => {
@@ -333,4 +355,3 @@ main().catch((error) => {
   console.error("[seo:gsc:ingest] Failed:", error);
   process.exit(1);
 });
-
