@@ -12,6 +12,7 @@ const ProjectsTeaser = dynamic(() => import("@/components/ProjectsTeaser"));
 const WhyRenovate = dynamic(() => import("@/components/WhyRenovate"));
 const FAQSection = dynamic(() => import("@/components/FAQSection"));
 const CostsSection = dynamic(() => import("@/components/CostsSection"));
+const TestimonialsSection = dynamic(() => import("@/components/TestimonialsSection"));
 const ImageComparisonSlider = dynamic(() => import("@/components/ImageComparisonSlider"), {
   ssr: false,
 });
@@ -41,22 +42,19 @@ export default function SSRHomeClient() {
       <main>
         <EditorialReveal />
         <JourneySection />
-        <WhatWeRenovateSplit />
-        <ProjectsTeaser />
-        <WhyRenovate />
 
         <section className="min-h-screen bg-cream relative z-10 flex items-center">
           <div className="container-wide py-20 md:py-0">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div>
-                <p className="text-label text-foreground/50 mb-6">AI Design Tool</p>
+                <p className="text-label text-foreground/65 mb-6">AI Design Tool</p>
                 <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-6">
                   What Could Your Space Look Like?
                 </h2>
-                <p className="text-foreground/60 text-lg leading-relaxed mb-10">
+                <p className="text-body-text text-lg leading-relaxed mb-10">
                   Snap a photo of your bathroom, kitchen, or living area — and see a renovation concept in seconds.
                 </p>
-                <ul className="space-y-2 text-foreground/70 mb-8 text-sm md:text-base">
+                <ul className="space-y-2 text-body-text mb-8 text-sm md:text-base">
                   <li>
                     <strong>Keep your existing layout</strong> while testing different renovation styles.
                   </li>
@@ -92,6 +90,10 @@ export default function SSRHomeClient() {
           </div>
         </section>
 
+        <WhatWeRenovateSplit />
+        <ProjectsTeaser />
+        <WhyRenovate />
+        <TestimonialsSection />
         <FAQSection />
         <CostsSection />
       </main>

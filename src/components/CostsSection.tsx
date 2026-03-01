@@ -184,7 +184,7 @@ const CostsSection = () => {
           scale: 0.98
         }} className="mb-6 md:mb-8">
             <Link to="/book-renovation-consultation">
-              <Button variant="heroOutline" size="lg" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+              <Button variant="hero" size="lg" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
                 Request Your Renovation Consultation
               </Button>
             </Link>

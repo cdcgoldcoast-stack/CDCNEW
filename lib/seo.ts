@@ -4,7 +4,7 @@ import {
   PRODUCTION_DOMAIN,
   SITE_NAME,
   SITE_ALTERNATE_NAME,
-  SITELINK_TARGETS,
+  PRIORITY_SITELINK_TARGETS,
   formatPageTitle,
   withBrandDescription,
 } from "@/config/seo";
@@ -231,13 +231,16 @@ export const generateWebSiteSchema = ({
       "@id": `${SITE_URL}#organization`,
     },
     about: "Gold Coast renovations",
-    hasPart: SITELINK_TARGETS.map((target) => ({
+    hasPart: PRIORITY_SITELINK_TARGETS.map((target) => ({
       "@type": "WebPage",
       "@id": `${absoluteUrl(target.path)}#webpage`,
       name: target.label,
       description: target.description,
       url: absoluteUrl(target.path),
     })),
+    significantLink: PRIORITY_SITELINK_TARGETS.map((target) =>
+      absoluteUrl(target.path)
+    ),
   };
 
   if (enableSearchAction) {
@@ -250,3 +253,15 @@ export const generateWebSiteSchema = ({
 
   return schema;
 };
+
+export const generateSiteNavigationSchema = () => ({
+  "@context": "https://schema.org",
+  "@type": "SiteNavigationElement",
+  name: "Main Navigation",
+  hasPart: PRIORITY_SITELINK_TARGETS.map((target) => ({
+    "@type": "WebPage",
+    "@id": `${absoluteUrl(target.path)}#webpage`,
+    name: target.label,
+    url: absoluteUrl(target.path),
+  })),
+});

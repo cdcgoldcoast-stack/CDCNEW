@@ -16,6 +16,7 @@ const WhatWeRenovateSplit = () => {
       tags: ["Layout", "Flow"],
       bgImage: assets["service-bg-whole-home"],
       image: assets["service-whole-home"],
+      href: "/whole-home-renovations-gold-coast",
     },
     {
       title: "Bathroom Renovations",
@@ -23,6 +24,7 @@ const WhatWeRenovateSplit = () => {
       tags: ["Comfort", "Safety"],
       bgImage: assets["service-bg-bathroom"],
       image: assets["service-bathroom"],
+      href: "/bathroom-renovations-gold-coast",
     },
     {
       title: "Kitchen Renovations",
@@ -30,6 +32,7 @@ const WhatWeRenovateSplit = () => {
       tags: ["Storage", "Function"],
       bgImage: assets["service-bg-kitchen"],
       image: assets["service-kitchen"],
+      href: "/kitchen-renovations-gold-coast",
     },
     {
       title: "Connected Spaces",
@@ -37,6 +40,7 @@ const WhatWeRenovateSplit = () => {
       tags: ["Laundry", "Living"],
       bgImage: assets["service-bg-living"],
       image: assets["service-living"],
+      href: "/renovation-services",
     },
     {
       title: "Home Extensions",
@@ -44,6 +48,7 @@ const WhatWeRenovateSplit = () => {
       tags: ["Space", "Growth"],
       bgImage: assets["service-bg-extensions"],
       image: assets["service-extensions"],
+      href: "/renovation-services",
     },
   ];
 
@@ -70,6 +75,7 @@ interface ServiceSectionProps {
     tags: string[];
     bgImage: string | null;
     image: string | null;
+    href: string;
   };
   index: number;
   isReversed: boolean;
@@ -157,13 +163,15 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          {/* Label */}
-          <a
-            href="/renovation-services"
-            className="text-label text-primary mb-4 md:mb-6 uppercase tracking-wider text-xs md:text-sm inline-block"
-          >
-            Our Gold Coast Renovation Services
-          </a>
+          {/* Label - only on first card */}
+          {index === 0 && (
+            <a
+              href="/renovation-services"
+              className="text-label text-primary mb-4 md:mb-6 uppercase tracking-wider text-xs md:text-sm inline-block"
+            >
+              Our Gold Coast Renovation Services
+            </a>
+          )}
 
           {/* Title */}
           <h2 className="text-foreground text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif leading-tight mb-4 md:mb-6">
@@ -171,21 +179,28 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
           </h2>
 
           {/* Description */}
-          <p className="text-foreground/70 text-sm md:text-lg leading-relaxed mb-6 md:mb-8">
+          <p className="text-body-text text-sm md:text-lg leading-relaxed mb-6 md:mb-8">
             {service.description}
           </p>
 
           {/* Tags */}
-          <div className="flex gap-2 md:gap-3">
+          <div className="flex gap-3 md:gap-4">
             {service.tags.map((tag, tagIndex) => (
               <span
                 key={tagIndex}
-                className="text-[10px] md:text-xs uppercase tracking-[0.1em] text-foreground/60 border border-foreground/20 px-3 md:px-4 py-1.5 md:py-2 rounded-full"
+                className="text-[10px] md:text-xs uppercase tracking-[0.15em] text-body-text"
               >
                 {tag}
               </span>
             ))}
           </div>
+
+          <a
+            href={service.href}
+            className="text-label text-primary border-b border-primary/30 pb-1 inline-block mt-6 md:mt-8 hover:opacity-70 transition-opacity text-xs md:text-sm"
+          >
+            Explore {service.title}
+          </a>
         </motion.div>
       </div>
     </div>

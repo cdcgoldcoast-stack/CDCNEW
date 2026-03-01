@@ -34,14 +34,10 @@ const Hero = () => {
               Clear communication, realistic timelines, and quality results.
             </p>
 
-            <p className="text-sm text-foreground/70 leading-relaxed mb-4">
-              We reshape entire homes and apartments - including kitchens and bathrooms - designed around your vision,
-              lifestyle, and the way you live.
-            </p>
-
-            <p className="text-sm text-foreground/70 leading-relaxed mb-5">
-              Our experienced Gold Coast team partners with you from first consultation to handover, providing
-              transparent quotes, honest timeframes, and trusted trades who care about the end result.
+            <p className="text-sm text-body-text leading-relaxed mb-5">
+              We reshape homes and apartments — kitchens, bathrooms, and whole-home layouts — designed around your
+              vision, lifestyle, and how you actually live. From first consultation to handover, our Gold Coast team
+              provides transparent quotes, honest timeframes, and trusted trades who care about the result.
             </p>
 
             <p className="text-primary/80 font-serif italic text-sm mb-6">
@@ -54,6 +50,13 @@ const Hero = () => {
               labelSize="text-xs"
               starGap="gap-0.5"
             />
+
+            <a
+              href="/book-renovation-consultation"
+              className="bg-primary text-primary-foreground px-6 py-3 text-xs uppercase tracking-widest hover:opacity-90 transition-opacity inline-block mt-6"
+            >
+              Book Your Free Consultation
+            </a>
           </div>
         </div>
       </div>
@@ -71,14 +74,10 @@ const Hero = () => {
                 Clear communication, realistic timelines, and quality results.
               </p>
 
-              <p className="text-base text-foreground/70 leading-relaxed mb-4">
-                We reshape entire homes and apartments - including kitchens and bathrooms - designed around your
-                vision, lifestyle, and the way you live.
-              </p>
-
-              <p className="text-base text-foreground/70 leading-relaxed mb-6">
-                Our experienced Gold Coast team partners with you from first consultation to handover, providing
-                transparent quotes, honest timeframes, and trusted trades who care about the end result.
+              <p className="text-base text-body-text leading-relaxed mb-6">
+                We reshape homes and apartments — kitchens, bathrooms, and whole-home layouts — designed around your
+                vision, lifestyle, and how you actually live. From first consultation to handover, our Gold Coast team
+                provides transparent quotes, honest timeframes, and trusted trades who care about the result.
               </p>
 
               <p className="text-primary/80 font-serif italic text-base mb-8">
@@ -86,6 +85,13 @@ const Hero = () => {
               </p>
 
               <GoogleReviewBadge iconSize="w-8 h-8" starSize="w-4 h-4" labelSize="text-sm" />
+
+              <a
+                href="/book-renovation-consultation"
+                className="bg-primary text-primary-foreground mt-8 px-8 py-3 text-xs uppercase tracking-widest hover:opacity-90 transition-opacity inline-block"
+              >
+                Book Your Free Consultation
+              </a>
             </div>
           </div>
 

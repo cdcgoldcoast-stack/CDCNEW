@@ -260,6 +260,17 @@ export const generateLocalBusinessSchema = () => ({
   logo: `${PRODUCTION_DOMAIN}/assets/logo.webp`,
   image: `${PRODUCTION_DOMAIN}/og-image.jpg`,
   email: BUSINESS_INFO.email,
+  sameAs: [
+    "https://www.instagram.com/conceptdesignconstruct_",
+    "https://www.facebook.com/conceptdesignconstruct",
+  ],
+  knowsAbout: [
+    "Gold Coast home renovations",
+    "kitchen renovations",
+    "bathroom renovations",
+    "whole-home renovations",
+    "QBCC licensed building",
+  ],
   address: {
     "@type": "PostalAddress",
     addressLocality: SERVICE_AREAS.primary[0],

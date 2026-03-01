@@ -91,16 +91,33 @@ const WhyRenovate = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
             />
             
-            <motion.p 
-              className="text-white/80 text-sm md:text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto"
+            <motion.div
+              className="text-left max-w-2xl mx-auto space-y-6"
               style={{ y: paragraphY }}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              Renovation is a major decision because it affects your daily routine, your time, and your sense of control at home. Many people hesitate because they want to avoid cost surprises, unclear timelines, disruption without a plan, and too many decisions without clear direction.
-            </motion.p>
+              <div className="grid gap-5 md:gap-6">
+                <div className="flex gap-4 items-start">
+                  <span className="text-white/50 text-xs uppercase tracking-wider mt-1 w-32 flex-shrink-0 text-right">Cost surprises</span>
+                  <span className="text-white/80 text-sm md:text-base leading-relaxed">Transparent, itemised quotes before work begins.</span>
+                </div>
+                <div className="flex gap-4 items-start">
+                  <span className="text-white/50 text-xs uppercase tracking-wider mt-1 w-32 flex-shrink-0 text-right">Unclear timelines</span>
+                  <span className="text-white/80 text-sm md:text-base leading-relaxed">Realistic schedules locked in at contract, with regular updates.</span>
+                </div>
+                <div className="flex gap-4 items-start">
+                  <span className="text-white/50 text-xs uppercase tracking-wider mt-1 w-32 flex-shrink-0 text-right">Disruption</span>
+                  <span className="text-white/80 text-sm md:text-base leading-relaxed">Structured process so you know what happens and when.</span>
+                </div>
+                <div className="flex gap-4 items-start">
+                  <span className="text-white/50 text-xs uppercase tracking-wider mt-1 w-32 flex-shrink-0 text-right">Too many decisions</span>
+                  <span className="text-white/80 text-sm md:text-base leading-relaxed">We guide selections step by step.</span>
+                </div>
+              </div>
+            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -110,10 +127,10 @@ const WhyRenovate = () => {
               className="mt-8 md:mt-10"
             >
               <Link
-                to="/renovation-life-stages"
+                to="/book-renovation-consultation"
                 className="text-white/80 text-sm border-b border-white/40 pb-1 inline-block hover:text-white transition-colors"
               >
-                Explore Renovation Life Stages
+                Book a No-Pressure Chat
               </Link>
             </motion.div>
           </div>

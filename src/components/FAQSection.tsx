@@ -53,7 +53,7 @@ const FAQSection = () => {
         style={{ y: leftTextY }}
       >
         <span 
-          className="text-label text-foreground/60 tracking-widest whitespace-nowrap"
+          className="text-label text-body-text tracking-widest whitespace-nowrap"
           style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
         >
           Gold Coast, Aus
@@ -66,7 +66,7 @@ const FAQSection = () => {
         style={{ y: rightTextY }}
       >
         <span 
-          className="text-label text-foreground/60 tracking-widest whitespace-nowrap"
+          className="text-label text-body-text tracking-widest whitespace-nowrap"
           style={{ writingMode: 'vertical-rl' }}
         >
           Established 2000
@@ -82,7 +82,7 @@ const FAQSection = () => {
           transition={{ duration: 0.7 }}
         >
           <motion.p 
-            className="text-label text-foreground/60 mb-4 md:mb-8 text-xs md:text-sm"
+            className="text-label text-foreground/70 mb-4 md:mb-8 text-xs md:text-sm"
             whileInView={{ 
               letterSpacing: ["0.1em", "0.2em", "0.1em"],
             }}
@@ -145,8 +145,8 @@ const FAQSection = () => {
                 transition={{ duration: 0.3, ease: [0.25, 0.4, 0.25, 1] }}
                 className="overflow-hidden"
               >
-                <motion.p 
-                  className="text-foreground/70 text-sm md:text-base leading-relaxed pb-5 md:pb-8 pl-3 md:pl-4 pr-4"
+                <motion.p
+                  className="text-body-text text-sm md:text-base leading-relaxed pb-5 md:pb-8 pl-3 md:pl-4 pr-4"
                   initial={{ x: -10 }}
                   animate={{ x: openIndex === index ? 0 : -10 }}
                   transition={{ duration: 0.3, delay: 0.1 }}

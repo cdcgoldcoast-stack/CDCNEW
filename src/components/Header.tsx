@@ -172,7 +172,7 @@ const Header = () => {
         </Link>
 
         {/* Desktop Navigation - only shows when viewport is wide enough */}
-        <nav className="hidden min-[1440px]:flex items-center gap-5 2xl:gap-7 whitespace-nowrap">
+        <nav className="hidden min-[1280px]:flex items-center gap-5 2xl:gap-7 whitespace-nowrap">
           {desktopNavLinks.map((item) =>
             item.type === "link" ? (
               <Link
@@ -240,7 +240,7 @@ const Header = () => {
         </nav>
 
         {/* Mobile/Tablet actions */}
-        <div className="min-[1440px]:hidden flex items-center gap-2">
+        <div className="min-[1280px]:hidden flex items-center gap-2">
           {!isHome && (
             <Link
               to="/"
@@ -263,7 +263,7 @@ const Header = () => {
 
       {/* Mobile/Tablet Navigation */}
       {isMenuOpen && (
-        <nav className="min-[1440px]:hidden absolute top-full left-0 right-0 bg-background border-t border-border/30">
+        <nav className="min-[1280px]:hidden absolute top-full left-0 right-0 bg-background border-t border-border/30">
           <div className="container-wide py-8 flex flex-col gap-6">
             {mobileNavLinks.map((link) => (
               <Link

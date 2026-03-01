@@ -106,6 +106,7 @@ export type SitelinkTarget = {
   description: string;
   includeInHeader?: boolean;
   includeInFooter?: boolean;
+  priority?: "primary";
 };
 
 // Core indexable routes we want Google to understand as primary sitelink candidates.
@@ -116,6 +117,7 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
     description: withBrandDescription("Meet the team behind Gold Coast renovations."),
     includeInHeader: true,
     includeInFooter: true,
+    priority: "primary",
   },
   {
     path: "/blog",
@@ -152,6 +154,7 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
     ),
     includeInHeader: true,
     includeInFooter: true,
+    priority: "primary",
   },
   {
     path: "/renovation-life-stages",
@@ -179,6 +182,7 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
     label: "Book Renovation Consultation",
     description: withBrandDescription("Start your Gold Coast renovation quote and consultation process."),
     includeInFooter: true,
+    priority: "primary",
   },
   {
     path: "/kitchen-renovations-gold-coast",
@@ -186,6 +190,7 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
     description: withBrandDescription("Gold Coast kitchen renovations with bespoke designs and quality craftsmanship."),
     includeInHeader: false,
     includeInFooter: true,
+    priority: "primary",
   },
   {
     path: "/bathroom-renovations-gold-coast",
@@ -193,6 +198,7 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
     description: withBrandDescription("Gold Coast bathroom renovations with waterproofing-led construction."),
     includeInHeader: false,
     includeInFooter: true,
+    priority: "primary",
   },
   {
     path: "/whole-home-renovations-gold-coast",
@@ -200,6 +206,7 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
     description: withBrandDescription("Gold Coast whole-home renovations and complete house transformations."),
     includeInHeader: false,
     includeInFooter: true,
+    priority: "primary",
   },
   // Location pages
   {
@@ -239,6 +246,7 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
   },
 ];
 
+export const PRIORITY_SITELINK_TARGETS = SITELINK_TARGETS.filter((t) => t.priority === "primary");
 export const HEADER_SITELINK_TARGETS = SITELINK_TARGETS.filter((target) => target.includeInHeader);
 export const FOOTER_SITELINK_TARGETS = SITELINK_TARGETS.filter((target) => target.includeInFooter);
 

@@ -1,213 +1,213 @@
 # www.cdconstruct.com.au Full AI Content Inventory
-Generated: 2026-02-27T06:43:04.844Z
+Generated: 2026-03-01T08:11:55.690Z
 
 ## /
 URL: https://www.cdconstruct.com.au
 Type: homepage
-Last-Modified: 2026-02-27
-Structured-Data-Types: Answer, Brand, City, FAQPage, HomeAndConstructionBusiness, Offer, OfferCatalog, OpeningHoursSpecification, PostalAddress, Question, Service, State, WebPage, WebSite
+Last-Modified: 2026-03-01
+Structured-Data-Types: Answer, Brand, City, FAQPage, HomeAndConstructionBusiness, Offer, OfferCatalog, OpeningHoursSpecification, PostalAddress, Question, Service, SiteNavigationElement, State, WebPage, WebSite
 
 ## /about-us
 URL: https://www.cdconstruct.com.au/about-us
 Type: about-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: AboutPage, BreadcrumbList, City, HomeAndConstructionBusiness, ListItem, WebPage
 
 ## /blog
 URL: https://www.cdconstruct.com.au/blog
 Type: blog-index
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, CreativeWork, ItemList, ListItem, WebPage
 
 ## /renovation-projects
 URL: https://www.cdconstruct.com.au/renovation-projects
 Type: projects-index
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, CreativeWork, ItemList, ListItem, WebPage
 
 ## /renovation-services
 URL: https://www.cdconstruct.com.au/renovation-services
 Type: services-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: Answer, BreadcrumbList, City, FAQPage, ItemList, ListItem, Organization, Question, Service, WebPage
 
 ## /kitchen-renovations-gold-coast
 URL: https://www.cdconstruct.com.au/kitchen-renovations-gold-coast
 Type: content-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: Answer, BreadcrumbList, City, FAQPage, HomeAndConstructionBusiness, ListItem, Question, Service, WebPage
 
 ## /bathroom-renovations-gold-coast
 URL: https://www.cdconstruct.com.au/bathroom-renovations-gold-coast
 Type: content-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: Answer, BreadcrumbList, City, FAQPage, HomeAndConstructionBusiness, ListItem, Question, Service, WebPage
 
 ## /whole-home-renovations-gold-coast
 URL: https://www.cdconstruct.com.au/whole-home-renovations-gold-coast
 Type: content-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: Answer, BreadcrumbList, City, FAQPage, HomeAndConstructionBusiness, ListItem, Question, Service, WebPage
 
 ## /broadbeach-renovations
 URL: https://www.cdconstruct.com.au/broadbeach-renovations
 Type: content-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: Answer, Brand, BreadcrumbList, City, FAQPage, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, PostalAddress, Question, Service, State, WebPage
 
 ## /mermaid-beach-renovations
 URL: https://www.cdconstruct.com.au/mermaid-beach-renovations
 Type: content-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: Answer, Brand, BreadcrumbList, City, FAQPage, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, PostalAddress, Question, Service, State, WebPage
 
 ## /palm-beach-renovations
 URL: https://www.cdconstruct.com.au/palm-beach-renovations
 Type: content-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: Answer, Brand, BreadcrumbList, City, FAQPage, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, PostalAddress, Question, Service, State, WebPage
 
 ## /robina-renovations
 URL: https://www.cdconstruct.com.au/robina-renovations
 Type: content-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: Answer, Brand, BreadcrumbList, City, FAQPage, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, PostalAddress, Question, Service, State, WebPage
 
 ## /southport-renovations
 URL: https://www.cdconstruct.com.au/southport-renovations
 Type: content-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: Answer, Brand, BreadcrumbList, City, FAQPage, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, PostalAddress, Question, Service, State, WebPage
 
 ## /renovations/burleigh-heads
 URL: https://www.cdconstruct.com.au/renovations/burleigh-heads
 Type: content-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: City, GeoCoordinates, LocalBusiness, PostalAddress
 
 ## /renovation-life-stages
 URL: https://www.cdconstruct.com.au/renovation-life-stages
 Type: content-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: Answer, BreadcrumbList, FAQPage, ListItem, Question, WebPage
 
 ## /book-renovation-consultation
 URL: https://www.cdconstruct.com.au/book-renovation-consultation
 Type: contact-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, City, ContactPage, HomeAndConstructionBusiness, ListItem, WebPage
 
 ## /renovation-gallery
 URL: https://www.cdconstruct.com.au/renovation-gallery
 Type: gallery-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, CollectionPage, ListItem, Thing, WebPage
 
 ## /renovation-design-tools
 URL: https://www.cdconstruct.com.au/renovation-design-tools
 Type: design-tools
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /renovation-ai-generator/intro
 URL: https://www.cdconstruct.com.au/renovation-ai-generator/intro
 Type: content-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /renovation-ai-generator
 URL: https://www.cdconstruct.com.au/renovation-ai-generator
 Type: content-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /renovation-design-tools/moodboard
 URL: https://www.cdconstruct.com.au/renovation-design-tools/moodboard
 Type: design-tool
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /privacy-policy
 URL: https://www.cdconstruct.com.au/privacy-policy
 Type: legal-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /terms-conditions
 URL: https://www.cdconstruct.com.au/terms-conditions
 Type: legal-page
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /renovation-projects/everyday-ease
 URL: https://www.cdconstruct.com.au/renovation-projects/everyday-ease
 Type: project-detail
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /renovation-projects/family-hub
 URL: https://www.cdconstruct.com.au/renovation-projects/family-hub
 Type: project-detail
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /renovation-projects/light-and-flow-house
 URL: https://www.cdconstruct.com.au/renovation-projects/light-and-flow-house
 Type: project-detail
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /renovation-projects/seamless-bathroom
 URL: https://www.cdconstruct.com.au/renovation-projects/seamless-bathroom
 Type: project-detail
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /renovation-projects/stone-and-light
 URL: https://www.cdconstruct.com.au/renovation-projects/stone-and-light
 Type: project-detail
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /renovation-projects/terrazzo-retreat
 URL: https://www.cdconstruct.com.au/renovation-projects/terrazzo-retreat
 Type: project-detail
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /renovation-projects/the-calm-edit
 URL: https://www.cdconstruct.com.au/renovation-projects/the-calm-edit
 Type: project-detail
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /renovation-projects/the-elanora-residence
 URL: https://www.cdconstruct.com.au/renovation-projects/the-elanora-residence
 Type: project-detail
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /renovation-projects/warm-minimal-bathroom
 URL: https://www.cdconstruct.com.au/renovation-projects/warm-minimal-bathroom
 Type: project-detail
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /blog/bathroom-renovation-timeline-what-to-expect
 URL: https://www.cdconstruct.com.au/blog/bathroom-renovation-timeline-what-to-expect
 Type: blog-post
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/first-renovation-planning-checklist-gold-coast
 URL: https://www.cdconstruct.com.au/blog/first-renovation-planning-checklist-gold-coast
 Type: blog-post
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/kitchen-renovation-budget-breakdown-gold-coast
 URL: https://www.cdconstruct.com.au/blog/kitchen-renovation-budget-breakdown-gold-coast
 Type: blog-post
-Last-Modified: 2026-02-27
+Last-Modified: 2026-03-01
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 

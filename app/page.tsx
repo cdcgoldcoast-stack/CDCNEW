@@ -8,8 +8,9 @@ import JsonLd from "@/components/JsonLd";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import SSRHomeClient from "../components/SSRHomeClient";
-import { buildMetadata, generateWebSiteSchema } from "@/lib/seo";
-import { PRIMARY_KEYWORDS, SITELINK_TARGETS } from "@/config/seo";
+import { buildMetadata, generateWebSiteSchema, generateSiteNavigationSchema } from "@/lib/seo";
+import { PRIMARY_KEYWORDS, PRIORITY_SITELINK_TARGETS } from "@/config/seo";
+import Link from "next/link";
 
 const homepageFAQs = [
   {
@@ -63,41 +64,34 @@ export default function HomePage() {
   const localBusinessSchema = generateLocalBusinessSchema();
   const faqSchema = generateFAQSchema(homepageFAQs);
   const webSiteSchema = generateWebSiteSchema();
-  const sitelinkTargets = SITELINK_TARGETS;
+  const siteNavigationSchema = generateSiteNavigationSchema();
 
   return (
     <>
-      <JsonLd data={[webSiteSchema, localBusinessSchema, faqSchema]} />
+      <JsonLd data={[webSiteSchema, localBusinessSchema, faqSchema, siteNavigationSchema]} />
       <div className="min-h-screen">
         <Header />
         <Hero />
         <SSRHomeClient />
       </div>
-      <section className="sr-only" aria-label="Home page summary for search crawlers">
-        <p>Gold Coast Renovations - Locally Trusted.</p>
-        <p>
-          Concept Design Construct, also known as CD Construct, delivers design-led home renovations across the Gold
-          Coast.
-        </p>
-        <p>
-          Clear communication, realistic timelines, and quality results for kitchens, bathrooms, and
-          whole-home renovations across the Gold Coast.
-        </p>
-        <h2>Gold Coast Renovation Services</h2>
-        <ul>
-          <li>Kitchen renovations designed for flow, storage, and everyday usability.</li>
-          <li>Bathroom renovations focused on comfort, durability, and clean detailing.</li>
-          <li>Whole-home renovations planned around lifestyle, layout, and long-term value.</li>
-        </ul>
-        <h2>Popular Renovation Pages</h2>
-        <ul>
-          {sitelinkTargets.map((target) => (
+      <nav aria-label="Quick links" className="border-t border-neutral-200 bg-neutral-50 py-3">
+        <ul className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-6 gap-y-1 px-4">
+          {PRIORITY_SITELINK_TARGETS.map((target) => (
             <li key={target.path}>
-              <a href={target.path}>{target.label}</a>: {target.description}
+              <Link
+                href={target.path}
+                className="text-xs font-medium uppercase tracking-wide text-neutral-500 hover:text-neutral-800 transition-colors"
+              >
+                {target.label}
+              </Link>
             </li>
           ))}
         </ul>
-      </section>
+      </nav>
+      <p className="sr-only">
+        Concept Design Construct, also known as CD Construct, delivers design-led home renovations across the Gold
+        Coast including kitchens, bathrooms, and whole-home transformations.
+      </p>
     </>
   );
 }

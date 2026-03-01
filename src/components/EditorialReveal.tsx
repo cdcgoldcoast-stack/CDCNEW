@@ -142,6 +142,7 @@ const EditorialReveal = () => {
   if (isMobile) {
     return (
       <section ref={sectionRef} className="py-8 overflow-hidden">
+        <p className="text-label text-foreground/50 text-xs uppercase tracking-[0.2em] mb-4 px-5">Our Recent Work</p>
         <div className="grid grid-cols-3 gap-2 -mx-8">
           {/* Row 1 */}
           {mobileImages.slice(0, 3).map((img, i) => (
@@ -190,6 +191,7 @@ const EditorialReveal = () => {
   if (isTablet) {
     return (
       <section ref={sectionRef} className="py-10 overflow-hidden">
+        <p className="text-label text-foreground/50 text-xs uppercase tracking-[0.2em] mb-5 px-6">Our Recent Work</p>
         <div className="grid grid-cols-4 gap-3 -mx-4">
           {/* Row 1 */}
           {tabletImages.filter((_, i) => i % 2 === 0).map((img, i) => (
@@ -237,7 +239,9 @@ const EditorialReveal = () => {
   // Desktop: 5 columns parallax scroll effect
   return (
     <section ref={sectionRef}>
-      <div className="h-[60vh]" />
+      <div className="h-[60vh] relative">
+        <p className="absolute bottom-8 left-8 text-label text-foreground/50 text-xs uppercase tracking-[0.2em] z-10">Our Recent Work</p>
+      </div>
       
       <div 
         className="fixed inset-0 z-0 transition-opacity duration-300 ease-out overflow-hidden"

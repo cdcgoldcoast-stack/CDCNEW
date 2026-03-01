@@ -1,66 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { X, Gift } from "lucide-react";
+import { useEffect, useState } from "react";
+import { X, MessageCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 
 interface PromoPopupProps {
   delay?: number; // in seconds
 }
-
-const playPopupArrivalSound = async () => {
-  if (typeof window === "undefined") return;
-
-  const audioContextConstructor =
-    window.AudioContext ||
-    (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-
-  if (!audioContextConstructor) return;
-
-  let audioContext: AudioContext | null = null;
-  try {
-    audioContext = new audioContextConstructor();
-
-    // Some browsers start in "suspended" state until user interaction.
-    if (audioContext.state === "suspended") {
-      await audioContext.resume();
-    }
-
-    const notes = [
-      { frequency: 880, startOffset: 0, duration: 0.08 },
-      { frequency: 1174, startOffset: 0.11, duration: 0.12 },
-    ];
-    const startTime = audioContext.currentTime;
-
-    for (const note of notes) {
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-      const noteStart = startTime + note.startOffset;
-      const noteEnd = noteStart + note.duration;
-
-      oscillator.type = "sine";
-      oscillator.frequency.setValueAtTime(note.frequency, noteStart);
-      gainNode.gain.setValueAtTime(0.0001, noteStart);
-      gainNode.gain.exponentialRampToValueAtTime(0.06, noteStart + 0.02);
-      gainNode.gain.exponentialRampToValueAtTime(0.0001, noteEnd);
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-      oscillator.start(noteStart);
-      oscillator.stop(noteEnd);
-    }
-
-    const totalDurationMs = 400;
-    window.setTimeout(() => {
-      void audioContext?.close();
-    }, totalDurationMs);
-  } catch {
-    if (audioContext) {
-      void audioContext.close();
-    }
-  }
-};
 
 const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -69,7 +16,6 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
   const [formData, setFormData] = useState({ name: "", phone: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
-  const hasPlayedArrivalSound = useRef(false);
 
   useEffect(() => {
     // Check if user has already seen/submitted popup in this session
@@ -87,12 +33,6 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
 
     return () => clearTimeout(timer);
   }, [delay]);
-
-  useEffect(() => {
-    if (!isVisible || hasPlayedArrivalSound.current) return;
-    hasPlayedArrivalSound.current = true;
-    void playPopupArrivalSound();
-  }, [isVisible]);
 
   const handleClose = () => {
     setIsVisible(false);
@@ -191,8 +131,8 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
         {/* Header */}
         <div className="flex items-start justify-between p-4 pb-2">
           <div className="flex items-center gap-2">
-            <Gift className="w-5 h-5" />
-            <span className="font-medium text-sm">Limited Time Offer</span>
+            <MessageCircle className="w-5 h-5" />
+            <span className="font-medium text-sm">Thinking About Renovating?</span>
           </div>
           <button
             onClick={handleClose}
@@ -208,32 +148,29 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
           {!isFormOpen && !isSubmitted && (
             <>
               <h3 className="font-serif text-lg leading-tight mb-2">
-                Get a FREE Comprehensive Site Audit
+                Get a Free On-Site Walkthrough
               </h3>
               <p className="text-sm text-primary-foreground/80 mb-4">
-                Worth $450 - We'll assess your home's renovation potential and provide expert recommendations.
+                We'll visit your home, talk through your ideas, and share honest advice — no obligation.
               </p>
               <button
                 onClick={handleClaimClick}
                 className="w-full bg-background text-foreground font-medium py-3 px-4 rounded hover:bg-background/90 transition-colors text-sm"
               >
-                Claim My Free Audit
+                Book a Walkthrough
               </button>
-              <p className="text-[10px] text-primary-foreground/60 mt-2 text-center">
-                Limited spots available. Offer ends soon.
-              </p>
             </>
           )}
 
           {isFormOpen && !isSubmitted && (
             <form onSubmit={handleSubmit} className="space-y-3">
               <h3 className="font-serif text-lg leading-tight">
-                Claim Your Free Audit
+                We'll Be in Touch
               </h3>
               <p className="text-sm text-primary-foreground/80">
-                Enter your details and we'll contact you within 24 hours.
+                Leave your details and we'll arrange a time that suits you.
               </p>
-              
+
               <input
                 type="text"
                 placeholder="Your Name"
@@ -242,7 +179,7 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
                 className="w-full px-3 py-2.5 rounded text-foreground bg-background border-0 text-sm placeholder:text-foreground/50 focus:ring-2 focus:ring-background"
                 required
               />
-              
+
               <input
                 type="tel"
                 placeholder="Phone Number"
@@ -255,15 +192,15 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
               {error && (
                 <p className="text-xs text-red-200">{error}</p>
               )}
-              
+
               <button
                 type="submit"
                 disabled={isSubmitting}
                 className="w-full bg-background text-foreground font-medium py-3 px-4 rounded hover:bg-background/90 transition-colors text-sm disabled:opacity-70"
               >
-                {isSubmitting ? "Submitting..." : "Submit"}
+                {isSubmitting ? "Sending..." : "Send"}
               </button>
-              
+
               <button
                 type="button"
                 onClick={() => setIsFormOpen(false)}
@@ -277,11 +214,11 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
           {isSubmitted && (
             <div className="text-center py-4">
               <div className="w-12 h-12 bg-background rounded-full flex items-center justify-center mx-auto mb-3">
-                <Gift className="w-6 h-6 text-primary" />
+                <MessageCircle className="w-6 h-6 text-primary" />
               </div>
               <h3 className="font-serif text-lg mb-2">Thank You!</h3>
               <p className="text-sm text-primary-foreground/80">
-                We'll contact you within 24 hours to schedule your free site audit.
+                We'll be in touch shortly to arrange your walkthrough.
               </p>
             </div>
           )}

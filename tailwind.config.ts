@@ -78,6 +78,7 @@ const config: Config = {
         "brand-red": "hsl(var(--brand-red))",
         charcoal: "hsl(var(--charcoal))",
         "charcoal-soft": "hsl(var(--charcoal-soft))",
+        "body-text": "hsl(var(--body-text))",
         media: {
           foreground: "hsl(var(--media-foreground))",
           overlay: "hsl(var(--media-overlay))",

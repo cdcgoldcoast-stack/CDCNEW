@@ -100,7 +100,7 @@ const JourneySection = () => {
                 <p className="font-serif text-sm text-primary italic mb-2">
                   {step.title}
                 </p>
-                <p className="text-xs leading-relaxed text-primary/70">
+                <p className="text-xs leading-relaxed text-body-text">
                   {step.lines.join(" ")}
                 </p>
               </motion.div>
@@ -108,27 +108,49 @@ const JourneySection = () => {
           </div>
         </div>
 
-        {/* Tablet + Desktop: Shared responsive grid */}
-        <div className="hidden md:block mb-6 md:mb-8">
-          <div className="grid md:grid-cols-4 lg:grid-cols-7 gap-4 lg:gap-0">
-            {steps.map((step, index) => (
+        {/* Tablet + Desktop: Two-row grid (4 + 3) */}
+        <div className="hidden md:block mb-6 md:mb-8 space-y-8">
+          {/* Row 1: Steps 01–04 */}
+          <div className="grid md:grid-cols-4 gap-6 lg:gap-8">
+            {steps.slice(0, 4).map((step, index) => (
               <motion.div
                 key={step.number}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: index * 0.06 }}
-                className={`border-l-2 border-primary/20 pl-4 lg:border-primary/10 lg:pl-6 lg:pr-3 xl:pl-8 xl:pr-4 ${
-                  index === 0 ? "lg:border-l-0" : "lg:border-l"
-                }`}
+                className={`border-l-2 border-primary/10 pl-5 ${index === 0 ? "border-l-0" : ""}`}
               >
-                <span className="block font-serif text-4xl lg:text-5xl xl:text-6xl mb-3 lg:mb-5 text-primary/20 h-12 lg:h-[60px] xl:h-[72px]">
+                <span className="block font-serif text-4xl lg:text-5xl mb-3 text-primary/20">
                   {step.number}
                 </span>
-                <h3 className="font-serif text-sm lg:text-base xl:text-lg mb-2 lg:mb-4 leading-snug text-primary italic md:h-10 lg:h-[68px] xl:h-[76px]">
+                <h3 className="font-serif text-sm lg:text-base xl:text-lg mb-3 leading-snug text-primary italic">
                   {step.title}
                 </h3>
-                <p className="text-xs lg:text-sm leading-relaxed text-primary/70 md:min-h-[6.5rem] lg:min-h-[8.5rem]">
+                <p className="text-xs lg:text-sm leading-relaxed text-body-text">
+                  {step.lines.join(" ")}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+          {/* Row 2: Steps 05–07 */}
+          <div className="grid md:grid-cols-4 gap-6 lg:gap-8">
+            {steps.slice(4).map((step, index) => (
+              <motion.div
+                key={step.number}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: (index + 4) * 0.06 }}
+                className={`border-l-2 border-primary/10 pl-5 ${index === 0 ? "border-l-0" : ""}`}
+              >
+                <span className="block font-serif text-4xl lg:text-5xl mb-3 text-primary/20">
+                  {step.number}
+                </span>
+                <h3 className="font-serif text-sm lg:text-base xl:text-lg mb-3 leading-snug text-primary italic">
+                  {step.title}
+                </h3>
+                <p className="text-xs lg:text-sm leading-relaxed text-body-text">
                   {step.lines.join(" ")}
                 </p>
               </motion.div>
@@ -147,14 +169,14 @@ const JourneySection = () => {
           transition={{ duration: 0.6 }}
           className="flex flex-col gap-6 md:grid md:grid-cols-[auto_1fr_auto] md:items-end md:gap-10"
         >
-          <h3 className="font-serif text-2xl md:text-4xl lg:text-5xl text-primary italic">Do it now!</h3>
+          <h3 className="font-serif text-2xl md:text-4xl lg:text-5xl text-primary italic">Start Your Renovation</h3>
           <div />
           <div className="flex justify-center md:justify-end">
             <Link
               to="/book-renovation-consultation"
               className="inline-flex items-center justify-center h-11 px-7 bg-primary text-primary-foreground text-xs tracking-[0.22em] uppercase hover:bg-primary/90 transition-colors"
             >
-              Get Best Offers
+              Request Your Free Consultation
             </Link>
           </div>
         </motion.div>
