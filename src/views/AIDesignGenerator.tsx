@@ -1139,7 +1139,7 @@ const buildPreferenceSentence = (
       />
        <Header />
  
-      <main className="pt-16 md:pt-28 h-[100dvh] overflow-hidden">
+      <main className="pt-24 md:pt-28 h-[100dvh] overflow-hidden">
         <div className="w-full h-full flex flex-col px-0 md:px-12 md:max-w-7xl md:mx-auto">
           <input
             ref={fileInputRef}

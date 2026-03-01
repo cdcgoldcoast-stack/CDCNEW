@@ -48,7 +48,7 @@ const Work = () => {
       />
       <Header />
 
-      <main className="pt-20 md:pt-28 px-4 md:px-6 lg:px-8 pb-16">
+      <main className="pt-24 md:pt-28 px-4 md:px-6 lg:px-8 pb-16">
         {/* Title */}
         <div className="text-center mb-8 md:mb-16 max-w-2xl mx-auto px-2">
           <h1 className="font-serif italic text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-primary mb-4 md:mb-6">
