@@ -78,6 +78,9 @@ const BrandGuidelinesPage = dynamic(() => import("@/views/BrandGuidelines"), {
 });
 
 // Admin pages - dynamic imports
+const AdminDashboardPage = dynamic(() => import("@/views/admin/AdminDashboard"), {
+  ssr: false,
+});
 const AdminChatInquiriesPage = dynamic(() => import("@/views/admin/AdminChatInquiries"), {
   ssr: false,
 });
@@ -183,7 +186,15 @@ export function BrandGuidelinesClient() {
 export function AdminIndexClient() {
   return (
     <RequireAdmin>
-      <Navigate to="/admin/projects" replace />
+      <Navigate to="/admin/dashboard" replace />
+    </RequireAdmin>
+  );
+}
+
+export function AdminDashboardClient() {
+  return (
+    <RequireAdmin>
+      <AdminDashboardPage />
     </RequireAdmin>
   );
 }

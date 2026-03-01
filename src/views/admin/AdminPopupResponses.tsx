@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import AdminLayout from "@/components/admin/AdminLayout";
 import { format } from "date-fns";
-import { Phone, Mail, MapPin, Calendar, User, ExternalLink, Trash2, Download } from "lucide-react";
+import { Phone, MapPin, Calendar, User, ExternalLink, Trash2, Download } from "lucide-react";
 
 interface PopupResponse {
   id: string;
@@ -82,17 +83,15 @@ const AdminPopupResponses = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background p-8">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-foreground/60">Loading responses...</p>
-        </div>
-      </div>
+      <AdminLayout>
+        <p className="text-foreground/60">Loading responses...</p>
+      </AdminLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <AdminLayout>
+      <div>
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
@@ -241,7 +240,7 @@ const AdminPopupResponses = () => {
           </div>
         )}
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 

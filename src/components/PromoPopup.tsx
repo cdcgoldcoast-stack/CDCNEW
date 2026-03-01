@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X, MessageCircle } from "lucide-react";
+import { X, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 
@@ -18,7 +18,6 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Check if user has already seen/submitted popup in this session
     const hasInteracted = sessionStorage.getItem("promoPopupInteracted");
     if (hasInteracted) return;
 
@@ -63,7 +62,6 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
       return;
     }
 
-    // Basic phone validation
     const phoneRegex = /^[\d\s+()-]{8,}$/;
     if (!phoneRegex.test(formData.phone)) {
       setError("Please enter a valid phone number");
@@ -111,7 +109,6 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
         value: 1,
       });
 
-      // Auto close after 3 seconds
       setTimeout(() => {
         setIsVisible(false);
       }, 3000);
@@ -126,103 +123,106 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-24 right-4 md:right-6 z-50 w-[320px] md:w-[360px]">
-      <div className="bg-primary text-primary-foreground rounded-lg shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
-        {/* Header */}
-        <div className="flex items-start justify-between p-4 pb-2">
-          <div className="flex items-center gap-2">
-            <MessageCircle className="w-5 h-5" />
-            <span className="font-medium text-sm">Thinking About Renovating?</span>
+    <div className="fixed bottom-6 right-4 md:right-6 z-50 w-[340px] md:w-[380px]">
+      <div className="bg-white rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.12)] overflow-hidden animate-in slide-in-from-bottom-4 duration-500 border border-neutral-100">
+        {/* Close button */}
+        <button
+          onClick={handleClose}
+          className="absolute top-3 right-3 z-10 w-7 h-7 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center transition-colors"
+          aria-label="Close popup"
+        >
+          <X className="w-3.5 h-3.5 text-neutral-500" />
+        </button>
+
+        {!isFormOpen && !isSubmitted && (
+          <div className="p-5 pt-6">
+            <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-primary/70 mb-2">
+              Free consultation
+            </p>
+            <h3 className="font-serif text-xl text-neutral-900 leading-snug mb-2">
+              Thinking about renovating?
+            </h3>
+            <p className="text-sm text-neutral-500 leading-relaxed mb-5">
+              We&apos;ll visit your home, talk through your ideas, and share honest advice — no obligation.
+            </p>
+            <button
+              onClick={handleClaimClick}
+              className="w-full bg-primary text-white font-medium py-3 px-5 rounded-xl hover:bg-primary/90 transition-colors text-sm flex items-center justify-center gap-2 group"
+            >
+              Book a free walkthrough
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+            </button>
           </div>
-          <button
-            onClick={handleClose}
-            className="text-primary-foreground/70 hover:text-primary-foreground transition-colors"
-            aria-label="Close popup"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
+        )}
 
-        {/* Content */}
-        <div className="px-4 pb-4">
-          {!isFormOpen && !isSubmitted && (
-            <>
-              <h3 className="font-serif text-lg leading-tight mb-2">
-                Get a Free On-Site Walkthrough
-              </h3>
-              <p className="text-sm text-primary-foreground/80 mb-4">
-                We'll visit your home, talk through your ideas, and share honest advice — no obligation.
-              </p>
-              <button
-                onClick={handleClaimClick}
-                className="w-full bg-background text-foreground font-medium py-3 px-4 rounded hover:bg-background/90 transition-colors text-sm"
-              >
-                Book a Walkthrough
-              </button>
-            </>
-          )}
+        {isFormOpen && !isSubmitted && (
+          <form onSubmit={handleSubmit} className="p-5 pt-6">
+            <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-primary/70 mb-2">
+              Almost there
+            </p>
+            <h3 className="font-serif text-xl text-neutral-900 leading-snug mb-1">
+              Leave your details
+            </h3>
+            <p className="text-sm text-neutral-500 mb-4">
+              We&apos;ll arrange a time that suits you.
+            </p>
 
-          {isFormOpen && !isSubmitted && (
-            <form onSubmit={handleSubmit} className="space-y-3">
-              <h3 className="font-serif text-lg leading-tight">
-                We'll Be in Touch
-              </h3>
-              <p className="text-sm text-primary-foreground/80">
-                Leave your details and we'll arrange a time that suits you.
-              </p>
-
+            <div className="space-y-3">
               <input
                 type="text"
-                placeholder="Your Name"
+                placeholder="Your name"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-3 py-2.5 rounded text-foreground bg-background border-0 text-sm placeholder:text-foreground/50 focus:ring-2 focus:ring-background"
+                className="w-full px-4 py-3 rounded-xl bg-neutral-50 border border-neutral-200 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all"
                 required
               />
 
               <input
                 type="tel"
-                placeholder="Phone Number"
+                placeholder="Phone number"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full px-3 py-2.5 rounded text-foreground bg-background border-0 text-sm placeholder:text-foreground/50 focus:ring-2 focus:ring-background"
+                className="w-full px-4 py-3 rounded-xl bg-neutral-50 border border-neutral-200 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all"
                 required
               />
 
               {error && (
-                <p className="text-xs text-red-200">{error}</p>
+                <p className="text-xs text-red-500">{error}</p>
               )}
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-background text-foreground font-medium py-3 px-4 rounded hover:bg-background/90 transition-colors text-sm disabled:opacity-70"
+                className="w-full bg-primary text-white font-medium py-3 px-5 rounded-xl hover:bg-primary/90 transition-colors text-sm disabled:opacity-60 flex items-center justify-center gap-2 group"
               >
                 {isSubmitting ? "Sending..." : "Send"}
+                {!isSubmitting && <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />}
               </button>
 
               <button
                 type="button"
                 onClick={() => setIsFormOpen(false)}
-                className="w-full text-xs text-primary-foreground/60 hover:text-primary-foreground transition-colors"
+                className="w-full text-xs text-neutral-400 hover:text-neutral-600 transition-colors py-1"
               >
-                ← Back
+                Back
               </button>
-            </form>
-          )}
-
-          {isSubmitted && (
-            <div className="text-center py-4">
-              <div className="w-12 h-12 bg-background rounded-full flex items-center justify-center mx-auto mb-3">
-                <MessageCircle className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-serif text-lg mb-2">Thank You!</h3>
-              <p className="text-sm text-primary-foreground/80">
-                We'll be in touch shortly to arrange your walkthrough.
-              </p>
             </div>
-          )}
-        </div>
+          </form>
+        )}
+
+        {isSubmitted && (
+          <div className="p-5 pt-6 text-center">
+            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+              <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h3 className="font-serif text-xl text-neutral-900 mb-1">Thank you</h3>
+            <p className="text-sm text-neutral-500">
+              We&apos;ll be in touch shortly to arrange your walkthrough.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

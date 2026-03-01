@@ -22,6 +22,7 @@ interface AdminLayoutProps {
 }
 
 const navItems = [
+  { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { label: "Projects", href: "/admin/projects", icon: FolderOpen },
   { label: "Enquiries", href: "/admin/enquiries", icon: MessageSquare },
   { label: "Chat Inquiries", href: "/admin/chat-inquiries", icon: MessageCircle },
