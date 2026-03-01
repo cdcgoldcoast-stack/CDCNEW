@@ -35,11 +35,12 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema]} />
+      <AIDesignIntroClient />
       <section className="py-16 md:py-20 bg-background">
         <div className="container-wide max-w-3xl text-foreground/80">
-          <h1 className="font-serif text-h2-mobile md:text-h1 leading-tight mb-6">
+          <h2 className="font-serif text-h2-mobile md:text-h2 leading-tight mb-6">
             Preview Gold Coast Renovations With AI
-          </h1>
+          </h2>
           <p className="text-base md:text-lg leading-relaxed mb-4">
             This introduction page explains how the AI design generator fits into a calm, realistic
             renovation planning process. It walks through what makes a good reference photo,
@@ -56,9 +57,9 @@ export default function Page() {
             images, and start collecting concepts to discuss with the team during a formal
             consultation.
           </p>
-          <h2 className="font-serif text-h3 md:text-h2 leading-tight mt-10 mb-4">
+          <h3 className="font-serif text-h3 md:text-h2 leading-tight mt-10 mb-4">
             What To Prepare Before You Start
-          </h2>
+          </h3>
           <p className="text-base md:text-lg leading-relaxed mb-4">
             For the best output, use bright, uncluttered photos and keep your first prompt simple.
             <strong> Start with one clear style direction</strong>, then test variations after you
@@ -82,7 +83,6 @@ export default function Page() {
           </p>
         </div>
       </section>
-      <AIDesignIntroClient />
     </>
   );
 }
