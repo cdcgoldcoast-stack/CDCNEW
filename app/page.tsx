@@ -9,8 +9,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import SSRHomeClient from "../components/SSRHomeClient";
 import { buildMetadata, generateWebSiteSchema, generateSiteNavigationSchema } from "@/lib/seo";
-import { PRIMARY_KEYWORDS, PRIORITY_SITELINK_TARGETS } from "@/config/seo";
-import Link from "next/link";
+import { PRIMARY_KEYWORDS } from "@/config/seo";
 
 const homepageFAQs = [
   {
@@ -74,20 +73,6 @@ export default function HomePage() {
         <Hero />
         <SSRHomeClient />
       </div>
-      <nav aria-label="Quick links" className="border-t border-neutral-200 bg-neutral-50 py-3">
-        <ul className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-6 gap-y-1 px-4">
-          {PRIORITY_SITELINK_TARGETS.map((target) => (
-            <li key={target.path}>
-              <Link
-                href={target.path}
-                className="text-xs font-medium uppercase tracking-wide text-neutral-500 hover:text-neutral-800 transition-colors"
-              >
-                {target.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
       <p className="sr-only">
         Concept Design Construct, also known as CD Construct, delivers design-led home renovations across the Gold
         Coast including kitchens, bathrooms, and whole-home transformations.

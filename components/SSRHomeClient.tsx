@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
+import { PRIORITY_SITELINK_TARGETS } from "@/config/seo";
 
 const EditorialReveal = dynamic(() => import("@/components/EditorialReveal"));
 const JourneySection = dynamic(() => import("@/components/JourneySection"));
@@ -43,8 +44,8 @@ export default function SSRHomeClient() {
         <EditorialReveal />
         <JourneySection />
 
-        <section className="min-h-screen bg-cream relative z-10 flex items-center">
-          <div className="container-wide py-20 md:py-0">
+        <section className="bg-cream relative z-10 py-16 md:py-24">
+          <div className="container-wide">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div>
                 <p className="text-label text-foreground/65 mb-6">AI Design Tool</p>
@@ -97,6 +98,20 @@ export default function SSRHomeClient() {
         <FAQSection />
         <CostsSection />
       </main>
+      <nav aria-label="Quick links" className="border-t border-neutral-200 bg-neutral-50 py-3 relative z-10">
+        <ul className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-6 gap-y-1 px-4">
+          {PRIORITY_SITELINK_TARGETS.map((target) => (
+            <li key={target.path}>
+              <a
+                href={target.path}
+                className="text-xs font-medium uppercase tracking-wide text-neutral-500 hover:text-neutral-800 transition-colors"
+              >
+                {target.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
       <Footer />
     </>
   );
