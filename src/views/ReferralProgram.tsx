@@ -65,9 +65,9 @@ const benefits = [
 ];
 
 const commissionTiers = [
-  { range: "Up to $50,000", commission: "$750" },
-  { range: "$50,000 – $80,000", commission: "$1,000" },
-  { range: "$80,000+", commission: "$2,000" },
+  { range: "$20,000 – $50,000", commission: "$500" },
+  { range: "$50,000 – $100,000", commission: "$1,000" },
+  { range: "$100,000+", commission: "$2,000" },
 ];
 
 const steps = [
