@@ -48,6 +48,7 @@ const staticRoutes: Array<{
     changeFrequency: "monthly",
     priority: 0.5,
   },
+  { path: "/referral-program", changeFrequency: "monthly", priority: 0.5 },
   { path: "/blog", changeFrequency: "weekly", priority: 0.75 },
   { path: "/privacy-policy", changeFrequency: "yearly", priority: 0.3 },
   { path: "/terms-conditions", changeFrequency: "yearly", priority: 0.3 },

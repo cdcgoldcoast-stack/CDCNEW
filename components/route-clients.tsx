@@ -14,6 +14,7 @@ import GetQuotePage from "@/views/GetQuote";
 import LifeStagesPage from "@/views/LifeStages";
 import NotFoundPage from "@/views/NotFound";
 import PrivacyPolicyPage from "@/views/PrivacyPolicy";
+import ReferralProgramPage from "@/views/ReferralProgram";
 import ServicesPage from "@/views/Services";
 import TermsConditionsPage from "@/views/TermsConditions";
 import WorkPage from "@/views/Work";
@@ -294,4 +295,8 @@ export function RobinaRenovationsClient() {
 
 export function SouthportRenovationsClient() {
   return <SouthportRenovationsPage />;
+}
+
+export function ReferralProgramClient() {
+  return <ReferralProgramPage />;
 }

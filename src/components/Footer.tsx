@@ -32,6 +32,7 @@ const Footer = () => {
     { label: "Our Projects", href: "/renovation-projects" },
     { label: "Gallery", href: "/renovation-gallery" },
     { label: "Life Stages", href: "/renovation-life-stages" },
+    { label: "Referral Program", href: "/referral-program" },
     { label: "Contact Us", href: "/book-renovation-consultation" },
   ];
 
