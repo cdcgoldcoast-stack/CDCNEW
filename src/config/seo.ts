@@ -208,6 +208,38 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
     includeInFooter: true,
     priority: "primary",
   },
+  {
+    path: "/why-cdc",
+    label: "Why CDC",
+    description: withBrandDescription("Discover why Gold Coast homeowners choose CDC for their renovations."),
+    includeInHeader: true,
+    includeInFooter: true,
+  },
+  {
+    path: "/how-we-work",
+    label: "How We Work",
+    description: withBrandDescription("Our structured 7-step renovation process from consultation to handover."),
+    includeInHeader: true,
+    includeInFooter: true,
+  },
+  {
+    path: "/testimonials",
+    label: "Testimonials",
+    description: withBrandDescription("Read real reviews from Gold Coast homeowners who renovated with CDC."),
+    includeInFooter: true,
+  },
+  {
+    path: "/faq",
+    label: "FAQ",
+    description: withBrandDescription("Answers to common Gold Coast renovation questions on costs, timelines, and process."),
+    includeInFooter: true,
+  },
+  {
+    path: "/before-after",
+    label: "Before & After",
+    description: withBrandDescription("See real before and after renovation transformations from Gold Coast homes."),
+    includeInFooter: true,
+  },
   // Location pages
   {
     path: "/broadbeach-renovations",

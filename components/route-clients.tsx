@@ -8,15 +8,20 @@ import RequireAdmin from "@/components/admin/RequireAdmin";
 // Lightweight pages - static imports
 import AboutUsPage from "@/views/AboutUs";
 import AuthPage from "@/views/Auth";
+import BeforeAfterPage from "@/views/BeforeAfter";
 import DesignToolsPage from "@/views/DesignTools";
+import FAQPage from "@/views/FAQ";
 import GalleryPage from "@/views/Gallery";
 import GetQuotePage from "@/views/GetQuote";
+import HowWeWorkPage from "@/views/HowWeWork";
 import LifeStagesPage from "@/views/LifeStages";
 import NotFoundPage from "@/views/NotFound";
 import PrivacyPolicyPage from "@/views/PrivacyPolicy";
 import ReferralProgramPage from "@/views/ReferralProgram";
 import ServicesPage from "@/views/Services";
 import TermsConditionsPage from "@/views/TermsConditions";
+import TestimonialsPage from "@/views/Testimonials";
+import WhyCDCPage from "@/views/WhyCDC";
 import WorkPage from "@/views/Work";
 
 // Service pages - dynamic imports
@@ -299,4 +304,24 @@ export function SouthportRenovationsClient() {
 
 export function ReferralProgramClient() {
   return <ReferralProgramPage />;
+}
+
+export function HowWeWorkClient() {
+  return <HowWeWorkPage />;
+}
+
+export function FAQClient() {
+  return <FAQPage />;
+}
+
+export function WhyCDCClient() {
+  return <WhyCDCPage />;
+}
+
+export function TestimonialsClient() {
+  return <TestimonialsPage />;
+}
+
+export function BeforeAfterClient() {
+  return <BeforeAfterPage />;
 }

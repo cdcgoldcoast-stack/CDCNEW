@@ -28,6 +28,11 @@ const Footer = () => {
 
   const companyLinks = [
     { label: "About Us", href: "/about-us" },
+    { label: "Why CDC", href: "/why-cdc" },
+    { label: "How We Work", href: "/how-we-work" },
+    { label: "Testimonials", href: "/testimonials" },
+    { label: "FAQ", href: "/faq" },
+    { label: "Before & After", href: "/before-after" },
     { label: "Renovation Blog", href: "/blog" },
     { label: "Our Projects", href: "/renovation-projects" },
     { label: "Gallery", href: "/renovation-gallery" },
