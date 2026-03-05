@@ -16,6 +16,36 @@ import { useDesignGeneration } from "@/hooks/useDesignGeneration";
 import SEO from "@/components/SEO";
 import type { DesignGenerationError, DesignGenerationSpaceType } from "@/types/ai";
 
+const compressImage = (
+  base64: string,
+  maxDimension = 1500,
+  quality = 0.8,
+): Promise<string> =>
+  new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      let { naturalWidth: w, naturalHeight: h } = img;
+
+      if (w <= maxDimension && h <= maxDimension) {
+        resolve(base64);
+        return;
+      }
+
+      const scale = maxDimension / Math.max(w, h);
+      w = Math.round(w * scale);
+      h = Math.round(h * scale);
+
+      const canvas = document.createElement("canvas");
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext("2d")!;
+      ctx.drawImage(img, 0, 0, w, h);
+      resolve(canvas.toDataURL("image/jpeg", quality));
+    };
+    img.onerror = () => resolve(base64);
+    img.src = base64;
+  });
+
 const ChatMessage = ({
   role,
   children,
@@ -880,8 +910,9 @@ const buildPreferenceSentence = (
     }
 
     const reader = new FileReader();
-    reader.onload = (e) => {
-      const base64 = e.target?.result as string;
+    reader.onload = async (e) => {
+      const rawBase64 = e.target?.result as string;
+      const base64 = await compressImage(rawBase64);
 
       const img = new Image();
       img.onload = () => {
@@ -1002,7 +1033,7 @@ const buildPreferenceSentence = (
       }
     } catch (error: unknown) {
       console.error("Generation error:", error);
-      const warning = error instanceof Error ? error.message : "Failed to generate design. Please try again.";
+      const warning = "Something went wrong generating your preview. Please try again.";
       setGenerationGuardrailMessage(warning);
       toast.error(warning);
     } finally {
@@ -1305,7 +1336,7 @@ const buildPreferenceSentence = (
 
                   {generationGuardrailMessage && !isGenerating && (
                     <ChatMessage role="assistant" className="max-w-full" avatarSrc={logoSrc}>
-                      <p className="font-medium text-foreground">I need one adjustment before generating.</p>
+                      <p className="font-medium text-foreground">Let's try that again</p>
                       <p className="text-xs text-foreground/70 mt-2">{generationGuardrailMessage}</p>
                     </ChatMessage>
                   )}

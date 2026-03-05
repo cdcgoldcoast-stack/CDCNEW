@@ -108,10 +108,16 @@ const buildNormalizedError = ({
   fallbackMessage?: string;
 }): DesignGenerationError => {
   const code = (payload.code as DesignGenerationErrorCode | undefined) || deriveFallbackCode(status, payload);
-  const errorMessage =
+
+  const TECHNICAL_PATTERNS = /Edge Function|non-2xx|FunctionsHttpError|FunctionsRelayError|TypeError|NetworkError|CORS|fetch failed/i;
+  const GENERIC_FALLBACK = "Something went wrong generating your design. Please try again.";
+
+  const rawMessage =
     (typeof payload.error === "string" && payload.error.trim()) ||
     fallbackMessage ||
-    "Failed to generate design. Please try again.";
+    "";
+  const errorMessage =
+    (!rawMessage || TECHNICAL_PATTERNS.test(rawMessage)) ? GENERIC_FALLBACK : rawMessage;
 
   const retryable =
     typeof payload.retryable === "boolean"
@@ -207,7 +213,7 @@ export function useDesignGeneration() {
         requestId: clientRequestId,
         payload: payload ?? {},
         status,
-        fallbackMessage: invokeResult.error.message,
+        fallbackMessage: undefined,
       });
 
       if (shouldRetryClientSide(normalizedError, attempt)) {

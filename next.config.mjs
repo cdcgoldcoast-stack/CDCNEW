@@ -53,7 +53,7 @@ const nextConfig = {
       : "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://va.vercel-scripts.com";
     const cspValue =
       `default-src 'self'; ${scriptSrc}; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; ` +
-      "font-src 'self'; connect-src 'self' https://iqugsxeejieneyksfbza.supabase.co https://www.google-analytics.com https://www.facebook.com; " +
+      "font-src 'self'; connect-src 'self' https://iqugsxeejieneyksfbza.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://www.facebook.com; " +
       "frame-ancestors 'none'; base-uri 'self'; form-action 'self';";
 
     return [
