@@ -141,17 +141,9 @@ const Testimonials = () => {
                 starGap="gap-1.5"
               />
             </div>
-            <p className="text-foreground/60 text-sm mb-6">
+            <p className="text-foreground/60 text-sm">
               4.9 stars from 47 reviews on Google
             </p>
-            <a
-              href="https://g.page/r/CQ_review_placeholder"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center border border-foreground/20 text-foreground px-6 py-3 text-xs uppercase tracking-[0.15em] font-medium hover:bg-foreground hover:text-background transition-colors"
-            >
-              Leave a Review
-            </a>
           </motion.div>
         </div>
       </section>

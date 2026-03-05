@@ -32,20 +32,23 @@ const Footer = () => {
     { label: "How We Work", href: "/how-we-work" },
     { label: "Testimonials", href: "/testimonials" },
     { label: "FAQ", href: "/faq" },
-    { label: "Before & After", href: "/before-after" },
+    { label: "Contact Us", href: "/book-renovation-consultation" },
+  ];
+
+  const resourceLinks = [
     { label: "Renovation Blog", href: "/blog" },
     { label: "Our Projects", href: "/renovation-projects" },
     { label: "Gallery", href: "/renovation-gallery" },
+    { label: "Before & After", href: "/before-after" },
     { label: "Life Stages", href: "/renovation-life-stages" },
     { label: "Referral Program", href: "/referral-program" },
-    { label: "Contact Us", href: "/book-renovation-consultation" },
   ];
 
   return (
     <footer className="py-16 md:py-20 bg-background relative z-10">
       <div className="container-wide px-6 md:px-10 lg:px-12">
         {/* Main footer grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-8 gap-y-10 lg:gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-8 gap-y-10 lg:gap-12">
           
           {/* Column 1: Logo & Contact */}
           <div className="col-span-2 md:col-span-1">
@@ -166,7 +169,26 @@ const Footer = () => {
             </nav>
           </div>
 
-          {/* Column 5: Accreditation */}
+          {/* Column 5: Resources */}
+          <div>
+            <p className="text-label text-foreground/50 mb-6">Resources</p>
+            <nav aria-label="Footer resources">
+              <ul className="flex flex-col gap-4">
+                {resourceLinks.map(link => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-foreground/80 hover:text-primary transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+
+          {/* Column 6: Accreditation */}
           <div>
             <p className="text-label text-foreground/50 mb-6">Accreditation</p>
             <div className="flex flex-col gap-5">
