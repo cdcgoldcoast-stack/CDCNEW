@@ -36,7 +36,7 @@ type RawGenerationPayload = {
   reason?: string;
 };
 
-const CLIENT_MAX_ATTEMPTS = 2;
+const CLIENT_MAX_ATTEMPTS = 3;
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

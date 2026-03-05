@@ -1360,6 +1360,30 @@ const buildPreferenceSentence = (
                     <ChatMessage role="assistant" className="max-w-full" avatarSrc={logoSrc}>
                       <p className="font-medium text-foreground">Let's try that again</p>
                       <p className="text-xs text-foreground/70 mt-2">{generationGuardrailMessage}</p>
+                      <div className="flex flex-wrap gap-3 mt-4">
+                        <Button
+                          type="button"
+                          onClick={() => {
+                            setGenerationGuardrailMessage(null);
+                            handleGenerate();
+                          }}
+                          disabled={isGenerating || !readyToGenerate}
+                          className="h-10 px-5 text-[11px] tracking-[0.2em]"
+                        >
+                          <span className="flex items-center gap-2">
+                            <Sparkles className="w-4 h-4" />
+                            Retry
+                          </span>
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => fileInputRef.current?.click()}
+                          className="h-10 px-4 text-[11px] tracking-[0.2em]"
+                        >
+                          Upload a new photo
+                        </Button>
+                      </div>
                       <div className="mt-4 bg-muted/50 rounded-xl p-4 space-y-2">
                         <p className="text-xs font-semibold text-foreground/80">For best results, your photo should:</p>
                         <ul className="text-xs text-foreground/60 space-y-1">
@@ -1368,12 +1392,6 @@ const buildPreferenceSentence = (
                           <li>• Have walls, floor and ceiling clearly visible</li>
                           <li>• Be free of people or pets in the foreground</li>
                         </ul>
-                        <button
-                          onClick={() => fileInputRef.current?.click()}
-                          className="mt-2 text-xs font-medium text-primary underline underline-offset-2"
-                        >
-                          Upload a new photo
-                        </button>
                       </div>
                     </ChatMessage>
                   )}

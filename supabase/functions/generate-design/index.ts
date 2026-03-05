@@ -27,7 +27,7 @@ const SUSPICIOUS_LIMIT = Number(Deno.env.get("DESIGN_SUSPICIOUS_LIMIT") ?? "2");
 const SUSPICIOUS_WINDOW_SECONDS = Number(Deno.env.get("DESIGN_SUSPICIOUS_WINDOW_SECONDS") ?? "3600");
 const AI_MODEL = Deno.env.get("GEMINI_IMAGE_MODEL") ?? "gemini-3-pro-image-preview";
 const AI_MAX_ATTEMPTS = Math.max(1, Number(Deno.env.get("DESIGN_AI_MAX_ATTEMPTS") ?? "4"));
-const AI_REQUEST_TIMEOUT_MS = Math.max(20_000, Number(Deno.env.get("DESIGN_AI_TIMEOUT_MS") ?? "70_000"));
+const AI_REQUEST_TIMEOUT_MS = Math.max(20_000, Number(Deno.env.get("DESIGN_AI_TIMEOUT_MS") ?? "90_000"));
 
 type DesignErrorCode =
   | "BUSY"
@@ -85,90 +85,40 @@ type GatewayResult = GatewaySuccess | GatewayFailure;
 
 const STRICT_LAYOUT_SUFFIX = `
 
-STRICT LAYOUT LOCK:
-- Do NOT remove, add, or move any walls or partitions.
-- Do NOT remove openings or add new openings.
-- Do NOT move or alter doors, door frames, windows, or window frames.
-- Do NOT change room boundaries in any way.
-- Keep all fixtures present and in the SAME positions (you may update their style/finish).
-- You may add subtle lighting accents attached to existing surfaces.
-- If you cannot comply, respond with: NEED_CLEARER_PHOTO: layout preservation required.
+LAYOUT LOCK — preserve every wall, door, window, partition, and fixture in its exact position. You may only update surface finishes and fixture styles. Add at least one ambient LED accent (mirror backlight or under-vanity strip). If the photo is too unclear to preserve layout, respond with text: NEED_CLEARER_PHOTO: [reason].
 `;
 
 const STRONG_RENOVATION_SUFFIX = `
 
-RENOVATION IMPACT: CLEAR AND REALISTIC
-- The result must look like a real renovation, not a minor color tweak.
-- Update finishes and modernize fixtures, but keep geometry untouched.
-- Refresh vanity/joinery fronts and handles, basin style, and fixture finishes.
-- Add visible modern mood lighting (mirror backlight, under-vanity toe-kick glow, or subtle wall sconce).
-- Keep layout identical. Do NOT move walls, windows, doors, or fixtures.
-- Preserve all doors and windows exactly in place (frames, handles, openings unchanged).
+RENOVATION IMPACT — make changes clearly visible: update multiple surfaces, modernize fixture styles, refresh joinery fronts/handles, and add mood lighting. The result must look like a real renovation, not a subtle tweak.
 `;
 
 const COMPLETION_FIRST_RETRY_SUFFIX = `
 
-RETRY MODE - COMPLETION FIRST:
-- Produce a finished renovation preview for this same room photo.
-- Keep the room clearly recognizable and preserve major structure.
-- Prioritize a usable final image over strict refusal.
-- Keep doors, windows, and key fixtures in broadly the same positions.
-- Make renovation changes visibly stronger than a subtle color tweak.
+PRIORITY: produce a finished renovation image. Keep the room recognizable and major structure intact. Prioritize delivering a usable image over strict refusal. Make renovation changes clearly visible.
 `;
 
-const SYSTEM_PROMPT = `CRITICAL INSTRUCTION - READ FIRST
-THIS IS PHOTO EDITING, NOT IMAGE GENERATION.
-You MUST edit the provided photo. The output must be the EXACT SAME ROOM with upgraded finishes only.
+const SYSTEM_PROMPT = `You are a photo editor that renovates rooms. Edit the provided photo to show upgraded finishes while preserving the exact room.
 
-ABSOLUTE RULES (VIOLATION = FAILURE):
-1. SAME camera angle, lens, and viewpoint. No zoom, no crop, no perspective change.
-2. SAME layout. All windows, doors, walls, partitions, toilets, sinks, showers, cabinets stay in EXACT same positions.
-3. SAME room shape and geometry. Walls, corners, ceiling height unchanged.
-4. KEEP ALL FIXTURES PRESENT. You may UPDATE their style/finish, but do NOT remove, move, or resize them.
-5. You MAY add subtle lighting accents and small decorative details that do not change layout.
-6. NO new furniture or storage. No text overlays.
-7. NO rotation, flip, crop, resize, or aspect-ratio change.
+RULES:
+1. Same camera angle, perspective, and framing — no zoom, crop, rotation, or flip.
+2. Same layout — all walls, doors, windows, partitions stay in exact positions.
+3. Same fixtures present in same positions — you may update their style/finish only.
+4. Output dimensions and orientation must match input exactly.
+5. No new furniture or storage. No text overlays.
 
-DIMENSIONS & ORIENTATION:
-- Output image MUST match input width, height, aspect ratio, and orientation EXACTLY.
-- Portrait stays portrait. Landscape stays landscape. Square stays square.
+WHAT TO CHANGE:
+- Wall paint, tiles (wall & floor), flooring, benchtops
+- Fixture styles (vanity, basin, toilet, tapware, shower head) — same position & size
+- Cabinet door colors/textures — same position & size
+- Add ambient LED lighting (mirror backlight, under-vanity strip, wall sconce)
+- Modernize joinery fronts and handles in-place
 
-If you overlay before/after, everything must align pixel-perfectly. Only surfaces and fixture styles can change.
+Changes must be clearly visible — this should look like a real renovation, not a subtle tweak.
 
-RENOVATION IMPACT REQUIREMENT:
-The changes must be clearly visible. Do not make subtle edits only.
-Update multiple surfaces and fixture styles, modernize the vanity/basin/toilet/tapware, and add modern mood lighting accents.
-Ambient lighting is REQUIRED: include at least one visible LED feature (mirror backlight, under-vanity strip, or subtle wall sconce).
+FAILSAFE: If the photo is too unclear to preserve layout, respond with text only: "NEED_CLEARER_PHOTO: [reason]"
 
-WHAT YOU CAN EDIT (SURFACES + FIXTURES IN PLACE + LIGHTING ACCENTS):
-- Wall paint colors
-- Tiles (wall and floor)
-- Flooring materials
-- Benchtop/countertop materials
-- Fixture finishes and styles (toilet, vanity, basin, tapware, shower head, bath, lighting) - SAME position and size
-- Cabinet door colors or textures ONLY (same position, same size)
-- Add modern mood lighting: LED strips (mirror backlight, vanity toe-kick, under-cabinet), subtle wall sconces, warm ambient glow
-- Add small decorative accents attached to surfaces (mirror frame, towel rail, minimal artwork) without changing layout
-- Modernize fixtures and joinery in-place: updated basin shape, modern toilet seat/lid, new vanity/drawer fronts and handles (same footprint)
-- Ambient LED lighting is required (mirror backlight and/or under-vanity strip).
-
-WHAT YOU MUST NEVER DO:
-- Move or remove walls, windows, doors, or partitions
-- Remove, relocate, or resize fixtures (toilet, basin, shower, bath, vanity, etc.)
-- Add new furniture or storage
-- Change perspective or camera angle
-- Rotate or flip the image
-- Change the image dimensions or aspect ratio
-- Redesign the layout
-- Create a different room
-
-FAILSAFE:
-If the photo is unclear or you cannot preserve the exact structure, respond with text only:
-"NEED_CLEARER_PHOTO: [reason]"
-Do not generate an image in this case.
-
-OUTPUT:
-Return the edited photo. The room structure, layout, camera angle, orientation, and dimensions must be IDENTICAL to the original.`;
+OUTPUT: Return the edited photo only.`;
 
 function buildRequestId(): string {
   return typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
@@ -179,30 +129,11 @@ function buildRequestId(): string {
 function buildDimensionConstraint(width: number, height: number): string {
   const isPortrait = height > width;
   const isLandscape = width > height;
-  const orientation = isPortrait ? "PORTRAIT (vertical/tall)" : isLandscape ? "LANDSCAPE (horizontal/wide)" : "SQUARE";
+  const orientation = isPortrait ? "PORTRAIT" : isLandscape ? "LANDSCAPE" : "SQUARE";
   const aspectRatio = getAspectRatio(width, height);
 
   return `
-MANDATORY INPUT IMAGE SPECIFICATIONS - YOU MUST MATCH THESE EXACTLY:
-═══════════════════════════════════════════════════════════════════
-• Input Width: ${width} pixels
-• Input Height: ${height} pixels
-• Input Orientation: ${orientation}
-• Input Aspect Ratio: ${aspectRatio}
-
-YOUR OUTPUT IMAGE MUST BE:
-• EXACTLY ${width} x ${height} pixels (same as input)
-• EXACTLY ${orientation} orientation (same as input)
-• EXACTLY ${aspectRatio} aspect ratio (same as input)
-
-ABSOLUTE PROHIBITION:
-• DO NOT rotate the image
-• DO NOT flip the image
-• DO NOT crop the image
-• DO NOT change dimensions
-• DO NOT change aspect ratio
-• A ${isPortrait ? "portrait" : isLandscape ? "landscape" : "square"} input MUST produce a ${isPortrait ? "portrait" : isLandscape ? "landscape" : "square"} output
-═══════════════════════════════════════════════════════════════════
+OUTPUT IMAGE: ${width}x${height} pixels, ${orientation}, aspect ratio ${aspectRatio}. Do NOT rotate, flip, crop, or change dimensions.
 `;
 }
 
@@ -214,51 +145,22 @@ function buildStylePrompt(
   fixtureFinish: string | null,
   dimensionConstraint: string,
 ): string {
-  const colorInstruction = colorTone ? `Use a ${colorTone.toLowerCase()} color palette.` : "";
-  const materialInstruction = materialFeel ? `Feature ${materialFeel.toLowerCase()} materials.` : "";
-  const fixtureInstruction = fixtureFinish ? `Use ${fixtureFinish.toLowerCase()} fixtures.` : "";
+  const details = [
+    colorTone && `Color palette: ${colorTone.toLowerCase()}.`,
+    materialFeel && `Materials: ${materialFeel.toLowerCase()}.`,
+    fixtureFinish && `Fixtures: ${fixtureFinish.toLowerCase()}.`,
+  ].filter(Boolean).join(" ");
 
   return `${dimensionConstraint}
-
-PHOTO EDITING TASK:
-Space Type: ${spaceLabel}
-
-DESIGN BRIEF:
-- Style: ${designStyle}
-- Color Tone: ${colorTone || "Not specified"}
-- Materials: ${materialFeel || "Not specified"}
-- Fixtures: ${fixtureFinish || "Not specified"}
-
-EDIT this photo only. Keep the exact same room, angle, and layout.
-Apply the ${designStyle} aesthetic. ${colorInstruction} ${materialInstruction} ${fixtureInstruction}
-
-ABSOLUTE REQUIREMENT:
-- Same room, same geometry, same objects.
-- Do NOT add or remove structural elements or change layout.
-- Only update surface materials and fixture styles.
-- Keep all fixtures in the same positions.
-- Modernize fixtures and joinery in place (basin/toilet/vanity/drawers/handles).
-- Add visible ambient LED lighting (mirror backlight and/or under-vanity strip) without changing layout.`;
+Renovate this ${spaceLabel} in a ${designStyle} style. ${details}
+Edit the photo — same room, same angle, same layout. Update surfaces, fixture styles, and add ambient LED lighting.`;
 }
 
 function buildDescribePrompt(spaceLabel: string, userDescription: string, dimensionConstraint: string): string {
   return `${dimensionConstraint}
+Renovate this ${spaceLabel}. Edit the photo — same room, same angle, same layout. Update surfaces, fixture styles, and add ambient LED lighting.
 
-PHOTO EDITING TASK:
-Space Type: ${spaceLabel}
-
-EDIT this photo only. Keep the exact same room, angle, and layout. Change finishes only.
-Do NOT add or remove anything. Do NOT change geometry.
-
-USER DESCRIPTION:
-${userDescription}
-
-REMINDER:
-- Same room, same geometry, same objects.
-- Only update surface materials and fixture styles.
-- Keep all fixtures in the same positions.
-- Modernize fixtures and joinery in place (basin/toilet/vanity/drawers/handles).
-- Add visible ambient LED lighting (mirror backlight and/or under-vanity strip) without changing layout.`;
+User's vision: ${userDescription}`;
 }
 
 function normalizeSpaceType(rawSpaceType: string): SpaceType | null {
@@ -434,6 +336,7 @@ function buildGeminiRequestBody(args: {
     ],
     generationConfig: {
       responseModalities: ["TEXT", "IMAGE"],
+      temperature: 0.8,
     },
   });
 }
@@ -830,7 +733,7 @@ serve(async (req) => {
       : buildDescribePrompt(spaceLabel, trimmedPrompt, dimensionConstraint);
 
     const primaryPrompt = `${basePrompt}${STRICT_LAYOUT_SUFFIX}${STRONG_RENOVATION_SUFFIX}`;
-    const salvagePrompt = `${basePrompt}${STRONG_RENOVATION_SUFFIX}${COMPLETION_FIRST_RETRY_SUFFIX}`;
+    const salvagePrompt = `${basePrompt}${COMPLETION_FIRST_RETRY_SUFFIX}`;
 
     const base64Data = imageBase64.includes(",") ? imageBase64.split(",")[1] : imageBase64;
     const mimeMatch = imageBase64.match(/^data:([^;]+);/);
