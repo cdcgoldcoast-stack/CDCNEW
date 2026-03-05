@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Separator } from "@/components/ui/separator";
 import SEO from "@/components/SEO";
 import { toast } from "sonner";
-import { Loader2, Mail, Lock, User, Shield } from "lucide-react";
+import { Loader2, Mail, Lock, User, Shield, Bell, Plus, X } from "lucide-react";
 
 const AdminSettings = () => {
   const { user, isAuthorized, isCheckingAccess } = useAdminPageAccess({ showForbiddenToast: false });
@@ -25,6 +25,14 @@ const AdminSettings = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordLoading, setPasswordLoading] = useState(false);
+
+  // Notification settings
+  const [notifEmails, setNotifEmails] = useState<string[]>([]);
+  const [notifFromEmail, setNotifFromEmail] = useState("hello@cdconstruct.com.au");
+  const [notifFromName, setNotifFromName] = useState("Concept Design Construct");
+  const [notifEmailInput, setNotifEmailInput] = useState("");
+  const [notifLoading, setNotifLoading] = useState(false);
+  const [notifSettingsId, setNotifSettingsId] = useState<string | null>(null);
 
   // Load profile on first render
   useEffect(() => {
@@ -43,6 +51,24 @@ const AdminSettings = () => {
         });
     }
   }, [user, profileLoaded]);
+
+  // Load notification settings once
+  useEffect(() => {
+    if (!isAuthorized) return;
+    supabase
+      .from("notification_settings")
+      .select("id, from_email, from_name, notification_emails")
+      .limit(1)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) {
+          setNotifSettingsId(data.id);
+          setNotifFromEmail(data.from_email || "hello@cdconstruct.com.au");
+          setNotifFromName(data.from_name || "Concept Design Construct");
+          setNotifEmails(Array.isArray(data.notification_emails) ? data.notification_emails : []);
+        }
+      });
+  }, [isAuthorized]);
 
   if (isCheckingAccess) {
     return (
@@ -143,6 +169,60 @@ const AdminSettings = () => {
     }
   };
 
+  const handleAddNotifEmail = () => {
+    const trimmed = notifEmailInput.trim().toLowerCase();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmed)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+    if (notifEmails.includes(trimmed)) {
+      toast.error("That email is already in the list");
+      return;
+    }
+    setNotifEmails((prev) => [...prev, trimmed]);
+    setNotifEmailInput("");
+  };
+
+  const handleSaveNotifSettings = async () => {
+    if (!notifFromEmail.trim()) {
+      toast.error("Please enter a from email address");
+      return;
+    }
+    setNotifLoading(true);
+    try {
+      const payload = {
+        from_email: notifFromEmail.trim(),
+        from_name: notifFromName.trim() || "Concept Design Construct",
+        notification_emails: notifEmails,
+        updated_at: new Date().toISOString(),
+      };
+
+      if (notifSettingsId) {
+        const { error } = await supabase
+          .from("notification_settings")
+          .update(payload)
+          .eq("id", notifSettingsId);
+        if (error) throw error;
+      } else {
+        const { data, error } = await supabase
+          .from("notification_settings")
+          .insert(payload)
+          .select("id")
+          .single();
+        if (error) throw error;
+        setNotifSettingsId(data.id);
+      }
+
+      toast.success("Notification settings saved");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Failed to save settings";
+      toast.error(msg);
+    } finally {
+      setNotifLoading(false);
+    }
+  };
+
   return (
     <AdminLayout>
       <SEO title="Admin - Account Settings" noIndex={true} />
@@ -152,6 +232,91 @@ const AdminSettings = () => {
       </div>
 
       <div className="space-y-6 max-w-2xl">
+        {/* Notification Settings */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Bell className="w-5 h-5 text-primary" />
+              <CardTitle className="text-lg">Email Notifications</CardTitle>
+            </div>
+            <CardDescription>
+              Configure who gets notified when an enquiry, chat inquiry, or referral comes in — and what address emails send from
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-5">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="notifFromName">From Name</Label>
+                <Input
+                  id="notifFromName"
+                  value={notifFromName}
+                  onChange={(e) => setNotifFromName(e.target.value)}
+                  placeholder="Concept Design Construct"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="notifFromEmail">From Email</Label>
+                <Input
+                  id="notifFromEmail"
+                  type="email"
+                  value={notifFromEmail}
+                  onChange={(e) => setNotifFromEmail(e.target.value)}
+                  placeholder="hello@cdconstruct.com.au"
+                />
+              </div>
+            </div>
+            <p className="text-xs text-foreground/50">
+              The "From" domain must be verified in your Resend account. Visit resend.com/domains to add cdconstruct.com.au.
+            </p>
+
+            <Separator />
+
+            <div className="space-y-2">
+              <Label>Team Notification Emails</Label>
+              <p className="text-xs text-foreground/50">These addresses receive an email every time a new enquiry, chat inquiry, or referral is submitted.</p>
+              <div className="flex gap-2">
+                <Input
+                  type="email"
+                  value={notifEmailInput}
+                  onChange={(e) => setNotifEmailInput(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); handleAddNotifEmail(); } }}
+                  placeholder="team@example.com"
+                />
+                <Button variant="outline" size="icon" onClick={handleAddNotifEmail}>
+                  <Plus className="w-4 h-4" />
+                </Button>
+              </div>
+
+              {notifEmails.length > 0 && (
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {notifEmails.map((em) => (
+                    <div key={em} className="flex items-center gap-1.5 bg-muted rounded-md px-3 py-1.5 text-sm">
+                      <span>{em}</span>
+                      <button
+                        onClick={() => setNotifEmails((prev) => prev.filter((e) => e !== em))}
+                        className="text-foreground/40 hover:text-foreground transition-colors"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {notifEmails.length === 0 && (
+                <p className="text-xs text-foreground/40 italic">No notification emails yet — add one above.</p>
+              )}
+            </div>
+
+            <Button onClick={handleSaveNotifSettings} disabled={notifLoading}>
+              {notifLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+              Save Notification Settings
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Separator />
+
         {/* Current Account Info */}
         <Card>
           <CardHeader>

@@ -8,6 +8,12 @@ import {
   requireMethod,
   rejectDisallowedOrigin,
 } from "../_shared/security.ts";
+import {
+  getNotificationSettings,
+  sendEmail,
+  buildReferralNotificationEmail,
+  buildReferralConfirmationEmail,
+} from "../_shared/email.ts";
 
 interface ReferralRequest {
   affiliateName?: string;
@@ -127,6 +133,50 @@ serve(async (req) => {
     if (error) {
       console.error("save-referral insert failed:", error);
       return jsonResponse(req, 500, { error: "Failed to save referral." });
+    }
+
+    // Send emails (fire-and-forget — never block the response)
+    const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+    if (RESEND_API_KEY) {
+      (async () => {
+        try {
+          const settings = await getNotificationSettings(supabase);
+          const from = `${settings.from_name} <${settings.from_email}>`;
+
+          // Team notification
+          if (settings.notification_emails.length > 0) {
+            await sendEmail({
+              apiKey: RESEND_API_KEY,
+              from,
+              to: settings.notification_emails,
+              subject: `New Referral — ${affiliateName} referred ${referralName}`,
+              html: buildReferralNotificationEmail({
+                affiliateName,
+                affiliateEmail,
+                affiliatePhone,
+                referralName,
+                referralPhone,
+                referralEmail: referralEmail || undefined,
+                referralSuburb: referralSuburb || undefined,
+              }),
+            });
+          }
+
+          // Confirmation to the affiliate (person who submitted the referral)
+          await sendEmail({
+            apiKey: RESEND_API_KEY,
+            from,
+            to: affiliateEmail,
+            subject: `Your referral has been received — thanks, ${affiliateName.split(" ")[0]}!`,
+            html: buildReferralConfirmationEmail({
+              affiliateName: affiliateName.split(" ")[0],
+              referralName,
+            }),
+          });
+        } catch (emailErr) {
+          console.error("save-referral email error:", emailErr);
+        }
+      })();
     }
 
     return jsonResponse(req, 200, { success: true, id: data.id });

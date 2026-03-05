@@ -8,6 +8,12 @@ import {
   requireMethod,
   rejectDisallowedOrigin,
 } from "../_shared/security.ts";
+import {
+  getNotificationSettings,
+  sendEmail,
+  buildEnquiryNotificationEmail,
+  buildEnquiryConfirmationEmail,
+} from "../_shared/email.ts";
 
 interface EnquiryRequest {
   fullName?: string;
@@ -145,6 +151,52 @@ serve(async (req) => {
     if (error) {
       console.error("save-enquiry insert failed:", error);
       return jsonResponse(req, 500, { error: "Failed to save enquiry." });
+    }
+
+    // Send emails (fire-and-forget — never block the response)
+    const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+    if (RESEND_API_KEY) {
+      (async () => {
+        try {
+          const settings = await getNotificationSettings(supabase);
+          const from = `${settings.from_name} <${settings.from_email}>`;
+
+          // Team notification
+          if (settings.notification_emails.length > 0) {
+            await sendEmail({
+              apiKey: RESEND_API_KEY,
+              from,
+              to: settings.notification_emails,
+              subject: `New Enquiry — ${fullName}`,
+              html: buildEnquiryNotificationEmail({
+                name: fullName,
+                email,
+                phone,
+                suburb: suburb || undefined,
+                renovations,
+                budget: budget || undefined,
+                timeline: timeline || undefined,
+              }),
+            });
+          }
+
+          // User confirmation
+          await sendEmail({
+            apiKey: RESEND_API_KEY,
+            from,
+            to: email,
+            subject: `We've received your enquiry, ${fullName.split(" ")[0]}`,
+            html: buildEnquiryConfirmationEmail({
+              name: fullName.split(" ")[0],
+              renovations,
+              budget: budget || undefined,
+              suburb: suburb || undefined,
+            }),
+          });
+        } catch (emailErr) {
+          console.error("save-enquiry email error:", emailErr);
+        }
+      })();
     }
 
     return jsonResponse(req, 200, { success: true, id: data.id });

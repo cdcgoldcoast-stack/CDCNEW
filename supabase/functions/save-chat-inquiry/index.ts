@@ -8,6 +8,12 @@ import {
   requireMethod,
   rejectDisallowedOrigin,
 } from "../_shared/security.ts";
+import {
+  getNotificationSettings,
+  sendEmail,
+  buildChatNotificationEmail,
+  buildChatConfirmationEmail,
+} from "../_shared/email.ts";
 
 serve(async (req) => {
   const corsHeaders = buildCorsHeaders(req);
@@ -167,6 +173,51 @@ ${normalizedHistory.map((m: { role: string; content: string }) => `${m.role === 
     if (error) {
       console.error("Database error:", error);
       throw new Error("Failed to save inquiry");
+    }
+
+    // Send emails (fire-and-forget — never block the response)
+    const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+    if (RESEND_API_KEY) {
+      (async () => {
+        try {
+          const settings = await getNotificationSettings(supabase);
+          const from = `${settings.from_name} <${settings.from_email}>`;
+          const finalSummary = conversationSummary || normalizedSummary || undefined;
+
+          // Team notification
+          if (settings.notification_emails.length > 0) {
+            await sendEmail({
+              apiKey: RESEND_API_KEY,
+              from,
+              to: settings.notification_emails,
+              subject: `New Chat Inquiry — ${cleanedName}`,
+              html: buildChatNotificationEmail({
+                name: cleanedName,
+                phone: cleanedPhone,
+                email: cleanedEmail || undefined,
+                notes: cleanedNotes || undefined,
+                summary: finalSummary,
+              }),
+            });
+          }
+
+          // User confirmation (only if they provided an email)
+          if (cleanedEmail) {
+            await sendEmail({
+              apiKey: RESEND_API_KEY,
+              from,
+              to: cleanedEmail,
+              subject: `Thanks for chatting with us, ${cleanedName.split(" ")[0]}`,
+              html: buildChatConfirmationEmail({
+                name: cleanedName.split(" ")[0],
+                summary: finalSummary,
+              }),
+            });
+          }
+        } catch (emailErr) {
+          console.error("save-chat-inquiry email error:", emailErr);
+        }
+      })();
     }
 
     return jsonResponse(req, 200, { success: true, id: data.id });

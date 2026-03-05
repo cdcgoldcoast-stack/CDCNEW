@@ -544,6 +544,33 @@ export type Database = {
         }
         Relationships: []
       }
+      notification_settings: {
+        Row: {
+          id: string
+          notification_emails: string[]
+          from_email: string
+          from_name: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          notification_emails?: string[]
+          from_email?: string
+          from_name?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          notification_emails?: string[]
+          from_email?: string
+          from_name?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
