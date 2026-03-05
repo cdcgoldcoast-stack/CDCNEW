@@ -345,7 +345,7 @@ const buildPreferenceSentence = (
   const [lastGeneratedPrompt, setLastGeneratedPrompt] = useState("");
   const [pendingUserNote, setPendingUserNote] = useState<string | null>(null);
   const [isNewImageFlow, setIsNewImageFlow] = useState(false);
-  const [loadingMessageIndex, setLoadingMessageIndex] = useState(0);
+  const [generatingSeconds, setGeneratingSeconds] = useState(0);
   const [generationHistory, setGenerationHistory] = useState<HistoryEntry[]>([]);
   const [generationGuardrailMessage, setGenerationGuardrailMessage] = useState<string | null>(null);
   const [leadGateOpen, setLeadGateOpen] = useState(false);
@@ -439,13 +439,15 @@ const buildPreferenceSentence = (
     }
   };
 
-  const loadingMessages = [
-    "Magic happening…",
-    "Something’s cooking…",
-    "Polishing the finishes…",
-    "Shaping the details…",
-    "Almost there…",
-  ];
+  const loadingMsg = (() => {
+    if (generatingSeconds < 10) return "Analysing your space…";
+    if (generatingSeconds < 22) return "Applying your style…";
+    if (generatingSeconds < 38) return "Polishing the finishes…";
+    if (generatingSeconds < 52) return "Taking a little longer than usual…";
+    return "Still working on it…";
+  })();
+  const showLoadingSubtext = generatingSeconds >= 38;
+  const showPhotoTip = generatingSeconds >= 52;
 
   const renderHistoryContext = (item: HistoryEntry, index: number) => {
     const previous = generationHistory[index - 1];
@@ -513,14 +515,14 @@ const buildPreferenceSentence = (
 
   useEffect(() => {
     if (!isGenerating) {
-      setLoadingMessageIndex(0);
+      setGeneratingSeconds(0);
       return;
     }
     const interval = window.setInterval(() => {
-      setLoadingMessageIndex((prev) => (prev + 1) % loadingMessages.length);
-    }, 1800);
+      setGeneratingSeconds((s) => s + 1);
+    }, 1000);
     return () => window.clearInterval(interval);
-  }, [isGenerating, loadingMessages.length]);
+  }, [isGenerating]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -1071,7 +1073,7 @@ const buildPreferenceSentence = (
           </div>
         ) : isGenerating ? (
           <div className="flex-1 flex items-center justify-center px-6 py-10">
-            <div className="flex flex-col items-center gap-4 text-center">
+            <div className="flex flex-col items-center gap-4 text-center max-w-xs w-full">
               <div className="relative w-20 h-20 flex items-center justify-center">
                 <div className="absolute inset-0 rounded-full border-2 border-primary/20 animate-ping" />
                 <div className="absolute inset-0 rounded-full border-2 border-primary/50 animate-[spin_5s_linear_infinite]" />
@@ -1080,9 +1082,29 @@ const buildPreferenceSentence = (
                   <Wand2 className="w-6 h-6 text-primary animate-pulse" />
                 </div>
               </div>
-              <p className="text-sm sm:text-base text-primary font-medium">
-                {loadingMessages[loadingMessageIndex]}
-              </p>
+              <div className="space-y-1">
+                <p className="text-sm sm:text-base text-primary font-medium">{loadingMsg}</p>
+                {showLoadingSubtext && (
+                  <p className="text-xs text-foreground/45">This usually takes 30–60 seconds</p>
+                )}
+              </div>
+              {showPhotoTip && (
+                <div className="w-full text-left bg-amber-50 border border-amber-200/70 rounded-xl p-4 space-y-2">
+                  <p className="text-xs font-semibold text-amber-800">Still loading? Try a different photo</p>
+                  <ul className="text-xs text-amber-700 space-y-1">
+                    <li>• Shoot from the doorway so the full room is visible</li>
+                    <li>• Good lighting — no dark corners or shadows</li>
+                    <li>• Walls, floor and ceiling all in frame</li>
+                    <li>• No people or pets in the foreground</li>
+                  </ul>
+                  <button
+                    onClick={() => fileInputRef.current?.click()}
+                    className="mt-1 text-xs font-medium text-amber-800 underline underline-offset-2"
+                  >
+                    Upload a new photo
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         ) : generatedImage ? (
@@ -1338,6 +1360,21 @@ const buildPreferenceSentence = (
                     <ChatMessage role="assistant" className="max-w-full" avatarSrc={logoSrc}>
                       <p className="font-medium text-foreground">Let's try that again</p>
                       <p className="text-xs text-foreground/70 mt-2">{generationGuardrailMessage}</p>
+                      <div className="mt-4 bg-muted/50 rounded-xl p-4 space-y-2">
+                        <p className="text-xs font-semibold text-foreground/80">For best results, your photo should:</p>
+                        <ul className="text-xs text-foreground/60 space-y-1">
+                          <li>• Show the full room from the doorway</li>
+                          <li>• Be well-lit with no harsh shadows</li>
+                          <li>• Have walls, floor and ceiling clearly visible</li>
+                          <li>• Be free of people or pets in the foreground</li>
+                        </ul>
+                        <button
+                          onClick={() => fileInputRef.current?.click()}
+                          className="mt-2 text-xs font-medium text-primary underline underline-offset-2"
+                        >
+                          Upload a new photo
+                        </button>
+                      </div>
                     </ChatMessage>
                   )}
 
