@@ -17,6 +17,15 @@ const RENOVATION_DROPDOWN_PATHS: ReadonlySet<string> = new Set(
   RENOVATION_DROPDOWN_LINKS.map((link) => link.href),
 );
 
+const ABOUT_DROPDOWN_LINKS = [
+  { label: "About Us", href: "/about-us" },
+  { label: "Why CDC", href: "/why-cdc" },
+  { label: "How We Work", href: "/how-we-work" },
+] as const;
+const ABOUT_DROPDOWN_PATHS: ReadonlySet<string> = new Set(
+  ABOUT_DROPDOWN_LINKS.map((link) => link.href),
+);
+
 type DesktopNavItem =
   | { type: "link"; label: string; href: string }
   | { type: "dropdown"; label: string; links: readonly { label: string; href: string }[] };
@@ -88,6 +97,7 @@ const Header = () => {
   const mobileNavLinks = isHome ? baseLinks : [{ label: "Home", href: "/" }, ...baseLinks];
   const desktopBaseLinks: DesktopNavItem[] = [];
   let hasInsertedRenovationsDropdown = false;
+  let hasInsertedAboutDropdown = false;
 
   for (const link of baseLinks) {
     if (RENOVATION_DROPDOWN_PATHS.has(link.href)) {
@@ -102,6 +112,18 @@ const Header = () => {
       continue;
     }
 
+    if (ABOUT_DROPDOWN_PATHS.has(link.href)) {
+      if (!hasInsertedAboutDropdown) {
+        desktopBaseLinks.push({
+          type: "dropdown",
+          label: "About Us",
+          links: ABOUT_DROPDOWN_LINKS,
+        });
+        hasInsertedAboutDropdown = true;
+      }
+      continue;
+    }
+
     desktopBaseLinks.push({ type: "link", ...link });
   }
 
@@ -110,6 +132,14 @@ const Header = () => {
       type: "dropdown",
       label: "Renovations",
       links: RENOVATION_DROPDOWN_LINKS,
+    });
+  }
+
+  if (!hasInsertedAboutDropdown) {
+    desktopBaseLinks.push({
+      type: "dropdown",
+      label: "About Us",
+      links: ABOUT_DROPDOWN_LINKS,
     });
   }
 

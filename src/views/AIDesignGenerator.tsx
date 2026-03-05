@@ -1131,15 +1131,15 @@ const buildPreferenceSentence = (
   };
  
    return (
-     <div className="min-h-screen bg-background overflow-hidden">
+     <div className="h-[100dvh] bg-background overflow-hidden flex flex-col">
       <SEO
         title="Gold Coast Renovations AI Visualiser | Design Preview"
         description="Upload a room photo and preview Gold Coast renovations concepts while preserving your existing layout. Explore finishes, styles, and design direction in seconds."
         url="/renovation-ai-generator"
       />
        <Header />
- 
-      <main className="pt-24 md:pt-28 h-[100dvh] overflow-hidden">
+
+      <main className="pt-[74px] md:pt-[100px] flex-1 min-h-0 overflow-hidden">
         <div className="w-full h-full flex flex-col px-0 md:px-12 md:max-w-7xl md:mx-auto">
           <input
             ref={fileInputRef}
@@ -1148,13 +1148,13 @@ const buildPreferenceSentence = (
             onChange={handleFileUpload}
             className="hidden"
           />
-           {/* Header */}
           <div className="flex-1 min-h-0 flex flex-col">
             <div className="w-full flex-1 min-h-0">
-              <div className="bg-background/80 rounded-none overflow-hidden flex flex-col h-full">
-                <div className="px-2 sm:px-3 md:px-6 py-2.5 sm:py-3 md:py-4 border-b border-border/40 flex items-center justify-between">
-                  <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                    <div className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full bg-primary/10 text-primary text-xs font-semibold flex items-center justify-center overflow-hidden border border-border shrink-0">
+              <div className="bg-background md:border-x md:border-t md:border-border/40 overflow-hidden flex flex-col h-full">
+                {/* Chat header bar */}
+                <div className="px-3 sm:px-4 md:px-6 py-3 md:py-4 border-b border-border/40 bg-background flex items-center justify-between shrink-0">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="h-8 w-8 md:h-9 md:w-9 rounded-full bg-primary/10 text-primary text-xs font-semibold flex items-center justify-center overflow-hidden border border-border shrink-0">
                       {logoSrc ? (
                         <img
                           src={logoSrc}
@@ -1170,25 +1170,25 @@ const buildPreferenceSentence = (
                       )}
                     </div>
                     <div className="min-w-0">
-                      <h1 className="text-[13px] sm:text-sm font-medium text-foreground truncate">CDC Renovation Assistant</h1>
-                      <h2 className="text-[11px] sm:text-xs text-foreground/60 leading-tight truncate">Chat through a few prompts to build your preview.</h2>
+                      <h1 className="text-sm font-medium text-foreground truncate">CDC Renovation Assistant</h1>
+                      <h2 className="text-xs text-foreground/50 leading-tight truncate">Upload a photo and preview renovation concepts</h2>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-foreground/60 shrink-0">
-                    <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                  <div className="flex items-center gap-1.5 text-xs text-emerald-600 shrink-0">
+                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                     Online
                   </div>
                 </div>
 
                 <div
                   ref={chatScrollRef}
-                  className="flex-1 min-h-0 px-2 sm:px-3 md:px-6 py-3 sm:py-4 md:py-6 space-y-4 sm:space-y-6 bg-background overflow-y-auto pr-1 md:pr-3 chat-scroll"
+                  className="flex-1 min-h-0 px-3 sm:px-4 md:px-6 py-4 md:py-6 space-y-5 bg-muted/20 overflow-y-auto chat-scroll"
                 >
                   {!hasGenerated && <SetupFlow />}
 
                   {isInitialGeneration && !isNewImageFlow && (
                     <ChatMessage role="assistant" className="w-full max-w-none bg-transparent border-0 p-0" avatarSrc={logoSrc}>
-                      <div className="w-full max-w-[440px] mx-auto">
+                      <div className="w-full max-w-2xl mx-auto">
                         <PreviewErrorBoundary>
                           <PreviewPanel variant="chat" />
                         </PreviewErrorBoundary>
@@ -1200,7 +1200,7 @@ const buildPreferenceSentence = (
                     <Fragment key={item.id}>
                       {renderHistoryContext(item, index)}
                       <ChatMessage role="assistant" className="w-full max-w-none bg-transparent border-0 p-0" avatarSrc={logoSrc}>
-                        <div className="w-full max-w-[440px] mx-auto">
+                        <div className="w-full max-w-2xl mx-auto">
                           <HistoryPreview beforeImage={item.beforeImage} afterImage={item.afterImage} />
                         </div>
                       </ChatMessage>
@@ -1283,7 +1283,7 @@ const buildPreferenceSentence = (
 
                   {isUpdateGeneration && (
                     <ChatMessage role="assistant" className="w-full max-w-none bg-transparent border-0 p-0" avatarSrc={logoSrc}>
-                      <div className="w-full max-w-[440px] mx-auto">
+                      <div className="w-full max-w-2xl mx-auto">
                         <PreviewErrorBoundary>
                           <PreviewPanel variant="chat" />
                         </PreviewErrorBoundary>
@@ -1295,7 +1295,7 @@ const buildPreferenceSentence = (
 
                   {isNewImageFlow && isInitialGeneration && (
                     <ChatMessage role="assistant" className="w-full max-w-none bg-transparent border-0 p-0" avatarSrc={logoSrc}>
-                      <div className="w-full max-w-[440px] mx-auto">
+                      <div className="w-full max-w-2xl mx-auto">
                         <PreviewErrorBoundary>
                           <PreviewPanel variant="chat" />
                         </PreviewErrorBoundary>
@@ -1313,7 +1313,7 @@ const buildPreferenceSentence = (
                   <div ref={chatBottomRef} />
                 </div>
 
-                <div className="border-t border-border/40 bg-background/90 p-2 sm:p-3 md:p-4">
+                <div className="border-t border-border/40 bg-background p-3 md:p-4 shrink-0">
                   <div className="flex flex-col sm:flex-row items-stretch gap-2 sm:gap-3">
                     <Textarea
                       value={chatInput}
