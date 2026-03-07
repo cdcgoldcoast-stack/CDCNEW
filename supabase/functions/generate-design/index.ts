@@ -200,11 +200,29 @@ function classifyUpstreamError(status: number, parsedError: GeminiErrorEnvelope 
     };
   }
 
+  if (status === 401 || status === 403) {
+    return {
+      status,
+      code: "CONFIG_ERROR",
+      error: "AI service authentication failed. Please contact support.",
+      retryable: false,
+    };
+  }
+
   if (status === 402) {
     return {
       status,
       code: "CONFIG_ERROR",
       error: "AI service is currently unavailable due to account limits.",
+      retryable: false,
+    };
+  }
+
+  if (status === 404) {
+    return {
+      status,
+      code: "CONFIG_ERROR",
+      error: "AI model is not available. Please contact support.",
       retryable: false,
     };
   }
@@ -343,6 +361,7 @@ function buildGeminiRequestBody(args: {
 
 async function callGeminiWithRetries(args: {
   endpoint: string;
+  apiKey: string;
   requestBody: string;
   requestId: string;
   maxAttempts: number;
@@ -367,6 +386,7 @@ async function callGeminiWithRetries(args: {
         signal: abortController.signal,
         headers: {
           "Content-Type": "application/json",
+          "x-goog-api-key": args.apiKey,
         },
         body: args.requestBody,
       });
@@ -739,7 +759,7 @@ serve(async (req) => {
     const mimeMatch = imageBase64.match(/^data:([^;]+);/);
     const mimeType = mimeMatch ? mimeMatch[1] : "image/jpeg";
 
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${AI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${AI_MODEL}:generateContent`;
 
     console.log("generate-design started", {
       requestId,
@@ -754,6 +774,7 @@ serve(async (req) => {
 
     const primaryResult = await callGeminiWithRetries({
       endpoint,
+      apiKey: GEMINI_API_KEY,
       requestBody: buildGeminiRequestBody({
         systemPrompt: SYSTEM_PROMPT,
         userPrompt: primaryPrompt,
@@ -805,6 +826,7 @@ serve(async (req) => {
     if (!parsed.imageUrl) {
       const salvageResult = await callGeminiWithRetries({
         endpoint,
+        apiKey: GEMINI_API_KEY,
         requestBody: buildGeminiRequestBody({
           systemPrompt: SYSTEM_PROMPT,
           userPrompt: salvagePrompt,
