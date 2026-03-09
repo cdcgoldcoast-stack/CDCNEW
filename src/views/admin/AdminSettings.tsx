@@ -60,7 +60,11 @@ const AdminSettings = () => {
       .select("id, from_email, from_name, notification_emails")
       .limit(1)
       .maybeSingle()
-      .then(({ data }) => {
+      .then(({ data, error }) => {
+        if (error) {
+          console.error("Failed to load notification settings:", error.message);
+          return;
+        }
         if (data) {
           setNotifSettingsId(data.id);
           setNotifFromEmail(data.from_email || "hello@cdconstruct.com.au");
@@ -189,21 +193,41 @@ const AdminSettings = () => {
       toast.error("Please enter a from email address");
       return;
     }
+
+    // Auto-add any email still sitting in the input field
+    let emailsToSave = [...notifEmails];
+    const pending = notifEmailInput.trim().toLowerCase();
+    if (pending) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(pending)) {
+        toast.error("Please enter a valid email address or clear the input");
+        return;
+      }
+      if (!emailsToSave.includes(pending)) {
+        emailsToSave.push(pending);
+        setNotifEmails(emailsToSave);
+      }
+      setNotifEmailInput("");
+    }
+
     setNotifLoading(true);
     try {
       const payload = {
         from_email: notifFromEmail.trim(),
         from_name: notifFromName.trim() || "Concept Design Construct",
-        notification_emails: notifEmails,
+        notification_emails: emailsToSave,
         updated_at: new Date().toISOString(),
       };
 
       if (notifSettingsId) {
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from("notification_settings")
           .update(payload)
-          .eq("id", notifSettingsId);
+          .eq("id", notifSettingsId)
+          .select("id")
+          .single();
         if (error) throw error;
+        if (!data) throw new Error("Update matched no rows — settings may have been deleted");
       } else {
         const { data, error } = await supabase
           .from("notification_settings")
