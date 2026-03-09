@@ -18,22 +18,28 @@ import type { DesignGenerationError, DesignGenerationSpaceType } from "@/types/a
 
 const compressImage = (
   base64: string,
-  maxDimension = 1500,
-  quality = 0.8,
+  maxDimension = 1024,
+  quality = 0.75,
 ): Promise<string> =>
   new Promise((resolve) => {
     const img = new Image();
     img.onload = () => {
       let { naturalWidth: w, naturalHeight: h } = img;
 
-      if (w <= maxDimension && h <= maxDimension) {
+      const needsResize = w > maxDimension || h > maxDimension;
+      const isAlreadySmallJpeg = !needsResize && /^data:image\/jpeg[;,]/.test(base64);
+
+      // Skip re-encoding only if already a small JPEG
+      if (isAlreadySmallJpeg) {
         resolve(base64);
         return;
       }
 
-      const scale = maxDimension / Math.max(w, h);
-      w = Math.round(w * scale);
-      h = Math.round(h * scale);
+      if (needsResize) {
+        const scale = maxDimension / Math.max(w, h);
+        w = Math.round(w * scale);
+        h = Math.round(h * scale);
+      }
 
       const canvas = document.createElement("canvas");
       canvas.width = w;
@@ -335,6 +341,7 @@ const buildPreferenceSentence = (
   const [isGenerating, setIsGenerating] = useState(false);
   const [viewMode, setViewMode] = useState<"compare" | "result">("compare");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const generationCancelledRef = useRef(false);
 
   const [spaceType, setSpaceType] = useState<SpaceType>(null);
   const [inputMode, setInputMode] = useState<InputMode>(null);
@@ -935,6 +942,13 @@ const buildPreferenceSentence = (
     reader.readAsDataURL(file);
   };
 
+  const handleCancelGeneration = () => {
+    generationCancelledRef.current = true;
+    setIsGenerating(false);
+    setGenerationGuardrailMessage(null);
+    toast("Generation cancelled");
+  };
+
   const handleGenerate = async () => {
     if (!uploadedImage) {
       toast.error("Please upload an image first");
@@ -951,6 +965,7 @@ const buildPreferenceSentence = (
       return;
     }
 
+    generationCancelledRef.current = false;
     setIsGenerating(true);
     setGeneratedImage(null);
     setGenerationGuardrailMessage(null);
@@ -972,9 +987,12 @@ const buildPreferenceSentence = (
         imageHeight: imageDimensions?.height,
       });
 
+      if (generationCancelledRef.current) return;
+
       if (!result.ok) {
         const warning = getGenerationErrorMessage(result);
         setGenerationGuardrailMessage(warning);
+        setShowChatInput(true);
         toast.error(warning);
         return;
       }
@@ -1034,9 +1052,11 @@ const buildPreferenceSentence = (
         applySuccessState();
       }
     } catch (error: unknown) {
+      if (generationCancelledRef.current) return;
       console.error("Generation error:", error);
       const warning = "Something went wrong generating your preview. Please try again.";
       setGenerationGuardrailMessage(warning);
+      setShowChatInput(true);
       toast.error(warning);
     } finally {
       setIsGenerating(false);
@@ -1088,6 +1108,14 @@ const buildPreferenceSentence = (
                   <p className="text-xs text-foreground/45">This usually takes 30–60 seconds</p>
                 )}
               </div>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleCancelGeneration}
+                className="h-9 px-5 text-[11px] tracking-[0.15em]"
+              >
+                Cancel
+              </Button>
               {showPhotoTip && (
                 <div className="w-full text-left bg-amber-50 border border-amber-200/70 rounded-xl p-4 space-y-2">
                   <p className="text-xs font-semibold text-amber-800">Still loading? Try a different photo</p>
