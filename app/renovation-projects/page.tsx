@@ -5,7 +5,7 @@ import projectSlugData from "@/generated/project-slugs.json";
 import { generateBreadcrumbSchema, generateItemListSchema } from "@/lib/structured-data";
 import { buildMetadata, titleFromSlug, DEFAULT_OG_IMAGE, generateWebPageSchema } from "@/lib/seo";
 
-const pageTitle = "Gold Coast Renovation Projects | Kitchen, Bathroom & Full Home Renovations";
+const pageTitle = "Gold Coast Renovation Projects | Real Case Studies";
 const pageDescription =
   "Browse Gold Coast renovations case studies with completed kitchen, bathroom, and whole-home transformations across key Gold Coast suburbs.";
 

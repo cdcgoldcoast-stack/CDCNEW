@@ -4,7 +4,7 @@ import { RenovationDesignToolsClient } from "@/components/route-clients";
 import { generateBreadcrumbSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 
-const pageTitle = "Gold Coast Renovations | Design Tools to Visualise Before You Build";
+const pageTitle = "Renovation Design Tools | Visualise Before You Build";
 const pageDescription =
   "Use our design tools to preview Gold Coast renovations, compare style directions, and plan decisions before construction.";
 

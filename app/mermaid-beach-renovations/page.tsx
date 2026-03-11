@@ -5,7 +5,7 @@ import { generateBreadcrumbSchema, generateFAQSchema, generateLocalBusinessSchem
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 import { SITE_NAME } from "@/config/seo";
 
-const pageTitle = "Mermaid Beach Renovations | Kitchen, Bathroom & Home | CD Construct";
+const pageTitle = "Mermaid Beach Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
   "Renovation builders in Mermaid Beach. Kitchen, bathroom and whole-home renovations for beachside homes. QBCC licensed. Based in Broadbeach - your local Gold Coast builder.";
 
@@ -66,7 +66,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Mermaid Beach renovation services summary for search crawlers">
-        <h1>Mermaid Beach Renovations by {SITE_NAME}</h1>
+        <h2>Mermaid Beach Renovations by {SITE_NAME}</h2>
         <p>
           Kitchen, bathroom and whole-home renovations in Mermaid Beach. Specialists in 
           coastal homes with materials designed for beachside conditions. Based in Broadbeach.

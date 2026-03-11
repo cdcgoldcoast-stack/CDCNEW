@@ -5,7 +5,7 @@ import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structured-da
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
-const pageTitle = "Gold Coast Kitchen Renovations | Design & Build by CD Construct";
+const pageTitle = "Gold Coast Kitchen Renovations | CD Construct";
 const pageDescription =
   "Gold Coast kitchen renovations and remodelling with bespoke designs, quality craftsmanship & smooth project management. Fixed price quotes. QBCC licensed.";
 
@@ -97,7 +97,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Kitchen renovation services summary for search crawlers">
-        <h1>Gold Coast Kitchen Renovations by {SITE_NAME}</h1>
+        <h2>Gold Coast Kitchen Renovations by {SITE_NAME}</h2>
         <p>
           Complete kitchen renovation services including design, cabinetry, benchtops, appliances, 
           splashbacks, and installation. QBCC licensed builders serving all Gold Coast suburbs.

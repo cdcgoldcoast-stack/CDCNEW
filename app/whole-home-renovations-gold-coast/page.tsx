@@ -5,7 +5,7 @@ import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structured-da
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
-const pageTitle = "Gold Coast Whole-Home Renovations | Design & Build by CD Construct";
+const pageTitle = "Gold Coast Whole-Home Renovations | CD Construct";
 const pageDescription =
   "Transform your entire Gold Coast home with whole-home renovations. Open-plan living, modern layouts & quality finishes. QBCC licensed builders. Free consultation.";
 
@@ -94,7 +94,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Whole-home renovation services summary for search crawlers">
-        <h1>Gold Coast Whole-Home Renovations by {SITE_NAME}</h1>
+        <h2>Gold Coast Whole-Home Renovations by {SITE_NAME}</h2>
         <p>
           Complete whole-home renovation services including structural changes, kitchen, bathrooms, 
           flooring, electrical, and finishing. Transform your entire home with QBCC licensed builders.

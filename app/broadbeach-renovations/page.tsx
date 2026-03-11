@@ -5,7 +5,7 @@ import { generateBreadcrumbSchema, generateFAQSchema, generateLocalBusinessSchem
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
-const pageTitle = "Broadbeach Renovations | Kitchen, Bathroom & Home | CD Construct";
+const pageTitle = "Broadbeach Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
   "Renovation builders in Broadbeach. Kitchen, bathroom and whole-home renovations with design-led planning. We're based in Broadbeach - your local Gold Coast builder.";
 
@@ -68,7 +68,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Broadbeach renovation services summary for search crawlers">
-        <h1>Broadbeach Renovations by {SITE_NAME}</h1>
+        <h2>Broadbeach Renovations by {SITE_NAME}</h2>
         <p>
           Kitchen, bathroom and whole-home renovations in Broadbeach. Specialists in apartment 
           renovations with body corporate experience. Based in Broadbeach - your local Gold Coast builder.

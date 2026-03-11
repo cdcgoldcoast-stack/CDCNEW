@@ -5,7 +5,7 @@ import { generateBreadcrumbSchema, generateFAQSchema, generateLocalBusinessSchem
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 import { SITE_NAME } from "@/config/seo";
 
-const pageTitle = "Southport Renovations | Kitchen, Bathroom & Home | CD Construct";
+const pageTitle = "Southport Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
   "Renovation builders in Southport. Kitchen, bathroom and whole-home renovations for character homes and waterfront properties. QBCC licensed. Based in Broadbeach.";
 
@@ -67,7 +67,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Southport renovation services summary for search crawlers">
-        <h1>Southport Renovations by {SITE_NAME}</h1>
+        <h2>Southport Renovations by {SITE_NAME}</h2>
         <p>
           Kitchen, bathroom and whole-home renovations in Southport. Specialists in character 
           homes, Queenslanders, and waterfront properties. Based in Broadbeach.

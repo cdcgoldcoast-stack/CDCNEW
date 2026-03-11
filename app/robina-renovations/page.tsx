@@ -5,7 +5,7 @@ import { generateBreadcrumbSchema, generateFAQSchema, generateLocalBusinessSchem
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 import { SITE_NAME } from "@/config/seo";
 
-const pageTitle = "Robina Renovations | Kitchen, Bathroom & Home | CD Construct";
+const pageTitle = "Robina Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
   "Renovation builders in Robina. Kitchen, bathroom and whole-home renovations for modern family homes. QBCC licensed. Based in Broadbeach - your local Gold Coast builder.";
 
@@ -66,7 +66,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Robina renovation services summary for search crawlers">
-        <h1>Robina Renovations by {SITE_NAME}</h1>
+        <h2>Robina Renovations by {SITE_NAME}</h2>
         <p>
           Kitchen, bathroom and whole-home renovations in Robina. Specialists in modernising 
           90s homes with open-plan designs. Based in Broadbeach.

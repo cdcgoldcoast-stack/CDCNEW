@@ -4,7 +4,7 @@ import { ProjectGalleryClient } from "@/components/route-clients";
 import { generateBreadcrumbSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema, absoluteUrl } from "@/lib/seo";
 
-const pageTitle = "Gold Coast Renovations Gallery | Kitchen, Bathroom & Home Inspiration";
+const pageTitle = "Gold Coast Renovation Gallery | Kitchen & Bathroom";
 const pageDescription =
   "Explore Gold Coast renovations inspiration with kitchen, bathroom, and living space design examples by Concept Design Construct.";
 

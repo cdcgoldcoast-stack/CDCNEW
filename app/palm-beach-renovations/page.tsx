@@ -5,7 +5,7 @@ import { generateBreadcrumbSchema, generateFAQSchema, generateLocalBusinessSchem
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 import { SITE_NAME } from "@/config/seo";
 
-const pageTitle = "Palm Beach Renovations | Kitchen, Bathroom & Home | CD Construct";
+const pageTitle = "Palm Beach Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
   "Renovation builders in Palm Beach. Kitchen, bathroom and whole-home renovations for beachside homes. Family-focused designs. QBCC licensed. Based in Broadbeach.";
 
@@ -66,7 +66,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Palm Beach renovation services summary for search crawlers">
-        <h1>Palm Beach Renovations by {SITE_NAME}</h1>
+        <h2>Palm Beach Renovations by {SITE_NAME}</h2>
         <p>
           Kitchen, bathroom and whole-home renovations in Palm Beach. Family-focused designs 
           with durable finishes and outdoor living. Based in Broadbeach.

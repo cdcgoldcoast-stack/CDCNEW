@@ -260,6 +260,20 @@ export const generateLocalBusinessSchema = () => ({
   logo: `${PRODUCTION_DOMAIN}/assets/logo.webp`,
   image: `${PRODUCTION_DOMAIN}/og-image.jpg`,
   email: BUSINESS_INFO.email,
+  telephone: BUSINESS_INFO.phone,
+  memberOf: [
+    { "@type": "Organization", name: "Master Builders Queensland" },
+    { "@type": "Organization", name: "Queensland Building and Construction Commission (QBCC)" },
+  ],
+  hasCredential: {
+    "@type": "EducationalOccupationalCredential",
+    credentialCategory: "license",
+    name: "QBCC Licensed Builder",
+    recognizedBy: {
+      "@type": "Organization",
+      name: "Queensland Building and Construction Commission",
+    },
+  },
   sameAs: [
     "https://www.instagram.com/conceptdesignconstruct_",
     "https://www.facebook.com/conceptdesignconstruct",

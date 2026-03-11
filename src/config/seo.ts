@@ -45,6 +45,8 @@ export const BUSINESS_INFO = {
   name: SITE_NAME,
   type: "HomeAndConstructionBusiness",
   email: "info@cdconstruct.com.au",
+  phone: "+61413468928",
+  phoneDisplay: "0413 468 928",
   priceRange: "$$$$",
   geo: {
     latitude: "-28.0167",

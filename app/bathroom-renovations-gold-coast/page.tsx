@@ -5,7 +5,7 @@ import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structured-da
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
-const pageTitle = "Gold Coast Bathroom Renovations | Design & Build by CD Construct";
+const pageTitle = "Gold Coast Bathroom Renovations | CD Construct";
 const pageDescription =
   "Gold Coast bathroom renovations with waterproofing-led construction, quality fixtures, and timeless design. Ensuite, family bathroom & powder room specialists. QBCC licensed.";
 
@@ -97,7 +97,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Bathroom renovation services summary for search crawlers">
-        <h1>Gold Coast Bathroom Renovations by {SITE_NAME}</h1>
+        <h2>Gold Coast Bathroom Renovations by {SITE_NAME}</h2>
         <p>
           Complete bathroom renovation services including design, waterproofing, tiling, fixtures, 
           and installation. Specialists in ensuites, family bathrooms, and powder rooms. 

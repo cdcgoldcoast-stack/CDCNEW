@@ -4,7 +4,7 @@ import { ServicesClient } from "@/components/route-clients";
 import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structured-data";
 import { buildMetadata, generateServiceCatalogSchema, generateWebPageSchema } from "@/lib/seo";
 
-const pageTitle = "Gold Coast Renovations | Services for Kitchen, Bathroom & Full Home";
+const pageTitle = "Gold Coast Renovation Services | Kitchen & Bathroom";
 const pageDescription =
   "Explore Gold Coast renovations for kitchens, bathrooms, whole-home upgrades, and extensions with design-led planning and QBCC licensed delivery.";
 const serviceFaqs = [
