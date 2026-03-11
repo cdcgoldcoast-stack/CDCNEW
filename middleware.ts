@@ -23,6 +23,14 @@ const LEGACY_GONE_PATHS = new Set([
   "/luxury-home-builders-gold-coast",
   "/luxury-home-builders-on-the-gold-coast-your-guide-to-building-your-dream-home",
   "/bayside-custom-home-builders",
+  // Melbourne-specific old site pages — tell Google to deindex
+  "/home-renovations-melbourne",
+  "/new-home-builders-melbourne",
+  "/building-designer",
+  "/best-renovation-builder-melbourne-checks",
+  "/custom-cabinetry-the-heart-of-your-home",
+  "/home-extension-cost",
+  "/projects/country-home-builders",
 ]);
 
 const normalizePathname = (pathname: string) => {

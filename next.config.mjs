@@ -120,6 +120,26 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/about",
+        destination: "/about-us",
+        permanent: true,
+      },
+      {
+        source: "/contact",
+        destination: "/book-renovation-consultation",
+        permanent: true,
+      },
+      {
+        source: "/home-renovations-gold-coast",
+        destination: "/renovation-services",
+        permanent: true,
+      },
+      {
+        source: "/home-extensions-gold-coast",
+        destination: "/renovation-services",
+        permanent: true,
+      },
+      {
         source: "/projects/:slug",
         destination: "/renovation-projects/:slug",
         permanent: true,
