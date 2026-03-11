@@ -8,6 +8,11 @@ import {
   requireJsonBody,
   requireMethod,
 } from "../_shared/security.ts";
+import {
+  getNotificationSettings,
+  sendEmail,
+  buildPopupNotificationEmail,
+} from "../_shared/email.ts";
 
 interface PopupResponseRequest {
   name?: unknown;
@@ -142,6 +147,34 @@ serve(async (req) => {
     if (error) {
       console.error("save-popup-response insert failed:", error);
       return jsonResponse(req, 500, { error: "Failed to save popup response." });
+    }
+
+    // Send team notification email (fire-and-forget — never block the response)
+    const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+    if (RESEND_API_KEY) {
+      (async () => {
+        try {
+          const settings = await getNotificationSettings(supabase);
+          const from = `${settings.from_name} <${settings.from_email}>`;
+
+          if (settings.notification_emails.length > 0) {
+            await sendEmail({
+              apiKey: RESEND_API_KEY,
+              from,
+              to: settings.notification_emails,
+              subject: `New Popup Lead — ${name}`,
+              html: buildPopupNotificationEmail({
+                name,
+                phone,
+                source,
+                pageUrl: pageUrl || undefined,
+              }),
+            });
+          }
+        } catch (emailErr) {
+          console.error("save-popup-response email error:", emailErr);
+        }
+      })();
     }
 
     return jsonResponse(req, 200, {

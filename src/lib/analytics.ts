@@ -8,8 +8,6 @@ declare global {
 const GA_MEASUREMENT_ID = "G-R8P05RETF4";
 const GA_SCRIPT_ID = "ga-gtag-script";
 const EVENT_DEDUPE_WINDOW_MS = 1500;
-const GA_IDLE_FALLBACK_MS = 12000;
-const GA_INTERACTION_EVENTS = ["pointerdown", "keydown", "touchstart", "scroll"] as const;
 let gaInitScheduled = false;
 let lastTrackedPagePath = "";
 const eventDedupeCache = new Map<string, number>();
@@ -69,37 +67,9 @@ export const initGoogleAnalytics = () => {
   gaInitScheduled = true;
   ensureGtagStub();
 
-  let loaded = false;
-  let timeoutId: number | null = null;
-  let triggerLoad: (() => void) | null = null;
-
-  const cleanupInteractionListeners = () => {
-    if (triggerLoad) {
-      for (const eventName of GA_INTERACTION_EVENTS) {
-        window.removeEventListener(eventName, triggerLoad);
-      }
-    }
-    if (timeoutId !== null) {
-      window.clearTimeout(timeoutId);
-      timeoutId = null;
-    }
-  };
-
-  const loadScriptOnce = () => {
-    if (loaded) return;
-    loaded = true;
-    cleanupInteractionListeners();
-    runWhenBrowserIsIdle(loadGoogleAnalyticsScript);
-  };
-
-  triggerLoad = () => {
-    loadScriptOnce();
-  };
-
-  for (const eventName of GA_INTERACTION_EVENTS) {
-    window.addEventListener(eventName, triggerLoad, { passive: true });
-  }
-  timeoutId = window.setTimeout(loadScriptOnce, GA_IDLE_FALLBACK_MS);
+  // Load GA directly — AppProviders already handles deferral for mobile/perf.
+  // Using requestIdleCallback so we don't block the main thread.
+  runWhenBrowserIsIdle(loadGoogleAnalyticsScript);
 };
 
 const normalizeEventPath = (path?: string) => {

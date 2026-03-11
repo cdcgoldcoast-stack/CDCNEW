@@ -55,6 +55,7 @@ export const sendEmail = async ({
 };
 
 // ─── Shared layout helpers ────────────────────────────────────────────────────
+// Brand: Red #C8102E, Cream #FFFEEF, Dark #0C0507, Georgia headings, Helvetica Neue body
 
 const emailWrapper = (content: string) => `<!DOCTYPE html>
 <html lang="en">
@@ -63,16 +64,16 @@ const emailWrapper = (content: string) => `<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Concept Design Construct</title>
 </head>
-<body style="margin:0;padding:0;background-color:#f2f0eb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f2f0eb;padding:40px 16px;">
+<body style="margin:0;padding:0;background-color:#f3f2e8;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f3f2e8;padding:40px 16px;">
     <tr><td align="center">
       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;">
         ${content}
         <!-- Footer -->
         <tr><td style="padding:28px 0 8px;text-align:center;">
-          <p style="margin:0;font-size:12px;color:#999;line-height:1.6;">
+          <p style="margin:0;font-size:12px;color:#8a7e72;line-height:1.6;">
             Concept Design Construct &nbsp;·&nbsp; Gold Coast, QLD<br />
-            <a href="https://www.cdconstruct.com.au" style="color:#b8924a;text-decoration:none;">www.cdconstruct.com.au</a>
+            <a href="https://www.cdconstruct.com.au" style="color:#C8102E;text-decoration:none;">www.cdconstruct.com.au</a>
           </p>
         </td></tr>
       </table>
@@ -82,28 +83,28 @@ const emailWrapper = (content: string) => `<!DOCTYPE html>
 </html>`;
 
 const headerBlock = (subtitle: string, title: string) => `
-<tr><td style="background:#1a1a1a;border-radius:12px 12px 0 0;padding:40px 40px 36px;text-align:center;">
-  <p style="margin:0 0 12px;font-size:11px;color:#b8924a;letter-spacing:3px;text-transform:uppercase;font-weight:700;">${subtitle}</p>
-  <h1 style="margin:0;color:#ffffff;font-size:26px;font-weight:300;letter-spacing:-0.3px;line-height:1.3;">${title}</h1>
+<tr><td style="background:#0C0507;padding:44px 40px 40px;text-align:center;">
+  <p style="margin:0 0 14px;font-size:11px;color:#C8102E;letter-spacing:3px;text-transform:uppercase;font-weight:600;">${subtitle}</p>
+  <h1 style="margin:0;color:#FFFEEF;font-size:26px;font-weight:400;letter-spacing:-0.01em;line-height:1.2;font-family:Georgia,'Times New Roman',serif;">${title}</h1>
 </td></tr>`;
 
 const bodyCard = (inner: string) => `
-<tr><td style="background:#ffffff;padding:36px 40px 40px;border-radius:0 0 12px 12px;">
+<tr><td style="background:#FFFEEF;padding:36px 40px 40px;">
   ${inner}
 </td></tr>`;
 
 const detailRow = (label: string, value: string) =>
   value
     ? `<tr>
-        <td style="padding:8px 0;font-size:13px;color:#888;width:140px;vertical-align:top;">${label}</td>
-        <td style="padding:8px 0 8px 12px;font-size:13px;color:#2d2d2d;font-weight:500;vertical-align:top;">${value}</td>
+        <td style="padding:8px 0;font-size:13px;color:#8a7e72;width:140px;vertical-align:top;">${label}</td>
+        <td style="padding:8px 0 8px 12px;font-size:13px;color:#1A0C10;font-weight:500;vertical-align:top;">${value}</td>
        </tr>`
     : "";
 
 const summaryBox = (rows: string) => `
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#f9f7f3;border-left:3px solid #b8924a;border-radius:0 6px 6px 0;margin:0 0 28px;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f3f2e8;border-left:3px solid #C8102E;margin:0 0 28px;">
   <tr><td style="padding:20px 24px;">
-    <p style="margin:0 0 14px;font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:2px;font-weight:700;">Submission details</p>
+    <p style="margin:0 0 14px;font-size:11px;color:#8a7e72;text-transform:uppercase;letter-spacing:2px;font-weight:600;">Submission details</p>
     <table width="100%" cellpadding="0" cellspacing="0">${rows}</table>
   </td></tr>
 </table>`;
@@ -111,8 +112,8 @@ const summaryBox = (rows: string) => `
 const ctaButton = (href: string, label: string) => `
 <table cellpadding="0" cellspacing="0" border="0" style="margin:0 0 28px;">
   <tr>
-    <td style="background:#1a1a1a;border-radius:6px;">
-      <a href="${href}" style="display:inline-block;padding:13px 26px;color:#ffffff;text-decoration:none;font-size:14px;font-weight:500;letter-spacing:0.3px;">${label} →</a>
+    <td style="background:#C8102E;">
+      <a href="${href}" style="display:inline-block;padding:13px 26px;color:#FFFEEF;text-decoration:none;font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;">${label} &rarr;</a>
     </td>
   </tr>
 </table>`;
@@ -140,7 +141,7 @@ export const buildEnquiryConfirmationEmail = ({
   const body = `
     <p style="margin:0 0 20px;font-size:16px;color:#2d2d2d;line-height:1.6;">Hi ${name},</p>
     <p style="margin:0 0 28px;font-size:15px;color:#555;line-height:1.7;">
-      Thanks for reaching out — we've received your renovation enquiry and a member of our team will be in touch within <strong style="color:#2d2d2d;">1–2 business days</strong>.
+      Thanks for reaching out — we've received your renovation enquiry and a member of our team will be in touch very shortly.
     </p>
     ${summaryBox(detailRows)}
     <p style="margin:0 0 8px;font-size:14px;color:#555;font-weight:600;">What happens next?</p>
@@ -170,7 +171,7 @@ export const buildChatConfirmationEmail = ({
   const body = `
     <p style="margin:0 0 20px;font-size:16px;color:#2d2d2d;line-height:1.6;">Hi ${name},</p>
     <p style="margin:0 0 28px;font-size:15px;color:#555;line-height:1.7;">
-      Thanks for chatting with us! We've saved your details and a member of our team will follow up with you directly within <strong style="color:#2d2d2d;">1–2 business days</strong>.
+      Thanks for chatting with us! We've saved your details and a member of our team will follow up with you directly very shortly.
     </p>
     ${summarySection}
     ${ctaButton("https://www.cdconstruct.com.au/renovation-projects", "Explore Our Projects")}
@@ -280,6 +281,35 @@ export const buildChatNotificationEmail = ({
   return emailWrapper(headerBlock("New Chat Inquiry", `${name} submitted via the AI chat`) + bodyCard(body));
 };
 
+export const buildPopupNotificationEmail = ({
+  name,
+  phone,
+  source,
+  pageUrl,
+  adminUrl = "https://www.cdconstruct.com.au/admin/popup-responses",
+}: {
+  name: string;
+  phone: string;
+  source: string;
+  pageUrl?: string;
+  adminUrl?: string;
+}): string => {
+  const rows = [
+    detailRow("Name", name),
+    detailRow("Phone", phone),
+    detailRow("Source", source),
+    detailRow("Page", pageUrl || ""),
+    detailRow("Received", new Date().toLocaleString("en-AU", { timeZone: "Australia/Brisbane" })),
+  ].join("");
+
+  const body = `
+    ${summaryBox(rows)}
+    ${ctaButton(adminUrl, "View in Admin")}
+    <p style="margin:0;font-size:13px;color:#aaa;">This is an automated notification from your CDC website.</p>`;
+
+  return emailWrapper(headerBlock("New Popup Lead", `${name} submitted via the popup`) + bodyCard(body));
+};
+
 export const buildReferralNotificationEmail = ({
   affiliateName,
   affiliateEmail,
@@ -300,11 +330,11 @@ export const buildReferralNotificationEmail = ({
   adminUrl?: string;
 }): string => {
   const rows = [
-    `<tr><td colspan="2" style="padding:8px 0 4px;font-size:11px;color:#b8924a;text-transform:uppercase;letter-spacing:2px;font-weight:700;">Referred by</td></tr>`,
+    `<tr><td colspan="2" style="padding:8px 0 4px;font-size:11px;color:#C8102E;text-transform:uppercase;letter-spacing:2px;font-weight:700;">Referred by</td></tr>`,
     detailRow("Name", affiliateName),
     detailRow("Email", affiliateEmail),
     detailRow("Phone", affiliatePhone),
-    `<tr><td colspan="2" style="padding:16px 0 4px;font-size:11px;color:#b8924a;text-transform:uppercase;letter-spacing:2px;font-weight:700;">Referral (potential client)</td></tr>`,
+    `<tr><td colspan="2" style="padding:16px 0 4px;font-size:11px;color:#C8102E;text-transform:uppercase;letter-spacing:2px;font-weight:700;">Referral (potential client)</td></tr>`,
     detailRow("Name", referralName),
     detailRow("Phone", referralPhone),
     detailRow("Email", referralEmail || ""),

@@ -58,7 +58,7 @@ const defaultOverrideByPath: Record<string, string> = {
   "editorial-9.jpg":
     "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Elanora-Bathroom-Renovations.webp",
   "hero-bg.jpg":
-    "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Helensvale-Renovations-Kitchen.webp",
+    "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Gold_Coast_Best_Renovations.webp",
   "lifestyle-bathroom.jpg":
     "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Elanora-Gold-Coast-Bathroom-Renovations.webp",
   "lifestyle-calm.jpg":
