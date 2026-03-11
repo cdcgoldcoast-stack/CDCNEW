@@ -84,6 +84,7 @@ const ImageComparisonSlider = ({
           decoding="async"
           quality={58}
           responsiveWidths={[320, 480, 640, 800, 960]}
+          useSupabaseTransform
           className="w-full h-full bg-muted/10"
           fit="contain"
           position="center"
@@ -105,6 +106,7 @@ const ImageComparisonSlider = ({
           decoding="async"
           quality={58}
           responsiveWidths={[320, 480, 640, 800, 960]}
+          useSupabaseTransform
           className="w-full h-full bg-muted/10"
           fit="contain"
           position="center"

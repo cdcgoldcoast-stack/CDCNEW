@@ -30,6 +30,7 @@ const ProjectCard = ({
         loading="lazy"
         quality={58}
         responsiveWidths={[240, 320, 420, 560, 720]}
+        useSupabaseTransform
       />
 
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-media-overlay/70 pointer-events-none" />

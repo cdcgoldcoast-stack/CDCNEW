@@ -101,6 +101,7 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
             loading="lazy"
             quality={sectionImageQuality}
             responsiveWidths={sectionBgWidths}
+            useSupabaseTransform
             className="absolute inset-0 w-full h-full object-cover bg-muted"
           />
         ) : (
@@ -132,6 +133,7 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
                   loading="lazy"
                   quality={sectionImageQuality}
                   responsiveWidths={sectionCardWidths}
+                  useSupabaseTransform
                   className="w-full h-full object-cover"
                 />
               </motion.div>

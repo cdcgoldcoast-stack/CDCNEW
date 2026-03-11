@@ -32,3 +32,6 @@ supabase/.temp/
 .env.*.local
 .vercel
 artifacts
+
+# Instagram posts (local only)
+instagram-posts/
