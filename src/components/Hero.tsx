@@ -2,7 +2,7 @@ import Image from "next/image";
 import GoogleReviewBadge from "@/components/GoogleReviewBadge";
 
 const revealed = "opacity-100 translate-y-0 transition-all duration-700 ease-out";
-const HERO_IMAGE = "/home/hero-unified.webp";
+const HERO_IMAGE = "/home/hero-v2.webp";
 
 const Hero = () => {
   return (
