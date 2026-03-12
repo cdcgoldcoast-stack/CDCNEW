@@ -202,7 +202,7 @@ const Header = () => {
         </Link>
 
         {/* Desktop Navigation - only shows when viewport is wide enough */}
-        <nav className="hidden min-[1280px]:flex items-center gap-5 2xl:gap-7 whitespace-nowrap">
+        <nav className="hidden min-[1280px]:flex items-center gap-7 2xl:gap-10 whitespace-nowrap">
           {desktopNavLinks.map((item) =>
             item.type === "link" ? (
               <Link

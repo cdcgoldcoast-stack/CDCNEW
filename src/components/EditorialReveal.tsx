@@ -159,7 +159,6 @@ const EditorialReveal = () => {
                   decoding="async"
                   quality={editorialImageQuality}
                   responsiveWidths={editorialResponsiveWidths}
-                  useSupabaseTransform
                 />
               )}
             </div>
@@ -179,7 +178,6 @@ const EditorialReveal = () => {
                   decoding="async"
                   quality={editorialImageQuality}
                   responsiveWidths={editorialResponsiveWidths}
-                  useSupabaseTransform
                 />
               )}
             </div>
@@ -210,7 +208,6 @@ const EditorialReveal = () => {
                   decoding="async"
                   quality={editorialImageQuality}
                   responsiveWidths={editorialResponsiveWidths}
-                  useSupabaseTransform
                 />
               )}
             </div>
@@ -230,7 +227,6 @@ const EditorialReveal = () => {
                   decoding="async"
                   quality={editorialImageQuality}
                   responsiveWidths={editorialResponsiveWidths}
-                  useSupabaseTransform
                 />
               )}
             </div>
@@ -282,7 +278,6 @@ const EditorialReveal = () => {
                     decoding="async"
                     quality={editorialImageQuality}
                     responsiveWidths={editorialResponsiveWidths}
-                    useSupabaseTransform
                   />
                 </div>
               ))}

@@ -48,10 +48,10 @@ const Footer = () => {
     <footer className="py-16 md:py-20 bg-background relative z-10">
       <div className="container-wide px-6 md:px-10 lg:px-12">
         {/* Main footer grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-8 gap-y-10 lg:gap-12">
-          
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-6 sm:gap-x-8 gap-y-10 lg:gap-12">
+
           {/* Column 1: Logo & Contact */}
-          <div className="col-span-2 md:col-span-1">
+          <div className="sm:col-span-2 md:col-span-1">
             <ResponsiveImage
               src={logo}
               alt="Concept Design Construct"
@@ -71,14 +71,14 @@ const Footer = () => {
                 href="tel:0413468928"
                 className="flex items-center gap-3 text-sm text-foreground/80 hover:text-primary transition-colors"
               >
-                <Phone className="w-4 h-4" />
+                <Phone className="w-4 h-4 flex-shrink-0" />
                 0413 468 928
               </a>
               <a
                 href="mailto:info@cdconstruct.com.au"
                 className="flex items-center gap-3 text-sm text-foreground/80 hover:text-primary transition-colors"
               >
-                <Mail className="w-4 h-4" />
+                <Mail className="w-4 h-4 flex-shrink-0" />
                 info@cdconstruct.com.au
               </a>
               <div className="flex items-start gap-3 text-sm text-foreground/70">

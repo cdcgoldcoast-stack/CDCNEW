@@ -150,7 +150,7 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
   },
   {
     path: "/renovation-services",
-    label: "Renovation Services",
+    label: "Services",
     description: withBrandDescription(
       "View Gold Coast renovation services for bathrooms, kitchens, and whole-home upgrades.",
     ),
@@ -168,7 +168,7 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
   },
   {
     path: "/renovation-design-tools",
-    label: "Renovation Design Tools",
+    label: "Design Tools",
     description: withBrandDescription("Use Gold Coast renovation design tools to plan style, scope, and layout direction."),
     includeInHeader: true,
     includeInFooter: true,
