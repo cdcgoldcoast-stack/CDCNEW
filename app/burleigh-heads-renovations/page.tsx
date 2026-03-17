@@ -8,7 +8,7 @@ export const metadata: Metadata = buildMetadata({
   title: "Burleigh Heads Renovations | Kitchen, Bathroom & Home",
   description:
     "Renovation builders in Burleigh Heads. Kitchen, bathroom & whole-home renovations. 25+ years experience. QBCC licensed. Local Broadbeach team. Free consultation.",
-  path: "/renovations/burleigh-heads",
+  path: "/burleigh-heads-renovations",
 });
 
 export default function Page() {
@@ -18,7 +18,7 @@ export default function Page() {
     name: "Concept Design Construct - Burleigh Heads Renovations",
     description:
       "Kitchen, bathroom and whole-home renovation builders servicing Burleigh Heads and surrounding Gold Coast suburbs.",
-    url: "https://www.cdconstruct.com.au/renovations/burleigh-heads",
+    url: "https://www.cdconstruct.com.au/burleigh-heads-renovations",
     telephone: "0413468928",
     address: {
       "@type": "PostalAddress",

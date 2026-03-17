@@ -23,7 +23,7 @@ const Footer = () => {
 
   const locationLinks = [
     { label: "Broadbeach", href: "/broadbeach-renovations" },
-    { label: "Burleigh Heads", href: "/renovations/burleigh-heads" },
+    { label: "Burleigh Heads", href: "/burleigh-heads-renovations" },
     { label: "Surfers Paradise", href: "/surfers-paradise-renovations" },
     { label: "Robina", href: "/robina-renovations" },
     { label: "Southport", href: "/southport-renovations" },
@@ -32,7 +32,7 @@ const Footer = () => {
 
   const allSuburbLinks = [
     { label: "Broadbeach", href: "/broadbeach-renovations" },
-    { label: "Burleigh Heads", href: "/renovations/burleigh-heads" },
+    { label: "Burleigh Heads", href: "/burleigh-heads-renovations" },
     { label: "Surfers Paradise", href: "/surfers-paradise-renovations" },
     { label: "Mermaid Beach", href: "/mermaid-beach-renovations" },
     { label: "Palm Beach", href: "/palm-beach-renovations" },

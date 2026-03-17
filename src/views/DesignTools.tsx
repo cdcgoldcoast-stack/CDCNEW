@@ -79,7 +79,7 @@ const DesignTools = () => {
 
       <Header />
 
-      <main className="relative z-10 pt-32 pb-20">
+      <main id="main-content" className="relative z-10 pt-32 pb-20">
         {/* Hero Section */}
         <section className="container-wide mb-16 md:mb-24">
           <motion.div

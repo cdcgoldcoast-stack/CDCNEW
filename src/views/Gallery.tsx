@@ -67,7 +67,7 @@ const Gallery = () => {
       <Header />
       
       {/* Main content */}
-      <main className="pt-24 md:pt-32 pb-16 md:pb-24">
+      <main id="main-content" className="pt-24 md:pt-32 pb-16 md:pb-24">
         <div className="container-wide">
           {/* Title */}
           <div className="text-center mb-12 md:mb-16 max-w-2xl mx-auto">

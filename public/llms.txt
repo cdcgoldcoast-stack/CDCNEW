@@ -1,5 +1,5 @@
 # www.cdconstruct.com.au AI Content Index
-Generated: 2026-03-11T05:37:14.262Z
+Generated: 2026-03-17T14:22:16.939Z
 
 ## Canonical Domain
 https://www.cdconstruct.com.au
@@ -18,7 +18,7 @@ https://www.cdconstruct.com.au
 - https://www.cdconstruct.com.au/palm-beach-renovations
 - https://www.cdconstruct.com.au/robina-renovations
 - https://www.cdconstruct.com.au/southport-renovations
-- https://www.cdconstruct.com.au/renovations/burleigh-heads
+- https://www.cdconstruct.com.au/burleigh-heads-renovations
 - https://www.cdconstruct.com.au/renovation-life-stages
 - https://www.cdconstruct.com.au/book-renovation-consultation
 - https://www.cdconstruct.com.au/renovation-gallery
@@ -28,10 +28,18 @@ https://www.cdconstruct.com.au
 - https://www.cdconstruct.com.au/renovation-design-tools/moodboard
 - https://www.cdconstruct.com.au/privacy-policy
 - https://www.cdconstruct.com.au/terms-conditions
+- https://www.cdconstruct.com.au/blog/apartment-renovation-body-corporate-guide-gold-coast
+- https://www.cdconstruct.com.au/blog/bathroom-renovation-cost-gold-coast
 - https://www.cdconstruct.com.au/blog/bathroom-renovation-timeline-what-to-expect
 - https://www.cdconstruct.com.au/blog/first-renovation-planning-checklist-gold-coast
+- https://www.cdconstruct.com.au/blog/gold-coast-renovation-costs-complete-guide
+- https://www.cdconstruct.com.au/blog/how-to-choose-renovation-builder-gold-coast
 - https://www.cdconstruct.com.au/blog/kitchen-renovation-budget-breakdown-gold-coast
+- https://www.cdconstruct.com.au/blog/kitchen-renovation-trends-gold-coast-2026
+- https://www.cdconstruct.com.au/blog/renovation-mistakes-cost-thousands
 - https://www.cdconstruct.com.au/blog/signs-your-gold-coast-home-needs-renovating
+- https://www.cdconstruct.com.au/blog/small-bathroom-renovation-ideas-gold-coast
+- https://www.cdconstruct.com.au/blog/what-to-expect-during-gold-coast-home-renovation
 
 ## Project Detail Pages
 - https://www.cdconstruct.com.au/renovation-projects/everyday-ease

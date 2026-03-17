@@ -173,7 +173,7 @@ const Header = () => {
   };
 
   return (
-    <header 
+    <header
       className={`fixed top-0 left-0 right-0 z-50 ease-out ${
         shouldBeTransparent ? "bg-transparent" : "bg-background shadow-sm"
       }`}
@@ -182,6 +182,9 @@ const Header = () => {
         transition: isVisible ? "transform 500ms ease-out" : "transform 300ms ease-out",
       }}
     >
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-primary-foreground focus:px-4 focus:py-2 focus:text-sm">
+        Skip to content
+      </a>
       <div className="max-w-[1440px] mx-auto px-4 md:px-7 lg:px-8 flex items-center justify-between h-[74px] md:h-[100px]">
         {/* Logo */}
         <Link to="/" className="flex-shrink-0 flex items-center mr-8" aria-label="Concept Design Construct home">

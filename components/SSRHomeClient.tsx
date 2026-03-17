@@ -40,7 +40,7 @@ function MobileDeferred({ children, placeholder }: { children: React.ReactNode; 
 export default function SSRHomeClient() {
   return (
     <>
-      <main>
+      <main id="main-content">
         <EditorialReveal />
         <JourneySection />
 

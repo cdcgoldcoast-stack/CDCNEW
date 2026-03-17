@@ -224,6 +224,11 @@ const nextConfig = {
         destination: "/renovation-design-tools",
         permanent: true,
       },
+      {
+        source: "/renovations/burleigh-heads",
+        destination: "/burleigh-heads-renovations",
+        permanent: true,
+      },
     ];
   },
   webpack: (config) => {

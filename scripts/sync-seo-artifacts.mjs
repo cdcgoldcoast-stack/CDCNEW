@@ -40,7 +40,7 @@ const STATIC_ROUTES = [
   { path: "/palm-beach-renovations", changefreq: "weekly", priority: "0.85" },
   { path: "/robina-renovations", changefreq: "weekly", priority: "0.85" },
   { path: "/southport-renovations", changefreq: "weekly", priority: "0.85" },
-  { path: "/renovations/burleigh-heads", changefreq: "weekly", priority: "0.85" },
+  { path: "/burleigh-heads-renovations", changefreq: "weekly", priority: "0.85" },
   { path: "/renovation-life-stages", changefreq: "monthly", priority: "0.7" },
   { path: "/book-renovation-consultation", changefreq: "monthly", priority: "0.9" },
   { path: "/renovation-gallery", changefreq: "weekly", priority: "0.7" },

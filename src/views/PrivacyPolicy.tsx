@@ -11,7 +11,7 @@ const PrivacyPolicy = () => {
         url="/privacy-policy"
       />
       <Header />
-      <main className="pt-32 pb-20">
+      <main id="main-content" className="pt-32 pb-20">
         <div className="max-w-3xl mx-auto px-5 md:px-8">
           <h1 className="text-h1 mb-8">Privacy Policy</h1>
           <p className="text-body text-muted-foreground mb-8">

@@ -1220,7 +1220,7 @@ const buildPreferenceSentence = (
       />
        <Header />
 
-      <main className="pt-[74px] md:pt-[100px] flex-1 min-h-0 overflow-hidden">
+      <main id="main-content" className="pt-[74px] md:pt-[100px] flex-1 min-h-0 overflow-hidden">
         <div className="w-full h-full flex flex-col px-0 md:px-12 md:max-w-7xl md:mx-auto">
           <input
             ref={fileInputRef}

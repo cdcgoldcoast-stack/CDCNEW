@@ -34,7 +34,7 @@ const AIDesignIntro = () => {
       />
       <Header />
 
-      <main className="pt-24 md:pt-28 pb-16 md:pb-20 lg:pb-0 lg:h-[calc(100vh-112px)]">
+      <main id="main-content" className="pt-24 md:pt-28 pb-16 md:pb-20 lg:pb-0 lg:h-[calc(100vh-112px)]">
         <div className="container-wide h-full flex flex-col lg:grid lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
           <div className="flex flex-col justify-center space-y-8">
             <div className="space-y-4">

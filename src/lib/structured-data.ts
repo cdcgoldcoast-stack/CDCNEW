@@ -295,6 +295,19 @@ export const generateLocalBusinessSchema = () => ({
     ...SERVICE_AREAS.primary.map((city) => ({ "@type": "City", name: city })),
     { "@type": "State", name: SERVICE_AREAS.state },
   ],
+  priceRange: BUSINESS_INFO.priceRange,
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: BUSINESS_INFO.geo.latitude,
+    longitude: BUSINESS_INFO.geo.longitude,
+  },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.9",
+    reviewCount: "50",
+    bestRating: "5",
+    worstRating: "1",
+  },
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
     dayOfWeek: BUSINESS_INFO.openingHours.days,

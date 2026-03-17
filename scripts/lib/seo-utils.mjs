@@ -28,7 +28,7 @@ export const EXTENDED_ROUTES = [
   "/palm-beach-renovations",
   "/robina-renovations",
   "/southport-renovations",
-  "/renovations/burleigh-heads",
+  "/burleigh-heads-renovations",
   "/renovation-ai-generator/intro",
   "/renovation-ai-generator",
   "/renovation-design-tools/moodboard",

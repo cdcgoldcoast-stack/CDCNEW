@@ -32,7 +32,7 @@ const staticRoutes: Array<{
   { path: "/palm-beach-renovations", changeFrequency: "weekly", priority: 0.7 },
   { path: "/robina-renovations", changeFrequency: "weekly", priority: 0.7 },
   { path: "/southport-renovations", changeFrequency: "weekly", priority: 0.7 },
-  { path: "/renovations/burleigh-heads", changeFrequency: "weekly", priority: 0.7 },
+  { path: "/burleigh-heads-renovations", changeFrequency: "weekly", priority: 0.7 },
   { path: "/surfers-paradise-renovations", changeFrequency: "weekly", priority: 0.7 },
   { path: "/bundall-renovations", changeFrequency: "weekly", priority: 0.7 },
   { path: "/runaway-bay-renovations", changeFrequency: "weekly", priority: 0.7 },
