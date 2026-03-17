@@ -247,10 +247,10 @@ const WhyCDC = () => {
                   &ldquo;{review.quote}&rdquo;
                 </p>
                 <footer className="mt-auto">
-                  <p className="text-foreground font-medium text-sm">
+                  <p className="text-primary font-medium text-sm">
                     {review.name}
                   </p>
-                  <p className="text-foreground/60 text-xs uppercase tracking-wider mt-1">
+                  <p className="text-primary/60 text-xs uppercase tracking-wider mt-1">
                     {review.suburb}
                   </p>
                 </footer>

@@ -212,15 +212,13 @@ const HowWeWork = () => {
         </div>
       </section>
 
-      <div className="relative z-10">
-        <BottomInvitation
-          title="Start Your Renovation"
-          description="Ready to transform your home? Book a free consultation and we will walk you through our process."
-          ctaLabel="Book a Consultation"
-          ctaTo="/book-renovation-consultation"
-          className="mt-0 mb-0"
-        />
-      </div>
+      <BottomInvitation
+        title="Start Your Renovation"
+        description="Ready to transform your home? Book a free consultation and we will walk you through our process."
+        ctaLabel="Book a Consultation"
+        ctaTo="/book-renovation-consultation"
+        className="mt-0 mb-0"
+      />
 
       <Footer />
     </div>

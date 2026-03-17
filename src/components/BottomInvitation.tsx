@@ -17,8 +17,8 @@ const BottomInvitation = ({
   className,
 }: BottomInvitationProps) => {
   return (
-    <section className={cn("mt-12 md:mt-20 mb-8 md:mb-12", className)}>
-      <div className="bg-primary py-10 md:py-24 px-5 md:px-8 text-center">
+    <section className={cn("mt-12 md:mt-20 mb-8 md:mb-12 bg-primary", className)}>
+      <div className="py-10 md:py-24 px-5 md:px-8 text-center">
         <h2 className="font-serif italic text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-primary-foreground mb-4 md:mb-6">
           {title}
         </h2>
