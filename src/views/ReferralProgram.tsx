@@ -251,7 +251,7 @@ const ReferralProgram = () => {
       {/* ── Section 2: Benefits ── */}
       <section className="py-20 md:py-28 bg-background">
         <div className="container-wide px-6 md:px-10 lg:px-12">
-          <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground text-center mb-16">
+          <h2 className="font-serif text-h2-mobile md:text-h2 text-primary text-center mb-16">
             A Straightforward Way To Earn
           </h2>
           <div className="grid md:grid-cols-2 gap-8 lg:gap-10 max-w-4xl mx-auto">
@@ -261,7 +261,7 @@ const ReferralProgram = () => {
                   <benefit.icon className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-serif text-lg text-foreground mb-2">
+                  <h3 className="font-serif text-lg text-primary mb-2">
                     {benefit.title}
                   </h3>
                   <p className="text-foreground/70 leading-relaxed">
@@ -305,7 +305,7 @@ const ReferralProgram = () => {
       {/* ── Section 4: How It Works ── */}
       <section className="py-20 md:py-28 bg-background">
         <div className="container-wide px-6 md:px-10 lg:px-12">
-          <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground text-center mb-16">
+          <h2 className="font-serif text-h2-mobile md:text-h2 text-primary text-center mb-16">
             Four Simple Steps
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 max-w-5xl mx-auto">
@@ -317,7 +317,7 @@ const ReferralProgram = () => {
                 <p className="text-label text-primary mb-3">
                   Step {index + 1}
                 </p>
-                <h3 className="font-serif text-lg text-foreground mb-2">
+                <h3 className="font-serif text-lg text-primary mb-2">
                   {step.title}
                 </h3>
                 <p className="text-foreground/70 text-sm leading-relaxed">
@@ -344,7 +344,7 @@ const ReferralProgram = () => {
                 <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
                   <CheckCircle2 className="w-8 h-8 text-primary" />
                 </div>
-                <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground mb-4">
+                <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-4">
                   Thank You
                 </h2>
                 <p className="text-foreground/70 text-lg leading-relaxed max-w-md mx-auto">
@@ -359,7 +359,7 @@ const ReferralProgram = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
               >
-                <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground text-center mb-3">
+                <h2 className="font-serif text-h2-mobile md:text-h2 text-primary text-center mb-3">
                   Submit a Referral
                 </h2>
                 <p className="text-foreground/70 text-center mb-12">

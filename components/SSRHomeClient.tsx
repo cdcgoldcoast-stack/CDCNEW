@@ -49,7 +49,7 @@ export default function SSRHomeClient() {
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div>
                 <p className="text-label text-foreground/65 mb-6">AI Design Tool</p>
-                <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-6">
+                <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-6">
                   What Could Your Space Look Like?
                 </h2>
                 <p className="text-body-text text-lg leading-relaxed mb-10">

@@ -153,7 +153,7 @@ const DesignTools = () => {
                       </div>
 
                       <p className="text-label text-primary mb-2 tracking-wider">{tool.subtitle}</p>
-                      <h3 className="font-serif italic text-2xl md:text-3xl text-foreground mb-4 group-hover:text-primary transition-colors">
+                      <h3 className="font-serif italic text-2xl md:text-3xl text-primary mb-4 group-hover:text-primary transition-colors">
                         {tool.title}
                       </h3>
                       <p className="text-foreground/70 leading-relaxed mb-6 flex-grow">

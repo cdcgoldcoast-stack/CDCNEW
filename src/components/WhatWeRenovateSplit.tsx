@@ -174,7 +174,7 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
           )}
 
           {/* Title */}
-          <h2 className="text-foreground text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif leading-tight mb-4 md:mb-6">
+          <h2 className="text-primary text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif leading-tight mb-4 md:mb-6">
             {service.title}
           </h2>
 

@@ -38,7 +38,7 @@ const TestimonialsSection = () => {
           <p className="text-label text-foreground/70 mb-4 md:mb-6 text-xs md:text-sm">
             What Homeowners Say
           </p>
-          <h2 className="text-foreground font-serif italic text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight">
+          <h2 className="text-primary font-serif italic text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight">
             Real Experiences, Real Results
           </h2>
         </motion.div>

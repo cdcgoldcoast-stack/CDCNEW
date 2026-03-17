@@ -160,7 +160,7 @@ const FAQ = () => {
         <div className="container-wide">
           <div className="max-w-3xl">
             <p className="text-label text-primary mb-6">FAQ</p>
-            <h1 className="font-serif text-h1-mobile md:text-h1 text-foreground leading-tight mb-8">
+            <h1 className="font-serif text-h1-mobile md:text-h1 text-primary leading-tight mb-8">
               Frequently Asked Questions
             </h1>
             <p className="text-foreground/80 text-lg leading-relaxed">
@@ -184,7 +184,7 @@ const FAQ = () => {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: catIndex * 0.1 }}
               >
-                <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">
+                <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
                   {category.title}
                 </h2>
                 <Accordion type="single" collapsible className="w-full">

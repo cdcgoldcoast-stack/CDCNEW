@@ -47,7 +47,7 @@ export default function BurleighHeads() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
               <p className="text-label text-primary mb-4">Local Renovation Builders</p>
-              <h1 className="font-serif text-h1-mobile md:text-h1 text-foreground leading-tight mb-6">
+              <h1 className="font-serif text-h1-mobile md:text-h1 text-primary leading-tight mb-6">
                 Burleigh Heads Renovations
               </h1>
               <p className="text-lg md:text-xl text-foreground/80 leading-relaxed mb-8">

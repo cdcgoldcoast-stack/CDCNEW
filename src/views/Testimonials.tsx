@@ -88,7 +88,7 @@ const Testimonials = () => {
         <div className="container-wide">
           <div className="max-w-3xl">
             <p className="text-label text-primary mb-6">Testimonials</p>
-            <h1 className="font-serif text-h1-mobile md:text-h1 text-foreground leading-tight mb-8">
+            <h1 className="font-serif text-h1-mobile md:text-h1 text-primary leading-tight mb-8">
               What Our Clients Say
             </h1>
             <p className="text-foreground/80 text-lg leading-relaxed">

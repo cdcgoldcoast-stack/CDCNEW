@@ -32,8 +32,8 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
   const renderMarkdown = (text: string) => {
     return text
       // Headers
-      .replace(/^### (.*$)/gim, '<h3 class="font-serif text-xl text-foreground mt-10 mb-4" id="$1">$1</h3>')
-      .replace(/^## (.*$)/gim, '<h2 class="font-serif text-2xl md:text-3xl text-foreground mt-12 mb-6" id="$1">$1</h2>')
+      .replace(/^### (.*$)/gim, '<h3 class="font-serif text-xl text-primary mt-10 mb-4" id="$1">$1</h3>')
+      .replace(/^## (.*$)/gim, '<h2 class="font-serif text-2xl md:text-3xl text-primary mt-12 mb-6" id="$1">$1</h2>')
       // Bold
       .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
       // Italic within bold (handle nested)

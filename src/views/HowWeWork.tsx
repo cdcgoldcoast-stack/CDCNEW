@@ -111,7 +111,7 @@ const HowWeWork = () => {
         <div className="container-wide">
           <div className="max-w-3xl">
             <p className="text-label text-primary mb-6">Our Process</p>
-            <h1 className="font-serif text-h1-mobile md:text-h1 text-foreground leading-tight mb-8">
+            <h1 className="font-serif text-h1-mobile md:text-h1 text-primary leading-tight mb-8">
               How We Work
             </h1>
             <p className="text-foreground/80 text-lg leading-relaxed">
@@ -135,7 +135,7 @@ const HowWeWork = () => {
             className="mb-12 md:mb-16"
           >
             <p className="text-label text-foreground/60 mb-4">Step by Step</p>
-            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight">
+            <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight">
               Our 7-Step Renovation Process
             </h2>
           </motion.div>

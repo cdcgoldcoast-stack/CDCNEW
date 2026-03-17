@@ -102,7 +102,7 @@ const LaundryRenovations = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
               <p className="text-label text-primary mb-6">Laundry Specialists</p>
-              <h1 className="font-serif text-h1-mobile md:text-h1 text-foreground leading-tight mb-6">
+              <h1 className="font-serif text-h1-mobile md:text-h1 text-primary leading-tight mb-6">
                 Gold Coast Laundry Renovations
               </h1>
               <p className="text-foreground/80 text-lg leading-relaxed mb-6">
@@ -158,7 +158,7 @@ const LaundryRenovations = () => {
         <div className="container-wide">
           <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
             <p className="text-label text-primary mb-4">What We Offer</p>
-            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-5">
+            <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-5">
               Laundry Solutions For Every Home
             </h2>
             <p className="text-foreground/70 leading-relaxed">
@@ -288,7 +288,7 @@ const LaundryRenovations = () => {
         <div className="container-wide">
           <div className="max-w-3xl mb-12 md:mb-16">
             <p className="text-label text-primary mb-4">Our Process</p>
-            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-5">
+            <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-5">
               How We Deliver Your New Laundry
             </h2>
             <p className="text-foreground/70 leading-relaxed">
@@ -333,7 +333,7 @@ const LaundryRenovations = () => {
             </div>
             <div className="order-1 lg:order-2">
               <p className="text-label text-primary mb-4">Related Services</p>
-              <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-5">
+              <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-5">
                 Renovating More Than Just The Laundry?
               </h2>
               <p className="text-foreground/70 leading-relaxed mb-6">
@@ -373,7 +373,7 @@ const LaundryRenovations = () => {
       <section className="py-16 md:py-24 bg-cream relative z-10">
         <div className="container-wide max-w-4xl">
           <p className="text-label text-primary mb-4">FAQs</p>
-          <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-8">
+          <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-8">
             Common Laundry Renovation Questions
           </h2>
           <div className="space-y-6">

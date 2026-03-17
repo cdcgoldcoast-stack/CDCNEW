@@ -90,7 +90,7 @@ const FAQSection = () => {
           >
             FAQ
           </motion.p>
-          <h2 className="text-foreground font-serif italic text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight">
+          <h2 className="text-primary font-serif italic text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight">
             Renovation FAQ, Gold Coast
           </h2>
         </motion.div>

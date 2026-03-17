@@ -73,7 +73,7 @@ const BrandGuidelines = () => {
 
             <div className="mt-12 p-8 bg-secondary/50 border border-border">
               <h3 className="mb-4 not-italic">Core Positioning</h3>
-              <p className="text-xl font-serif text-foreground">
+              <p className="text-xl font-serif text-primary">
                 Lifestyle-focused renovation partner for Gold Coast homeowners.
               </p>
             </div>
@@ -336,7 +336,7 @@ const BrandGuidelines = () => {
               
               <div>
                 <h3 className="mb-4 not-italic">Tagline</h3>
-                <p className="font-serif text-2xl italic text-foreground mb-4">
+                <p className="font-serif text-2xl italic text-primary mb-4">
                   Life feels better when your home works better.
                 </p>
                 <p className="text-sm text-muted-foreground">

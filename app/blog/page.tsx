@@ -58,7 +58,7 @@ export default async function BlogPage() {
         <section className="pt-32 pb-16 md:pt-40 md:pb-20">
           <div className="container-wide">
             <p className="text-label text-primary mb-4">CDC Journal</p>
-            <h1 className="font-serif text-h1-mobile md:text-h1 text-foreground leading-tight max-w-3xl">
+            <h1 className="font-serif text-h1-mobile md:text-h1 text-primary leading-tight max-w-3xl">
               Gold Coast Renovation Blog
             </h1>
             <p className="text-foreground/70 text-lg leading-relaxed mt-6 max-w-2xl">
@@ -119,7 +119,7 @@ export default async function BlogPage() {
                           />
                         ) : (
                           <div className="w-full h-full bg-muted flex items-center justify-center">
-                            <span className="font-serif text-4xl text-foreground/20">CDC</span>
+                            <span className="font-serif text-4xl text-primary/20">CDC</span>
                           </div>
                         )}
                       </div>
@@ -128,7 +128,7 @@ export default async function BlogPage() {
                       <p className="text-label text-foreground/50 mb-3">
                         {formatBlogDate(post.publishedAt)} · {post.readingTime}
                       </p>
-                      <h2 className="font-serif text-h3 text-foreground group-hover:text-primary transition-colors">
+                      <h2 className="font-serif text-h3 text-primary group-hover:text-primary transition-colors">
                         {post.title}
                       </h2>
                       <p className="text-foreground/60 text-sm leading-relaxed mt-3 line-clamp-2">

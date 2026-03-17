@@ -102,7 +102,7 @@ const BathroomRenovations = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
               <p className="text-label text-primary mb-6">Bathroom Specialists</p>
-              <h1 className="font-serif text-h1-mobile md:text-h1 text-foreground leading-tight mb-6">
+              <h1 className="font-serif text-h1-mobile md:text-h1 text-primary leading-tight mb-6">
                 Gold Coast Bathroom Renovations
               </h1>
               <p className="text-foreground/80 text-lg leading-relaxed mb-6">
@@ -206,7 +206,7 @@ const BathroomRenovations = () => {
         <div className="container-wide">
           <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
             <p className="text-label text-primary mb-4">Bathroom Types</p>
-            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-5">
+            <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-5">
               Bathrooms For Every Space
             </h2>
             <p className="text-foreground/70 leading-relaxed">
@@ -267,7 +267,7 @@ const BathroomRenovations = () => {
         <div className="container-wide">
           <div className="max-w-3xl mb-12 md:mb-16">
             <p className="text-label text-primary mb-4">Our Process</p>
-            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-5">
+            <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-5">
               How We Deliver Your Dream Bathroom
             </h2>
             <p className="text-foreground/70 leading-relaxed">
@@ -294,7 +294,7 @@ const BathroomRenovations = () => {
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <div className="order-2 lg:order-1">
               <p className="text-label text-primary mb-4">Portfolio</p>
-              <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-5">
+              <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-5">
                 See Our Bathroom Renovations
               </h2>
               <p className="text-foreground/70 leading-relaxed mb-8">
@@ -328,7 +328,7 @@ const BathroomRenovations = () => {
       <section className="py-16 md:py-24 bg-cream relative z-10">
         <div className="container-wide max-w-4xl">
           <p className="text-label text-primary mb-4">FAQs</p>
-          <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-8">
+          <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-8">
             Common Bathroom Renovation Questions
           </h2>
           <div className="space-y-6">

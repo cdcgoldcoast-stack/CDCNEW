@@ -179,7 +179,7 @@ const ProjectDetail = ({ initialProject, initialProjects }: ProjectDetailProps =
             <span className="text-label text-primary uppercase tracking-wider mb-4 block text-sm">
               {project.category.replace("-", " ")}
             </span>
-            <h1 className="font-serif italic text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-foreground leading-tight mb-4 md:mb-6">
+            <h1 className="font-serif italic text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-primary leading-tight mb-4 md:mb-6">
               {project.name}
             </h1>
             <p className="text-primary text-base md:text-lg lg:text-xl leading-relaxed max-w-2xl">
@@ -397,7 +397,7 @@ const ProjectDetail = ({ initialProject, initialProjects }: ProjectDetailProps =
             <span className="text-label text-foreground/40 uppercase tracking-wider text-xs block mb-2">
               Location
             </span>
-            <p className="text-foreground font-serif text-sm md:text-lg">{project.location}</p>
+            <p className="text-primary font-serif text-sm md:text-lg">{project.location}</p>
           </div>
         </div>
       </section>

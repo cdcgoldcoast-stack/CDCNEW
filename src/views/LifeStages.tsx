@@ -223,7 +223,7 @@ const LifeStagesPage = () => {
             transition={{ duration: 0.7 }}
           >
             <p className="text-label text-foreground/60 mb-4">Why a Better Space Helps</p>
-            <h2 className="text-foreground font-serif italic text-2xl md:text-4xl">
+            <h2 className="text-primary font-serif italic text-2xl md:text-4xl">
               Health, Comfort, Daily Living
             </h2>
           </motion.div>
@@ -288,7 +288,7 @@ const LifeStagesPage = () => {
               transition={{ duration: 0.7, delay: 0.2 }}
             >
               <span className="text-label text-foreground/50 mb-3">{stage.subtitle}</span>
-              <h2 className="text-foreground font-serif italic text-3xl md:text-4xl lg:text-5xl mb-6">
+              <h2 className="text-primary font-serif italic text-3xl md:text-4xl lg:text-5xl mb-6">
                 {stage.title}
               </h2>
               
@@ -315,7 +315,7 @@ const LifeStagesPage = () => {
 
               <div className="pt-6 border-t border-foreground/10">
                 <p className="text-label text-foreground/50 mb-2">Why it matters</p>
-                <p className="text-foreground/80 text-base md:text-lg leading-relaxed font-serif italic">
+                <p className="text-primary/80 text-base md:text-lg leading-relaxed font-serif italic">
                   {stage.whyItMatters}
                 </p>
               </div>
@@ -401,7 +401,7 @@ const LifeStagesPage = () => {
               transition={{ duration: 0.7 }}
             >
               <p className="text-label text-foreground/60 mb-4">Gold Coast Renovation Costs</p>
-              <h2 className="text-foreground font-serif italic text-2xl md:text-3xl">
+              <h2 className="text-primary font-serif italic text-2xl md:text-3xl">
                 Life Stage Renovation FAQs
               </h2>
             </motion.div>

@@ -98,7 +98,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               {formatBlogDate(post.publishedAt)} · {post.readingTime}
             </p>
 
-            <h1 className="font-serif text-h1-mobile md:text-h1 text-foreground leading-tight mb-6">
+            <h1 className="font-serif text-h1-mobile md:text-h1 text-primary leading-tight mb-6">
               {post.title}
             </h1>
 
@@ -152,7 +152,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 </div>
                 <div>
                   <p className="text-label text-foreground/50 mb-1">Written by</p>
-                  <p className="font-serif text-h4 text-foreground">{post.author || SITE_NAME}</p>
+                  <p className="font-serif text-h4 text-primary">{post.author || SITE_NAME}</p>
                   <p className="text-foreground/60 text-sm mt-2">
                     Gold Coast renovation specialists. QBCC licensed builders for kitchens, bathrooms, and whole-home transformations.
                   </p>
@@ -166,7 +166,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         {allPosts.length > 1 && (
           <section className="py-20 md:py-28 bg-muted/30">
             <div className="container-wide">
-              <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground mb-12">
+              <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-12">
                 Continue Reading
               </h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
@@ -189,7 +189,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                         <p className="text-label text-foreground/50 mb-2">
                           {formatBlogDate(relatedPost.publishedAt)}
                         </p>
-                        <h3 className="font-serif text-h3 text-foreground group-hover:text-primary transition-colors">
+                        <h3 className="font-serif text-h3 text-primary group-hover:text-primary transition-colors">
                           {relatedPost.title}
                         </h3>
                       </Link>

@@ -103,7 +103,7 @@ const ApartmentRenovations = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
               <p className="text-label text-primary mb-6">Apartment Specialists</p>
-              <h1 className="font-serif text-h1-mobile md:text-h1 text-foreground leading-tight mb-6">
+              <h1 className="font-serif text-h1-mobile md:text-h1 text-primary leading-tight mb-6">
                 Gold Coast Apartment Renovations
               </h1>
               <p className="text-foreground/80 text-lg leading-relaxed mb-6">
@@ -159,7 +159,7 @@ const ApartmentRenovations = () => {
         <div className="container-wide">
           <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
             <p className="text-label text-primary mb-4">Why Choose Us</p>
-            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-5">
+            <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-5">
               Apartment Renovation Expertise
             </h2>
             <p className="text-foreground/70 leading-relaxed">
@@ -216,7 +216,7 @@ const ApartmentRenovations = () => {
         <div className="container-wide">
           <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
             <p className="text-label text-primary mb-4">Renovation Types</p>
-            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-5">
+            <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-5">
               Apartment Renovations We Deliver
             </h2>
             <p className="text-foreground/70 leading-relaxed">
@@ -340,7 +340,7 @@ const ApartmentRenovations = () => {
         <div className="container-wide">
           <div className="max-w-3xl mb-12 md:mb-16">
             <p className="text-label text-primary mb-4">Our Process</p>
-            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-5">
+            <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-5">
               How We Deliver Your Apartment Renovation
             </h2>
             <p className="text-foreground/70 leading-relaxed">
@@ -386,7 +386,7 @@ const ApartmentRenovations = () => {
             </div>
             <div className="order-1 lg:order-2">
               <p className="text-label text-primary mb-4">Related Services</p>
-              <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-5">
+              <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-5">
                 Explore Our Other Services
               </h2>
               <p className="text-foreground/70 leading-relaxed mb-6">
@@ -427,7 +427,7 @@ const ApartmentRenovations = () => {
       <section className="py-16 md:py-24 bg-cream relative z-10">
         <div className="container-wide max-w-4xl">
           <p className="text-label text-primary mb-4">FAQs</p>
-          <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-8">
+          <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-8">
             Common Apartment Renovation Questions
           </h2>
           <div className="space-y-6">

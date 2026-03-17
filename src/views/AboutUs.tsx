@@ -61,7 +61,7 @@ const AboutUs = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
               <p className="text-label text-primary mb-6">About Us</p>
-              <h1 className="font-serif text-h1-mobile md:text-h1 text-foreground leading-tight mb-8">
+              <h1 className="font-serif text-h1-mobile md:text-h1 text-primary leading-tight mb-8">
                 A Strong Team That Takes Pride In Their Work
               </h1>
               <p className="text-foreground/80 text-lg leading-relaxed mb-6">
@@ -105,7 +105,7 @@ const AboutUs = () => {
         <div className="container-wide">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <p className="text-label text-foreground/60 mb-4">How We Work</p>
-            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-6">
+            <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-6">
               Trusted Trades And A Clear Process
             </h2>
             <p className="text-foreground/70 leading-relaxed">
@@ -115,21 +115,21 @@ const AboutUs = () => {
           <div className="grid md:grid-cols-3 gap-8 md:gap-12">
             <div className="text-center">
               <span className="text-primary text-4xl font-serif italic block mb-4">01</span>
-              <h3 className="font-serif text-h3 text-foreground mb-3">Clear Communication</h3>
+              <h3 className="font-serif text-h3 text-primary mb-3">Clear Communication</h3>
               <p className="text-foreground/60 text-sm leading-relaxed">
                 You'll always know what's happening with your project. No guessing, no chasing.
               </p>
             </div>
             <div className="text-center">
               <span className="text-primary text-4xl font-serif italic block mb-4">02</span>
-              <h3 className="font-serif text-h3 text-foreground mb-3">Realistic Timelines</h3>
+              <h3 className="font-serif text-h3 text-primary mb-3">Realistic Timelines</h3>
               <p className="text-foreground/60 text-sm leading-relaxed">
                 We give you honest timeframes upfront and keep you updated along the way.
               </p>
             </div>
             <div className="text-center">
               <span className="text-primary text-4xl font-serif italic block mb-4">03</span>
-              <h3 className="font-serif text-h3 text-foreground mb-3">Quality Results</h3>
+              <h3 className="font-serif text-h3 text-primary mb-3">Quality Results</h3>
               <p className="text-foreground/60 text-sm leading-relaxed">
                 We don't cut corners. Every job is done <strong>properly, the first time</strong>.
               </p>
@@ -191,7 +191,7 @@ const AboutUs = () => {
         <div className="container-wide">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <p className="text-label text-foreground/60 mb-4">Meet The Team</p>
-            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-6">
+            <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-6">
               The People Behind Your Renovation
             </h2>
             <p className="text-foreground/70 leading-relaxed">
@@ -254,7 +254,7 @@ const AboutUs = () => {
         <div className="container-wide">
           <div className="max-w-3xl mx-auto">
             <p className="text-label text-foreground/60 mb-4 text-center">Why It Matters</p>
-            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-8 text-center">
+            <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-8 text-center">
               A Smooth Experience From Start To Finish
             </h2>
             <div className="space-y-6 text-foreground/70 leading-relaxed">

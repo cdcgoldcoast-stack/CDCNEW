@@ -96,7 +96,7 @@ const Services = () => {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
               <p className="text-label text-primary mb-6">Services</p>
-              <h1 className="font-serif text-h1-mobile md:text-h1 text-foreground leading-tight mb-6">
+              <h1 className="font-serif text-h1-mobile md:text-h1 text-primary leading-tight mb-6">
                 Gold Coast Renovation Services Built Around How You Live
               </h1>
               <p className="text-foreground/80 text-lg leading-relaxed mb-6">
@@ -138,7 +138,7 @@ const Services = () => {
         <div className="container-wide">
           <div className="max-w-3xl mb-10">
             <p className="text-label text-primary mb-4">Service Scope</p>
-            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-5">
+            <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-5">
               Renovation Services Matched To The Way You Live
             </h2>
             <p className="text-foreground/70 leading-relaxed">
@@ -168,7 +168,7 @@ const Services = () => {
         <div className="container-wide grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           <div>
             <p className="text-label text-primary mb-4">Process</p>
-            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-5">
+            <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-5">
               How We Run A Gold Coast Renovation
             </h2>
             <p className="text-foreground/70 leading-relaxed mb-8">
@@ -212,7 +212,7 @@ const Services = () => {
       <section className="bg-background relative z-10 py-16 md:py-20">
         <div className="container-wide max-w-4xl">
           <p className="text-label text-primary mb-4">FAQs</p>
-          <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-8">
+          <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-8">
             Service Planning Questions We Hear Most
           </h2>
           <div className="space-y-6">

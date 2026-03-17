@@ -164,7 +164,7 @@ const WhyCDC = () => {
             <p className="text-label text-foreground/60 mb-4">
               What Sets Us Apart
             </p>
-            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight">
+            <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight">
               The CDC Difference
             </h2>
           </motion.div>
@@ -186,7 +186,7 @@ const WhyCDC = () => {
                   <item.icon className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-serif text-lg text-foreground mb-2">
+                  <h3 className="font-serif text-lg text-primary mb-2">
                     {item.title}
                   </h3>
                   <p className="text-foreground/70 text-sm leading-relaxed">
@@ -220,7 +220,7 @@ const WhyCDC = () => {
             <p className="text-label text-foreground/60 mb-4">
               Trusted by Homeowners
             </p>
-            <h2 className="font-serif text-h2-mobile md:text-h2 text-foreground leading-tight mb-8">
+            <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-8">
               What Our Clients Say
             </h2>
             <div className="flex justify-center mb-10">

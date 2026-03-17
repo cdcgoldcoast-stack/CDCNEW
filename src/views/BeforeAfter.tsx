@@ -37,7 +37,7 @@ const BeforeAfter = () => {
         <div className="container-wide">
           <div className="max-w-3xl">
             <p className="text-label text-primary mb-6">Before & After</p>
-            <h1 className="font-serif text-h1-mobile md:text-h1 text-foreground leading-tight mb-8">
+            <h1 className="font-serif text-h1-mobile md:text-h1 text-primary leading-tight mb-8">
               See the Transformation
             </h1>
             <p className="text-foreground/80 text-lg leading-relaxed">
@@ -61,7 +61,7 @@ const BeforeAfter = () => {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6 }}
               >
-                <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-3">
+                <h2 className="font-serif text-2xl md:text-3xl text-primary mb-3">
                   {item.title}
                 </h2>
                 <p className="text-foreground/70 text-sm md:text-base leading-relaxed mb-6">
