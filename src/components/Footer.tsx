@@ -25,6 +25,15 @@ const Footer = () => {
     { label: "Broadbeach", href: "/broadbeach-renovations" },
     { label: "Burleigh Heads", href: "/renovations/burleigh-heads" },
     { label: "Surfers Paradise", href: "/surfers-paradise-renovations" },
+    { label: "Robina", href: "/robina-renovations" },
+    { label: "Southport", href: "/southport-renovations" },
+    { label: "Helensvale", href: "/helensvale-renovations" },
+  ];
+
+  const allSuburbLinks = [
+    { label: "Broadbeach", href: "/broadbeach-renovations" },
+    { label: "Burleigh Heads", href: "/renovations/burleigh-heads" },
+    { label: "Surfers Paradise", href: "/surfers-paradise-renovations" },
     { label: "Mermaid Beach", href: "/mermaid-beach-renovations" },
     { label: "Palm Beach", href: "/palm-beach-renovations" },
     { label: "Robina", href: "/robina-renovations" },
@@ -235,8 +244,14 @@ const Footer = () => {
         {/* Service areas */}
         <div className="mt-16 pt-8 border-t border-foreground/10">
           <p className="text-sm text-foreground/50 text-center">
-            Serving: Broadbeach, Burleigh Heads, Surfers Paradise, Mermaid Beach, Robina, Southport, Palm Beach,
-            Helensvale, Hope Island, Coomera, Nerang, Mudgeeraba, Varsity Lakes, Coolangatta, Currumbin, Miami & all Gold Coast suburbs
+            Serving:{" "}
+            {allSuburbLinks.map((link, i) => (
+              <span key={link.href}>
+                <a href={link.href} className="hover:text-primary transition-colors">{link.label}</a>
+                {i < allSuburbLinks.length - 1 ? ", " : ""}
+              </span>
+            ))}
+            {" "}& all Gold Coast suburbs
           </p>
         </div>
 
