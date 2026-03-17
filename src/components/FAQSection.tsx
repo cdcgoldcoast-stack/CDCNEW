@@ -46,7 +46,7 @@ const FAQSection = () => {
   ];
 
   return (
-    <section ref={ref} className="py-12 md:py-28 border-t border-foreground/10 relative z-10 bg-background" id="faq">
+    <section ref={ref} className="py-12 md:py-20 border-t border-foreground/10 relative z-10 bg-background" id="faq">
       {/* Animated vertical text - Left (desktop only) */}
       <motion.div 
         className="hidden lg:flex absolute left-6 xl:left-10 top-1/2 -translate-y-1/2"
@@ -117,17 +117,19 @@ const FAQSection = () => {
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 className="w-full py-5 md:py-8 flex items-center justify-between text-left gap-4 md:gap-6 group pl-3 md:pl-4 min-h-[60px]"
+                aria-expanded={openIndex === index}
+                aria-controls={`faq-answer-${index}`}
               >
-                <motion.span 
+                <motion.span
                   className="text-foreground text-sm md:text-base lg:text-lg uppercase tracking-wide font-medium group-hover:text-foreground/70 transition-colors leading-tight"
                   whileHover={{ x: 5 }}
                   transition={{ duration: 0.2 }}
                 >
                   {faq.question}
                 </motion.span>
-                <motion.span 
+                <motion.span
                   className="text-foreground/40 flex-shrink-0 text-xl leading-none"
-                  animate={{ 
+                  animate={{
                     rotate: openIndex === index ? 45 : 0,
                     scale: openIndex === index ? 1.2 : 1,
                   }}
@@ -137,6 +139,9 @@ const FAQSection = () => {
                 </motion.span>
               </button>
               <motion.div
+                id={`faq-answer-${index}`}
+                role="region"
+                aria-hidden={openIndex !== index}
                 initial={false}
                 animate={{
                   height: openIndex === index ? "auto" : 0,

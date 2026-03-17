@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useSiteAssets } from "@/hooks/useSiteAssets";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { Phone, Check, ArrowRight, Shield } from "lucide-react";
+import Breadcrumb from "@/components/Breadcrumb";
 
 const features = [
   "Complete bathroom design & 3D renders",
@@ -99,6 +100,7 @@ const BathroomRenovations = () => {
       {/* Hero Section */}
       <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-cream relative z-10">
         <div className="container-wide">
+          <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Services", href: "/renovation-services" }, { label: "Bathroom Renovations" }]} />
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
               <p className="text-label text-primary mb-6">Bathroom Specialists</p>

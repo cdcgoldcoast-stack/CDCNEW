@@ -13,6 +13,7 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import ImageComparisonSlider from "@/components/ImageComparisonSlider";
 import { generateFAQSchema, generateLocalBusinessSchema } from "@/lib/structured-data";
+import { generateWebSiteSchema } from "@/lib/seo";
 import { Link } from "react-router-dom";
 
 // FAQ data for structured data (matches FAQSection component)
@@ -54,7 +55,7 @@ const TestHome = () => {
         title="Gold Coast Renovations | Concept Design Construct"
         description="Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations with design-led planning, QBCC licensed delivery, and timelines."
         url="/"
-        jsonLd={[generateLocalBusinessSchema(), generateFAQSchema(homepageFAQs)]}
+        jsonLd={[generateLocalBusinessSchema(), generateWebSiteSchema(), generateFAQSchema(homepageFAQs)]}
       />
       <Header />
       <main>

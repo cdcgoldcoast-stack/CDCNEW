@@ -26,7 +26,7 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   return (
-    <section className="py-16 md:py-28 bg-background relative z-10 border-t border-foreground/10">
+    <section className="py-12 md:py-20 bg-background relative z-10 border-t border-foreground/10">
       <div className="container-wide px-5 md:px-8">
         <motion.div
           className="text-center mb-12 md:mb-16"

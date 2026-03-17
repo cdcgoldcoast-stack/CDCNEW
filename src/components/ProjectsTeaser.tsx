@@ -32,17 +32,17 @@ const ProjectCard = ({
         responsiveWidths={[240, 320, 420, 560, 720]}
       />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-media-overlay/70 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-media-overlay/50 via-transparent to-media-overlay/70 pointer-events-none" />
 
       <div className="absolute inset-0 flex flex-col items-center text-center p-3 md:p-4 pointer-events-none">
         <div className="pt-2">
-          <p className="font-serif italic text-base sm:text-lg md:text-xl lg:text-2xl leading-none text-media-foreground">
+          <p className="font-serif italic text-base sm:text-lg md:text-xl lg:text-2xl leading-none text-media-foreground drop-shadow-md">
             {project.name}
           </p>
         </div>
 
         <div className="mt-auto pb-2">
-          <p className="text-media-foreground/80 text-[9px] sm:text-[10px] md:text-xs uppercase tracking-[0.12em]">
+          <p className="text-media-foreground/80 text-[9px] sm:text-[10px] md:text-xs uppercase tracking-[0.12em] drop-shadow-md">
             {project.location}
           </p>
         </div>
@@ -178,7 +178,7 @@ const ProjectsTeaser = () => {
   }
 
   return (
-    <section className="py-12 md:py-28 border-t border-foreground/10 bg-background relative z-10" id="projects">
+    <section className="py-12 md:py-20 border-t border-foreground/10 bg-background relative z-10" id="projects">
       <div className="container-wide mb-8 md:mb-12 px-5 md:px-8">
         <div className="max-w-2xl mx-auto text-center mb-8 md:mb-12">
           <p className="text-label text-foreground/60 mb-4 md:mb-6 text-xs md:text-sm">Gold Coast Renovations Selected Work</p>
@@ -189,7 +189,7 @@ const ProjectsTeaser = () => {
         </div>
       </div>
 
-      <div className="relative">
+      <div className="relative" role="region" aria-label="Project showcase" aria-roledescription="carousel">
         {projects.length > 1 ? (
           <button
             onClick={togglePause}
@@ -207,6 +207,7 @@ const ProjectsTeaser = () => {
         <div
           ref={scrollRef}
           className="flex gap-3 md:gap-4 overflow-x-hidden scrollbar-hide cursor-grab"
+          aria-live="polite"
           style={{
             maskImage: "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
             WebkitMaskImage: "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
