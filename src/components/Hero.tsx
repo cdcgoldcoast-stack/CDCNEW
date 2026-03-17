@@ -16,7 +16,7 @@ const Hero = () => {
             src={HERO_IMAGE}
             alt="Gold Coast kitchen renovation in Helensvale by Concept Design Construct"
             fill
-            className="absolute inset-0 w-full h-full object-cover object-[60%_center] bg-muted"
+            className="absolute inset-0 w-full h-full object-cover object-[70%_center] bg-muted"
             sizes="100vw"
             priority
             fetchPriority="high"
@@ -99,7 +99,7 @@ const Hero = () => {
             <Image
               src={HERO_IMAGE}
               alt="Gold Coast home renovation interior by Concept Design Construct"
-              className="w-full max-w-[600px] h-[65vh] max-h-[680px] object-cover object-[60%_center] bg-muted"
+              className="w-full max-w-[600px] h-[65vh] max-h-[680px] object-cover object-[70%_center] bg-muted"
               width={1200}
               height={800}
               sizes="(min-width: 768px) 50vw, 100vw"
