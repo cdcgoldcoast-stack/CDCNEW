@@ -83,7 +83,7 @@ const extensionImages = {
   extension:
     "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Helensvale-full-house-renovations.webp",
   living:
-    "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/service-living.webp",
+    "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Living-renovation-Helensvale.webp",
   kitchen:
     "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Helensvale-Gold-Coast-Kitchen-Renovations.webp",
 };
