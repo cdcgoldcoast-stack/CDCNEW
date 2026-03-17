@@ -35,3 +35,12 @@ artifacts
 
 # Instagram posts (local only)
 instagram-posts/
+
+# Build artifacts
+tsconfig.tsbuildinfo
+
+# Test/audit reports
+lighthouse-*.json
+
+# Design exports
+figma export/

@@ -1,11 +1,11 @@
 # www.cdconstruct.com.au Full AI Content Inventory
-Generated: 2026-03-17T14:22:16.939Z
+Generated: 2026-03-17T22:49:02.511Z
 
 ## /
 URL: https://www.cdconstruct.com.au
 Type: homepage
 Last-Modified: 2026-03-17
-Structured-Data-Types: AggregateRating, Answer, Brand, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, Offer, OfferCatalog, OpeningHoursSpecification, Organization, PostalAddress, Question, Service, SiteNavigationElement, State, WebPage, WebSite
+Structured-Data-Types: AggregateRating, Answer, Brand, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, SiteNavigationElement, State, WebPage, WebSite
 
 ## /about-us
 URL: https://www.cdconstruct.com.au/about-us
@@ -53,31 +53,31 @@ Structured-Data-Types: Answer, BreadcrumbList, City, FAQPage, HomeAndConstructio
 URL: https://www.cdconstruct.com.au/broadbeach-renovations
 Type: content-page
 Last-Modified: 2026-03-17
-Structured-Data-Types: AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, PostalAddress, Question, Service, State, WebPage
+Structured-Data-Types: AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, State, WebPage
 
 ## /mermaid-beach-renovations
 URL: https://www.cdconstruct.com.au/mermaid-beach-renovations
 Type: content-page
 Last-Modified: 2026-03-17
-Structured-Data-Types: AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, PostalAddress, Question, Service, State, WebPage
+Structured-Data-Types: AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, State, WebPage
 
 ## /palm-beach-renovations
 URL: https://www.cdconstruct.com.au/palm-beach-renovations
 Type: content-page
 Last-Modified: 2026-03-17
-Structured-Data-Types: AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, PostalAddress, Question, Service, State, WebPage
+Structured-Data-Types: AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, State, WebPage
 
 ## /robina-renovations
 URL: https://www.cdconstruct.com.au/robina-renovations
 Type: content-page
 Last-Modified: 2026-03-17
-Structured-Data-Types: AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, PostalAddress, Question, Service, State, WebPage
+Structured-Data-Types: AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, State, WebPage
 
 ## /southport-renovations
 URL: https://www.cdconstruct.com.au/southport-renovations
 Type: content-page
 Last-Modified: 2026-03-17
-Structured-Data-Types: AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, PostalAddress, Question, Service, State, WebPage
+Structured-Data-Types: AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, State, WebPage
 
 ## /burleigh-heads-renovations
 URL: https://www.cdconstruct.com.au/burleigh-heads-renovations

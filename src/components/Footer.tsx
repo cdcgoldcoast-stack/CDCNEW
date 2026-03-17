@@ -5,6 +5,7 @@ import masterBuildersLogo from "@/assets/master-builders.webp";
 import qbccLogo from "@/assets/qbcc.webp";
 import { Facebook, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import ResponsiveImage from "@/components/ResponsiveImage";
+import { ALL_SUBURB_LINKS, FOOTER_SUBURB_LINKS } from "@/config/suburbs";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -19,38 +20,6 @@ const Footer = () => {
     { label: "Apartment Renovations", href: "/apartment-renovations-gold-coast" },
     { label: "Home Extensions", href: "/home-extensions-gold-coast" },
     { label: "All Services", href: "/renovation-services" },
-  ];
-
-  const locationLinks = [
-    { label: "Broadbeach", href: "/broadbeach-renovations" },
-    { label: "Burleigh Heads", href: "/burleigh-heads-renovations" },
-    { label: "Surfers Paradise", href: "/surfers-paradise-renovations" },
-    { label: "Robina", href: "/robina-renovations" },
-    { label: "Southport", href: "/southport-renovations" },
-    { label: "Helensvale", href: "/helensvale-renovations" },
-  ];
-
-  const allSuburbLinks = [
-    { label: "Broadbeach", href: "/broadbeach-renovations" },
-    { label: "Burleigh Heads", href: "/burleigh-heads-renovations" },
-    { label: "Surfers Paradise", href: "/surfers-paradise-renovations" },
-    { label: "Mermaid Beach", href: "/mermaid-beach-renovations" },
-    { label: "Palm Beach", href: "/palm-beach-renovations" },
-    { label: "Robina", href: "/robina-renovations" },
-    { label: "Southport", href: "/southport-renovations" },
-    { label: "Helensvale", href: "/helensvale-renovations" },
-    { label: "Hope Island", href: "/hope-island-renovations" },
-    { label: "Coomera", href: "/coomera-renovations" },
-    { label: "Nerang", href: "/nerang-renovations" },
-    { label: "Coolangatta", href: "/coolangatta-renovations" },
-    { label: "Currumbin", href: "/currumbin-renovations" },
-    { label: "Miami", href: "/miami-renovations" },
-    { label: "Mudgeeraba", href: "/mudgeeraba-renovations" },
-    { label: "Varsity Lakes", href: "/varsity-lakes-renovations" },
-    { label: "Bundall", href: "/bundall-renovations" },
-    { label: "Runaway Bay", href: "/runaway-bay-renovations" },
-    { label: "Sanctuary Cove", href: "/sanctuary-cove-renovations" },
-    { label: "Upper Coomera", href: "/upper-coomera-renovations" },
   ];
 
   const companyLinks = [
@@ -168,7 +137,7 @@ const Footer = () => {
             <p className="text-label text-foreground/50 mb-6">Locations</p>
             <nav aria-label="Footer locations">
               <ul className="flex flex-col gap-4">
-                {locationLinks.map(link => (
+                {FOOTER_SUBURB_LINKS.map(link => (
                   <li key={link.href}>
                     <a
                       href={link.href}
@@ -250,10 +219,10 @@ const Footer = () => {
         <div className="mt-16 pt-8 border-t border-foreground/10">
           <p className="text-sm text-foreground/50 text-center">
             Serving:{" "}
-            {allSuburbLinks.map((link, i) => (
+            {ALL_SUBURB_LINKS.map((link, i) => (
               <span key={link.href}>
                 <a href={link.href} className="hover:text-primary transition-colors">{link.label}</a>
-                {i < allSuburbLinks.length - 1 ? ", " : ""}
+                {i < ALL_SUBURB_LINKS.length - 1 ? ", " : ""}
               </span>
             ))}
             {" "}& all Gold Coast suburbs

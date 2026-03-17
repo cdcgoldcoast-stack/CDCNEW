@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
+import { ALL_SUBURB_LINKS } from "@/config/suburbs";
 import { useSiteAssets } from "@/hooks/useSiteAssets";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { Phone, Check, ArrowRight, Shield } from "lucide-react";
@@ -336,28 +337,7 @@ const BathroomRenovations = () => {
             We deliver bathroom renovations throughout the Gold Coast. Find your local area below.
           </p>
           <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
-            {[
-              { label: "Broadbeach", href: "/broadbeach-renovations" },
-              { label: "Surfers Paradise", href: "/surfers-paradise-renovations" },
-              { label: "Robina", href: "/robina-renovations" },
-              { label: "Southport", href: "/southport-renovations" },
-              { label: "Helensvale", href: "/helensvale-renovations" },
-              { label: "Palm Beach", href: "/palm-beach-renovations" },
-              { label: "Burleigh Heads", href: "/burleigh-heads-renovations" },
-              { label: "Mermaid Beach", href: "/mermaid-beach-renovations" },
-              { label: "Hope Island", href: "/hope-island-renovations" },
-              { label: "Coomera", href: "/coomera-renovations" },
-              { label: "Nerang", href: "/nerang-renovations" },
-              { label: "Coolangatta", href: "/coolangatta-renovations" },
-              { label: "Currumbin", href: "/currumbin-renovations" },
-              { label: "Miami", href: "/miami-renovations" },
-              { label: "Mudgeeraba", href: "/mudgeeraba-renovations" },
-              { label: "Varsity Lakes", href: "/varsity-lakes-renovations" },
-              { label: "Bundall", href: "/bundall-renovations" },
-              { label: "Runaway Bay", href: "/runaway-bay-renovations" },
-              { label: "Sanctuary Cove", href: "/sanctuary-cove-renovations" },
-              { label: "Upper Coomera", href: "/upper-coomera-renovations" },
-            ].map((area) => (
+            {ALL_SUBURB_LINKS.map((area) => (
               <Link key={area.href} to={area.href} className="text-sm text-primary border border-primary/20 px-4 py-2 hover:bg-primary hover:text-primary-foreground transition-colors">
                 {area.label}
               </Link>
