@@ -36,6 +36,12 @@ const Footer = () => {
     { label: "Coolangatta", href: "/coolangatta-renovations" },
     { label: "Currumbin", href: "/currumbin-renovations" },
     { label: "Miami", href: "/miami-renovations" },
+    { label: "Mudgeeraba", href: "/mudgeeraba-renovations" },
+    { label: "Varsity Lakes", href: "/varsity-lakes-renovations" },
+    { label: "Bundall", href: "/bundall-renovations" },
+    { label: "Runaway Bay", href: "/runaway-bay-renovations" },
+    { label: "Sanctuary Cove", href: "/sanctuary-cove-renovations" },
+    { label: "Upper Coomera", href: "/upper-coomera-renovations" },
   ];
 
   const companyLinks = [
