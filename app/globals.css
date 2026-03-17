@@ -42,13 +42,13 @@
   :root {
     /* Brand palette: #C8102E (red), #FFFEEF (warm cream), #F2D7D5 (blush), #EAB8C9 (pink), #A50034 (burgundy) */
     --background: 56 100% 97%;
-    --foreground: 350 85% 42%;
+    --foreground: 0 8% 20%;
 
     --card: 56 60% 94%;
-    --card-foreground: 350 85% 42%;
+    --card-foreground: 0 8% 20%;
 
     --popover: 56 100% 97%;
-    --popover-foreground: 350 85% 42%;
+    --popover-foreground: 0 8% 20%;
 
     /* Primary: #C8102E - bright brand red */
     --primary: 350 85% 42%;
@@ -56,14 +56,14 @@
 
     /* Secondary: soft warm cream */
     --secondary: 56 60% 92%;
-    --secondary-foreground: 350 85% 42%;
+    --secondary-foreground: 0 8% 20%;
 
     --muted: 56 40% 90%;
     --muted-foreground: 20 10% 55%;
 
     /* Accent: slightly warmer */
     --accent: 56 50% 88%;
-    --accent-foreground: 350 85% 42%;
+    --accent-foreground: 0 8% 20%;
 
     --destructive: 0 70% 50%;
     --destructive-foreground: 56 100% 97%;
