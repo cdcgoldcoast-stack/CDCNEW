@@ -1,161 +1,173 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { Navigate } from "react-router-dom";
 import type { ProjectDetailProps } from "@/views/ProjectDetail";
-import RequireAdmin from "@/components/admin/RequireAdmin";
 
-// Lightweight pages - static imports
-import AboutUsPage from "@/views/AboutUs";
-import AuthPage from "@/views/Auth";
-import BeforeAfterPage from "@/views/BeforeAfter";
-import DesignToolsPage from "@/views/DesignTools";
-import FAQPage from "@/views/FAQ";
-import GalleryPage from "@/views/Gallery";
-import GetQuotePage from "@/views/GetQuote";
-import HowWeWorkPage from "@/views/HowWeWork";
-import LifeStagesPage from "@/views/LifeStages";
-import NotFoundPage from "@/views/NotFound";
-import PrivacyPolicyPage from "@/views/PrivacyPolicy";
-import ReferralProgramPage from "@/views/ReferralProgram";
-import ServicesPage from "@/views/Services";
-import TermsConditionsPage from "@/views/TermsConditions";
-import TestimonialsPage from "@/views/Testimonials";
-import WhyCDCPage from "@/views/WhyCDC";
-import WorkPage from "@/views/Work";
+const pageLoader = () => <div className="min-h-screen bg-background animate-pulse" />;
 
-// Service pages - dynamic imports
+// All pages use dynamic imports for proper code-splitting.
+// Previously 16 pages were statically imported, pulling framer-motion, Header,
+// Footer, Supabase client, and other heavy deps into a single shared chunk.
+const AboutUsPage = dynamic(() => import("@/views/AboutUs"), {
+  loading: pageLoader,
+});
+const AuthPage = dynamic(() => import("@/views/Auth"), {
+  loading: pageLoader,
+});
+const BeforeAfterPage = dynamic(() => import("@/views/BeforeAfter"), {
+  loading: pageLoader,
+});
+const DesignToolsPage = dynamic(() => import("@/views/DesignTools"), {
+  loading: pageLoader,
+});
+const FAQPage = dynamic(() => import("@/views/FAQ"), {
+  loading: pageLoader,
+});
+const GalleryPage = dynamic(() => import("@/views/Gallery"), {
+  loading: pageLoader,
+});
+const GetQuotePage = dynamic(() => import("@/views/GetQuote"), {
+  loading: pageLoader,
+});
+const HowWeWorkPage = dynamic(() => import("@/views/HowWeWork"), {
+  loading: pageLoader,
+});
+const LifeStagesPage = dynamic(() => import("@/views/LifeStages"), {
+  loading: pageLoader,
+});
+const NotFoundPage = dynamic(() => import("@/views/NotFound"), {
+  loading: pageLoader,
+});
+const PrivacyPolicyPage = dynamic(() => import("@/views/PrivacyPolicy"), {
+  loading: pageLoader,
+});
+const ReferralProgramPage = dynamic(() => import("@/views/ReferralProgram"), {
+  loading: pageLoader,
+});
+const ServicesPage = dynamic(() => import("@/views/Services"), {
+  loading: pageLoader,
+});
+const TermsConditionsPage = dynamic(() => import("@/views/TermsConditions"), {
+  loading: pageLoader,
+});
+const TestimonialsPage = dynamic(() => import("@/views/Testimonials"), {
+  loading: pageLoader,
+});
+const WhyCDCPage = dynamic(() => import("@/views/WhyCDC"), {
+  loading: pageLoader,
+});
+const WorkPage = dynamic(() => import("@/views/Work"), {
+  loading: pageLoader,
+});
+
+const RequireAdmin = dynamic(() => import("@/components/admin/RequireAdmin"), {
+  loading: pageLoader,
+});
+
+// Service pages
 const KitchenRenovationsPage = dynamic(() => import("@/views/KitchenRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const BathroomRenovationsPage = dynamic(() => import("@/views/BathroomRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const WholeHomeRenovationsPage = dynamic(() => import("@/views/WholeHomeRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const LaundryRenovationsPage = dynamic(() => import("@/views/LaundryRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const OutdoorRenovationsPage = dynamic(() => import("@/views/OutdoorRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const ApartmentRenovationsPage = dynamic(() => import("@/views/ApartmentRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const HomeExtensionsPage = dynamic(() => import("@/views/HomeExtensions"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
 
 // Location pages
 const BroadbeachRenovationsPage = dynamic(() => import("@/views/BroadbeachRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const MermaidBeachRenovationsPage = dynamic(() => import("@/views/MermaidBeachRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const PalmBeachRenovationsPage = dynamic(() => import("@/views/PalmBeachRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const RobinaRenovationsPage = dynamic(() => import("@/views/RobinaRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const SouthportRenovationsPage = dynamic(() => import("@/views/SouthportRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const MiamiRenovationsPage = dynamic(() => import("@/views/MiamiRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const HopeIslandRenovationsPage = dynamic(() => import("@/views/HopeIslandRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const SanctuaryCoveRenovationsPage = dynamic(() => import("@/views/SanctuaryCoveRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const HelensvaleRenovationsPage = dynamic(() => import("@/views/HelensvaleRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const NerangRenovationsPage = dynamic(() => import("@/views/NerangRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const MudgeerabaRenovationsPage = dynamic(() => import("@/views/MudgeerabaRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const VarsityLakesRenovationsPage = dynamic(() => import("@/views/VarsityLakesRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const CoolangattaRenovationsPage = dynamic(() => import("@/views/CoolangattaRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const CurrumbinRenovationsPage = dynamic(() => import("@/views/CurrumbinRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const SurfersParadiseRenovationsPage = dynamic(() => import("@/views/SurfersParadiseRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const BundallRenovationsPage = dynamic(() => import("@/views/BundallRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const RunawayBayRenovationsPage = dynamic(() => import("@/views/RunawayBayRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const CoomeraRenovationsPage = dynamic(() => import("@/views/CoomeraRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
-
 const UpperCoomeraRenovationsPage = dynamic(() => import("@/views/UpperCoomeraRenovations"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
 });
 
-// Heavy pages - dynamic imports with loading states
+// Heavy/interactive pages - client-only (ssr: false)
 const AIDesignGeneratorPage = dynamic(() => import("@/views/AIDesignGenerator"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
   ssr: false,
 });
-
 const AIDesignIntroPage = dynamic(() => import("@/views/AIDesignIntro"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
   ssr: false,
 });
-
 const MoodboardCreatorPage = dynamic(() => import("@/views/MoodboardCreator"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
   ssr: false,
 });
-
 const ProjectDetailPage = dynamic(() => import("@/views/ProjectDetail"), {
-  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+  loading: pageLoader,
   ssr: false,
 });
-
 const BrandGuidelinesPage = dynamic(() => import("@/views/BrandGuidelines"), {
   ssr: false,
 });
 
-// Admin pages - dynamic imports
+// Admin pages
 const AdminDashboardPage = dynamic(() => import("@/views/admin/AdminDashboard"), {
   ssr: false,
 });
@@ -177,14 +189,12 @@ const AdminProjectsPage = dynamic(() => import("@/views/admin/AdminProjects"), {
 const AdminSettingsPage = dynamic(() => import("@/views/admin/AdminSettings"), {
   ssr: false,
 });
-
 const AdminPopupResponsesPage = dynamic(() => import("@/views/admin/AdminPopupResponses"), {
   ssr: false,
 });
 const AdminSiteImagesPage = dynamic(() => import("@/views/admin/AdminSiteImages"), {
   ssr: false,
 });
-
 const BurleighHeadsPage = dynamic(() => import("@/views/BurleighHeads"), {
   ssr: false,
 });
@@ -262,9 +272,15 @@ export function BrandGuidelinesClient() {
 }
 
 export function AdminIndexClient() {
+  // Navigate is from the compat shim (lightweight); lazy-load it to avoid
+  // pulling it into the shared chunk.
+  const LazyNavigate = dynamic(
+    () => import("react-router-dom").then((m) => ({ default: m.Navigate })),
+    { ssr: false },
+  );
   return (
     <RequireAdmin>
-      <Navigate to="/admin/dashboard" replace />
+      <LazyNavigate to="/admin/dashboard" replace />
     </RequireAdmin>
   );
 }

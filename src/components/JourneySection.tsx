@@ -174,7 +174,7 @@ const JourneySection = () => {
           <div className="flex justify-center md:justify-end">
             <Link
               to="/book-renovation-consultation"
-              className="inline-flex items-center justify-center h-11 px-7 bg-primary text-primary-foreground text-xs tracking-[0.22em] uppercase hover:bg-primary/90 transition-colors"
+              className="bg-primary text-primary-foreground px-8 py-3 text-xs uppercase tracking-widest hover:opacity-90 transition-opacity inline-block"
             >
               Request Your Free Consultation
             </Link>

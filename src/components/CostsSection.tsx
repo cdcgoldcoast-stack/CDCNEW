@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 const CostsSection = () => {
   const ref = useRef<HTMLElement>(null);
   const services = [{
@@ -183,10 +182,11 @@ const CostsSection = () => {
         }} whileTap={{
           scale: 0.98
         }} className="mb-6 md:mb-8">
-            <Link to="/book-renovation-consultation">
-              <Button variant="hero" size="lg" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90">
-                Request Your Renovation Consultation
-              </Button>
+            <Link
+              to="/book-renovation-consultation"
+              className="bg-primary-foreground text-primary px-8 py-3 text-xs uppercase tracking-widest hover:bg-primary-foreground/90 transition-colors inline-block"
+            >
+              Request Your Renovation Consultation
             </Link>
           </motion.div>
 

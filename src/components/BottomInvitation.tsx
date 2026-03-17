@@ -27,7 +27,7 @@ const BottomInvitation = ({
         </p>
         <Link
           to={ctaTo}
-          className="inline-flex items-center justify-center border border-primary-foreground text-primary-foreground px-6 md:px-8 py-3 md:py-4 text-xs uppercase tracking-[0.15em] font-medium hover:bg-primary-foreground hover:text-primary transition-colors"
+          className="bg-primary-foreground text-primary px-8 py-3 text-xs uppercase tracking-widest hover:bg-primary-foreground/90 transition-colors inline-block"
         >
           {ctaLabel}
         </Link>

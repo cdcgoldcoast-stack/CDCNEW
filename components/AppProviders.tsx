@@ -4,7 +4,8 @@ import { type ReactNode, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HelmetProvider } from "react-helmet-async";
+// react-helmet-async HelmetProvider removed — the SEO compat shim (compat/SEO.tsx)
+// renders nothing, so wrapping the tree in HelmetProvider was dead weight (~15KB).
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import { initGoogleAnalytics, trackPageView } from "@/lib/analytics";
@@ -166,16 +167,14 @@ export default function AppProviders({ children }: AppProvidersProps) {
   }, [allowEngagementUi, viewportType]);
 
   return (
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          {children}
-          {showChatWidget ? <AIChatWidget /> : null}
-          {allowEngagementUi ? <PromoPopup delay={viewportType === "mobile" ? 10 : 7} /> : null}
-          <Toaster />
-          {allowSpeedInsights ? <SpeedInsights /> : null}
-        </TooltipProvider>
-      </QueryClientProvider>
-    </HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        {children}
+        {showChatWidget ? <AIChatWidget /> : null}
+        {allowEngagementUi ? <PromoPopup delay={viewportType === "mobile" ? 10 : 7} /> : null}
+        <Toaster />
+        {allowSpeedInsights ? <SpeedInsights /> : null}
+      </TooltipProvider>
+    </QueryClientProvider>
   );
 }

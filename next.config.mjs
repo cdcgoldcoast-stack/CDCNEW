@@ -31,6 +31,21 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  // Tree-shake barrel exports for large icon/animation libraries
+  experimental: {
+    optimizePackageImports: [
+      "framer-motion",
+      "lucide-react",
+      "date-fns",
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-navigation-menu",
+      "@radix-ui/react-popover",
+      "@radix-ui/react-tabs",
+      "@radix-ui/react-tooltip",
+    ],
+  },
   env: {
     NEXT_PUBLIC_SUPABASE_URL: resolvedSupabaseUrl,
     NEXT_PUBLIC_SUPABASE_ANON_KEY: resolvedSupabaseAnonKey,

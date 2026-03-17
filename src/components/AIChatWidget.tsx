@@ -428,7 +428,7 @@ const AIChatWidget = () => {
       {/* Chat Toggle Button */}
       <motion.button
         onClick={() => (isOpen ? handleClose() : handleOpen())}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-primary text-primary-foreground rounded-full shadow-lg flex items-center justify-center hover:bg-primary/90 transition-colors"
+        className="fixed bottom-6 right-6 z-[60] w-14 h-14 bg-primary text-primary-foreground rounded-full shadow-lg flex items-center justify-center hover:bg-primary/90 transition-colors"
         aria-label={isOpen ? "Close chat" : "Open chat"}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -466,7 +466,7 @@ const AIChatWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed bottom-24 right-6 z-50 w-[380px] max-w-[calc(100vw-3rem)] max-h-[calc(100vh-120px)] bg-background border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            className="fixed bottom-24 right-6 z-[60] w-[380px] max-w-[calc(100vw-3rem)] max-h-[calc(100vh-120px)] bg-background border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Chat View */}
             <motion.div

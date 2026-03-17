@@ -67,7 +67,7 @@ const WhyRenovate = () => {
             >
               <Link
                 to="/book-renovation-consultation"
-                className="inline-flex items-center justify-center h-11 px-7 bg-white text-primary text-xs tracking-[0.22em] uppercase hover:bg-white/90 transition-colors"
+                className="bg-primary-foreground text-primary px-8 py-3 text-xs uppercase tracking-widest hover:bg-primary-foreground/90 transition-colors inline-block"
               >
                 Book a No-Pressure Chat
               </Link>

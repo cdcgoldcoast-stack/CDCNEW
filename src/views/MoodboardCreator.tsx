@@ -12,7 +12,8 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import html2canvas from "html2canvas";
+// html2canvas is ~500KB — load it only when export is triggered
+const loadHtml2Canvas = () => import("html2canvas").then((m) => m.default);
 import { useIsMobile } from "@/hooks/use-mobile";
 import SEO from "@/components/SEO";
 import { FUNCTION_ENDPOINTS } from "@/config/endpoints";
@@ -752,6 +753,7 @@ const MoodboardCreator = () => {
       // Use high scale for HD export (4x for print-quality output)
       const exportScale = 4;
       
+      const html2canvas = await loadHtml2Canvas();
       const canvas = await html2canvas(boardRef.current, {
         scale: exportScale,
         backgroundColor: "#ffffff",

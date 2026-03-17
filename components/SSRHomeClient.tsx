@@ -73,7 +73,7 @@ export default function SSRHomeClient() {
                   </Link>
                   <Link
                     to="/renovation-ai-generator"
-                    className="text-label border border-primary/30 text-primary px-8 py-3 hover:bg-primary/5 transition-colors inline-block"
+                    className="border border-primary/30 text-primary px-8 py-3 text-xs uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition-colors inline-block"
                   >
                     Open AI Generator
                   </Link>
