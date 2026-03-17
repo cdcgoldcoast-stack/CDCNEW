@@ -14,16 +14,28 @@ const Footer = () => {
     { label: "Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
     { label: "Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
     { label: "Whole-Home Renovations", href: "/whole-home-renovations-gold-coast" },
+    { label: "Laundry Renovations", href: "/laundry-renovations-gold-coast" },
+    { label: "Outdoor & Decks", href: "/outdoor-renovations-gold-coast" },
+    { label: "Apartment Renovations", href: "/apartment-renovations-gold-coast" },
+    { label: "Home Extensions", href: "/home-extensions-gold-coast" },
     { label: "All Services", href: "/renovation-services" },
   ];
 
   const locationLinks = [
     { label: "Broadbeach", href: "/broadbeach-renovations" },
-    { label: "Burleigh", href: "/renovations/burleigh-heads" },
+    { label: "Burleigh Heads", href: "/renovations/burleigh-heads" },
+    { label: "Surfers Paradise", href: "/surfers-paradise-renovations" },
     { label: "Mermaid Beach", href: "/mermaid-beach-renovations" },
     { label: "Palm Beach", href: "/palm-beach-renovations" },
     { label: "Robina", href: "/robina-renovations" },
     { label: "Southport", href: "/southport-renovations" },
+    { label: "Helensvale", href: "/helensvale-renovations" },
+    { label: "Hope Island", href: "/hope-island-renovations" },
+    { label: "Coomera", href: "/coomera-renovations" },
+    { label: "Nerang", href: "/nerang-renovations" },
+    { label: "Coolangatta", href: "/coolangatta-renovations" },
+    { label: "Currumbin", href: "/currumbin-renovations" },
+    { label: "Miami", href: "/miami-renovations" },
   ];
 
   const companyLinks = [
@@ -217,8 +229,8 @@ const Footer = () => {
         {/* Service areas */}
         <div className="mt-16 pt-8 border-t border-foreground/10">
           <p className="text-sm text-foreground/50 text-center">
-            Serving: Broadbeach, Burleigh Heads, Mermaid Beach, Robina, Southport, Palm Beach, 
-            Elanora, Helensvale, Hope Island & all Gold Coast suburbs
+            Serving: Broadbeach, Burleigh Heads, Surfers Paradise, Mermaid Beach, Robina, Southport, Palm Beach,
+            Helensvale, Hope Island, Coomera, Nerang, Mudgeeraba, Varsity Lakes, Coolangatta, Currumbin, Miami & all Gold Coast suburbs
           </p>
         </div>
 

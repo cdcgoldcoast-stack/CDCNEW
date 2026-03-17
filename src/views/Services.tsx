@@ -10,20 +10,44 @@ const serviceScopes = [
   {
     title: "Kitchen Renovation Service Scope",
     summary: "Layout improvements, cabinetry planning, appliance integration, and lighting upgrades.",
-    link: "/renovation-projects/family-hub",
-    linkLabel: "View kitchen project example",
+    link: "/kitchen-renovations-gold-coast",
+    linkLabel: "View kitchen renovations",
   },
   {
     title: "Bathroom Renovation Service Scope",
     summary: "Waterproofing-led upgrades, fixture selection, storage planning, and practical detailing.",
-    link: "/renovation-projects/seamless-bathroom",
-    linkLabel: "View bathroom project example",
+    link: "/bathroom-renovations-gold-coast",
+    linkLabel: "View bathroom renovations",
   },
   {
     title: "Whole-Home Renovation Service Scope",
     summary: "Flow, zoning, and staged works planning for better daily living outcomes.",
-    link: "/renovation-projects/light-and-flow-house",
-    linkLabel: "View whole-home project example",
+    link: "/whole-home-renovations-gold-coast",
+    linkLabel: "View whole-home renovations",
+  },
+  {
+    title: "Laundry Renovation Service Scope",
+    summary: "Custom cabinetry, smart storage, utility sinks, and combined bathroom-laundry solutions.",
+    link: "/laundry-renovations-gold-coast",
+    linkLabel: "View laundry renovations",
+  },
+  {
+    title: "Outdoor & Deck Renovations",
+    summary: "Decking, alfresco areas, outdoor kitchens, pergolas, and pool surrounds built for Gold Coast living.",
+    link: "/outdoor-renovations-gold-coast",
+    linkLabel: "View outdoor renovations",
+  },
+  {
+    title: "Apartment Renovation Service Scope",
+    summary: "Body corporate compliant renovations for high-rise and low-rise apartments across the Gold Coast.",
+    link: "/apartment-renovations-gold-coast",
+    linkLabel: "View apartment renovations",
+  },
+  {
+    title: "Home Extensions",
+    summary: "Room additions, second storey extensions, granny flats, and garage conversions with council approval handling.",
+    link: "/home-extensions-gold-coast",
+    linkLabel: "View home extensions",
   },
 ];
 

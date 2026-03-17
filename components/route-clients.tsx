@@ -37,6 +37,22 @@ const WholeHomeRenovationsPage = dynamic(() => import("@/views/WholeHomeRenovati
   loading: () => <div className="min-h-screen bg-background animate-pulse" />,
 });
 
+const LaundryRenovationsPage = dynamic(() => import("@/views/LaundryRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const OutdoorRenovationsPage = dynamic(() => import("@/views/OutdoorRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const ApartmentRenovationsPage = dynamic(() => import("@/views/ApartmentRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const HomeExtensionsPage = dynamic(() => import("@/views/HomeExtensions"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
 // Location pages
 const BroadbeachRenovationsPage = dynamic(() => import("@/views/BroadbeachRenovations"), {
   loading: () => <div className="min-h-screen bg-background animate-pulse" />,
@@ -55,6 +71,62 @@ const RobinaRenovationsPage = dynamic(() => import("@/views/RobinaRenovations"),
 });
 
 const SouthportRenovationsPage = dynamic(() => import("@/views/SouthportRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const MiamiRenovationsPage = dynamic(() => import("@/views/MiamiRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const HopeIslandRenovationsPage = dynamic(() => import("@/views/HopeIslandRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const SanctuaryCoveRenovationsPage = dynamic(() => import("@/views/SanctuaryCoveRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const HelensvaleRenovationsPage = dynamic(() => import("@/views/HelensvaleRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const NerangRenovationsPage = dynamic(() => import("@/views/NerangRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const MudgeerabaRenovationsPage = dynamic(() => import("@/views/MudgeerabaRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const VarsityLakesRenovationsPage = dynamic(() => import("@/views/VarsityLakesRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const CoolangattaRenovationsPage = dynamic(() => import("@/views/CoolangattaRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const CurrumbinRenovationsPage = dynamic(() => import("@/views/CurrumbinRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const SurfersParadiseRenovationsPage = dynamic(() => import("@/views/SurfersParadiseRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const BundallRenovationsPage = dynamic(() => import("@/views/BundallRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const RunawayBayRenovationsPage = dynamic(() => import("@/views/RunawayBayRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const CoomeraRenovationsPage = dynamic(() => import("@/views/CoomeraRenovations"), {
+  loading: () => <div className="min-h-screen bg-background animate-pulse" />,
+});
+
+const UpperCoomeraRenovationsPage = dynamic(() => import("@/views/UpperCoomeraRenovations"), {
   loading: () => <div className="min-h-screen bg-background animate-pulse" />,
 });
 
@@ -281,6 +353,22 @@ export function WholeHomeRenovationsClient() {
   return <WholeHomeRenovationsPage />;
 }
 
+export function LaundryRenovationsClient() {
+  return <LaundryRenovationsPage />;
+}
+
+export function OutdoorRenovationsClient() {
+  return <OutdoorRenovationsPage />;
+}
+
+export function ApartmentRenovationsClient() {
+  return <ApartmentRenovationsPage />;
+}
+
+export function HomeExtensionsClient() {
+  return <HomeExtensionsPage />;
+}
+
 // Location pages
 export function BroadbeachRenovationsClient() {
   return <BroadbeachRenovationsPage />;
@@ -300,6 +388,62 @@ export function RobinaRenovationsClient() {
 
 export function SouthportRenovationsClient() {
   return <SouthportRenovationsPage />;
+}
+
+export function MiamiRenovationsClient() {
+  return <MiamiRenovationsPage />;
+}
+
+export function HopeIslandRenovationsClient() {
+  return <HopeIslandRenovationsPage />;
+}
+
+export function SanctuaryCoveRenovationsClient() {
+  return <SanctuaryCoveRenovationsPage />;
+}
+
+export function HelensvaleRenovationsClient() {
+  return <HelensvaleRenovationsPage />;
+}
+
+export function NerangRenovationsClient() {
+  return <NerangRenovationsPage />;
+}
+
+export function MudgeerabaRenovationsClient() {
+  return <MudgeerabaRenovationsPage />;
+}
+
+export function VarsityLakesRenovationsClient() {
+  return <VarsityLakesRenovationsPage />;
+}
+
+export function CoolangattaRenovationsClient() {
+  return <CoolangattaRenovationsPage />;
+}
+
+export function CurrumbinRenovationsClient() {
+  return <CurrumbinRenovationsPage />;
+}
+
+export function SurfersParadiseRenovationsClient() {
+  return <SurfersParadiseRenovationsPage />;
+}
+
+export function BundallRenovationsClient() {
+  return <BundallRenovationsPage />;
+}
+
+export function RunawayBayRenovationsClient() {
+  return <RunawayBayRenovationsPage />;
+}
+
+export function CoomeraRenovationsClient() {
+  return <CoomeraRenovationsPage />;
+}
+
+export function UpperCoomeraRenovationsClient() {
+  return <UpperCoomeraRenovationsPage />;
 }
 
 export function ReferralProgramClient() {

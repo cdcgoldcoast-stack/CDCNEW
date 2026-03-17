@@ -40,7 +40,7 @@ const WhatWeRenovateSplit = () => {
       tags: ["Laundry", "Living"],
       bgImage: assets["service-bg-living"],
       image: assets["service-living"],
-      href: "/renovation-services",
+      href: "/laundry-renovations-gold-coast",
     },
     {
       title: "Home Extensions",
@@ -48,7 +48,7 @@ const WhatWeRenovateSplit = () => {
       tags: ["Space", "Growth"],
       bgImage: assets["service-bg-extensions"],
       image: assets["service-extensions"],
-      href: "/renovation-services",
+      href: "/home-extensions-gold-coast",
     },
   ];
 
