@@ -3,24 +3,24 @@ import { motion } from "framer-motion";
 const testimonials = [
   {
     quote:
-      "They kept us informed at every stage — no surprises, no hidden costs. The whole process felt straightforward from start to finish.",
-    name: "Sarah M.",
-    suburb: "Broadbeach",
-    project: "Kitchen & Bathroom Renovation",
+      "Throughout the process they have been professional, communicative and supporting. We couldn't have asked for a better team for our first experience with renovating.",
+    name: "Trish",
+    suburb: "Gold Coast",
+    project: "Home Renovation",
   },
   {
     quote:
-      "We were nervous about the disruption, but the team had a clear plan and stuck to it. Our home feels completely different now — in the best way.",
-    name: "James & Lisa T.",
-    suburb: "Robina",
-    project: "Whole Home Renovation",
+      "The finish is absolutely incredible and was finished within the timeframe provided. Mark is extremely detail conscious and this shines through in the trades he uses.",
+    name: "Erin & Sam",
+    suburb: "Gold Coast",
+    project: "Bathroom Renovation",
   },
   {
     quote:
-      "From the first consultation to handover, communication was excellent. They genuinely cared about getting it right for our family.",
-    name: "Mark D.",
-    suburb: "Helensvale",
-    project: "Home Extension",
+      "In a word, CDC are 'Exceptional'. Their team workmanship, punctual attendance and tidiness exceeded my expectations and building industry standards.",
+    name: "Verified Google Review",
+    suburb: "Gold Coast",
+    project: "Home Renovation",
   },
 ];
 

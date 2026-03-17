@@ -6,7 +6,7 @@ import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 
 const pageTitle = "Client Testimonials | Gold Coast Renovations";
 const pageDescription =
-  "Read real testimonials from Gold Coast homeowners who have renovated with Concept Design Construct. 4.9-star Google rating from 47 reviews.";
+  "Read real testimonials from Gold Coast homeowners who have renovated with Concept Design Construct. 4.9-star Google rating from 50 reviews.";
 
 export const metadata: Metadata = buildMetadata({
   title: pageTitle,

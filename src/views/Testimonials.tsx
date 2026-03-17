@@ -10,59 +10,66 @@ import { motion } from "framer-motion";
 const testimonials = [
   {
     quote:
-      "They kept us informed at every stage — no surprises, no hidden costs. The whole process felt straightforward from start to finish.",
-    name: "Sarah M.",
-    suburb: "Broadbeach",
-    project: "Kitchen & Bathroom Renovation",
+      "Throughout the process they have been professional, communicative and supporting. We couldn't have asked for a better team for our first experience with renovating.",
+    name: "Trish",
+    suburb: "Gold Coast",
+    project: "Home Renovation",
   },
   {
     quote:
-      "We were nervous about the disruption, but the team had a clear plan and stuck to it. Our home feels completely different now — in the best way.",
-    name: "James & Lisa T.",
-    suburb: "Robina",
-    project: "Whole Home Renovation",
-  },
-  {
-    quote:
-      "From the first consultation to handover, communication was excellent. They genuinely cared about getting it right for our family.",
-    name: "Mark D.",
-    suburb: "Helensvale",
-    project: "Home Extension",
-  },
-  {
-    quote:
-      "The design process was fantastic. They helped us see what our kitchen could look like before any work started. The finished result exceeded our expectations.",
-    name: "Rachel & Tom K.",
-    suburb: "Mermaid Beach",
-    project: "Kitchen Renovation",
-  },
-  {
-    quote:
-      "After getting three quotes, CDC stood out for their transparency and attention to detail. The fixed-price contract gave us peace of mind throughout.",
-    name: "Andrew P.",
-    suburb: "Palm Beach",
-    project: "Bathroom & Laundry Renovation",
-  },
-  {
-    quote:
-      "Our 1990s home needed a complete refresh. The team transformed it into a modern, open-plan space while keeping the character we loved. Couldn't be happier.",
-    name: "Helen & Steve R.",
-    suburb: "Southport",
-    project: "Whole Home Renovation",
-  },
-  {
-    quote:
-      "What impressed us most was the single point of contact. One person managed everything, so we never felt lost or passed around. Highly recommend.",
-    name: "David L.",
-    suburb: "Burleigh Heads",
-    project: "Kitchen & Living Area Renovation",
-  },
-  {
-    quote:
-      "They delivered on time and on budget. In the renovation world, that says everything. We have already recommended them to two neighbours.",
-    name: "Karen W.",
-    suburb: "Broadbeach Waters",
+      "The finish is absolutely incredible and was finished within the timeframe provided. Mark is extremely detail conscious and this shines through in the trades he uses.",
+    name: "Erin & Sam",
+    suburb: "Gold Coast",
     project: "Bathroom Renovation",
+  },
+  {
+    quote:
+      "Not only were we astonished by the finished product of our Bathroom, Ensuite and Powder room renovations, we were amazed by the workmanship. Every little bit of attention to detail was made.",
+    name: "Emmanuel Vella",
+    suburb: "Gold Coast",
+    project: "Bathroom & Ensuite Renovation",
+  },
+  {
+    quote:
+      "Mark was an amazing project manager always one step ahead of the build, completing my project in 6 weeks. Transformed a tired '70s home into a modern beauty.",
+    name: "Susan",
+    suburb: "Gold Coast",
+    project: "Whole Home Renovation",
+  },
+  {
+    quote:
+      "They are on time, efficient, well mannered and clean up after themselves. You can't ask for more. I would highly recommend them for any building or renovation.",
+    name: "Fran",
+    suburb: "Gold Coast",
+    project: "Bathroom Renovation",
+  },
+  {
+    quote:
+      "We were so impressed by the timeliness, attitude and workmanship that when we needed an insurance repair on our main bathroom, we engaged CDC again. A builder who does what he says he will do.",
+    name: "Daryl Weavers",
+    suburb: "Gold Coast",
+    project: "Ensuite & Laundry Renovation",
+  },
+  {
+    quote:
+      "Mark managed to deliver great work within really tight timelines for our bathroom renovation. Really happy with the outcome and the result didn't disappoint our expectations.",
+    name: "Jonathan",
+    suburb: "Gold Coast",
+    project: "Bathroom Renovation",
+  },
+  {
+    quote:
+      "In a word, CDC are 'Exceptional'. Their team workmanship, punctual attendance and tidiness exceeded my expectations and building industry standards.",
+    name: "Verified Google Review",
+    suburb: "Gold Coast",
+    project: "Home Renovation",
+  },
+  {
+    quote:
+      "Communication was a breeze throughout the project. They kept me in the loop with regular updates and made sure everything was on track with weekly progress updates.",
+    name: "Verified Google Review",
+    suburb: "Gold Coast",
+    project: "Home Renovation",
   },
 ];
 
@@ -142,7 +149,7 @@ const Testimonials = () => {
               />
             </div>
             <p className="text-foreground/60 text-sm">
-              4.9 stars from 47 reviews on Google
+              4.9 stars from 50 reviews on Google
             </p>
           </motion.div>
         </div>

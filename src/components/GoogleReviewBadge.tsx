@@ -43,7 +43,7 @@ const GoogleReviewBadge = ({
             </svg>
           ))}
           <span className={`${labelSize} text-foreground/60 ml-1`}>4.9</span>
-          <span className={`${labelSize} text-foreground/50`}>(47 reviews)</span>
+          <span className={`${labelSize} text-foreground/50`}>(50 reviews)</span>
         </div>
       </div>
     </div>

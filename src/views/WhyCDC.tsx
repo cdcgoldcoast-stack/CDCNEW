@@ -22,7 +22,7 @@ import {
 const stats = [
   { value: "25+", label: "Years Experience" },
   { value: "4.9", label: "Google Rating" },
-  { value: "47", label: "Reviews" },
+  { value: "50", label: "Reviews" },
   { value: "QBCC", label: "Licensed" },
 ];
 
@@ -68,21 +68,21 @@ const differentiators = [
 const reviews = [
   {
     quote:
-      "They kept us informed at every stage — no surprises, no hidden costs. The whole process felt straightforward from start to finish.",
-    name: "Sarah M.",
-    suburb: "Broadbeach",
+      "Throughout the process they have been professional, communicative and supporting. We couldn't have asked for a better team for our first experience with renovating.",
+    name: "Trish",
+    suburb: "Gold Coast",
   },
   {
     quote:
-      "We were nervous about the disruption, but the team had a clear plan and stuck to it. Our home feels completely different now — in the best way.",
-    name: "James & Lisa T.",
-    suburb: "Robina",
+      "The finish is absolutely incredible and was finished within the timeframe provided. Mark is extremely detail conscious and this shines through in the trades he uses.",
+    name: "Erin & Sam",
+    suburb: "Gold Coast",
   },
   {
     quote:
-      "From the first consultation to handover, communication was excellent. They genuinely cared about getting it right for our family.",
-    name: "Mark D.",
-    suburb: "Helensvale",
+      "Not only were we astonished by the finished product, we were amazed by the workmanship. Every little bit of attention to detail was made. Highly recommended!",
+    name: "Emmanuel Vella",
+    suburb: "Gold Coast",
   },
 ];
 
