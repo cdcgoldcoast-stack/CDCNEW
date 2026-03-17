@@ -308,6 +308,29 @@ export const generateLocalBusinessSchema = () => ({
     bestRating: "5",
     worstRating: "1",
   },
+  review: [
+    {
+      "@type": "Review",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+      author: { "@type": "Person", name: "Trish" },
+      reviewBody:
+        "Throughout the process they have been professional, communicative and supporting. We couldn't have asked for a better team for our first experience with renovating.",
+    },
+    {
+      "@type": "Review",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+      author: { "@type": "Person", name: "Erin & Sam" },
+      reviewBody:
+        "The finish is absolutely incredible and was finished within the timeframe provided. Mark is extremely detail conscious and this shines through in the trades he uses.",
+    },
+    {
+      "@type": "Review",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+      author: { "@type": "Person", name: "Emmanuel Vella" },
+      reviewBody:
+        "Not only were we astonished by the finished product of our Bathroom, Ensuite and Powder room renovations, we were amazed by the workmanship. Every little bit of attention to detail was made.",
+    },
+  ],
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
     dayOfWeek: BUSINESS_INFO.openingHours.days,

@@ -289,6 +289,46 @@ const KitchenRenovations = () => {
         </div>
       </section>
 
+      {/* Areas We Serve */}
+      <section className="py-16 md:py-24 bg-cream relative z-10">
+        <div className="container-wide">
+          <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-4 text-center">
+            Kitchen Renovations Across the Gold Coast
+          </h2>
+          <p className="text-foreground/70 text-center mb-10 max-w-2xl mx-auto">
+            We deliver kitchen renovations throughout the Gold Coast. Find your local area below.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
+            {[
+              { label: "Broadbeach", href: "/broadbeach-renovations" },
+              { label: "Surfers Paradise", href: "/surfers-paradise-renovations" },
+              { label: "Robina", href: "/robina-renovations" },
+              { label: "Southport", href: "/southport-renovations" },
+              { label: "Helensvale", href: "/helensvale-renovations" },
+              { label: "Palm Beach", href: "/palm-beach-renovations" },
+              { label: "Burleigh Heads", href: "/burleigh-heads-renovations" },
+              { label: "Mermaid Beach", href: "/mermaid-beach-renovations" },
+              { label: "Hope Island", href: "/hope-island-renovations" },
+              { label: "Coomera", href: "/coomera-renovations" },
+              { label: "Nerang", href: "/nerang-renovations" },
+              { label: "Coolangatta", href: "/coolangatta-renovations" },
+              { label: "Currumbin", href: "/currumbin-renovations" },
+              { label: "Miami", href: "/miami-renovations" },
+              { label: "Mudgeeraba", href: "/mudgeeraba-renovations" },
+              { label: "Varsity Lakes", href: "/varsity-lakes-renovations" },
+              { label: "Bundall", href: "/bundall-renovations" },
+              { label: "Runaway Bay", href: "/runaway-bay-renovations" },
+              { label: "Sanctuary Cove", href: "/sanctuary-cove-renovations" },
+              { label: "Upper Coomera", href: "/upper-coomera-renovations" },
+            ].map((area) => (
+              <Link key={area.href} to={area.href} className="text-sm text-primary border border-primary/20 px-4 py-2 hover:bg-primary hover:text-primary-foreground transition-colors">
+                {area.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* FAQ Section */}
       <section className="py-16 md:py-24 bg-cream relative z-10">
         <div className="container-wide max-w-4xl">

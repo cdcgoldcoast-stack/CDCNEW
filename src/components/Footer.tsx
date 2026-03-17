@@ -108,12 +108,17 @@ const Footer = () => {
                 <Mail className="w-4 h-4 flex-shrink-0" />
                 info@cdconstruct.com.au
               </a>
-              <div className="flex items-start gap-3 text-sm text-foreground/70">
+              <a
+                href="https://maps.google.com/?q=1907/22+Surf+Parade+Broadbeach+QLD+4218"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-3 text-sm text-foreground/70 hover:text-primary transition-colors"
+              >
                 <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
                 <address className="not-italic">
                   1907/22 Surf Parade, Broadbeach
                 </address>
-              </div>
+              </a>
             </div>
 
             {/* Social */}
