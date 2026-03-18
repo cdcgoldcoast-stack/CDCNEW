@@ -33,8 +33,10 @@ type DesktopNavItem =
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
+  const dropdownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
   const isHome = location.pathname === "/";
 
@@ -221,20 +223,53 @@ const Header = () => {
             ) : (
               <div
                 key={item.label}
-                className="relative group"
-                onMouseEnter={() => item.links.forEach((link) => prefetchRoute(link.href))}
-                onFocus={() => item.links.forEach((link) => prefetchRoute(link.href))}
+                className="relative"
+                onMouseEnter={() => {
+                  if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+                  setOpenDropdown(item.label);
+                  item.links.forEach((link) => prefetchRoute(link.href));
+                }}
+                onMouseLeave={() => {
+                  dropdownTimeoutRef.current = setTimeout(() => setOpenDropdown(null), 150);
+                }}
+                onFocus={() => {
+                  setOpenDropdown(item.label);
+                  item.links.forEach((link) => prefetchRoute(link.href));
+                }}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                    setOpenDropdown(null);
+                  }
+                }}
               >
                 <button
                   type="button"
                   aria-haspopup="true"
-                  className={`text-[11px] 2xl:text-xs uppercase tracking-[0.15em] transition-all duration-300 hover:opacity-60 ${
+                  aria-expanded={openDropdown === item.label}
+                  onClick={() => setOpenDropdown(openDropdown === item.label ? null : item.label)}
+                  className={`text-[11px] 2xl:text-xs uppercase tracking-[0.15em] transition-all duration-300 hover:opacity-60 inline-flex items-center gap-1 ${
                     shouldBeTransparent ? "text-white" : "text-foreground"
                   }`}
                 >
                   {item.label}
+                  <svg
+                    className={`w-3 h-3 transition-transform duration-200 ${openDropdown === item.label ? "rotate-180" : ""}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
                 </button>
-                <div className="pointer-events-none absolute left-0 top-full pt-3 opacity-0 translate-y-1 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-focus-within:translate-y-0">
+                <div
+                  className={`absolute left-0 top-full pt-3 transition-all duration-200 ${
+                    openDropdown === item.label
+                      ? "pointer-events-auto opacity-100 translate-y-0"
+                      : "pointer-events-none opacity-0 translate-y-1"
+                  }`}
+                >
                   <div
                     className={`min-w-[220px] border py-2 ${
                       shouldBeTransparent
@@ -250,6 +285,7 @@ const Header = () => {
                         className={`block px-4 py-2 text-[11px] 2xl:text-xs uppercase tracking-[0.15em] transition-all duration-300 hover:opacity-60 ${
                           shouldBeTransparent ? "text-white" : "text-foreground"
                         }`}
+                        onClick={() => setOpenDropdown(null)}
                       >
                         {link.label}
                       </Link>

@@ -81,7 +81,7 @@ const Footer = () => {
                 href="https://maps.google.com/?q=1907/22+Surf+Parade+Broadbeach+QLD+4218"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-start gap-3 text-sm text-foreground/70 hover:text-primary transition-colors"
+                className="flex items-start gap-3 text-sm text-foreground/80 hover:text-primary transition-colors"
               >
                 <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
                 <address className="not-italic">
@@ -97,7 +97,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                className="text-foreground/60 hover:text-primary transition-colors"
+                className="text-foreground/80 hover:text-primary transition-colors"
               >
                 <Instagram className="w-5 h-5" />
               </a>
@@ -106,7 +106,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="text-foreground/60 hover:text-primary transition-colors"
+                className="text-foreground/80 hover:text-primary transition-colors"
               >
                 <Facebook className="w-5 h-5" />
               </a>
@@ -115,7 +115,7 @@ const Footer = () => {
 
           {/* Column 2: Services */}
           <div>
-            <p className="text-label text-foreground/50 mb-6">Services</p>
+            <p className="text-label text-foreground/80 mb-6">Services</p>
             <nav aria-label="Footer services">
               <ul className="flex flex-col gap-4">
                 {serviceLinks.map(link => (
@@ -134,7 +134,7 @@ const Footer = () => {
 
           {/* Column 3: Locations */}
           <div>
-            <p className="text-label text-foreground/50 mb-6">Locations</p>
+            <p className="text-label text-foreground/80 mb-6">Locations</p>
             <nav aria-label="Footer locations">
               <ul className="flex flex-col gap-4">
                 {FOOTER_SUBURB_LINKS.map(link => (
@@ -153,7 +153,7 @@ const Footer = () => {
 
           {/* Column 4: Company */}
           <div>
-            <p className="text-label text-foreground/50 mb-6">Company</p>
+            <p className="text-label text-foreground/80 mb-6">Company</p>
             <nav aria-label="Footer company">
               <ul className="flex flex-col gap-4">
                 {companyLinks.map(link => (
@@ -172,7 +172,7 @@ const Footer = () => {
 
           {/* Column 5: Resources */}
           <div>
-            <p className="text-label text-foreground/50 mb-6">Resources</p>
+            <p className="text-label text-foreground/80 mb-6">Resources</p>
             <nav aria-label="Footer resources">
               <ul className="flex flex-col gap-4">
                 {resourceLinks.map(link => (
@@ -191,7 +191,7 @@ const Footer = () => {
 
           {/* Column 6: Accreditation */}
           <div>
-            <p className="text-label text-foreground/50 mb-6">Accreditation</p>
+            <p className="text-label text-foreground/80 mb-6">Accreditation</p>
             <div className="flex flex-col gap-5">
               <ResponsiveImage
                 src={qbccLogo}
@@ -217,7 +217,7 @@ const Footer = () => {
 
         {/* Service areas */}
         <div className="mt-16 pt-8 border-t border-foreground/10">
-          <p className="text-sm text-foreground/50 text-center">
+          <p className="text-sm text-foreground/80 text-center">
             Serving:{" "}
             {ALL_SUBURB_LINKS.map((link, i) => (
               <span key={link.href}>
@@ -232,19 +232,19 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="mt-8 pt-6 border-t border-foreground/10">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <p className="text-xs uppercase tracking-widest text-foreground/40" suppressHydrationWarning>
+            <p className="text-xs uppercase tracking-widest text-foreground/80" suppressHydrationWarning>
               &copy; {currentYear} Concept Design Construct
             </p>
             <div className="flex items-center gap-6">
               <a
                 href="/privacy-policy"
-                className="text-xs uppercase tracking-widest text-foreground/40 hover:text-primary transition-colors"
+                className="text-xs uppercase tracking-widest text-foreground/80 hover:text-primary transition-colors"
               >
                 Privacy
               </a>
               <a
                 href="/terms-conditions"
-                className="text-xs uppercase tracking-widest text-foreground/40 hover:text-primary transition-colors"
+                className="text-xs uppercase tracking-widest text-foreground/80 hover:text-primary transition-colors"
               >
                 Terms
               </a>

@@ -72,13 +72,13 @@ const LifestyleSection = () => {
       {/* Header section with parallax */}
       <motion.div style={{ y: headerY }} className="py-12 md:py-20 container-wide px-5 md:px-8">
         <div className="max-w-3xl">
-          <p className="text-label text-foreground/60 mb-4 md:mb-6 text-xs md:text-sm">
+          <p className="text-label text-foreground/80 mb-4 md:mb-6 text-xs md:text-sm">
             Our Approach
           </p>
           <h2 className="text-primary text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight mb-2 md:mb-3">
             Lifestyle enhancement, through renovation
           </h2>
-          <p className="text-foreground/70 text-base md:text-xl leading-relaxed">
+          <p className="text-foreground/80 text-base md:text-xl leading-relaxed">
             Lifestyle enhancement is the quiet improvement you feel every day.
           </p>
         </div>

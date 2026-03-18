@@ -86,7 +86,7 @@ const SuggestedProjects = ({ currentProjectId }: SuggestedProjectsProps) => {
           <h2 className="font-serif italic text-2xl md:text-3xl lg:text-4xl text-primary mb-3">
             More Gold Coast Renovation Projects
           </h2>
-          <p className="text-foreground/60 text-base md:text-lg">
+          <p className="text-foreground/80 text-base md:text-lg">
             Explore more completed Gold Coast renovations
           </p>
         </div>

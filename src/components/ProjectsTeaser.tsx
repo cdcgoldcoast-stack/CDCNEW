@@ -56,7 +56,9 @@ const ProjectsTeaser = () => {
   const animationRef = useRef<number | null>(null);
   const scrollPosRef = useRef(0);
   const loopWidthRef = useRef(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const prefersReducedMotion = typeof window !== 'undefined'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const [isPaused, setIsPaused] = useState(prefersReducedMotion);
   const [projects, setProjects] = useState<HomeProjectTeaser[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInViewport, setIsInViewport] = useState(true);
@@ -181,11 +183,11 @@ const ProjectsTeaser = () => {
     <section className="py-12 md:py-20 border-t border-foreground/10 bg-background relative z-10" id="projects">
       <div className="container-wide mb-8 md:mb-12 px-5 md:px-8">
         <div className="max-w-2xl mx-auto text-center mb-8 md:mb-12">
-          <p className="text-label text-foreground/60 mb-4 md:mb-6 text-xs md:text-sm">Gold Coast Renovations Selected Work</p>
+          <p className="text-label text-foreground/80 mb-4 md:mb-6 text-xs md:text-sm">Gold Coast Renovations Selected Work</p>
           <h2 className="text-primary font-serif italic text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight mb-3 md:mb-4">
             Our Gold Coast Renovation Projects And Client Stories
           </h2>
-          <p className="text-foreground/70 text-base md:text-xl leading-relaxed">Stories of life improving at home.</p>
+          <p className="text-foreground/80 text-base md:text-xl leading-relaxed">Stories of life improving at home.</p>
         </div>
       </div>
 

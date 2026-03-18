@@ -17,31 +17,31 @@ const FAQSection = () => {
   const faqs = [
     {
       question: "How long does a kitchen renovation take?",
-      answer: "Planned correctly, approximately 2 weeks. Order kitchen joinery and benchtops first. Once delivery dates are confirmed, demolition begins, followed by carpentry, electrical and plumbing rough ins. Joinery is then installed, followed by benchtops, appliances, splashback, fit offs and painting.",
+      answer: "Planned correctly, a Gold Coast kitchen renovation takes approximately 2 weeks from demolition to completion. We order kitchen joinery and benchtops first, and once delivery dates are confirmed, demolition begins followed by carpentry, electrical and plumbing rough-ins. Joinery is then installed, followed by benchtops, appliances, splashback, fit-offs and painting. Our team coordinates every trade to keep the timeline on track and minimise disruption to your household.",
     },
     {
       question: "How long does a bathroom renovation take?",
-      answer: "A standard bathroom typically spans approximately 4 weeks. Luxury bathrooms can take around 6 weeks. This includes strip out, carpentry, rough ins, lining, waterproofing, tiling and fit offs.",
+      answer: "A standard Gold Coast bathroom renovation typically spans approximately 4 weeks, while luxury bathrooms can take around 6 weeks. This includes strip-out, carpentry, rough-ins, lining, waterproofing, tiling and fit-offs. We provide a detailed schedule during the planning phase so you know exactly what to expect at each stage and can plan around any disruption.",
     },
     {
       question: "How much does a renovation cost on the Gold Coast?",
-      answer: "Renovation costs can range from approximately $10k to $150k+, depending on the scope of works and level of quality required. A typical kitchen supply and install is around $30k. Bathrooms generally range from $50k to $100k, depending on finishes and fixtures.",
+      answer: "Gold Coast renovation costs range from approximately $10k to $150k or more, depending on the scope of works and the level of quality required. A typical kitchen supply and install starts around $30k, while bathroom renovations generally range from $50k to $100k depending on finishes and fixtures. We provide transparent, itemised quotes during the planning phase so there are no surprises once work begins.",
     },
     {
       question: "Do renovations on the Gold Coast need council approval?",
-      answer: "No. Generally, council approval applies to extensions and new builds. Most internal renovations do not require approval.",
+      answer: "Most internal renovations on the Gold Coast do not require council approval. Generally, approval applies to extensions, new builds, or changes that alter the building footprint. We help identify early in the planning process whether your project needs any permits or certifications, so there are no delays once construction starts.",
     },
     {
       question: "Do you help with design and selections?",
-      answer: "Yes. We love assisting with the design process. Our experience allows us to recommend layouts that best suit your space while balancing functionality and style. We also help guide selections to ensure everything works practically and cohesively.",
+      answer: "Yes, we love assisting with the design process for Gold Coast home renovations. Our experience allows us to recommend layouts that best suit your space while balancing functionality and style. We also guide material and fixture selections to ensure everything works practically and cohesively, helping you avoid costly mistakes and achieve a result that feels considered and complete.",
     },
     {
       question: "Can you renovate one space or the whole home?",
-      answer: "It is often more cost effective to renovate multiple spaces together rather than completing sections at different times. Projects run more smoothly, with less disruption and fewer repeated trades, saving both time and cost.",
+      answer: "We handle everything from single-room updates to complete whole-home renovations on the Gold Coast. It is often more cost-effective to renovate multiple spaces together rather than completing sections at different times. Projects run more smoothly with less disruption and fewer repeated trades, saving both time and cost. We help you prioritise which spaces will make the biggest difference to your daily life.",
     },
     {
       question: "Can I live in the house during renovation?",
-      answer: "Yes, you can live in the house during renovation. It may not be at full comfort, but the wait will be worth it.",
+      answer: "Yes, you can live in the house during most Gold Coast home renovations. While it may not be at full comfort during certain stages, we plan the work to minimise disruption to your daily routine. Our team keeps the site tidy and communicates the schedule clearly so you always know what to expect. The short-term inconvenience is well worth the transformation.",
     },
   ];
 
@@ -82,7 +82,7 @@ const FAQSection = () => {
           transition={{ duration: 0.7 }}
         >
           <motion.p 
-            className="text-label text-foreground/70 mb-4 md:mb-8 text-xs md:text-sm"
+            className="text-label text-foreground/80 mb-4 md:mb-8 text-xs md:text-sm"
             whileInView={{ 
               letterSpacing: ["0.1em", "0.2em", "0.1em"],
             }}

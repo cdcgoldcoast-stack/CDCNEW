@@ -35,7 +35,7 @@ const TestimonialsSection = () => {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
         >
-          <p className="text-label text-foreground/70 mb-4 md:mb-6 text-xs md:text-sm">
+          <p className="text-label text-foreground/80 mb-4 md:mb-6 text-xs md:text-sm">
             What Homeowners Say
           </p>
           <h2 className="text-primary font-serif italic text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight">

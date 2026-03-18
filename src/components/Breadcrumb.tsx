@@ -12,7 +12,7 @@ interface BreadcrumbProps {
 const Breadcrumb = ({ items }: BreadcrumbProps) => {
   return (
     <nav aria-label="Breadcrumb" className="container-wide py-3">
-      <ol className="flex items-center gap-2 text-xs text-foreground/50">
+      <ol className="flex items-center gap-2 text-xs text-foreground/80">
         {items.map((item, index) => (
           <li key={index} className="flex items-center gap-2">
             {index > 0 && <span aria-hidden="true">/</span>}
@@ -21,7 +21,7 @@ const Breadcrumb = ({ items }: BreadcrumbProps) => {
                 {item.label}
               </Link>
             ) : (
-              <span className={index === items.length - 1 ? "text-foreground/70" : ""}>
+              <span className={index === items.length - 1 ? "text-foreground/80" : ""}>
                 {item.label}
               </span>
             )}

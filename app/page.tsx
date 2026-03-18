@@ -15,37 +15,37 @@ const homepageFAQs = [
   {
     question: "How long does a kitchen renovation take?",
     answer:
-      "Timing depends on scope and selections. Locked decisions and planning are what keep schedules predictable. We'll provide a realistic timeline based on your specific project during the planning phase.",
+      "A well-planned Gold Coast kitchen renovation takes approximately 2 weeks from demolition to completion. Timing depends on scope and selections, but locked decisions and thorough planning are what keep schedules predictable. We provide a realistic, stage-by-stage timeline during the planning phase so you know exactly what to expect.",
   },
   {
     question: "How long does a bathroom renovation take?",
     answer:
-      "Bathrooms vary by complexity, but clear scope and selections reduce surprises. A straightforward bathroom refresh may take several weeks, while a full reconfiguration takes longer.",
+      "A standard Gold Coast bathroom renovation typically takes around 4 weeks, while luxury or fully reconfigured bathrooms can take up to 6 weeks. Clear scope and early selections reduce surprises. We map out every stage from strip-out to fit-off so the process stays on track.",
   },
   {
     question: "How much does a renovation cost on the Gold Coast?",
     answer:
-      "Costs depend on scope, structural changes, finishes, and approvals. Most bathroom renovations start in the mid five figures, kitchens usually start higher, and full-home renovations vary widely based on layout and specification.",
+      "Gold Coast renovation costs depend on scope, structural changes, finishes, and approvals. Most bathroom renovations start in the mid five figures, kitchens usually begin around $30k, and full-home renovations vary widely based on layout and specification. We provide transparent, itemised quotes so you can make confident decisions.",
   },
   {
     question: "Do renovations on the Gold Coast need council approval?",
     answer:
-      "Some renovations do, especially if they involve structural changes, extensions, or changes to the home footprint. We help identify what approvals are needed early.",
+      "Some Gold Coast renovations do require approval, especially if they involve structural changes, extensions, or alterations to the building footprint. Most internal renovations do not need council approval. We help identify what permits or certifications are needed early so there are no delays once work begins.",
   },
   {
     question: "Do you handle approvals and coordination?",
     answer:
-      "Yes. We guide the process and work with the right consultants so approvals and planning feel clear, not confusing.",
+      "Yes, we guide the entire approvals process and coordinate with the right consultants so permits and planning feel clear, not confusing. From council submissions to trade scheduling, our Gold Coast team manages the details so you can focus on the exciting parts of your renovation.",
   },
   {
     question: "Do you help with design and selections?",
     answer:
-      "Yes. We guide layout, design decisions, and selections so the process feels calm and manageable. You won't be left to figure it out alone.",
+      "Yes, we guide layout, design decisions, and material selections so the renovation process feels calm and manageable. Our experience with Gold Coast homes means we can recommend what works best for your space, climate, and lifestyle. You will not be left to figure it out alone.",
   },
   {
     question: "Can you renovate one space or the whole home?",
     answer:
-      "Yes. Many clients start with a key space that will make the biggest difference. Others reshape the whole home for better flow and comfort. We help you decide what makes most sense for your situation.",
+      "Yes, we handle everything from single-room updates to complete whole-home transformations across the Gold Coast. Many clients start with one key space that will make the biggest difference, while others reshape the entire home for better flow and comfort. We help you decide what makes most sense for your situation and budget.",
   },
 ];
 

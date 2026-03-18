@@ -100,7 +100,7 @@ export default function SSRHomeClient() {
         <section className="py-16 md:py-20 bg-background relative z-10">
           <div className="container-wide px-5 md:px-8">
             <div className="text-center mb-12">
-              <p className="text-label text-foreground/60 mb-4 text-xs md:text-sm">Renovation Insights</p>
+              <p className="text-label text-foreground/80 mb-4 text-xs md:text-sm">Renovation Insights</p>
               <h2 className="text-primary font-serif italic text-xl sm:text-2xl md:text-3xl lg:text-4xl">
                 Latest from Our Blog
               </h2>
@@ -127,7 +127,7 @@ export default function SSRHomeClient() {
                   <h3 className="font-serif text-lg text-primary mb-2 group-hover:opacity-80 transition-opacity">
                     {post.title}
                   </h3>
-                  <p className="text-foreground/60 text-sm leading-relaxed">
+                  <p className="text-foreground/80 text-sm leading-relaxed">
                     {post.description}
                   </p>
                 </a>
