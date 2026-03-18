@@ -141,7 +141,7 @@ const EditorialReveal = () => {
   // Mobile: 3 columns simple grid
   if (isMobile) {
     return (
-      <section ref={sectionRef} className="py-8 overflow-hidden">
+      <section ref={sectionRef} className="pt-4 pb-8 overflow-hidden">
         <p className="text-label text-foreground/50 text-xs uppercase tracking-[0.2em] mb-4 px-5">Our Recent Work</p>
         <div className="grid grid-cols-3 gap-2 -mx-8">
           {/* Row 1 */}
@@ -190,7 +190,7 @@ const EditorialReveal = () => {
   // Tablet: 4 columns simple grid (no parallax for performance)
   if (isTablet) {
     return (
-      <section ref={sectionRef} className="py-10 overflow-hidden">
+      <section ref={sectionRef} className="pt-4 pb-10 overflow-hidden">
         <p className="text-label text-foreground/50 text-xs uppercase tracking-[0.2em] mb-5 px-6">Our Recent Work</p>
         <div className="grid grid-cols-4 gap-3 -mx-4">
           {/* Row 1 */}
@@ -239,7 +239,7 @@ const EditorialReveal = () => {
   // Desktop: 5 columns parallax scroll effect
   return (
     <section ref={sectionRef}>
-      <div className="h-[60vh] relative">
+      <div className="h-[40vh] relative">
         <p className="absolute bottom-8 left-8 text-label text-foreground/50 text-xs uppercase tracking-[0.2em] z-10">Our Recent Work</p>
       </div>
       

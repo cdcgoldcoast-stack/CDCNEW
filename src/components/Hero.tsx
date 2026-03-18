@@ -73,7 +73,7 @@ const Hero = () => {
 
             <a
               href="/book-renovation-consultation"
-              className="bg-primary text-primary-foreground px-8 py-3 text-xs uppercase tracking-widest hover:opacity-90 transition-opacity inline-block mt-6 md:mt-8"
+              className="bg-primary text-primary-foreground px-8 py-3 text-sm uppercase tracking-widest hover:opacity-90 transition-opacity inline-block mt-6 md:mt-8"
             >
               Book Your Free Consultation
             </a>

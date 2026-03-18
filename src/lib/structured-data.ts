@@ -287,12 +287,15 @@ export const generateLocalBusinessSchema = () => ({
   ],
   address: {
     "@type": "PostalAddress",
-    addressLocality: SERVICE_AREAS.primary[0],
-    addressRegion: SERVICE_AREAS.state,
-    addressCountry: SERVICE_AREAS.country,
+    streetAddress: "1907/22 Surf Parade",
+    addressLocality: "Broadbeach",
+    addressRegion: "QLD",
+    postalCode: "4218",
+    addressCountry: "AU",
   },
   areaServed: [
     ...SERVICE_AREAS.primary.map((city) => ({ "@type": "City", name: city })),
+    ...SERVICE_AREAS.suburbs.map((suburb) => ({ "@type": "City", name: suburb })),
     { "@type": "State", name: SERVICE_AREAS.state },
   ],
   priceRange: BUSINESS_INFO.priceRange,

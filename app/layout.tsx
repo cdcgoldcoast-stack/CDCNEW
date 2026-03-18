@@ -75,18 +75,10 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     <html lang="en-AU">
       <head>
         <link rel="icon" type="image/png" href="/favicon-v2.png?v=2" sizes="256x256" />
+        <link rel="preload" as="image" href="/home/hero-v2.webp" type="image/webp" />
         <link rel="dns-prefetch" href="//iqugsxeejieneyksfbza.supabase.co" />
         <link rel="preconnect" href="https://iqugsxeejieneyksfbza.supabase.co" crossOrigin="anonymous" />
-        <meta property="og:type" content="website" />
-        <meta property="og:locale" content="en_AU" />
-        <meta property="og:url" content={SITE_URL} />
-        <meta property="og:site_name" content={SITE_NAME} />
-        <meta property="og:title" content={DEFAULT_META.title} />
-        <meta property="og:description" content={DEFAULT_META.description} />
-        <meta property="og:image" content={DEFAULT_META.image} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Gold Coast renovations by Concept Design Construct" />
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
       </head>
       <body>
         <AppProviders>{children}</AppProviders>

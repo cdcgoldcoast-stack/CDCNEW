@@ -51,9 +51,9 @@ const homepageFAQs = [
 
 export const metadata: Metadata = {
   ...buildMetadata({
-    title: "Concept Design Construct (CD Construct) | Gold Coast",
+    title: "Gold Coast Renovations | Kitchen, Bathroom & Home | CD Construct",
     description:
-      "Concept Design Construct (CD Construct) are Gold Coast renovation builders for kitchens, bathrooms, and whole-home transformations with design-led planning, QBCC licensed delivery, and clear timelines.",
+      "Gold Coast renovation builders for kitchens, bathrooms & whole-home transformations. Design-led planning, QBCC licensed, clear timelines. Free consultation.",
     path: "/",
     keywords: PRIMARY_KEYWORDS,
   }),

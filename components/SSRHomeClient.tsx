@@ -95,6 +95,52 @@ export default function SSRHomeClient() {
         <ProjectsTeaser />
         <WhyRenovate />
         <TestimonialsSection />
+
+        {/* Latest from the Blog */}
+        <section className="py-16 md:py-20 bg-background relative z-10">
+          <div className="container-wide px-5 md:px-8">
+            <div className="text-center mb-12">
+              <p className="text-label text-foreground/60 mb-4 text-xs md:text-sm">Renovation Insights</p>
+              <h2 className="text-primary font-serif italic text-xl sm:text-2xl md:text-3xl lg:text-4xl">
+                Latest from Our Blog
+              </h2>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {[
+                {
+                  title: "How to Choose a Renovation Builder on the Gold Coast",
+                  href: "/blog/how-to-choose-renovation-builder-gold-coast",
+                  description: "A practical guide to finding and vetting a renovation builder — QBCC licensing, contracts, and red flags.",
+                },
+                {
+                  title: "Gold Coast Renovation Costs 2026: Complete Price Guide",
+                  href: "/blog/gold-coast-renovation-costs-complete-guide",
+                  description: "Realistic renovation costs for Gold Coast kitchens, bathrooms, and whole homes with detailed breakdowns.",
+                },
+                {
+                  title: "Apartment Renovation Rules: Body Corporate Guide",
+                  href: "/blog/apartment-renovation-body-corporate-guide-gold-coast",
+                  description: "Everything you need to know about body corporate rules and approvals before renovating your apartment.",
+                },
+              ].map((post) => (
+                <a key={post.href} href={post.href} className="group block">
+                  <h3 className="font-serif text-lg text-primary mb-2 group-hover:opacity-80 transition-opacity">
+                    {post.title}
+                  </h3>
+                  <p className="text-foreground/60 text-sm leading-relaxed">
+                    {post.description}
+                  </p>
+                </a>
+              ))}
+            </div>
+            <div className="text-center mt-10">
+              <a href="/blog" className="text-sm text-primary border border-primary/20 px-6 py-2 hover:bg-primary hover:text-primary-foreground transition-colors uppercase tracking-widest">
+                View All Posts
+              </a>
+            </div>
+          </div>
+        </section>
+
         <FAQSection />
         <CostsSection />
       </main>
