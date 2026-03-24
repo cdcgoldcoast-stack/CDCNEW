@@ -1,7 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import Script from "next/script";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import AppProviders from "../components/AppProviders";
 import { DEFAULT_META, PRODUCTION_DOMAIN, SITE_NAME } from "@/config/seo";
+import { GA_MEASUREMENT_ID } from "@/lib/analytics";
 import "./globals.css";
 
 const SITE_URL = PRODUCTION_DOMAIN;
@@ -81,7 +84,21 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
       </head>
       <body>
+        <Script id="google-analytics-stub" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = window.gtag || function gtag(){window.dataLayer.push(arguments);}
+            window.gtag('js', new Date());
+            window.gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
+          `}
+        </Script>
+        <Script
+          id="google-analytics"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
         <AppProviders>{children}</AppProviders>
+        <VercelAnalytics />
       </body>
     </html>
   );

@@ -1,76 +1,13 @@
 declare global {
   interface Window {
-    dataLayer: unknown[];
     gtag?: (...args: unknown[]) => void;
   }
 }
 
-const GA_MEASUREMENT_ID = "G-R8P05RETF4";
-const GA_SCRIPT_ID = "ga-gtag-script";
+export const GA_MEASUREMENT_ID = "G-R8P05RETF4";
 const EVENT_DEDUPE_WINDOW_MS = 1500;
-let gaInitScheduled = false;
 let lastTrackedPagePath = "";
 const eventDedupeCache = new Map<string, number>();
-
-const ensureGtagStub = () => {
-  window.dataLayer = window.dataLayer || [];
-
-  if (!window.gtag) {
-    window.gtag = (...args: unknown[]) => {
-      window.dataLayer.push(args);
-    };
-  }
-};
-
-const configureGtag = () => {
-  ensureGtagStub();
-
-  window.gtag!("js", new Date());
-  window.gtag!("config", GA_MEASUREMENT_ID, {
-    send_page_view: false,
-  });
-
-  if (!lastTrackedPagePath) {
-    const initialPagePath = window.location.pathname || "/";
-    lastTrackedPagePath = initialPagePath;
-    window.gtag!("event", "page_view", {
-      page_path: initialPagePath,
-      page_location: `${window.location.origin}${initialPagePath}`,
-    });
-  }
-};
-
-const loadGoogleAnalyticsScript = () => {
-  if (document.getElementById(GA_SCRIPT_ID)) {
-    configureGtag();
-    return;
-  }
-
-  const script = document.createElement("script");
-  script.id = GA_SCRIPT_ID;
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-  script.onload = configureGtag;
-  document.head.appendChild(script);
-};
-
-const runWhenBrowserIsIdle = (callback: () => void) => {
-  if (typeof window.requestIdleCallback === "function") {
-    window.requestIdleCallback(() => callback(), { timeout: 2500 });
-    return;
-  }
-  window.setTimeout(callback, 2000);
-};
-
-export const initGoogleAnalytics = () => {
-  if (typeof window === "undefined" || gaInitScheduled) return;
-  gaInitScheduled = true;
-  ensureGtagStub();
-
-  // Load GA directly — AppProviders already handles deferral for mobile/perf.
-  // Using requestIdleCallback so we don't block the main thread.
-  runWhenBrowserIsIdle(loadGoogleAnalyticsScript);
-};
 
 const normalizeEventPath = (path?: string) => {
   if (path && path.startsWith("/")) return path;

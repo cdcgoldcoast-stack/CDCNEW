@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // renders nothing, so wrapping the tree in HelmetProvider was dead weight (~15KB).
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
-import { initGoogleAnalytics, trackPageView } from "@/lib/analytics";
+import { trackPageView } from "@/lib/analytics";
 import { initMetaPixel, trackMetaPixelPageView } from "@/lib/metaPixel";
 
 const AIChatWidget = dynamic(() => import("@/components/AIChatWidget"), {
@@ -116,12 +116,11 @@ export default function AppProviders({ children }: AppProvidersProps) {
 
   useEffect(() => {
     if (!allowMarketingScripts) return;
-    initGoogleAnalytics();
     initMetaPixel();
   }, [allowMarketingScripts]);
 
   useEffect(() => {
-    if (!pathname || !allowMarketingScripts) return;
+    if (!pathname) return;
 
     trackPageView(pathname);
 
@@ -129,6 +128,7 @@ export default function AppProviders({ children }: AppProvidersProps) {
       isFirstPathRender.current = false;
       return;
     }
+    if (!allowMarketingScripts) return;
     trackMetaPixelPageView();
   }, [allowMarketingScripts, pathname]);
 
