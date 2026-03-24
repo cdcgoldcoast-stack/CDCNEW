@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import Script from "next/script";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import AppProviders from "../components/AppProviders";
 import { DEFAULT_META, PRODUCTION_DOMAIN, SITE_NAME } from "@/config/seo";
@@ -82,21 +81,20 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <link rel="dns-prefetch" href="//iqugsxeejieneyksfbza.supabase.co" />
         <link rel="preconnect" href="https://iqugsxeejieneyksfbza.supabase.co" crossOrigin="anonymous" />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              window.gtag = window.gtag || gtag;
+              gtag('js', new Date());
+              gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
+            `,
+          }}
+        />
       </head>
       <body>
-        <Script id="google-analytics-stub" strategy="beforeInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            window.gtag = window.gtag || function gtag(){window.dataLayer.push(arguments);}
-            window.gtag('js', new Date());
-            window.gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
-          `}
-        </Script>
-        <Script
-          id="google-analytics"
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
-        />
         <AppProviders>{children}</AppProviders>
         <VercelAnalytics />
       </body>
