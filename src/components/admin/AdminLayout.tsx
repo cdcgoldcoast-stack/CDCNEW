@@ -15,6 +15,7 @@ import {
   Replace,
   Settings,
   Gift,
+  Users,
 } from "lucide-react";
 
 interface AdminLayoutProps {
@@ -30,6 +31,7 @@ const navItems = [
   { label: "Gallery", href: "/admin/gallery", icon: Images },
   { label: "Site Images", href: "/admin/site-images", icon: ImagePlus },
   { label: "Image Assets", href: "/admin/image-assets", icon: Replace },
+  { label: "Users", href: "/admin/users", icon: Users },
   { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
