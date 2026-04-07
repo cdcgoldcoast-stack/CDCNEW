@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import AppProviders from "../components/AppProviders";
 import { DEFAULT_META, PRODUCTION_DOMAIN, SITE_NAME } from "@/config/seo";
-import { GA_MEASUREMENT_ID } from "@/lib/analytics";
+import { GTM_CONTAINER_ID } from "@/lib/analytics";
 import "./globals.css";
 
 const SITE_URL = PRODUCTION_DOMAIN;
@@ -81,20 +81,27 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <link rel="dns-prefetch" href="//iqugsxeejieneyksfbza.supabase.co" />
         <link rel="preconnect" href="https://iqugsxeejieneyksfbza.supabase.co" crossOrigin="anonymous" />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              window.gtag = window.gtag || gtag;
-              gtag('js', new Date());
-              gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','${GTM_CONTAINER_ID}');
             `,
           }}
         />
       </head>
       <body>
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_CONTAINER_ID}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         <AppProviders>{children}</AppProviders>
         <VercelAnalytics />
       </body>

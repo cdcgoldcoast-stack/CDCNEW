@@ -1,10 +1,10 @@
 declare global {
   interface Window {
-    gtag?: (...args: unknown[]) => void;
+    dataLayer?: Array<Record<string, unknown>>;
   }
 }
 
-export const GA_MEASUREMENT_ID = "G-R8P05RETF4";
+export const GTM_CONTAINER_ID = "GTM-T7838TJS";
 const EVENT_DEDUPE_WINDOW_MS = 1500;
 let lastTrackedPagePath = "";
 const eventDedupeCache = new Map<string, number>();
@@ -23,6 +23,12 @@ const pruneEventDedupeCache = (now: number) => {
   }
 };
 
+const pushToDataLayer = (payload: Record<string, unknown>) => {
+  if (typeof window === "undefined") return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(payload);
+};
+
 export type AnalyticsEvent = {
   event_name: string;
   page_path?: string;
@@ -33,19 +39,19 @@ export type AnalyticsEvent = {
 };
 
 export const trackPageView = (path?: string) => {
-  if (typeof window === "undefined" || typeof window.gtag !== "function") return;
   const pagePath = normalizeEventPath(path);
   if (lastTrackedPagePath === pagePath) return;
   lastTrackedPagePath = pagePath;
 
-  window.gtag("event", "page_view", {
+  pushToDataLayer({
+    event: "page_view",
+    event_name: "page_view",
     page_path: pagePath,
     page_location: `${window.location.origin}${pagePath}`,
   });
 };
 
 export const trackAnalyticsEvent = (event: AnalyticsEvent) => {
-  if (typeof window === "undefined" || typeof window.gtag !== "function") return;
   const pagePath = normalizeEventPath(event.page_path);
   const now = Date.now();
 
@@ -65,6 +71,8 @@ export const trackAnalyticsEvent = (event: AnalyticsEvent) => {
   eventDedupeCache.set(dedupeKey, now);
 
   const payload: Record<string, unknown> = {
+    event: event.event_name,
+    event_name: event.event_name,
     page_path: pagePath,
     cta_location: event.cta_location || "unknown",
   };
@@ -76,5 +84,5 @@ export const trackAnalyticsEvent = (event: AnalyticsEvent) => {
     payload[key] = value;
   }
 
-  window.gtag("event", event.event_name, payload);
+  pushToDataLayer(payload);
 };
