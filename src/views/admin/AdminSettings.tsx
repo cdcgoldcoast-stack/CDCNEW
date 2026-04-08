@@ -195,7 +195,7 @@ const AdminSettings = () => {
     }
 
     // Auto-add any email still sitting in the input field
-    let emailsToSave = [...notifEmails];
+    const emailsToSave = [...notifEmails];
     const pending = notifEmailInput.trim().toLowerCase();
     if (pending) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

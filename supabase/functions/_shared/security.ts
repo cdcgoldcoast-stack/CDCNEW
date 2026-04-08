@@ -8,9 +8,13 @@ const DEFAULT_ALLOWED_ORIGINS = [
   "https://www.cdcconstruct.com.au",
   "https://conceptdesignconstruct.com.au",
   "https://www.conceptdesignconstruct.com.au",
+  "http://localhost:3000",
+  "http://localhost:3001",
   "http://localhost:8080",
   "http://localhost:8081",
   "http://localhost:5173",
+  "http://127.0.0.1:3000",
+  "http://127.0.0.1:3001",
   "http://127.0.0.1:8080",
   "http://127.0.0.1:8081",
   "http://127.0.0.1:5173",
@@ -70,7 +74,7 @@ export function buildCorsHeaders(req: Request): Record<string, string> {
   return {
     "Access-Control-Allow-Origin": allowOrigin,
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-forwarded-for, x-real-ip",
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, PATCH, DELETE, OPTIONS",
     "Access-Control-Max-Age": "86400",
     Vary: "Origin",
   };
@@ -98,6 +102,7 @@ export function jsonResponse(
 }
 
 type SupabaseClient = ReturnType<typeof createClient>;
+export type AppRole = "admin" | "marketer" | "user";
 
 export interface AuthenticatedRequestContext {
   user: User;
@@ -195,6 +200,13 @@ export async function requireAuthenticatedUser(
 export async function requireAdminUser(
   req: Request,
 ): Promise<{ context: AuthenticatedRequestContext } | { response: Response }> {
+  return requireAnyRole(req, ["admin"]);
+}
+
+export async function requireAnyRole(
+  req: Request,
+  allowedRoles: AppRole[],
+): Promise<{ context: AuthenticatedRequestContext } | { response: Response }> {
   const authResult = await requireAuthenticatedUser(req);
   if ("response" in authResult) {
     return authResult;
@@ -205,15 +217,16 @@ export async function requireAdminUser(
     .from("user_roles")
     .select("role")
     .eq("user_id", user.id)
-    .eq("role", "admin")
     .maybeSingle();
 
   if (error) {
-    console.error("Admin role check failed:", error.message);
+    console.error("Role check failed:", error.message);
     return { response: jsonResponse(req, 403, { error: "Forbidden" }) };
   }
 
-  if (!data) {
+  const userRole = data?.role as AppRole | undefined;
+
+  if (!userRole || !allowedRoles.includes(userRole)) {
     return { response: jsonResponse(req, 403, { error: "Forbidden" }) };
   }
 

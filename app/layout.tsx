@@ -77,7 +77,6 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     <html lang="en-AU">
       <head>
         <link rel="icon" type="image/png" href="/favicon-v2.png?v=2" sizes="256x256" />
-        <link rel="preload" as="image" href="/home/hero-v2.webp" type="image/webp" />
         <link rel="dns-prefetch" href="//iqugsxeejieneyksfbza.supabase.co" />
         <link rel="preconnect" href="https://iqugsxeejieneyksfbza.supabase.co" crossOrigin="anonymous" />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />

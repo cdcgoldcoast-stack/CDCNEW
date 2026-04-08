@@ -3,7 +3,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import {
   buildCorsHeaders,
   jsonResponse,
-  requireAdminUser,
+  requireAnyRole,
   requireJsonBody,
   requireMethod,
   rejectDisallowedOrigin,
@@ -23,9 +23,9 @@ serve(async (req) => {
   if (originBlock) return originBlock;
 
   try {
-    const adminResult = await requireAdminUser(req);
-    if ("response" in adminResult) {
-      return adminResult.response;
+    const roleResult = await requireAnyRole(req, ["admin", "marketer"]);
+    if ("response" in roleResult) {
+      return roleResult.response;
     }
 
     // Parse request body

@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { FUNCTION_ENDPOINTS, getFunctionAuthHeaders } from "@/config/endpoints";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { useAdminPageAccess } from "@/hooks/useAdminPageAccess";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Card,
   CardContent,
@@ -37,6 +38,7 @@ import {
   UserPlus,
   Shield,
   ShieldCheck,
+  AlertTriangle,
   Trash2,
   RefreshCw,
 } from "lucide-react";
@@ -46,39 +48,39 @@ interface UserRecord {
   email: string;
   first_name: string | null;
   last_name: string | null;
-  role: "admin" | "user";
+  role: "admin" | "marketer" | "user";
   created_at: string;
   last_sign_in_at: string | null;
 }
 
-const SUPABASE_URL =
-  import.meta.env.VITE_SUPABASE_URL ||
-  "https://iqugsxeejieneyksfbza.supabase.co";
-
-async function fetchWithAuth(method: string, body?: unknown) {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  if (!session?.access_token) throw new Error("Not authenticated");
-
+async function fetchWithAuth(
+  method: "GET" | "POST" | "PATCH" | "DELETE",
+  body?: unknown,
+) {
+  const headers = await getFunctionAuthHeaders();
   const options: RequestInit = {
     method,
-    headers: {
-      Authorization: `Bearer ${session.access_token}`,
-      "Content-Type": "application/json",
-      apikey: session.access_token,
-    },
+    headers,
   };
 
   if (body) {
     options.body = JSON.stringify(body);
   }
 
-  const res = await fetch(`${SUPABASE_URL}/functions/v1/manage-users`, options);
-  const data = await res.json();
+  const res = await fetch(FUNCTION_ENDPOINTS.manageUsers, options);
+  const raw = await res.text();
+  let data: { error?: string; users?: UserRecord[] } | null = null;
+
+  if (raw) {
+    try {
+      data = JSON.parse(raw) as { error?: string; users?: UserRecord[] };
+    } catch {
+      data = { error: raw };
+    }
+  }
 
   if (!res.ok) {
-    throw new Error(data.error || `Request failed (${res.status})`);
+    throw new Error(data?.error || `Request failed (${res.status})`);
   }
 
   return data;
@@ -87,26 +89,30 @@ async function fetchWithAuth(method: string, body?: unknown) {
 const AdminUsers = () => {
   const { user, isAuthorized, isCheckingAccess } = useAdminPageAccess({
     showForbiddenToast: false,
+    allowedRoles: ["admin"],
   });
 
   const [users, setUsers] = useState<UserRecord[]>([]);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [inviteOpen, setInviteOpen] = useState(false);
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteFirstName, setInviteFirstName] = useState("");
   const [inviteLastName, setInviteLastName] = useState("");
-  const [inviteRole, setInviteRole] = useState<"admin" | "user">("user");
+  const [inviteRole, setInviteRole] = useState<"admin" | "marketer" | "user">("user");
   const [inviteLoading, setInviteLoading] = useState(false);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
   const loadUsers = useCallback(async () => {
     setLoading(true);
+    setLoadError(null);
     try {
       const data = await fetchWithAuth("GET");
-      setUsers(data.users ?? []);
+      setUsers(data?.users ?? []);
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Failed to load users";
+      setLoadError(msg);
       toast.error(msg);
     } finally {
       setLoading(false);
@@ -169,7 +175,7 @@ const AdminUsers = () => {
     }
   };
 
-  const handleRoleChange = async (userId: string, newRole: "admin" | "user") => {
+  const handleRoleChange = async (userId: string, newRole: "admin" | "marketer" | "user") => {
     try {
       await fetchWithAuth("PATCH", { user_id: userId, role: newRole });
       toast.success("Role updated");
@@ -207,6 +213,8 @@ const AdminUsers = () => {
   };
 
   const adminCount = users.filter((u) => u.role === "admin").length;
+  const marketerCount = users.filter((u) => u.role === "marketer").length;
+  const regularUserCount = users.filter((u) => u.role === "user").length;
 
   return (
     <AdminLayout>
@@ -274,7 +282,7 @@ const AdminUsers = () => {
                   <Label htmlFor="invite-role">Role</Label>
                   <Select
                     value={inviteRole}
-                    onValueChange={(v) => setInviteRole(v as "admin" | "user")}
+                    onValueChange={(v) => setInviteRole(v as "admin" | "marketer" | "user")}
                   >
                     <SelectTrigger id="invite-role">
                       <SelectValue />
@@ -289,7 +297,13 @@ const AdminUsers = () => {
                       <SelectItem value="user">
                         <div className="flex items-center gap-2">
                           <Shield className="w-4 h-4" />
-                          User — Limited access
+                          User — No admin access
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="marketer">
+                        <div className="flex items-center gap-2">
+                          <Shield className="w-4 h-4" />
+                          Marketer — Lead/content/media access
                         </div>
                       </SelectItem>
                     </SelectContent>
@@ -317,7 +331,7 @@ const AdminUsers = () => {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
@@ -343,9 +357,20 @@ const AdminUsers = () => {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
+              <Shield className="w-8 h-8 text-amber-600" />
+              <div>
+                <p className="text-2xl font-bold">{marketerCount}</p>
+                <p className="text-sm text-foreground/60">Marketers</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-3">
               <Shield className="w-8 h-8 text-foreground/40" />
               <div>
-                <p className="text-2xl font-bold">{users.length - adminCount}</p>
+                <p className="text-2xl font-bold">{regularUserCount}</p>
                 <p className="text-sm text-foreground/60">Regular Users</p>
               </div>
             </div>
@@ -358,15 +383,33 @@ const AdminUsers = () => {
         <CardHeader>
           <CardTitle className="text-lg">Team Members</CardTitle>
           <CardDescription>
-            Admins have full access to the dashboard including projects, enquiries,
-            gallery, and settings.
+            Admins have full access. Marketers can work in lead, content, media, and settings areas. Users have no admin portal access.
           </CardDescription>
         </CardHeader>
         <CardContent>
+          {loadError && (
+            <Alert variant="destructive" className="mb-6">
+              <AlertTriangle className="w-4 h-4" />
+              <AlertTitle>Users couldn&apos;t be loaded</AlertTitle>
+              <AlertDescription>
+                {loadError}
+                <div className="mt-3">
+                  <Button variant="outline" size="sm" onClick={loadUsers} disabled={loading}>
+                    Try again
+                  </Button>
+                </div>
+              </AlertDescription>
+            </Alert>
+          )}
+
           {loading ? (
             <div className="flex items-center justify-center py-12">
               <Loader2 className="w-6 h-6 animate-spin text-primary" />
             </div>
+          ) : loadError && users.length === 0 ? (
+            <p className="text-center text-foreground/50 py-12">
+              User management is unavailable until the API responds.
+            </p>
           ) : users.length === 0 ? (
             <p className="text-center text-foreground/50 py-12">
               No users found. Invite someone to get started.
@@ -417,7 +460,7 @@ const AdminUsers = () => {
                       <Select
                         value={u.role}
                         onValueChange={(v) =>
-                          handleRoleChange(u.id, v as "admin" | "user")
+                          handleRoleChange(u.id, v as "admin" | "marketer" | "user")
                         }
                         disabled={isCurrentUser}
                       >
@@ -435,6 +478,12 @@ const AdminUsers = () => {
                             <div className="flex items-center gap-2">
                               <Shield className="w-3.5 h-3.5" />
                               User
+                            </div>
+                          </SelectItem>
+                          <SelectItem value="marketer">
+                            <div className="flex items-center gap-2">
+                              <Shield className="w-3.5 h-3.5" />
+                              Marketer
                             </div>
                           </SelectItem>
                         </SelectContent>

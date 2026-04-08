@@ -23,22 +23,23 @@ interface AdminLayoutProps {
 }
 
 const navItems = [
-  { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
-  { label: "Projects", href: "/admin/projects", icon: FolderOpen },
-  { label: "Enquiries", href: "/admin/enquiries", icon: MessageSquare },
-  { label: "Chat Inquiries", href: "/admin/chat-inquiries", icon: MessageCircle },
-  { label: "Pop-up Responses", href: "/admin/popup-responses", icon: Gift },
-  { label: "Gallery", href: "/admin/gallery", icon: Images },
-  { label: "Site Images", href: "/admin/site-images", icon: ImagePlus },
-  { label: "Image Assets", href: "/admin/image-assets", icon: Replace },
-  { label: "Users", href: "/admin/users", icon: Users },
-  { label: "Settings", href: "/admin/settings", icon: Settings },
-];
+  { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard, adminOnly: false },
+  { label: "Projects", href: "/admin/projects", icon: FolderOpen, adminOnly: false },
+  { label: "Enquiries", href: "/admin/enquiries", icon: MessageSquare, adminOnly: false },
+  { label: "Chat Inquiries", href: "/admin/chat-inquiries", icon: MessageCircle, adminOnly: false },
+  { label: "Pop-up Responses", href: "/admin/popup-responses", icon: Gift, adminOnly: false },
+  { label: "Gallery", href: "/admin/gallery", icon: Images, adminOnly: false },
+  { label: "Site Images", href: "/admin/site-images", icon: ImagePlus, adminOnly: false },
+  { label: "Image Assets", href: "/admin/image-assets", icon: Replace, adminOnly: false },
+  { label: "Users", href: "/admin/users", icon: Users, adminOnly: true },
+  { label: "Settings", href: "/admin/settings", icon: Settings, adminOnly: false },
+] as const;
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
-  const { user, signOut } = useAuth();
+  const { user, isAdmin, signOut } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const visibleNavItems = navItems.filter((item) => (item.adminOnly ? isAdmin : true));
 
   const handleSignOut = async () => {
     await signOut();
@@ -59,9 +60,9 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
 
         {/* Navigation */}
         <nav className="flex-1 p-4 space-y-1">
-          {navItems.map((item) => {
+          {visibleNavItems.map((item) => {
             const isActive = location.pathname === item.href || 
-              (item.href !== "/admin" && location.pathname.startsWith(item.href));
+              location.pathname.startsWith(item.href);
             return (
               <Link
                 key={item.href}

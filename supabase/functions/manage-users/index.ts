@@ -96,8 +96,8 @@ Deno.serve(async (req: Request) => {
       return jsonResponse(req, 400, { error: "email and role are required" });
     }
 
-    if (!["admin", "user"].includes(role)) {
-      return jsonResponse(req, 400, { error: "role must be 'admin' or 'user'" });
+    if (!["admin", "marketer", "user"].includes(role)) {
+      return jsonResponse(req, 400, { error: "role must be 'admin', 'marketer', or 'user'" });
     }
 
     try {
@@ -121,17 +121,27 @@ Deno.serve(async (req: Request) => {
       const userId = inviteData.user.id;
 
       // Create profile
-      await supabase.from("profiles").upsert({
+      const { error: profileError } = await supabase.from("profiles").upsert({
         user_id: userId,
         first_name: first_name ?? null,
         last_name: last_name ?? null,
       }, { onConflict: "user_id" });
+      if (profileError) {
+        console.error("Failed to upsert profile during invite:", profileError.message);
+        await supabase.auth.admin.deleteUser(userId);
+        return jsonResponse(req, 500, { error: "Failed to create user profile" });
+      }
 
       // Assign role
-      await supabase.from("user_roles").upsert({
+      const { error: roleError } = await supabase.from("user_roles").upsert({
         user_id: userId,
         role,
       }, { onConflict: "user_id" });
+      if (roleError) {
+        console.error("Failed to assign role during invite:", roleError.message);
+        await supabase.auth.admin.deleteUser(userId);
+        return jsonResponse(req, 500, { error: "Failed to assign user role" });
+      }
 
       return jsonResponse(req, 201, {
         user: {
@@ -159,8 +169,8 @@ Deno.serve(async (req: Request) => {
       return jsonResponse(req, 400, { error: "user_id and role are required" });
     }
 
-    if (!["admin", "user"].includes(role)) {
-      return jsonResponse(req, 400, { error: "role must be 'admin' or 'user'" });
+    if (!["admin", "marketer", "user"].includes(role)) {
+      return jsonResponse(req, 400, { error: "role must be 'admin', 'marketer', or 'user'" });
     }
 
     // Prevent removing your own admin role
@@ -202,18 +212,16 @@ Deno.serve(async (req: Request) => {
     }
 
     try {
-      // Remove role
-      await supabase.from("user_roles").delete().eq("user_id", user_id);
-
-      // Remove profile
-      await supabase.from("profiles").delete().eq("user_id", user_id);
-
       // Delete auth user
       const { error } = await supabase.auth.admin.deleteUser(user_id);
       if (error) {
         console.error("Failed to delete user:", error.message);
         return jsonResponse(req, 500, { error: "Failed to delete user" });
       }
+
+      // Best-effort cleanup for environments where cascade constraints drifted.
+      await supabase.from("user_roles").delete().eq("user_id", user_id);
+      await supabase.from("profiles").delete().eq("user_id", user_id);
 
       return jsonResponse(req, 200, { success: true });
     } catch (err) {

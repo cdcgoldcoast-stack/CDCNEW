@@ -105,20 +105,27 @@ function checkClientEnvUsage(failures) {
 }
 
 function checkFunctionGuarding(failures) {
-  const adminOnly = [
+  const roleGuardedFunctions = [
     "supabase/functions/generate-project-content/index.ts",
     "supabase/functions/refine-content/index.ts",
   ];
 
-  for (const relPath of adminOnly) {
+  for (const relPath of roleGuardedFunctions) {
     const fullPath = path.join(ROOT, relPath);
     if (!fs.existsSync(fullPath)) {
-      fail(failures, `[functions] Missing admin-only function file: ${relPath}`);
+      fail(failures, `[functions] Missing restricted function file: ${relPath}`);
       continue;
     }
     const content = fs.readFileSync(fullPath, "utf8");
-    if (!content.includes("requireAdminUser(")) {
-      fail(failures, `[functions] Admin-only function missing requireAdminUser guard: ${relPath}`);
+    const hasAdminGuard = content.includes("requireAdminUser(");
+    const hasRoleGuardWithAdmin =
+      content.includes("requireAnyRole(") &&
+      (content.includes('"admin"') || content.includes("'admin'"));
+    if (!hasAdminGuard && !hasRoleGuardWithAdmin) {
+      fail(
+        failures,
+        `[functions] Restricted function missing admin-capable guard (requireAdminUser or requireAnyRole with admin): ${relPath}`,
+      );
     }
   }
 

@@ -362,7 +362,7 @@ export function AdminPopupResponsesClient() {
 
 export function AdminUsersClient() {
   return (
-    <RequireAdmin>
+    <RequireAdmin allowedRoles={["admin"]}>
       <AdminUsersPage />
     </RequireAdmin>
   );

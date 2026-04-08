@@ -1,13 +1,21 @@
 import type { ReactNode } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import { type AppRole, useAuth } from "@/hooks/useAuth";
 
 interface RequireAdminProps {
   children: ReactNode;
+  allowedRoles?: AppRole[];
+  forbiddenPath?: string;
 }
 
-const RequireAdmin = ({ children }: RequireAdminProps) => {
-  const { user, isAdmin, loading } = useAuth();
+const DEFAULT_ALLOWED_ROLES: AppRole[] = ["admin", "marketer"];
+
+const RequireAdmin = ({
+  children,
+  allowedRoles = DEFAULT_ALLOWED_ROLES,
+  forbiddenPath = "/",
+}: RequireAdminProps) => {
+  const { user, role, loading } = useAuth();
   const location = useLocation();
 
   if (loading) {
@@ -22,8 +30,8 @@ const RequireAdmin = ({ children }: RequireAdminProps) => {
     return <Navigate to="/auth" replace state={{ from: location.pathname }} />;
   }
 
-  if (!isAdmin) {
-    return <Navigate to="/" replace />;
+  if (!allowedRoles.includes(role)) {
+    return <Navigate to={forbiddenPath} replace />;
   }
 
   return <>{children}</>;

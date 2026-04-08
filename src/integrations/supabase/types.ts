@@ -150,6 +150,7 @@ export type Database = {
           phone: string
           postcode: string | null
           renovations: string[] | null
+          source: string
           state: string | null
           status: string | null
           suburb: string | null
@@ -165,6 +166,7 @@ export type Database = {
           phone: string
           postcode?: string | null
           renovations?: string[] | null
+          source?: string
           state?: string | null
           status?: string | null
           suburb?: string | null
@@ -180,6 +182,7 @@ export type Database = {
           phone?: string
           postcode?: string | null
           renovations?: string[] | null
+          source?: string
           state?: string | null
           status?: string | null
           suburb?: string | null
@@ -588,7 +591,7 @@ export type Database = {
       is_admin: { Args: never; Returns: boolean }
     }
     Enums: {
-      app_role: "admin" | "user"
+      app_role: "admin" | "marketer" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -716,7 +719,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "user"],
+      app_role: ["admin", "marketer", "user"],
     },
   },
 } as const

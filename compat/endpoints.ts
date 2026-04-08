@@ -5,14 +5,11 @@ const DEFAULT_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_riMzmbUjAEXtvSij0Ho2Ew_
 
 const SUPABASE_URL =
   process.env.NEXT_PUBLIC_SUPABASE_URL ||
-  process.env.VITE_SUPABASE_URL ||
   DEFAULT_SUPABASE_URL;
 
 export const SUPABASE_PUBLISHABLE_KEY =
   process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-  process.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
-  process.env.VITE_SUPABASE_ANON_KEY ||
   DEFAULT_SUPABASE_PUBLISHABLE_KEY;
 
 export const SUPABASE_FUNCTIONS_BASE_URL = `${SUPABASE_URL}/functions/v1`;
@@ -22,6 +19,7 @@ export const FUNCTION_ENDPOINTS = {
   saveChatInquiry: `${SUPABASE_FUNCTIONS_BASE_URL}/save-chat-inquiry`,
   savePopupResponse: `${SUPABASE_FUNCTIONS_BASE_URL}/save-popup-response`,
   imageProxy: `${SUPABASE_FUNCTIONS_BASE_URL}/image-proxy`,
+  manageUsers: `${SUPABASE_FUNCTIONS_BASE_URL}/manage-users`,
 } as const;
 
 export async function getFunctionAuthHeaders() {

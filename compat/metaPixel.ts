@@ -13,8 +13,7 @@ declare global {
   }
 }
 
-const META_PIXEL_ID =
-  process.env.NEXT_PUBLIC_META_PIXEL_ID || process.env.VITE_META_PIXEL_ID || "";
+const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || "";
 const META_IDLE_FALLBACK_MS = 12000;
 const META_INTERACTION_EVENTS = ["pointerdown", "keydown", "touchstart", "scroll"] as const;
 
