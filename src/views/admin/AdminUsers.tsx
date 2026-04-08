@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { FUNCTION_ENDPOINTS, getFunctionAuthHeaders } from "@/config/endpoints";
+import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { useAdminPageAccess } from "@/hooks/useAdminPageAccess";
 import { Button } from "@/components/ui/button";
@@ -57,33 +57,17 @@ async function fetchWithAuth(
   method: "GET" | "POST" | "PATCH" | "DELETE",
   body?: unknown,
 ) {
-  const headers = await getFunctionAuthHeaders();
-  const options: RequestInit = {
+  const { data, error } = await supabase.functions.invoke("manage-users", {
     method,
-    headers,
-  };
+    body: body ?? undefined,
+  });
 
-  if (body) {
-    options.body = JSON.stringify(body);
+  if (error) {
+    const msg = (error as { message?: string }).message || "Request failed";
+    throw new Error(msg);
   }
 
-  const res = await fetch(FUNCTION_ENDPOINTS.manageUsers, options);
-  const raw = await res.text();
-  let data: { error?: string; users?: UserRecord[] } | null = null;
-
-  if (raw) {
-    try {
-      data = JSON.parse(raw) as { error?: string; users?: UserRecord[] };
-    } catch {
-      data = { error: raw };
-    }
-  }
-
-  if (!res.ok) {
-    throw new Error(data?.error || `Request failed (${res.status})`);
-  }
-
-  return data;
+  return data as { error?: string; users?: UserRecord[] } | null;
 }
 
 const AdminUsers = () => {

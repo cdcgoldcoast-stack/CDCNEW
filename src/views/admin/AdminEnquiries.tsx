@@ -155,7 +155,6 @@ const AdminEnquiries = () => {
     <>
       <SEO title="Admin - Enquiries" noIndex={true} />
       <AdminLayout>
-        <div className="p-8">
         {/* Header */}
         <div className="mb-8">
           <h1 className="font-serif italic text-3xl text-primary mb-2">
@@ -413,7 +412,6 @@ const AdminEnquiries = () => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-      </div>
     </AdminLayout>
     </>
   );
