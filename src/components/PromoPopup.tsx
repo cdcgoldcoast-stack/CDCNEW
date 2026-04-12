@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { X, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { trackAnalyticsEvent } from "@/lib/analytics";
+import { capturePostHogEvent } from "@/lib/posthog";
 
 interface PromoPopupProps {
   delay?: number; // in seconds
@@ -107,6 +108,10 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
         cta_location: "popup",
         lead_type: "promo",
         value: 1,
+      });
+      capturePostHogEvent("popup_submitted", {
+        source: "promo_popup",
+        deduped: Boolean(data?.deduped),
       });
 
       setTimeout(() => {

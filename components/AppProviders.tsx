@@ -10,6 +10,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import { trackPageView } from "@/lib/analytics";
 import { initMetaPixel, trackMetaPixelPageView } from "@/lib/metaPixel";
+import { initPostHog, trackPostHogPageView } from "@/lib/posthog";
 
 const AIChatWidget = dynamic(() => import("@/components/AIChatWidget"), {
   ssr: false,
@@ -117,12 +118,14 @@ export default function AppProviders({ children }: AppProvidersProps) {
   useEffect(() => {
     if (!allowMarketingScripts) return;
     initMetaPixel();
+    initPostHog();
   }, [allowMarketingScripts]);
 
   useEffect(() => {
     if (!pathname) return;
 
     trackPageView(pathname);
+    trackPostHogPageView(pathname);
 
     if (isFirstPathRender.current) {
       isFirstPathRender.current = false;

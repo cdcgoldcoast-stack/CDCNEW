@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import SEO from "@/components/SEO";
 import { generateContactPageSchema } from "@/lib/structured-data";
 import { trackAnalyticsEvent } from "@/lib/analytics";
+import { capturePostHogEvent } from "@/lib/posthog";
 
 const renovationOptions = [
   { id: "bathroom", label: "Bathroom" },
@@ -109,6 +110,11 @@ const GetQuote = () => {
         event_name: "quote_form_submit",
         cta_location: "form",
         lead_type: primaryRenovation,
+      });
+      capturePostHogEvent("quote_submitted", {
+        primary_renovation: primaryRenovation,
+        renovation_count: formData.renovations.length,
+        has_suburb: Boolean(formData.suburb),
       });
 
       setSubmitted(true);

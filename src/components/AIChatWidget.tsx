@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { FUNCTION_ENDPOINTS, getFunctionAuthHeaders } from "@/config/endpoints";
+import { capturePostHogEvent } from "@/lib/posthog";
 
 type Message = {
   role: "user" | "assistant";
@@ -404,6 +405,11 @@ const AIChatWidget = () => {
       }
 
       setChatPhase("submitted");
+      capturePostHogEvent("chat_lead_submitted", {
+        message_count: messages.length,
+        has_email: Boolean(contactForm.email.trim()),
+        has_notes: Boolean(contactForm.message.trim()),
+      });
       // Show typing indicator before success message
       setIsTyping(true);
       await new Promise((resolve) => setTimeout(resolve, 1000));

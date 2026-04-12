@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import ImageComparisonSlider from "@/components/ImageComparisonSlider";
 import { cn } from "@/lib/utils";
+import { capturePostHogEvent } from "@/lib/posthog";
 import { useResolvedAsset } from "@/hooks/useSiteAssets";
 import { useDesignGeneration } from "@/hooks/useDesignGeneration";
 import SEO from "@/components/SEO";
@@ -684,6 +685,11 @@ const buildPreferenceSentence = (
         window.localStorage.setItem("aiRenovationLeadUnlocked", "true");
       }
       setLeadGateOpen(false);
+      capturePostHogEvent("quote_submitted", {
+        primary_renovation: "ai-renovation-generator",
+        source: "ai-generator",
+        has_timeline: Boolean(leadForm.timeline),
+      });
       toast.success("Thanks! You can continue generating now.");
 
       if (pendingAction) {
