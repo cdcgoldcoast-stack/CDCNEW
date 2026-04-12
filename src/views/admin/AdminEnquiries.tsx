@@ -13,7 +13,8 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { format } from "date-fns";
-import { Eye, Trash2 } from "lucide-react";
+import { Eye, Trash2, Download, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
@@ -84,6 +85,8 @@ const AdminEnquiries = () => {
   const [loadingEnquiries, setLoadingEnquiries] = useState(true);
   const [selectedEnquiry, setSelectedEnquiry] = useState<Enquiry | null>(null);
   const [enquiryToDelete, setEnquiryToDelete] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (isAuthorized && user) {
@@ -128,6 +131,54 @@ const AdminEnquiries = () => {
     }
   };
 
+  const filteredEnquiries = enquiries.filter((enquiry) => {
+    if (statusFilter !== "all" && enquiry.status !== statusFilter) return false;
+    if (!searchTerm) return true;
+    const q = searchTerm.toLowerCase();
+    return (
+      enquiry.full_name?.toLowerCase().includes(q) ||
+      enquiry.email?.toLowerCase().includes(q) ||
+      enquiry.phone?.toLowerCase().includes(q) ||
+      enquiry.suburb?.toLowerCase().includes(q)
+    );
+  });
+
+  const handleExport = () => {
+    const rows = filteredEnquiries;
+    if (rows.length === 0) {
+      toast.error("Nothing to export");
+      return;
+    }
+    const escape = (v: string | null | undefined) =>
+      `"${(v ?? "").toString().replace(/"/g, '""')}"`;
+    const csv = [
+      ["Name", "Email", "Phone", "Suburb", "State", "Postcode", "Renovations", "Budget", "Timeline", "Status", "Date"],
+      ...rows.map((r) => [
+        escape(r.full_name),
+        escape(r.email),
+        escape(r.phone),
+        escape(r.suburb),
+        escape(r.state),
+        escape(r.postcode),
+        escape(r.renovations?.join("; ")),
+        escape(r.budget),
+        escape(r.timeline),
+        escape(r.status),
+        escape(format(new Date(r.created_at), "yyyy-MM-dd HH:mm")),
+      ]),
+    ]
+      .map((row) => row.join(","))
+      .join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `enquiries-${format(new Date(), "yyyy-MM-dd")}.csv`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
   const deleteEnquiry = async (id: string) => {
     try {
       const { error } = await supabase.from("enquiries").delete().eq("id", id);
@@ -156,13 +207,24 @@ const AdminEnquiries = () => {
       <SEO title="Admin - Enquiries" noIndex={true} />
       <AdminLayout>
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="font-serif italic text-3xl text-primary mb-2">
-            Enquiries
-          </h1>
-          <p className="text-foreground/60">
-            Manage quote requests from potential clients.
-          </p>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+          <div>
+            <h1 className="font-serif italic text-3xl text-primary mb-2">
+              Enquiries
+            </h1>
+            <p className="text-foreground/60">
+              Manage quote requests from potential clients.
+            </p>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleExport}
+            disabled={filteredEnquiries.length === 0}
+          >
+            <Download className="w-4 h-4 mr-2" />
+            Export CSV
+          </Button>
         </div>
 
         {/* Stats */}
@@ -191,12 +253,43 @@ const AdminEnquiries = () => {
           </div>
         </div>
 
+        {/* Filters */}
+        {!loadingEnquiries && enquiries.length > 0 && (
+          <div className="flex flex-col sm:flex-row gap-3 mb-4">
+            <div className="relative flex-1">
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-foreground/40" />
+              <Input
+                placeholder="Search by name, email, phone, or suburb"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-9"
+              />
+            </div>
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-full sm:w-44">
+                <SelectValue placeholder="All statuses" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All statuses</SelectItem>
+                <SelectItem value="new">New</SelectItem>
+                <SelectItem value="contacted">Contacted</SelectItem>
+                <SelectItem value="qualified">Qualified</SelectItem>
+                <SelectItem value="closed">Closed</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
         {/* Enquiries Table */}
         {loadingEnquiries ? (
           <p className="text-foreground/60">Loading enquiries...</p>
         ) : enquiries.length === 0 ? (
           <div className="text-center py-12 bg-card border border-border rounded-lg">
             <p className="text-foreground/60">No enquiries yet.</p>
+          </div>
+        ) : filteredEnquiries.length === 0 ? (
+          <div className="text-center py-12 bg-card border border-border rounded-lg">
+            <p className="text-foreground/60">No matches for current filters.</p>
           </div>
         ) : (
           <div className="bg-card border border-border rounded-lg overflow-hidden">
@@ -231,7 +324,7 @@ const AdminEnquiries = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
-                  {enquiries.map((enquiry) => (
+                  {filteredEnquiries.map((enquiry) => (
                     <tr key={enquiry.id} className="hover:bg-muted/30">
                       <td className="px-4 py-4">
                         <p className="font-medium text-foreground">
@@ -239,10 +332,18 @@ const AdminEnquiries = () => {
                         </p>
                       </td>
                       <td className="px-4 py-4">
-                        <p className="text-sm text-foreground">{enquiry.email}</p>
-                        <p className="text-sm text-foreground/60">
+                        <a
+                          href={`mailto:${enquiry.email}`}
+                          className="text-sm text-foreground hover:text-primary block"
+                        >
+                          {enquiry.email}
+                        </a>
+                        <a
+                          href={`tel:${enquiry.phone}`}
+                          className="text-sm text-foreground/60 hover:text-primary block"
+                        >
                           {enquiry.phone}
-                        </p>
+                        </a>
                       </td>
                       <td className="px-4 py-4">
                         <div className="flex flex-wrap gap-1">
@@ -331,11 +432,21 @@ const AdminEnquiries = () => {
                   </div>
                   <div>
                     <p className="text-sm text-foreground/60">Email</p>
-                    <p className="font-medium">{selectedEnquiry.email}</p>
+                    <a
+                      href={`mailto:${selectedEnquiry.email}`}
+                      className="font-medium hover:text-primary break-all"
+                    >
+                      {selectedEnquiry.email}
+                    </a>
                   </div>
                   <div>
                     <p className="text-sm text-foreground/60">Phone</p>
-                    <p className="font-medium">{selectedEnquiry.phone}</p>
+                    <a
+                      href={`tel:${selectedEnquiry.phone}`}
+                      className="font-medium hover:text-primary"
+                    >
+                      {selectedEnquiry.phone}
+                    </a>
                   </div>
                   <div>
                     <p className="text-sm text-foreground/60">Location</p>

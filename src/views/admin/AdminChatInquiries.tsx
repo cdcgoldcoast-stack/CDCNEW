@@ -13,13 +13,24 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { format } from "date-fns";
-import { Eye, Trash2, MessageCircle } from "lucide-react";
+import { Eye, Trash2, MessageCircle, Download, Search } from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SEO from "@/components/SEO";
 
@@ -53,6 +64,9 @@ const AdminChatInquiries = () => {
   const [inquiries, setInquiries] = useState<ChatInquiry[]>([]);
   const [loadingInquiries, setLoadingInquiries] = useState(true);
   const [selectedInquiry, setSelectedInquiry] = useState<ChatInquiry | null>(null);
+  const [inquiryToDelete, setInquiryToDelete] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (isAuthorized && user) {
@@ -103,19 +117,61 @@ const AdminChatInquiries = () => {
   };
 
   const deleteInquiry = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this chat inquiry?")) return;
-
     try {
       const { error } = await supabase.from("chat_inquiries").delete().eq("id", id);
       if (error) throw error;
 
       setInquiries((prev) => prev.filter((e) => e.id !== id));
       setSelectedInquiry(null);
+      setInquiryToDelete(null);
       toast.success("Chat inquiry deleted");
     } catch (error) {
       console.error("Error deleting inquiry:", error);
       toast.error("Failed to delete chat inquiry");
     }
+  };
+
+  const filteredInquiries = inquiries.filter((inquiry) => {
+    if (statusFilter !== "all" && inquiry.status !== statusFilter) return false;
+    if (!searchTerm) return true;
+    const q = searchTerm.toLowerCase();
+    return (
+      inquiry.name?.toLowerCase().includes(q) ||
+      inquiry.phone?.toLowerCase().includes(q) ||
+      inquiry.email?.toLowerCase().includes(q) ||
+      inquiry.conversation_summary?.toLowerCase().includes(q)
+    );
+  });
+
+  const handleExport = () => {
+    const rows = filteredInquiries;
+    if (rows.length === 0) {
+      toast.error("Nothing to export");
+      return;
+    }
+    const escape = (v: string | null | undefined) =>
+      `"${(v ?? "").toString().replace(/"/g, '""')}"`;
+    const csv = [
+      ["Name", "Phone", "Email", "Status", "Summary", "Date"],
+      ...rows.map((r) => [
+        escape(r.name),
+        escape(r.phone),
+        escape(r.email),
+        escape(r.status),
+        escape(r.conversation_summary || r.additional_notes),
+        escape(format(new Date(r.created_at), "yyyy-MM-dd HH:mm")),
+      ]),
+    ]
+      .map((row) => row.join(","))
+      .join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `chat-inquiries-${format(new Date(), "yyyy-MM-dd")}.csv`;
+    a.click();
+    window.URL.revokeObjectURL(url);
   };
 
   if (isCheckingAccess) {
@@ -130,18 +186,28 @@ const AdminChatInquiries = () => {
     <>
       <SEO title="Admin - Chat Inquiries" noIndex={true} />
       <AdminLayout>
-        <div className="p-8">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <MessageCircle className="w-8 h-8 text-primary" />
-            <h1 className="font-serif italic text-3xl text-primary">
-              Chat Inquiries
-            </h1>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <MessageCircle className="w-8 h-8 text-primary" />
+              <h1 className="font-serif italic text-3xl text-primary">
+                Chat Inquiries
+              </h1>
+            </div>
+            <p className="text-foreground/60">
+              Leads captured from the AI chat widget.
+            </p>
           </div>
-          <p className="text-foreground/60">
-            Leads captured from the AI chat widget.
-          </p>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleExport}
+            disabled={filteredInquiries.length === 0}
+          >
+            <Download className="w-4 h-4 mr-2" />
+            Export CSV
+          </Button>
         </div>
 
         {/* Stats */}
@@ -170,6 +236,33 @@ const AdminChatInquiries = () => {
           </div>
         </div>
 
+        {/* Filters */}
+        {!loadingInquiries && inquiries.length > 0 && (
+          <div className="flex flex-col sm:flex-row gap-3 mb-4">
+            <div className="relative flex-1">
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-foreground/40" />
+              <Input
+                placeholder="Search by name, phone, email, or summary"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-9"
+              />
+            </div>
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-full sm:w-44">
+                <SelectValue placeholder="All statuses" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All statuses</SelectItem>
+                <SelectItem value="new">New</SelectItem>
+                <SelectItem value="contacted">Contacted</SelectItem>
+                <SelectItem value="converted">Converted</SelectItem>
+                <SelectItem value="closed">Closed</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+
         {/* Inquiries Table */}
         {loadingInquiries ? (
           <p className="text-foreground/60">Loading chat inquiries...</p>
@@ -180,6 +273,10 @@ const AdminChatInquiries = () => {
             <p className="text-sm text-foreground/40 mt-1">
               Leads will appear here when visitors submit their details via the chat widget.
             </p>
+          </div>
+        ) : filteredInquiries.length === 0 ? (
+          <div className="text-center py-12 bg-card border border-border rounded-lg">
+            <p className="text-foreground/60">No matches for current filters.</p>
           </div>
         ) : (
           <div className="bg-card border border-border rounded-lg overflow-hidden">
@@ -211,7 +308,7 @@ const AdminChatInquiries = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
-                  {inquiries.map((inquiry) => (
+                  {filteredInquiries.map((inquiry) => (
                     <tr key={inquiry.id} className="hover:bg-muted/30">
                       <td className="px-4 py-4">
                         <p className="font-medium text-foreground">
@@ -219,10 +316,28 @@ const AdminChatInquiries = () => {
                         </p>
                       </td>
                       <td className="px-4 py-4">
-                        <p className="text-sm text-foreground">{inquiry.phone}</p>
+                        {inquiry.phone ? (
+                          <a
+                            href={`tel:${inquiry.phone}`}
+                            className="text-sm text-foreground hover:text-primary"
+                          >
+                            {inquiry.phone}
+                          </a>
+                        ) : (
+                          <p className="text-sm text-foreground/60">-</p>
+                        )}
                       </td>
                       <td className="px-4 py-4">
-                        <p className="text-sm text-foreground">{inquiry.email || "-"}</p>
+                        {inquiry.email ? (
+                          <a
+                            href={`mailto:${inquiry.email}`}
+                            className="text-sm text-foreground hover:text-primary"
+                          >
+                            {inquiry.email}
+                          </a>
+                        ) : (
+                          <p className="text-sm text-foreground/60">-</p>
+                        )}
                       </td>
                       <td className="px-4 py-4">
                         <p className="text-sm text-foreground/70 line-clamp-2 max-w-xs">
@@ -262,7 +377,7 @@ const AdminChatInquiries = () => {
                           <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => deleteInquiry(inquiry.id)}
+                            onClick={() => setInquiryToDelete(inquiry.id)}
                             className="text-destructive hover:text-destructive"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -299,11 +414,29 @@ const AdminChatInquiries = () => {
                   </div>
                   <div>
                     <p className="text-sm text-foreground/60">Phone</p>
-                    <p className="font-medium">{selectedInquiry.phone}</p>
+                    {selectedInquiry.phone ? (
+                      <a
+                        href={`tel:${selectedInquiry.phone}`}
+                        className="font-medium hover:text-primary"
+                      >
+                        {selectedInquiry.phone}
+                      </a>
+                    ) : (
+                      <p className="font-medium">Not provided</p>
+                    )}
                   </div>
                   <div>
                     <p className="text-sm text-foreground/60">Email</p>
-                    <p className="font-medium">{selectedInquiry.email || "Not provided"}</p>
+                    {selectedInquiry.email ? (
+                      <a
+                        href={`mailto:${selectedInquiry.email}`}
+                        className="font-medium hover:text-primary break-all"
+                      >
+                        {selectedInquiry.email}
+                      </a>
+                    ) : (
+                      <p className="font-medium">Not provided</p>
+                    )}
                   </div>
                   <div>
                     <p className="text-sm text-foreground/60">Submitted</p>
@@ -371,7 +504,30 @@ const AdminChatInquiries = () => {
             )}
           </DialogContent>
         </Dialog>
-      </div>
+
+        {/* Delete Confirmation Dialog */}
+        <AlertDialog
+          open={!!inquiryToDelete}
+          onOpenChange={(open) => !open && setInquiryToDelete(null)}
+        >
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete Chat Inquiry</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to delete this chat inquiry? This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => inquiryToDelete && deleteInquiry(inquiryToDelete)}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
     </AdminLayout>
     </>
   );

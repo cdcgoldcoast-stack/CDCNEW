@@ -1,10 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/admin/AdminLayout";
+import InviteUserDialog from "@/components/admin/InviteUserDialog";
 import { useAdminPageAccess } from "@/hooks/useAdminPageAccess";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Card,
@@ -20,22 +19,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import SEO from "@/components/SEO";
 import { toast } from "sonner";
 import {
   Loader2,
   Users,
-  UserPlus,
   Shield,
   ShieldCheck,
   AlertTriangle,
@@ -79,12 +68,6 @@ const AdminUsers = () => {
   const [users, setUsers] = useState<UserRecord[]>([]);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [inviteOpen, setInviteOpen] = useState(false);
-  const [inviteEmail, setInviteEmail] = useState("");
-  const [inviteFirstName, setInviteFirstName] = useState("");
-  const [inviteLastName, setInviteLastName] = useState("");
-  const [inviteRole, setInviteRole] = useState<"admin" | "marketer" | "user">("user");
-  const [inviteLoading, setInviteLoading] = useState(false);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
@@ -122,42 +105,6 @@ const AdminUsers = () => {
   if (!user || !isAuthorized) {
     return null;
   }
-
-  const handleInvite = async () => {
-    if (!inviteEmail.trim()) {
-      toast.error("Please enter an email address");
-      return;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(inviteEmail.trim())) {
-      toast.error("Please enter a valid email address");
-      return;
-    }
-
-    setInviteLoading(true);
-    try {
-      await fetchWithAuth("POST", {
-        email: inviteEmail.trim().toLowerCase(),
-        role: inviteRole,
-        first_name: inviteFirstName.trim() || undefined,
-        last_name: inviteLastName.trim() || undefined,
-      });
-
-      toast.success(`Invitation sent to ${inviteEmail.trim()}`);
-      setInviteEmail("");
-      setInviteFirstName("");
-      setInviteLastName("");
-      setInviteRole("user");
-      setInviteOpen(false);
-      loadUsers();
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : "Failed to invite user";
-      toast.error(msg);
-    } finally {
-      setInviteLoading(false);
-    }
-  };
 
   const handleRoleChange = async (userId: string, newRole: "admin" | "marketer" | "user") => {
     try {
@@ -216,101 +163,7 @@ const AdminUsers = () => {
             <RefreshCw className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`} />
             Refresh
           </Button>
-          <Dialog open={inviteOpen} onOpenChange={setInviteOpen}>
-            <DialogTrigger asChild>
-              <Button>
-                <UserPlus className="w-4 h-4 mr-2" />
-                Invite User
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Invite a New User</DialogTitle>
-                <DialogDescription>
-                  Send an email invitation. They'll receive a link to set their
-                  password and access the admin dashboard.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="space-y-4 py-4">
-                <div className="space-y-2">
-                  <Label htmlFor="invite-email">Email Address *</Label>
-                  <Input
-                    id="invite-email"
-                    type="email"
-                    value={inviteEmail}
-                    onChange={(e) => setInviteEmail(e.target.value)}
-                    placeholder="team@example.com"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="invite-first">First Name</Label>
-                    <Input
-                      id="invite-first"
-                      value={inviteFirstName}
-                      onChange={(e) => setInviteFirstName(e.target.value)}
-                      placeholder="First name"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="invite-last">Last Name</Label>
-                    <Input
-                      id="invite-last"
-                      value={inviteLastName}
-                      onChange={(e) => setInviteLastName(e.target.value)}
-                      placeholder="Last name"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="invite-role">Role</Label>
-                  <Select
-                    value={inviteRole}
-                    onValueChange={(v) => setInviteRole(v as "admin" | "marketer" | "user")}
-                  >
-                    <SelectTrigger id="invite-role">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="admin">
-                        <div className="flex items-center gap-2">
-                          <ShieldCheck className="w-4 h-4" />
-                          Admin — Full access to dashboard
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="user">
-                        <div className="flex items-center gap-2">
-                          <Shield className="w-4 h-4" />
-                          User — No admin access
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="marketer">
-                        <div className="flex items-center gap-2">
-                          <Shield className="w-4 h-4" />
-                          Marketer — Lead/content/media access
-                        </div>
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <DialogFooter>
-                <Button
-                  variant="outline"
-                  onClick={() => setInviteOpen(false)}
-                  disabled={inviteLoading}
-                >
-                  Cancel
-                </Button>
-                <Button onClick={handleInvite} disabled={inviteLoading}>
-                  {inviteLoading && (
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  )}
-                  Send Invitation
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+          <InviteUserDialog onInvited={loadUsers} />
         </div>
       </div>
 

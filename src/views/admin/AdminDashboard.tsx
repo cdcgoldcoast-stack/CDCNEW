@@ -2,19 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  FolderOpen,
-  MessageSquare,
-  MessageCircle,
-  Images,
-  ImagePlus,
-  Replace,
-  Settings,
-  Gift,
-  Users,
-} from "lucide-react";
+import { formatDistanceToNow } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/admin/AdminLayout";
+import InviteUserDialog from "@/components/admin/InviteUserDialog";
 import { useAdminPageAccess } from "@/hooks/useAdminPageAccess";
 import { useAuth } from "@/hooks/useAuth";
 import SEO from "@/components/SEO";
@@ -23,20 +14,26 @@ interface Counts {
   newEnquiries: number;
   newChatLeads: number;
   popupResponses: number;
-  publishedProjects: number;
+  enquiriesThisWeek: number;
 }
 
-const sections = [
-  { label: "Projects", href: "/admin/projects", icon: FolderOpen },
-  { label: "Enquiries", href: "/admin/enquiries", icon: MessageSquare },
-  { label: "Chat Inquiries", href: "/admin/chat-inquiries", icon: MessageCircle },
-  { label: "Pop-up Responses", href: "/admin/popup-responses", icon: Gift },
-  { label: "Gallery", href: "/admin/gallery", icon: Images },
-  { label: "Site Images", href: "/admin/site-images", icon: ImagePlus },
-  { label: "Image Assets", href: "/admin/image-assets", icon: Replace },
-  { label: "Users", href: "/admin/users", icon: Users, adminOnly: true },
-  { label: "Settings", href: "/admin/settings", icon: Settings },
-] as const;
+interface RecentEnquiry {
+  id: string;
+  full_name: string;
+  email: string;
+  phone: string;
+  status: string | null;
+  created_at: string;
+}
+
+interface RecentChat {
+  id: string;
+  name: string;
+  phone: string;
+  email: string | null;
+  status: string;
+  created_at: string;
+}
 
 const AdminDashboard = () => {
   const { isAuthorized, isCheckingAccess } = useAdminPageAccess();
@@ -45,27 +42,54 @@ const AdminDashboard = () => {
     newEnquiries: 0,
     newChatLeads: 0,
     popupResponses: 0,
-    publishedProjects: 0,
+    enquiriesThisWeek: 0,
   });
+  const [recentEnquiries, setRecentEnquiries] = useState<RecentEnquiry[]>([]);
+  const [recentChats, setRecentChats] = useState<RecentChat[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!isAuthorized) return;
 
     const load = async () => {
-      const [eq, ci, pr, pj] = await Promise.all([
-        supabase.from("enquiries").select("id, status"),
-        supabase.from("chat_inquiries").select("id, status"),
-        supabase.from("popup_responses").select("id"),
-        supabase.from("projects").select("id, is_published"),
+      const weekAgoIso = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
+      const [newEq, newCi, popup, weekEq, recentEq, recentCi] = await Promise.all([
+        supabase
+          .from("enquiries")
+          .select("id", { count: "exact", head: true })
+          .eq("status", "new"),
+        supabase
+          .from("chat_inquiries")
+          .select("id", { count: "exact", head: true })
+          .eq("status", "new"),
+        supabase
+          .from("popup_responses")
+          .select("id", { count: "exact", head: true }),
+        supabase
+          .from("enquiries")
+          .select("id", { count: "exact", head: true })
+          .gte("created_at", weekAgoIso),
+        supabase
+          .from("enquiries")
+          .select("id, full_name, email, phone, status, created_at")
+          .order("created_at", { ascending: false })
+          .limit(5),
+        supabase
+          .from("chat_inquiries")
+          .select("id, name, phone, email, status, created_at")
+          .order("created_at", { ascending: false })
+          .limit(5),
       ]);
 
       setCounts({
-        newEnquiries: eq.data?.filter((e) => e.status === "new").length ?? 0,
-        newChatLeads: ci.data?.filter((c) => c.status === "new").length ?? 0,
-        popupResponses: pr.data?.length ?? 0,
-        publishedProjects: pj.data?.filter((p) => p.is_published).length ?? 0,
+        newEnquiries: newEq.count ?? 0,
+        newChatLeads: newCi.count ?? 0,
+        popupResponses: popup.count ?? 0,
+        enquiriesThisWeek: weekEq.count ?? 0,
       });
+      setRecentEnquiries((recentEq.data as RecentEnquiry[]) ?? []);
+      setRecentChats((recentCi.data as RecentChat[]) ?? []);
       setLoading(false);
     };
 
@@ -83,25 +107,24 @@ const AdminDashboard = () => {
   const stats = [
     { label: "New enquiries", value: counts.newEnquiries, href: "/admin/enquiries" },
     { label: "New chat leads", value: counts.newChatLeads, href: "/admin/chat-inquiries" },
+    { label: "Enquiries this week", value: counts.enquiriesThisWeek, href: "/admin/enquiries" },
     { label: "Pop-up responses", value: counts.popupResponses, href: "/admin/popup-responses" },
-    { label: "Published projects", value: counts.publishedProjects, href: "/admin/projects" },
   ];
-
-  const visibleSections = sections.filter((s) => !("adminOnly" in s && s.adminOnly) || isAdmin);
 
   return (
     <AdminLayout>
       <SEO title="Admin - Dashboard" noIndex={true} />
 
-      <div className="mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <h1 className="font-serif italic text-3xl text-foreground">Dashboard</h1>
+        {isAdmin && <InviteUserDialog />}
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
         {stats.map((stat) => (
           <Link
-            key={stat.href}
+            key={stat.label}
             to={stat.href}
             className="bg-card border border-border rounded-xl p-5 hover:border-primary/30 transition-colors"
           >
@@ -113,18 +136,113 @@ const AdminDashboard = () => {
         ))}
       </div>
 
-      {/* Section links */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {visibleSections.map((section) => (
-          <Link
-            key={section.href}
-            to={section.href}
-            className="flex items-center gap-3 bg-card border border-border rounded-xl px-5 py-4 hover:border-primary/30 transition-colors"
-          >
-            <section.icon className="w-5 h-5 text-primary shrink-0" />
-            <span className="text-sm font-medium text-foreground">{section.label}</span>
-          </Link>
-        ))}
+      {/* Recent activity */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="bg-card border border-border rounded-xl p-5">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-sm font-medium text-foreground">Latest enquiries</h2>
+            <Link to="/admin/enquiries" className="text-xs text-primary hover:underline">
+              View all
+            </Link>
+          </div>
+          {loading ? (
+            <p className="text-sm text-foreground/60">Loading...</p>
+          ) : recentEnquiries.length === 0 ? (
+            <p className="text-sm text-foreground/60">No enquiries yet.</p>
+          ) : (
+            <ul className="divide-y divide-border">
+              {recentEnquiries.map((e) => (
+                <li key={e.id} className="py-3 first:pt-0 last:pb-0">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-medium text-foreground truncate">
+                        {e.full_name}
+                      </p>
+                      <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-0.5">
+                        <a
+                          href={`mailto:${e.email}`}
+                          className="text-xs text-foreground/60 hover:text-primary truncate"
+                        >
+                          {e.email}
+                        </a>
+                        <a
+                          href={`tel:${e.phone}`}
+                          className="text-xs text-foreground/60 hover:text-primary"
+                        >
+                          {e.phone}
+                        </a>
+                      </div>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <p className="text-xs text-foreground/60">
+                        {formatDistanceToNow(new Date(e.created_at), { addSuffix: true })}
+                      </p>
+                      {e.status && (
+                        <p className="text-xs text-foreground/40 mt-0.5 capitalize">
+                          {e.status}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <div className="bg-card border border-border rounded-xl p-5">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-sm font-medium text-foreground">Latest chat leads</h2>
+            <Link to="/admin/chat-inquiries" className="text-xs text-primary hover:underline">
+              View all
+            </Link>
+          </div>
+          {loading ? (
+            <p className="text-sm text-foreground/60">Loading...</p>
+          ) : recentChats.length === 0 ? (
+            <p className="text-sm text-foreground/60">No chat leads yet.</p>
+          ) : (
+            <ul className="divide-y divide-border">
+              {recentChats.map((c) => (
+                <li key={c.id} className="py-3 first:pt-0 last:pb-0">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-medium text-foreground truncate">
+                        {c.name}
+                      </p>
+                      <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-0.5">
+                        {c.phone && (
+                          <a
+                            href={`tel:${c.phone}`}
+                            className="text-xs text-foreground/60 hover:text-primary"
+                          >
+                            {c.phone}
+                          </a>
+                        )}
+                        {c.email && (
+                          <a
+                            href={`mailto:${c.email}`}
+                            className="text-xs text-foreground/60 hover:text-primary truncate"
+                          >
+                            {c.email}
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <p className="text-xs text-foreground/60">
+                        {formatDistanceToNow(new Date(c.created_at), { addSuffix: true })}
+                      </p>
+                      <p className="text-xs text-foreground/40 mt-0.5 capitalize">
+                        {c.status}
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </AdminLayout>
   );
