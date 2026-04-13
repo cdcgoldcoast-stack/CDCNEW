@@ -1,8 +1,11 @@
 import posthog from "posthog-js";
 
 const POSTHOG_KEY = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-const POSTHOG_HOST =
-  process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.i.posthog.com";
+// Use same-origin reverse proxy (see next.config.mjs `rewrites`) so ad blockers
+// don't eat ingest requests. UI links still point at the real PostHog app.
+const POSTHOG_HOST = "/ingest";
+const POSTHOG_UI_HOST =
+  process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://us.posthog.com";
 
 let initialized = false;
 
@@ -21,6 +24,7 @@ export const initPostHog = () => {
 
   posthog.init(POSTHOG_KEY, {
     api_host: POSTHOG_HOST,
+    ui_host: POSTHOG_UI_HOST,
     capture_pageview: false, // we call capture('$pageview') manually
     capture_pageleave: true,
     autocapture: true,
