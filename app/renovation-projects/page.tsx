@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { RenovationProjectsClient } from "@/components/route-clients";
 import projectSlugData from "@/generated/project-slugs.json";
+import { fetchProjects } from "@/data/projects";
 import { generateBreadcrumbSchema, generateItemListSchema } from "@/lib/structured-data";
 import { buildMetadata, titleFromSlug, DEFAULT_OG_IMAGE, generateWebPageSchema } from "@/lib/seo";
 
@@ -21,7 +22,8 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function Page() {
+export default async function Page() {
+  const projects = await fetchProjects();
   const slugs = Array.isArray(projectSlugData?.slugs) ? projectSlugData.slugs : [];
   const itemListSchema = generateItemListSchema(
     slugs.map((slug, index) => ({
@@ -62,7 +64,7 @@ export default function Page() {
           ))}
         </ul>
       </section>
-      <RenovationProjectsClient />
+      <RenovationProjectsClient initialProjects={projects} />
     </>
   );
 }

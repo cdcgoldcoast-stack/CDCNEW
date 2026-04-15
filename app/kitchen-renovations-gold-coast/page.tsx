@@ -97,12 +97,12 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Kitchen renovation services summary for search crawlers">
-        <h2>Gold Coast Kitchen Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Gold Coast Kitchen Renovations by {SITE_NAME}</p>
         <p>
           Complete kitchen renovation services including design, cabinetry, benchtops, appliances, 
           splashbacks, and installation. QBCC licensed builders serving all Gold Coast suburbs.
         </p>
-        <h2>Our Kitchen Renovation Services Include:</h2>
+        <p className="font-semibold">Our Kitchen Renovation Services Include:</p>
         <ul>
           <li>Custom kitchen design and 3D visualisation</li>
           <li>Cabinetry supply and installation</li>

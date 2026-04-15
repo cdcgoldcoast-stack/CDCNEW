@@ -67,12 +67,12 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Sanctuary Cove renovation services summary for search crawlers">
-        <h2>Sanctuary Cove Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Sanctuary Cove Renovations by {SITE_NAME}</p>
         <p>
           Prestige kitchen, bathroom and whole-home renovations in Sanctuary Cove. Specialists in
           marina homes, golf course properties, and bespoke luxury design. QBCC licensed Gold Coast builder.
         </p>
-        <h2>Our Sanctuary Cove Renovation Services:</h2>
+        <p className="font-semibold">Our Sanctuary Cove Renovation Services:</p>
         <ul>
           <li>Kitchen renovations</li>
           <li>Bathroom renovations</li>

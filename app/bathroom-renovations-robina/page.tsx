@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-robina",
+  noIndex: true,
   keywords: [
     "bathroom renovation Robina",
     "Robina bathroom renovation",
@@ -81,7 +82,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Robina bathroom renovation services for search crawlers">
-        <h2>Bathroom Renovations in Robina by {SITE_NAME}</h2>
+        <p className="font-semibold">Bathroom Renovations in Robina by {SITE_NAME}</p>
         <p>
           Professional bathroom renovations in Robina, from family bathrooms and ensuites to powder rooms.
           We specialise in quality waterproofing, premium fixtures, and designs that suit Robina&apos;s

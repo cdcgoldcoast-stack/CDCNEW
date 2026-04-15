@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-broadbeach",
+  noIndex: true,
   keywords: [
     "kitchen renovation Broadbeach",
     "Broadbeach kitchen renovation",
@@ -81,7 +82,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Broadbeach kitchen renovation services for search crawlers">
-        <h2>Kitchen Renovations in Broadbeach by {SITE_NAME}</h2>
+        <p className="font-semibold">Kitchen Renovations in Broadbeach by {SITE_NAME}</p>
         <p>
           Professional kitchen renovations in Broadbeach, from beachside apartment kitchens to spacious
           entertainer&apos;s kitchens. We specialise in compact apartment layouts and body corporate compliant

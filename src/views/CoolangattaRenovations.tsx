@@ -42,6 +42,7 @@ export default function CoolangattaRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Coolangatta Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Renovation builders in Coolangatta, Gold Coast. Kitchen, bathroom and whole-home renovations for coastal properties. Salt-air resistant materials and beachside design expertise."
@@ -317,6 +318,8 @@ export default function CoolangattaRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

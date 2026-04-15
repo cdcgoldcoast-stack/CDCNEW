@@ -42,6 +42,7 @@ export default function BroadbeachRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Broadbeach Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Renovation builders in Broadbeach. Kitchen, bathroom and whole-home renovations with design-led planning. We're based in Broadbeach - your local Gold Coast builder."
@@ -313,6 +314,8 @@ export default function BroadbeachRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

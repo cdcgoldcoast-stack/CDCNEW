@@ -42,6 +42,7 @@ export default function RobinaRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Robina Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Renovation builders in Robina. Kitchen, bathroom and whole-home renovations for modern family homes. QBCC licensed. Based in Broadbeach - your local Gold Coast builder."
@@ -296,6 +297,8 @@ export default function RobinaRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

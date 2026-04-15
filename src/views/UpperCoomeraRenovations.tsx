@@ -42,6 +42,7 @@ export default function UpperCoomeraRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Upper Coomera Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Family home renovations in Upper Coomera. Kitchen, bathroom and whole-home transformations for growing families. Extending and upgrading homes across Upper Coomera estates on the Gold Coast."
@@ -319,6 +320,8 @@ export default function UpperCoomeraRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

@@ -322,6 +322,8 @@ const Header = () => {
             className="p-2 flex flex-col gap-1.5"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation"
           >
             <span className={`w-5 h-px transition-all ${shouldBeTransparent ? "bg-white" : "bg-foreground"} ${isMenuOpen ? 'rotate-45 translate-y-1' : ''}`} />
             <span className={`w-5 h-px transition-all ${shouldBeTransparent ? "bg-white" : "bg-foreground"} ${isMenuOpen ? 'opacity-0' : ''}`} />
@@ -332,7 +334,7 @@ const Header = () => {
 
       {/* Mobile/Tablet Navigation */}
       {isMenuOpen && (
-        <nav className="min-[1280px]:hidden absolute top-full left-0 right-0 bg-background border-t border-border/30">
+        <nav id="mobile-navigation" className="min-[1280px]:hidden absolute top-full left-0 right-0 bg-background border-t border-border/30">
           <div className="container-wide py-8 flex flex-col gap-6">
             {mobileNavLinks.map((link) => (
               <Link

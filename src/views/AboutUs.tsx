@@ -54,6 +54,7 @@ const AboutUs = () => {
         jsonLd={aboutSchema}
       />
       <Header />
+      <main id="main-content">
 
       {/* 1. HERO - About Us */}
       <section className="pt-32 pb-20 md:pt-40 md:pb-28 bg-cream relative z-10">
@@ -283,6 +284,8 @@ const AboutUs = () => {
         />
       </div>
 
+
+      </main>
       <Footer />
     </div>
   );

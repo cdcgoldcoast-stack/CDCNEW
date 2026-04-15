@@ -42,6 +42,7 @@ export default function CurrumbinRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Currumbin Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Renovation builders in Currumbin, Gold Coast. Kitchen, bathroom and whole-home renovations for beachside family homes. Coastal-durable designs with family-friendly layouts."
@@ -316,6 +317,8 @@ export default function CurrumbinRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

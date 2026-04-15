@@ -26,11 +26,13 @@ function calculateReadingTime(text: string): { text: string; minutes: number } {
   return { text: `${minutes} min read`, minutes };
 }
 
-function parseFrontmatter(content: string): { data: Record<string, any>; body: string } {
+type FrontmatterValue = string | string[];
+
+function parseFrontmatter(content: string): { data: Record<string, FrontmatterValue>; body: string } {
   const lines = content.split('\n');
-  const data: Record<string, any> = {};
+  const data: Record<string, FrontmatterValue> = {};
   let bodyStart = 0;
-  
+
   if (lines[0] === '---') {
     let i = 1;
     while (i < lines.length && lines[i] !== '---') {
@@ -38,7 +40,7 @@ function parseFrontmatter(content: string): { data: Record<string, any>; body: s
       const colonIndex = line.indexOf(':');
       if (colonIndex > 0) {
         const key = line.slice(0, colonIndex).trim();
-        let value: any = line.slice(colonIndex + 1).trim();
+        let value: FrontmatterValue = line.slice(colonIndex + 1).trim();
         
         // Remove quotes if present
         if (value.startsWith('"') && value.endsWith('"')) {
@@ -61,32 +63,39 @@ function parseFrontmatter(content: string): { data: Record<string, any>; body: s
   return { data, body };
 }
 
+function asString(value: FrontmatterValue | undefined): string {
+  return typeof value === "string" ? value : "";
+}
+
 async function readBlogPostFromFile(filePath: string): Promise<BlogPost | null> {
   const source = await fs.readFile(filePath, "utf8");
   const { data, body } = parseFrontmatter(source);
-  
-  const title = data.title || "";
-  const description = data.description || "";
-  const publishedAt = data.publishedAt || "";
-  
+
+  const title = asString(data.title);
+  const description = asString(data.description);
+  const publishedAt = asString(data.publishedAt);
+
   if (!title || !description || !publishedAt) {
     return null;
   }
-  
+
   const slug = path.basename(filePath, ".mdx");
   const stats = calculateReadingTime(body);
-  
+  const updatedAt = asString(data.updatedAt);
+  const author = asString(data.author) || undefined;
+  const image = asString(data.image) || undefined;
+
   return {
     slug,
     url: `/blog/${slug}`,
     title,
     description,
     publishedAt: new Date(publishedAt).toISOString(),
-    updatedAt: data.updatedAt ? new Date(data.updatedAt).toISOString() : undefined,
-    author: data.author,
-    image: data.image,
+    updatedAt: updatedAt ? new Date(updatedAt).toISOString() : undefined,
+    author,
+    image,
     tags: Array.isArray(data.tags) ? data.tags : [],
-    draft: data.draft === "true",
+    draft: asString(data.draft) === "true",
     readingTime: stats.text,
     readingMinutes: stats.minutes,
     body,

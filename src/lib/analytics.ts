@@ -6,6 +6,23 @@ declare global {
 
 export const GTM_CONTAINER_ID = "GTM-T7838TJS";
 const EVENT_DEDUPE_WINDOW_MS = 1500;
+let gtmLoaded = false;
+
+export const loadGtmScript = () => {
+  if (typeof window === "undefined" || gtmLoaded) return;
+  if (document.getElementById("gtm-loader-script")) {
+    gtmLoaded = true;
+    return;
+  }
+  gtmLoaded = true;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
+  const script = document.createElement("script");
+  script.id = "gtm-loader-script";
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_CONTAINER_ID}`;
+  document.head.appendChild(script);
+};
 let lastTrackedPagePath = "";
 const eventDedupeCache = new Map<string, number>();
 

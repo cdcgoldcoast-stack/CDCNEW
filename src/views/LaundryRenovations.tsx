@@ -95,6 +95,7 @@ const LaundryRenovations = () => {
         url="/laundry-renovations-gold-coast"
       />
       <Header />
+      <main id="main-content">
 
       {/* Hero Section */}
       <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-cream relative z-10">
@@ -421,6 +422,8 @@ const LaundryRenovations = () => {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

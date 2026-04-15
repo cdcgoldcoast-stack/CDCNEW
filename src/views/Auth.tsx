@@ -129,7 +129,7 @@ const Auth = () => {
         url="/auth"
         noIndex={true}
       />
-      <div className="w-full max-w-md">
+      <main id="main-content" className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="font-serif italic text-3xl text-primary mb-2">
             {isLogin ? "Welcome Back" : "Create Account"}
@@ -237,7 +237,7 @@ const Auth = () => {
             ← Back to website
           </a>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

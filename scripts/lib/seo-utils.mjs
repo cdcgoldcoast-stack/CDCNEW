@@ -71,6 +71,18 @@ export const NOINDEX_EXACT_ROUTES = new Set([
   "/404",
   "/auth",
   "/brand-guidelines",
+  "/bathroom-renovations-broadbeach",
+  "/bathroom-renovations-helensvale",
+  "/bathroom-renovations-palm-beach",
+  "/bathroom-renovations-robina",
+  "/bathroom-renovations-southport",
+  "/bathroom-renovations-surfers-paradise",
+  "/kitchen-renovations-broadbeach",
+  "/kitchen-renovations-helensvale",
+  "/kitchen-renovations-palm-beach",
+  "/kitchen-renovations-robina",
+  "/kitchen-renovations-southport",
+  "/kitchen-renovations-surfers-paradise",
 ]);
 
 export const NOINDEX_PREFIXES = ["/admin"];
@@ -204,6 +216,19 @@ export function isDuplicateCompareExempt(routePath) {
   const normalized = normalizePath(routePath);
   if (DUPLICATE_EXACT_EXEMPT_ROUTES.has(normalized)) return true;
   return isProjectDetailPath(normalized);
+}
+
+export async function loadPrerenderedSitemapRoutes(sitemapBodyPath) {
+  try {
+    const xml = await fs.readFile(sitemapBodyPath, "utf8");
+    const urls = parseSitemapUrls(xml);
+    const paths = urls
+      .map((url) => pathFromUrl(url))
+      .filter((path) => path && isIndexableRoute(path));
+    return [...new Set(paths)].sort();
+  } catch {
+    return [];
+  }
 }
 
 export async function loadGeneratedProjectSlugs(filePath) {

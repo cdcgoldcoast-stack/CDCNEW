@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-southport",
+  noIndex: true,
   keywords: [
     "kitchen renovation Southport",
     "Southport kitchen renovation",
@@ -81,7 +82,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Southport kitchen renovation services for search crawlers">
-        <h2>Kitchen Renovations in Southport by {SITE_NAME}</h2>
+        <p className="font-semibold">Kitchen Renovations in Southport by {SITE_NAME}</p>
         <p>
           Professional kitchen renovations in Southport, specialising in transforming dated kitchens in
           older homes into modern open-plan designs. We handle everything from asbestos assessment to

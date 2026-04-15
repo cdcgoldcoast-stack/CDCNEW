@@ -42,6 +42,7 @@ export default function SurfersParadiseRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Surfers Paradise Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Luxury apartment and penthouse renovations in Surfers Paradise. Kitchen, bathroom and whole-home transformations with body corporate expertise. Your Gold Coast high-rise renovation specialists."
@@ -316,6 +317,8 @@ export default function SurfersParadiseRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

@@ -128,7 +128,7 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-6 right-4 md:right-6 z-50 w-[340px] md:w-[380px]">
+    <div className="fixed bottom-6 left-4 md:left-6 right-4 md:right-auto z-50 w-auto md:w-[380px] max-w-[380px]">
       <div className="bg-white rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.12)] overflow-hidden animate-in slide-in-from-bottom-4 duration-500 border border-neutral-100">
         {/* Close button */}
         <button

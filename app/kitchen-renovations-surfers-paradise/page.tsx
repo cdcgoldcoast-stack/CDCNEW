@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-surfers-paradise",
+  noIndex: true,
   keywords: [
     "kitchen renovation Surfers Paradise",
     "Surfers Paradise kitchen renovation",
@@ -81,7 +82,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Surfers Paradise kitchen renovation services for search crawlers">
-        <h2>Kitchen Renovations in Surfers Paradise by {SITE_NAME}</h2>
+        <p className="font-semibold">Kitchen Renovations in Surfers Paradise by {SITE_NAME}</p>
         <p>
           Professional kitchen renovations in Surfers Paradise, from compact apartment kitchens to luxury
           penthouse entertainer&apos;s kitchens. We specialise in high-rise renovations with body corporate

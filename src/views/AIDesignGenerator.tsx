@@ -1257,8 +1257,8 @@ const buildPreferenceSentence = (
                       )}
                     </div>
                     <div className="min-w-0">
-                      <h1 className="text-sm font-medium text-foreground truncate">CDC Renovation Assistant</h1>
-                      <h2 className="text-xs text-foreground/50 leading-tight truncate">Upload a photo and preview renovation concepts</h2>
+                      <p className="text-sm font-medium text-foreground truncate">CDC Renovation Assistant</p>
+                      <p className="text-xs text-foreground/50 leading-tight truncate">Upload a photo and preview renovation concepts</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-1.5 text-xs text-emerald-600 shrink-0">

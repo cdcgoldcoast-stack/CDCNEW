@@ -6,6 +6,7 @@ import {
   SERVICE_AREAS,
   withBrandDescription,
 } from "@/config/seo";
+import { REVIEW_STATS } from "@/config/reviews";
 
 export interface FAQItem {
   question: string;
@@ -306,10 +307,10 @@ export const generateLocalBusinessSchema = () => ({
   },
   aggregateRating: {
     "@type": "AggregateRating",
-    ratingValue: "4.9",
-    reviewCount: "50",
-    bestRating: "5",
-    worstRating: "1",
+    ratingValue: REVIEW_STATS.ratingValue,
+    reviewCount: REVIEW_STATS.reviewCount,
+    bestRating: REVIEW_STATS.bestRating,
+    worstRating: REVIEW_STATS.worstRating,
   },
   review: [
     {

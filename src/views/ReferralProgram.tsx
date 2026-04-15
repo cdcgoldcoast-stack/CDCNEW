@@ -223,6 +223,7 @@ const ReferralProgram = () => {
         url="/referral-program"
       />
       <Header />
+      <main id="main-content">
 
       {/* ── Section 1: Hero ── */}
       <section className="pt-32 pb-20 md:pt-40 md:pb-28 bg-primary relative z-10">
@@ -542,6 +543,48 @@ const ReferralProgram = () => {
         </div>
       </section>
 
+      <section className="py-16 md:py-24 bg-background">
+        <div className="container-wide max-w-3xl mx-auto text-foreground/75 text-base md:text-lg leading-relaxed space-y-6">
+          <h2 className="font-serif italic text-2xl md:text-3xl text-primary">
+            How the CD Construct Gold Coast renovation referral program works
+          </h2>
+          <p>
+            The referral program rewards friends, family, tradespeople, real estate agents, and
+            anyone connected to the Gold Coast property scene for introducing us to homeowners
+            planning a renovation. Every referral that progresses to a signed contract earns a
+            transparent commission based on the final project value, with no caps on how many
+            people you can refer in a given year.
+          </p>
+          <p>
+            We keep the process deliberately simple: submit the referral through the form above,
+            we contact the homeowner within one business day, and we keep you updated at every
+            stage so there are no surprises. You never need to be involved in the technical
+            renovation conversations — we take it from there and handle the consultation, design,
+            quote, and construction in partnership with the homeowner.
+          </p>
+          <p>
+            Commissions are paid directly to you once the homeowner signs a written renovation
+            agreement with us. Because we work only with realistic projects — typically kitchens,
+            bathrooms, whole-home renovations, and extensions — referrals that match our scope
+            convert at a meaningfully higher rate than generic lead lists. Our team is
+            QBCC-licensed, fully insured, and backed by a long track record of completed Gold
+            Coast renovations.
+          </p>
+          <h3 className="font-serif italic text-xl md:text-2xl text-primary pt-2">
+            Who makes a great Gold Coast renovation referral
+          </h3>
+          <p>
+            The best referrals tend to be homeowners who have already decided they want to
+            renovate and are in the early stages of researching builders. If someone is asking
+            you about kitchen layouts, bathroom costs, or whether they should extend versus
+            move, that is usually a strong signal. You do not need to pre-qualify anyone — just
+            submit their details and we will handle the rest from first consultation through
+            to handover.
+          </p>
+        </div>
+      </section>
+
+      </main>
       <Footer />
     </div>
   );

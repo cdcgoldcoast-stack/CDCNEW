@@ -2,6 +2,8 @@
 
 import dynamic from "next/dynamic";
 import type { ProjectDetailProps } from "@/views/ProjectDetail";
+import type { Project } from "@/data/projects";
+import type { GalleryItemRow } from "@/data/gallery";
 
 const pageLoader = () => <div className="min-h-screen bg-background animate-pulse" />;
 
@@ -88,6 +90,9 @@ const HomeExtensionsPage = dynamic(() => import("@/views/HomeExtensions"), {
 });
 
 // Location pages
+const GoldCoastRenovationsPage = dynamic(() => import("@/views/GoldCoastRenovations"), {
+  loading: pageLoader,
+});
 const BroadbeachRenovationsPage = dynamic(() => import("@/views/BroadbeachRenovations"), {
   loading: pageLoader,
 });
@@ -149,11 +154,9 @@ const UpperCoomeraRenovationsPage = dynamic(() => import("@/views/UpperCoomeraRe
 // Heavy/interactive pages - client-only (ssr: false)
 const AIDesignGeneratorPage = dynamic(() => import("@/views/AIDesignGenerator"), {
   loading: pageLoader,
-  ssr: false,
 });
 const AIDesignIntroPage = dynamic(() => import("@/views/AIDesignIntro"), {
   loading: pageLoader,
-  ssr: false,
 });
 const MoodboardCreatorPage = dynamic(() => import("@/views/MoodboardCreator"), {
   loading: pageLoader,
@@ -161,7 +164,6 @@ const MoodboardCreatorPage = dynamic(() => import("@/views/MoodboardCreator"), {
 });
 const ProjectDetailPage = dynamic(() => import("@/views/ProjectDetail"), {
   loading: pageLoader,
-  ssr: false,
 });
 const BrandGuidelinesPage = dynamic(() => import("@/views/BrandGuidelines"), {
   ssr: false,
@@ -210,12 +212,12 @@ export function ServicesClient() {
   return <ServicesPage />;
 }
 
-export function RenovationProjectsClient() {
-  return <WorkPage />;
+export function RenovationProjectsClient({ initialProjects }: { initialProjects?: Project[] } = {}) {
+  return <WorkPage initialProjects={initialProjects} />;
 }
 
-export function ProjectGalleryClient() {
-  return <GalleryPage />;
+export function ProjectGalleryClient({ initialItems }: { initialItems?: GalleryItemRow[] } = {}) {
+  return <GalleryPage initialItems={initialItems} />;
 }
 
 export function RenovationDesignToolsClient() {
@@ -397,6 +399,10 @@ export function HomeExtensionsClient() {
 }
 
 // Location pages
+export function GoldCoastRenovationsClient() {
+  return <GoldCoastRenovationsPage />;
+}
+
 export function BroadbeachRenovationsClient() {
   return <BroadbeachRenovationsPage />;
 }

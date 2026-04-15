@@ -66,12 +66,12 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Miami renovation services summary for search crawlers">
-        <h2>Miami Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Miami Renovations by {SITE_NAME}</p>
         <p>
           Kitchen, bathroom and whole-home renovations in Miami, Gold Coast. Specialists in
           transforming beach cottages into modern coastal homes. Based in Broadbeach.
         </p>
-        <h2>Our Miami Renovation Services:</h2>
+        <p className="font-semibold">Our Miami Renovation Services:</p>
         <ul>
           <li>Kitchen renovations</li>
           <li>Bathroom renovations</li>

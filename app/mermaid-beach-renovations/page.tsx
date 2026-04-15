@@ -66,7 +66,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Mermaid Beach renovation services summary for search crawlers">
-        <h2>Mermaid Beach Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Mermaid Beach Renovations by {SITE_NAME}</p>
         <p>
           Kitchen, bathroom and whole-home renovations in Mermaid Beach. Specialists in 
           coastal homes with materials designed for beachside conditions. Based in Broadbeach.

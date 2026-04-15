@@ -67,7 +67,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Southport renovation services summary for search crawlers">
-        <h2>Southport Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Southport Renovations by {SITE_NAME}</p>
         <p>
           Kitchen, bathroom and whole-home renovations in Southport. Specialists in character 
           homes, Queenslanders, and waterfront properties. Based in Broadbeach.

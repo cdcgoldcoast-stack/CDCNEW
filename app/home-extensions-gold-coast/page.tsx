@@ -96,13 +96,13 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Home extension services summary for search crawlers">
-        <h2>Gold Coast Home Extensions by {SITE_NAME}</h2>
+        <p className="font-semibold">Gold Coast Home Extensions by {SITE_NAME}</p>
         <p>
           Complete home extension services including room additions, second storey additions,
           granny flats, and garage conversions. Council approvals, structural engineering, and
           seamless construction. QBCC licensed builders serving all Gold Coast suburbs.
         </p>
-        <h2>Our Home Extension Services Include:</h2>
+        <p className="font-semibold">Our Home Extension Services Include:</p>
         <ul>
           <li>Ground floor room additions</li>
           <li>Second storey additions</li>

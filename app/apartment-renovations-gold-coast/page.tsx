@@ -96,13 +96,13 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Apartment renovation services summary for search crawlers">
-        <h2>Gold Coast Apartment & Unit Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Gold Coast Apartment & Unit Renovations by {SITE_NAME}</p>
         <p>
           Specialist apartment renovation services for high-rise and low-rise buildings across
           the Gold Coast. Body corporate compliant builds with strata experience, premium finishes,
           and space-maximising designs. QBCC licensed builders.
         </p>
-        <h2>Our Apartment Renovation Services Include:</h2>
+        <p className="font-semibold">Our Apartment Renovation Services Include:</p>
         <ul>
           <li>Full apartment renovations and makeovers</li>
           <li>Apartment kitchen and bathroom renovations</li>

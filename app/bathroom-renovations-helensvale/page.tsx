@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-helensvale",
+  noIndex: true,
   keywords: [
     "bathroom renovation Helensvale",
     "Helensvale bathroom renovation",
@@ -81,7 +82,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Helensvale bathroom renovation services for search crawlers">
-        <h2>Bathroom Renovations in Helensvale by {SITE_NAME}</h2>
+        <p className="font-semibold">Bathroom Renovations in Helensvale by {SITE_NAME}</p>
         <p>
           Professional bathroom renovations in Helensvale, from family bathrooms and master ensuites to
           kids&apos; bathrooms and powder rooms. We deliver quality waterproofing, premium fixtures, and

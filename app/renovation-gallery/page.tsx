@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { ProjectGalleryClient } from "@/components/route-clients";
+import { fetchGalleryItems } from "@/data/gallery";
 import { generateBreadcrumbSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema, absoluteUrl } from "@/lib/seo";
 
@@ -19,7 +20,8 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function Page() {
+export default async function Page() {
+  const galleryItems = await fetchGalleryItems();
   const webPageSchema = generateWebPageSchema({
     path: "/renovation-gallery",
     name: pageTitle,
@@ -56,7 +58,7 @@ export default function Page() {
           <a href="/renovation-projects">Gold Coast renovation projects</a>.
         </p>
       </section>
-      <ProjectGalleryClient />
+      <ProjectGalleryClient initialItems={galleryItems} />
     </>
   );
 }

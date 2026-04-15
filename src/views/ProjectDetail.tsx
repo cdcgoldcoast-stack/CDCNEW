@@ -80,7 +80,7 @@ const ProjectDetail = ({ initialProject, initialProjects }: ProjectDetailProps =
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <main className="pt-24 md:pt-28 animate-pulse">
+        <main id="main-content" className="pt-24 md:pt-28 animate-pulse">
           <section className="h-[42vh] md:h-[52vh] bg-muted/40" />
           <section className="py-12 md:py-16 lg:py-20">
             <div className="container-wide">
@@ -158,6 +158,7 @@ const ProjectDetail = ({ initialProject, initialProjects }: ProjectDetailProps =
       />
       <Header />
 
+      <main id="main-content">
       {/* Hero Image Slider */}
       <section className="pt-24 md:pt-28">
         <ImageSlider images={project.gallery} projectName={project.name} />
@@ -449,6 +450,7 @@ const ProjectDetail = ({ initialProject, initialProjects }: ProjectDetailProps =
           className="mt-0 md:mt-6"
         />
       </div>
+      </main>
 
       <Footer />
     </div>

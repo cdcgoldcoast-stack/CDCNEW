@@ -134,6 +134,7 @@ const LifeStagesPage = () => {
         jsonLd={faqSchema}
       />
       <Header />
+      <main id="main-content">
       
       {/* Hero Section - Editorial Style */}
       <section ref={heroRef} className="relative h-[70vh] md:h-[85vh] overflow-hidden">
@@ -202,7 +203,10 @@ const LifeStagesPage = () => {
               transition={{ duration: 0.7, delay: 0.1 }}
             >
               <p className="text-foreground text-lg md:text-xl leading-relaxed">
-                We help Gold Coast homeowners choose the right renovation based on the stage of life they are in, from first homes and growing families to future ready living and aging in place. The goal is simple: a home that feels better to live in every day, and still works as needs change.
+                We help Gold Coast homeowners choose the right renovation based on the{" "}
+                <strong>stage of life</strong> they are in, from first homes and growing families
+                to future ready living and aging in place. The goal is simple: a home that feels
+                better to live in every day, and still works as needs change.
               </p>
             </motion.div>
           </div>
@@ -469,6 +473,8 @@ const LifeStagesPage = () => {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

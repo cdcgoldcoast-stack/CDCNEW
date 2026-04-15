@@ -108,6 +108,7 @@ const WhyCDC = () => {
         url="/why-cdc"
       />
       <Header />
+      <main id="main-content">
 
       {/* Hero */}
       <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-primary relative z-10">
@@ -306,6 +307,8 @@ const WhyCDC = () => {
         />
       </div>
 
+
+      </main>
       <Footer />
     </div>
   );

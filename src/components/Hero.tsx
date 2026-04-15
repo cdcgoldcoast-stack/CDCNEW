@@ -37,8 +37,8 @@ const Hero = () => {
             width={1200}
             height={800}
             sizes="(min-width: 768px) 50vw"
-            loading="lazy"
-            fetchPriority="low"
+            priority
+            fetchPriority="high"
             quality={60}
           />
         </div>

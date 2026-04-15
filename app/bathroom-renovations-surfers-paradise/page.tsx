@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-surfers-paradise",
+  noIndex: true,
   keywords: [
     "bathroom renovation Surfers Paradise",
     "Surfers Paradise bathroom renovation",
@@ -81,7 +82,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Surfers Paradise bathroom renovation services for search crawlers">
-        <h2>Bathroom Renovations in Surfers Paradise by {SITE_NAME}</h2>
+        <p className="font-semibold">Bathroom Renovations in Surfers Paradise by {SITE_NAME}</p>
         <p>
           Professional bathroom renovations in Surfers Paradise, from compact apartment ensuites to luxury
           penthouse bathrooms. We specialise in high-rise bathroom renovations with expert waterproofing

@@ -7,6 +7,7 @@ import {
   EXTENDED_ROUTES,
   canonicalForPath,
   loadGeneratedProjectSlugs,
+  loadPrerenderedSitemapRoutes,
   normalizePath,
 } from "./lib/seo-utils.mjs";
 
@@ -14,6 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
 const NEXT_SERVER_APP_DIR = path.join(ROOT_DIR, ".next", "server", "app");
+const PRERENDERED_SITEMAP_PATH = path.join(NEXT_SERVER_APP_DIR, "sitemap.xml.body");
 const GENERATED_PROJECT_SLUGS_PATH = path.join(ROOT_DIR, "src", "generated", "project-slugs.json");
 const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, "vercel.json");
 const NEXT_CONFIG_PATH = path.join(ROOT_DIR, "next.config.mjs");
@@ -136,7 +138,12 @@ const main = async () => {
 
   const slugs = await loadGeneratedProjectSlugs(GENERATED_PROJECT_SLUGS_PATH);
   const projectRoutes = slugs.map((slug) => `/renovation-projects/${slug}`);
-  const publicRoutes = [...CORE_ROUTES, ...EXTENDED_ROUTES, ...projectRoutes].map(normalizePath);
+  const sitemapRoutes = await loadPrerenderedSitemapRoutes(PRERENDERED_SITEMAP_PATH);
+  const publicRoutes = (
+    sitemapRoutes.length > 0
+      ? sitemapRoutes
+      : [...CORE_ROUTES, ...EXTENDED_ROUTES, ...projectRoutes]
+  ).map(normalizePath);
   const privateRoutes = PRIVATE_ROUTES.map(normalizePath);
   const allRoutes = [...new Set([...publicRoutes, ...privateRoutes])];
 

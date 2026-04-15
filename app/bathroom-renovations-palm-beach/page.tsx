@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-palm-beach",
+  noIndex: true,
   keywords: [
     "bathroom renovation Palm Beach",
     "Palm Beach bathroom renovation",
@@ -81,7 +82,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Palm Beach bathroom renovation services for search crawlers">
-        <h2>Bathroom Renovations in Palm Beach by {SITE_NAME}</h2>
+        <p className="font-semibold">Bathroom Renovations in Palm Beach by {SITE_NAME}</p>
         <p>
           Professional bathroom renovations in Palm Beach, specialising in coastal-inspired designs with
           salt-air resistant finishes. We deliver expert waterproofing, quality tiling, and premium

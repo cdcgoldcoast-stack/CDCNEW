@@ -8,18 +8,23 @@ import BottomInvitation from "@/components/BottomInvitation";
 import Footer from "@/components/Footer";
 import ResponsiveImage from "@/components/ResponsiveImage";
 
-const Work = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
+interface WorkProps {
+  initialProjects?: Project[];
+}
+
+const Work = ({ initialProjects }: WorkProps = {}) => {
+  const [projects, setProjects] = useState<Project[]>(initialProjects ?? []);
+  const [loading, setLoading] = useState(!initialProjects);
 
   useEffect(() => {
+    if (initialProjects && initialProjects.length > 0) return;
     const loadProjects = async () => {
       const data = await fetchProjects();
       setProjects(data);
       setLoading(false);
     };
     loadProjects();
-  }, []);
+  }, [initialProjects]);
 
   // Generate ItemList schema for SEO
   const itemListSchema = generateItemListSchema(
@@ -74,7 +79,7 @@ const Work = () => {
         ) : (
           /* Responsive layout - single column on mobile, 3 columns on desktop */
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-4 md:gap-5 lg:gap-6 max-w-[1600px] mx-auto">
-            {projects.map((project) => (
+            {projects.map((project, index) => (
               <Link
                 key={project.id}
                 to={`/renovation-projects/${project.slug}`}
@@ -87,7 +92,8 @@ const Work = () => {
                   height={1200}
                   sizes="(min-width: 1024px) 32vw, (min-width: 640px) 48vw, 100vw"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
+                  loading={index < 3 ? "eager" : "lazy"}
+                  priority={index < 3}
                   quality={60}
                   responsiveWidths={[320, 480, 640, 800, 960]}
                 />

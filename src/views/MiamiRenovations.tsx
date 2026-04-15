@@ -42,6 +42,7 @@ export default function MiamiRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Miami Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Renovation builders in Miami, Gold Coast. Kitchen, bathroom and whole-home renovations for beach cottages and coastal homes. QBCC licensed. Based in Broadbeach."
@@ -295,6 +296,8 @@ export default function MiamiRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

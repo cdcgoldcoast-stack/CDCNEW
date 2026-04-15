@@ -94,12 +94,12 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Whole-home renovation services summary for search crawlers">
-        <h2>Gold Coast Whole-Home Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Gold Coast Whole-Home Renovations by {SITE_NAME}</p>
         <p>
           Complete whole-home renovation services including structural changes, kitchen, bathrooms, 
           flooring, electrical, and finishing. Transform your entire home with QBCC licensed builders.
         </p>
-        <h2>Our Whole-Home Renovation Services Include:</h2>
+        <p className="font-semibold">Our Whole-Home Renovation Services Include:</p>
         <ul>
           <li>Complete home design and planning</li>
           <li>Structural modifications and extensions</li>

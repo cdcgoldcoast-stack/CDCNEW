@@ -42,6 +42,7 @@ export default function PalmBeachRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Palm Beach Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Renovation builders in Palm Beach. Kitchen, bathroom and whole-home renovations for beachside homes. Family-focused designs. QBCC licensed. Based in Broadbeach."
@@ -296,6 +297,8 @@ export default function PalmBeachRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

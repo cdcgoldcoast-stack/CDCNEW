@@ -42,6 +42,7 @@ export default function SanctuaryCoveRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Sanctuary Cove Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Prestige renovation builders for Sanctuary Cove. Bespoke kitchen, bathroom and whole-home renovations for marina and golf course homes. QBCC licensed Gold Coast builder."
@@ -295,6 +296,8 @@ export default function SanctuaryCoveRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // renders nothing, so wrapping the tree in HelmetProvider was dead weight (~15KB).
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
-import { trackPageView } from "@/lib/analytics";
+import { loadGtmScript, trackPageView } from "@/lib/analytics";
 import { initMetaPixel, trackMetaPixelPageView } from "@/lib/metaPixel";
 import { initPostHog, trackPostHogPageView } from "@/lib/posthog";
 
@@ -117,6 +117,7 @@ export default function AppProviders({ children }: AppProvidersProps) {
 
   useEffect(() => {
     if (!allowMarketingScripts) return;
+    loadGtmScript();
     initMetaPixel();
     initPostHog();
   }, [allowMarketingScripts]);

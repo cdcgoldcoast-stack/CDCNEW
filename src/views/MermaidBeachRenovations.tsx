@@ -42,6 +42,7 @@ export default function MermaidBeachRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Mermaid Beach Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Renovation builders in Mermaid Beach. Kitchen, bathroom and whole-home renovations for beachside homes. QBCC licensed. Based in Broadbeach - your local Gold Coast builder."
@@ -295,6 +296,8 @@ export default function MermaidBeachRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

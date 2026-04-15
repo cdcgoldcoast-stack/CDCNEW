@@ -42,6 +42,7 @@ export default function VarsityLakesRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Varsity Lakes Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Renovation builders in Varsity Lakes, Gold Coast. Kitchen, bathroom and whole-home upgrades for modern homes. Premium finishes and open-plan transformations near Bond University."
@@ -317,6 +318,8 @@ export default function VarsityLakesRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

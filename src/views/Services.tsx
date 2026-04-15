@@ -44,7 +44,7 @@ const serviceScopes = [
     linkLabel: "View apartment renovations",
   },
   {
-    title: "Home Extensions",
+    title: "Home Extension Service Scope",
     summary: "Room additions, second storey extensions, granny flats, and garage conversions with council approval handling.",
     link: "/home-extensions-gold-coast",
     linkLabel: "View home extensions",
@@ -89,6 +89,7 @@ const Services = () => {
         url="/renovation-services"
       />
       <Header />
+      <main id="main-content">
 
       {/* Hero */}
       <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-cream relative z-10">
@@ -226,6 +227,8 @@ const Services = () => {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

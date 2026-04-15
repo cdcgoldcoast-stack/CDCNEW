@@ -42,6 +42,7 @@ export default function SouthportRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Southport Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Renovation builders in Southport. Kitchen, bathroom and whole-home renovations for character homes and waterfront properties. QBCC licensed. Based in Broadbeach."
@@ -296,6 +297,8 @@ export default function SouthportRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

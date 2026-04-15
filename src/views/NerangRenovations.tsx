@@ -42,6 +42,7 @@ export default function NerangRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Nerang Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Expert renovation builders in Nerang, Gold Coast. Kitchen, bathroom and whole-home renovations for established family homes near the hinterland. QBCC licensed local builders."
@@ -315,6 +316,8 @@ export default function NerangRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

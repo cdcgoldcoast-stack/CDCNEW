@@ -68,13 +68,13 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Mudgeeraba renovation services summary for search crawlers">
-        <h2>Mudgeeraba Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Mudgeeraba Renovations by {SITE_NAME}</p>
         <p>
           Kitchen, bathroom and whole-home renovations in Mudgeeraba, Gold Coast. Specialists in
           acreage property and character home renovations. Preserving charm while delivering modern
           functionality for semi-rural Gold Coast living.
         </p>
-        <h2>Our Mudgeeraba Renovation Services:</h2>
+        <p className="font-semibold">Our Mudgeeraba Renovation Services:</p>
         <ul>
           <li>Kitchen renovations Mudgeeraba</li>
           <li>Bathroom renovations Mudgeeraba</li>

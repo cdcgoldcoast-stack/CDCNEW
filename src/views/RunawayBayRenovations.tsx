@@ -42,6 +42,7 @@ export default function RunawayBayRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Runaway Bay Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Canal-front and family home renovations in Runaway Bay. Kitchen, bathroom and whole-home upgrades for waterfront properties and established homes on the Gold Coast."
@@ -317,6 +318,8 @@ export default function RunawayBayRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

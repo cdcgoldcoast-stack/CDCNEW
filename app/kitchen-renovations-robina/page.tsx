@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-robina",
+  noIndex: true,
   keywords: [
     "kitchen renovation Robina",
     "Robina kitchen renovation",
@@ -81,7 +82,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Robina kitchen renovation services for search crawlers">
-        <h2>Kitchen Renovations in Robina by {SITE_NAME}</h2>
+        <p className="font-semibold">Kitchen Renovations in Robina by {SITE_NAME}</p>
         <p>
           Professional kitchen renovations in Robina, specialising in family-sized kitchens with modern
           open-plan layouts. From contemporary island kitchens to butler&apos;s pantry additions, we deliver

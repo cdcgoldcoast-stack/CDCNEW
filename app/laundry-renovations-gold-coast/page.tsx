@@ -95,13 +95,13 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Laundry renovation services summary for search crawlers">
-        <h2>Gold Coast Laundry Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Gold Coast Laundry Renovations by {SITE_NAME}</p>
         <p>
           Complete laundry renovation services including custom cabinetry, stone benchtops,
           utility sinks, storage solutions, and combined bathroom-laundry designs.
           QBCC licensed builders serving all Gold Coast suburbs.
         </p>
-        <h2>Our Laundry Renovation Services Include:</h2>
+        <p className="font-semibold">Our Laundry Renovation Services Include:</p>
         <ul>
           <li>Custom laundry cabinetry and joinery</li>
           <li>Stone and laminate benchtops</li>

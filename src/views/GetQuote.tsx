@@ -389,6 +389,32 @@ const GetQuote = () => {
             </div>
           </motion.div>
         )}
+
+        <section className="max-w-3xl mx-auto px-6 pb-16 md:pb-24 text-foreground/70 text-sm md:text-base leading-relaxed space-y-4">
+          <h2 className="font-serif italic text-2xl md:text-3xl text-primary mb-2">
+            What to expect from your Gold Coast renovation consultation
+          </h2>
+          <p>
+            Every enquiry begins with a <strong>free, no-obligation consultation</strong> where we
+            take time to understand how you live, what is not working in your current home, and the
+            outcomes you want from a renovation. We will ask about your priorities, your timing,
+            and the constraints you are working within so that the advice we give is grounded in
+            your actual brief — not a generic script.
+          </p>
+          <p>
+            As <strong>QBCC-licensed Gold Coast renovation builders</strong>, we lead every project
+            with careful planning, transparent documentation, and clear communication. Whether you
+            are considering a kitchen upgrade, a bathroom renovation, a whole-home refresh, or a
+            home extension, our design-led approach is built to reduce surprises during construction
+            and keep the end result aligned with the vision we discussed on day one.
+          </p>
+          <p>
+            After submitting the form above, a member of our team will be in touch within one
+            business day to arrange a time to meet — either on-site at your home or at our studio.
+            From that first conversation, you can decide at your own pace whether to continue into
+            the design and planning stages with us.
+          </p>
+        </section>
       </main>
 
       <Footer />

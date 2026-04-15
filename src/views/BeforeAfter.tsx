@@ -31,6 +31,7 @@ const BeforeAfter = () => {
         url="/before-after"
       />
       <Header />
+      <main id="main-content">
 
       {/* Hero */}
       <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-cream relative z-10">
@@ -108,6 +109,55 @@ const BeforeAfter = () => {
         </div>
       </section>
 
+      <section className="relative z-10 py-16 md:py-24 bg-cream/40">
+        <div className="container-wide max-w-3xl mx-auto text-foreground/75 text-base md:text-lg leading-relaxed space-y-6">
+          <h2 className="font-serif italic text-2xl md:text-3xl text-primary">
+            How Gold Coast renovation before and after transformations come together
+          </h2>
+          <p>
+            Every before and after you see on this page began as a conversation with Gold Coast
+            homeowners about how they wanted to live. From that starting point, our design-led
+            team worked through measured drawings, material selections, and sequencing decisions
+            that shaped the final outcome. A strong transformation is never just a cosmetic
+            refresh — it depends on the planning behind the finishes.
+          </p>
+          <p>
+            Kitchen transformations typically rethink the relationship between cooking, storage,
+            and everyday flow. Bathroom transformations are driven by waterproofing-first
+            construction, layout adjustments, and fixture upgrades that improve daily comfort.
+            Whole-home transformations pull the plan together so each zone supports the others,
+            rather than feeling like a patchwork of separate projects.
+          </p>
+          <p>
+            We document every project thoroughly so that the reveal at handover matches the
+            direction we agreed during consultation. If a finished transformation inspires you
+            and you want to understand how it was planned or costed, book a consultation with
+            our Gold Coast renovation team and we will walk you through the process in detail —
+            including realistic timelines, trade coordination, and the material choices behind
+            the finished look.
+          </p>
+          <h3 className="font-serif italic text-xl md:text-2xl text-primary pt-4">
+            Planning your own Gold Coast renovation transformation
+          </h3>
+          <p>
+            If you are ready to start scoping your own renovation, browse the{" "}
+            <Link to="/renovation-projects" className="underline underline-offset-4">
+              full project portfolio
+            </Link>
+            , read about{" "}
+            <Link to="/how-we-work" className="underline underline-offset-4">
+              how we work
+            </Link>
+            , or jump straight into a{" "}
+            <Link to="/book-renovation-consultation" className="underline underline-offset-4">
+              free consultation
+            </Link>
+            . Our QBCC-licensed builders work across the Gold Coast, from Broadbeach and Palm
+            Beach through to Helensvale, Hope Island, and everywhere in between.
+          </p>
+        </div>
+      </section>
+
       <div className="relative z-10">
         <BottomInvitation
           title="Imagine Your Home Transformed"
@@ -118,6 +168,8 @@ const BeforeAfter = () => {
         />
       </div>
 
+
+      </main>
       <Footer />
     </div>
   );

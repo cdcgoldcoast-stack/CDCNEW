@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import BottomInvitation from "@/components/BottomInvitation";
+import { Link } from "react-router-dom";
 import {
   Accordion,
   AccordionContent,
@@ -154,6 +155,7 @@ const FAQ = () => {
         url="/faq"
       />
       <Header />
+      <main id="main-content">
 
       {/* Hero */}
       <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-cream relative z-10">
@@ -167,6 +169,46 @@ const FAQ = () => {
               Everything you need to know about renovating your Gold Coast home
               — from costs and timelines to design help and what to expect
               during the build.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Intro */}
+      <section className="py-12 md:py-16 bg-background relative z-10">
+        <div className="container-wide">
+          <div className="max-w-3xl mx-auto text-foreground/75 text-base md:text-lg leading-relaxed space-y-5">
+            <p>
+              The questions below cover the topics Gold Coast homeowners ask us most often when
+              they first start planning a renovation. They include questions about cost ranges,
+              typical timelines, council approvals, design and selections, and what to expect
+              during construction. We update this list whenever a new question keeps coming up
+              during consultations, so it reflects the real concerns behind starting a project.
+            </p>
+            <p>
+              As <strong>QBCC-licensed Gold Coast renovation builders</strong>, we try to give
+              answers that are specific, honest, and grounded in how we actually run projects.
+              Where a number is shown, it is an indicative range based on the last few years of
+              completed work — your final cost depends on your home, your scope, and the
+              selections you make during planning. If a question you have is not covered below,
+              reach out and we will answer it in writing so the next person who asks it benefits
+              too.
+            </p>
+            <p>
+              For category-specific information, our{" "}
+              <Link to="/kitchen-renovations-gold-coast" className="underline underline-offset-4">
+                kitchen renovation
+              </Link>
+              ,{" "}
+              <Link to="/bathroom-renovations-gold-coast" className="underline underline-offset-4">
+                bathroom renovation
+              </Link>
+              , and{" "}
+              <Link to="/whole-home-renovations-gold-coast" className="underline underline-offset-4">
+                whole-home renovation
+              </Link>{" "}
+              service pages cover scope, typical inclusions, and the specific considerations
+              unique to each type of project on the Gold Coast.
             </p>
           </div>
         </div>
@@ -218,6 +260,8 @@ const FAQ = () => {
         />
       </div>
 
+
+      </main>
       <Footer />
     </div>
   );

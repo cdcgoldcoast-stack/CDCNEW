@@ -118,10 +118,6 @@ serve(async (req) => {
       return jsonResponse(req, 400, { error: "Please provide a valid phone number." });
     }
 
-    if (!suburb && !postcode) {
-      return jsonResponse(req, 400, { error: "Please provide either suburb or postcode." });
-    }
-
     if (postcode && !POSTCODE_REGEX.test(postcode)) {
       return jsonResponse(req, 400, { error: "Please provide a valid postcode." });
     }

@@ -82,6 +82,7 @@ const Testimonials = () => {
         url="/testimonials"
       />
       <Header />
+      <main id="main-content">
 
       {/* Hero */}
       <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-cream relative z-10">
@@ -165,6 +166,8 @@ const Testimonials = () => {
         />
       </div>
 
+
+      </main>
       <Footer />
     </div>
   );

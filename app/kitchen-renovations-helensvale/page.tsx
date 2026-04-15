@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-helensvale",
+  noIndex: true,
   keywords: [
     "kitchen renovation Helensvale",
     "Helensvale kitchen renovation",
@@ -81,7 +82,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Helensvale kitchen renovation services for search crawlers">
-        <h2>Kitchen Renovations in Helensvale by {SITE_NAME}</h2>
+        <p className="font-semibold">Kitchen Renovations in Helensvale by {SITE_NAME}</p>
         <p>
           Professional kitchen renovations in Helensvale, specialising in spacious family kitchens with
           island benches, butler&apos;s pantries, and open-plan layouts. We deliver quality craftsmanship

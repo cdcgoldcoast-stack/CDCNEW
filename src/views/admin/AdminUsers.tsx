@@ -52,11 +52,27 @@ async function fetchWithAuth(
   });
 
   if (error) {
+    // supabase-js surfaces "Edge Function returned a non-2xx status code" without
+    // the body — unwrap context.json() to get the real `error` field from the function.
+    const context = (error as { context?: { json?: () => Promise<unknown> } }).context;
+    if (context?.json) {
+      try {
+        const parsed = await context.json();
+        const realMsg = (parsed as { error?: string })?.error;
+        if (realMsg) throw new Error(realMsg);
+      } catch (parseErr) {
+        if (parseErr instanceof Error && parseErr.message) throw parseErr;
+      }
+    }
     const msg = (error as { message?: string }).message || "Request failed";
     throw new Error(msg);
   }
 
-  return data as { error?: string; users?: UserRecord[] } | null;
+  if (data && typeof data === "object" && "error" in data) {
+    throw new Error((data as { error: string }).error);
+  }
+
+  return data as { users?: UserRecord[] } | null;
 }
 
 const AdminUsers = () => {

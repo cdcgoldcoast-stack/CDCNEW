@@ -68,13 +68,13 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Bundall renovation services summary for search crawlers">
-        <h2>Bundall Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Bundall Renovations by {SITE_NAME}</p>
         <p>
           Renovation builders in Bundall specialising in established homes and waterfront properties.
           Kitchen, bathroom and whole-home renovations for Bundall families on the Gold Coast.
           Expert at modernising 1970s-90s homes with open-plan living and contemporary finishes.
         </p>
-        <h2>Our Bundall Renovation Services:</h2>
+        <p className="font-semibold">Our Bundall Renovation Services:</p>
         <ul>
           <li>Kitchen renovations Bundall</li>
           <li>Bathroom renovations Bundall</li>

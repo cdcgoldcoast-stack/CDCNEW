@@ -66,12 +66,12 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Hope Island renovation services summary for search crawlers">
-        <h2>Hope Island Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Hope Island Renovations by {SITE_NAME}</p>
         <p>
           Luxury kitchen, bathroom and whole-home renovations in Hope Island. Specialists in
           waterfront properties, golf course homes, and resort-style living. Based on the Gold Coast.
         </p>
-        <h2>Our Hope Island Renovation Services:</h2>
+        <p className="font-semibold">Our Hope Island Renovation Services:</p>
         <ul>
           <li>Kitchen renovations</li>
           <li>Bathroom renovations</li>

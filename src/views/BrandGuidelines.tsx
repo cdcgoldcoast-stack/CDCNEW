@@ -48,7 +48,7 @@ const BrandGuidelines = () => {
         </div>
       </nav>
 
-      <main className="py-16 md:py-24">
+      <main id="main-content" className="py-16 md:py-24">
         <div className="container-wide space-y-24 md:space-y-32">
 
           {/* 1. Brand Overview */}

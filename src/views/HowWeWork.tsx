@@ -105,6 +105,7 @@ const HowWeWork = () => {
         url="/how-we-work"
       />
       <Header />
+      <main id="main-content">
 
       {/* Hero */}
       <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-cream relative z-10">
@@ -220,6 +221,8 @@ const HowWeWork = () => {
         className="mt-0 mb-0"
       />
 
+
+      </main>
       <Footer />
     </div>
   );

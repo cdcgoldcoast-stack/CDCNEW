@@ -97,13 +97,13 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Bathroom renovation services summary for search crawlers">
-        <h2>Gold Coast Bathroom Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Gold Coast Bathroom Renovations by {SITE_NAME}</p>
         <p>
           Complete bathroom renovation services including design, waterproofing, tiling, fixtures, 
           and installation. Specialists in ensuites, family bathrooms, and powder rooms. 
           QBCC licensed builders serving all Gold Coast suburbs.
         </p>
-        <h2>Our Bathroom Renovation Services Include:</h2>
+        <p className="font-semibold">Our Bathroom Renovation Services Include:</p>
         <ul>
           <li>Custom bathroom design and 3D visualisation</li>
           <li>Full waterproofing with 10-year warranty</li>

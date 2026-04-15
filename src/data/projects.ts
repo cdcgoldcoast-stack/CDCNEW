@@ -4,6 +4,8 @@ import { generateSlug, slugMatches } from "@/lib/slug";
 import { SITE_NAME } from "@/config/seo";
 
 type DbProjectRow = Database["public"]["Tables"]["projects"]["Row"];
+type DbProjectImageRow = Database["public"]["Tables"]["project_images"]["Row"];
+type DbProjectWithImages = DbProjectRow & { project_images: DbProjectImageRow[] | null };
 
 export interface Project {
   id: string;
@@ -39,27 +41,16 @@ const buildProjectTags = (projectName: string, category: Project["category"], lo
   projectName,
 ];
 
-const mapProjectImages = async (projectId: string) => {
-  const { data: images, error } = await supabase
-    .from("project_images")
-    .select("*")
-    .eq("project_id", projectId)
-    .order("display_order");
+const summarizeImages = (images: DbProjectImageRow[] | null | undefined) => {
+  const sorted = [...(images || [])].sort(
+    (a, b) => (a.display_order ?? 0) - (b.display_order ?? 0),
+  );
 
-  if (error) {
-    console.error("Error fetching project images:", error);
-    return {
-      gallery: [] as string[],
-      featuredImages: [] as string[],
-      featuredImage: "",
-    };
-  }
-
-  const gallery = (images || [])
+  const gallery = sorted
     .map((img) => img.image_url?.trim())
     .filter((url): url is string => Boolean(url));
 
-  const featuredImages = (images || [])
+  const featuredImages = sorted
     .filter((img) => img.is_featured)
     .map((img) => img.image_url?.trim())
     .filter((url): url is string => Boolean(url))
@@ -67,15 +58,11 @@ const mapProjectImages = async (projectId: string) => {
 
   const featuredImage = featuredImages[0] || gallery[0] || "";
 
-  return {
-    gallery,
-    featuredImages,
-    featuredImage,
-  };
+  return { gallery, featuredImages, featuredImage };
 };
 
-const mapDbProjectToProject = async (project: DbProjectRow): Promise<Project> => {
-  const { gallery, featuredImages, featuredImage } = await mapProjectImages(project.id);
+const mapDbProjectToProject = (project: DbProjectWithImages): Project => {
+  const { gallery, featuredImages, featuredImage } = summarizeImages(project.project_images);
   const category = project.category as Project["category"];
   const location = project.location || "Gold Coast";
 
@@ -103,7 +90,7 @@ export const fetchProjects = async (): Promise<Project[]> => {
   try {
     const { data: dbProjects, error } = await supabase
       .from("projects")
-      .select("*")
+      .select("*, project_images(*)")
       .eq("is_published", true)
       .order("created_at", { ascending: false });
 
@@ -116,9 +103,9 @@ export const fetchProjects = async (): Promise<Project[]> => {
       return [];
     }
 
-    const projectsWithImages = await Promise.all(dbProjects.map((project) => mapDbProjectToProject(project)));
-
-    return projectsWithImages.filter((project) => !REMOVED_PROJECT_SLUGS.has(project.slug));
+    return (dbProjects as DbProjectWithImages[])
+      .map((project) => mapDbProjectToProject(project))
+      .filter((project) => !REMOVED_PROJECT_SLUGS.has(project.slug));
   } catch (err) {
     console.error("Error in fetchProjects:", err);
     return [];
@@ -139,7 +126,7 @@ export const fetchProjectById = async (id: string): Promise<Project | undefined>
   try {
     const { data: dbProject, error } = await supabase
       .from("projects")
-      .select("*")
+      .select("*, project_images(*)")
       .eq("id", id)
       .maybeSingle();
 
@@ -147,7 +134,7 @@ export const fetchProjectById = async (id: string): Promise<Project | undefined>
       return undefined;
     }
 
-    const mappedProject = await mapDbProjectToProject(dbProject);
+    const mappedProject = mapDbProjectToProject(dbProject as DbProjectWithImages);
     if (REMOVED_PROJECT_SLUGS.has(mappedProject.slug)) {
       return undefined;
     }

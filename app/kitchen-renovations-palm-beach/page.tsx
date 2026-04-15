@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-palm-beach",
+  noIndex: true,
   keywords: [
     "kitchen renovation Palm Beach",
     "Palm Beach kitchen renovation",
@@ -81,7 +82,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Palm Beach kitchen renovation services for search crawlers">
-        <h2>Kitchen Renovations in Palm Beach by {SITE_NAME}</h2>
+        <p className="font-semibold">Kitchen Renovations in Palm Beach by {SITE_NAME}</p>
         <p>
           Professional kitchen renovations in Palm Beach, specialising in coastal kitchen designs with
           durable, salt-air resistant finishes. From beachside cottage kitchens to modern entertainer&apos;s

@@ -1396,7 +1396,7 @@ const MoodboardCreator = () => {
       />
       <Header />
 
-      <div className="pt-[74px] md:pt-[100px] flex-1 flex flex-col min-h-0 lg:min-h-0">
+      <main id="main-content" className="pt-[74px] md:pt-[100px] flex-1 flex flex-col min-h-0 lg:min-h-0">
         {/* Top bar */}
         <div className="px-4 py-3 border-b border-border bg-background flex items-center gap-3 md:gap-4 shrink-0">
           <Link
@@ -1900,7 +1900,7 @@ const MoodboardCreator = () => {
             )}
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

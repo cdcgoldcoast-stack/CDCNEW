@@ -67,13 +67,13 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Upper Coomera renovation services summary for search crawlers">
-        <h2>Upper Coomera Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Upper Coomera Renovations by {SITE_NAME}</p>
         <p>
           Family home renovations in Upper Coomera. Kitchen, bathroom and whole-home transformations
           for growing families. Specialists in extending and upgrading homes across Upper Coomera
           estates on the Gold Coast.
         </p>
-        <h2>Our Upper Coomera Renovation Services:</h2>
+        <p className="font-semibold">Our Upper Coomera Renovation Services:</p>
         <ul>
           <li>Kitchen renovations Upper Coomera</li>
           <li>Bathroom renovations Upper Coomera</li>

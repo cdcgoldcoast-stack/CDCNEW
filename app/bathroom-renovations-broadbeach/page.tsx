@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-broadbeach",
+  noIndex: true,
   keywords: [
     "bathroom renovation Broadbeach",
     "Broadbeach bathroom renovation",
@@ -81,7 +82,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Broadbeach bathroom renovation services for search crawlers">
-        <h2>Bathroom Renovations in Broadbeach by {SITE_NAME}</h2>
+        <p className="font-semibold">Bathroom Renovations in Broadbeach by {SITE_NAME}</p>
         <p>
           Professional bathroom renovations in Broadbeach, from compact apartment ensuites to luxurious
           family bathrooms. We specialise in high-rise apartment bathrooms with expert waterproofing and

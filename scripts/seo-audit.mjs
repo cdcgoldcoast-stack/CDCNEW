@@ -14,6 +14,7 @@ import {
   pathFromUrl,
   isSitemapEligibleRoute,
   loadGeneratedProjectSlugs,
+  loadPrerenderedSitemapRoutes,
   isProjectDetailPath,
   slugFromProjectPath,
   sameDomain,
@@ -31,6 +32,7 @@ const ROOT_DIR = path.resolve(__dirname, "..");
 const NEXT_SERVER_APP_DIR = path.join(ROOT_DIR, ".next", "server", "app");
 const SITEMAP_INVENTORY_PATH = path.join(ROOT_DIR, "artifacts", "seo-sitemap-inventory.json");
 const PUBLIC_SITEMAP_PATH = path.join(ROOT_DIR, "public", "sitemap.xml");
+const PRERENDERED_SITEMAP_PATH = path.join(NEXT_SERVER_APP_DIR, "sitemap.xml.body");
 const GENERATED_PROJECT_SLUGS_PATH = path.join(ROOT_DIR, "src", "generated", "project-slugs.json");
 const VERCEL_CONFIG_PATH = path.join(ROOT_DIR, "vercel.json");
 const ARTIFACTS_DIR = path.join(ROOT_DIR, "artifacts");
@@ -849,16 +851,30 @@ const loadProjectRoutes = async () => {
 };
 
 const getAuditRoutes = async () => {
-  const routes = [...CORE_ROUTES];
+  // Prefer the prerendered sitemap as the single source of truth for indexable
+  // routes — it is generated at build time from app/sitemap.ts and stays in
+  // sync with what search engines actually see.
+  const sitemapRoutes = await loadPrerenderedSitemapRoutes(PRERENDERED_SITEMAP_PATH);
 
+  if (sitemapRoutes.length > 0) {
+    const routes = new Set(sitemapRoutes);
+    if (!includeProjectDetailRoutes) {
+      for (const route of [...routes]) {
+        if (isProjectDetailPath(route)) routes.delete(route);
+      }
+    }
+    return [...routes].map((route) => normalizePath(route));
+  }
+
+  // Fallback: use the hardcoded constants when the prerendered sitemap
+  // is not available (e.g., running the audit before `next build`).
+  const routes = [...CORE_ROUTES];
   if (includeExtendedRoutes) {
     routes.push(...EXTENDED_ROUTES);
   }
-
   if (includeProjectDetailRoutes) {
     routes.push(...(await loadProjectRoutes()));
   }
-
   return [...new Set(routes.map((route) => normalizePath(route)))];
 };
 

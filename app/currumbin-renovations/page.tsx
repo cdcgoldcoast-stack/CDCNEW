@@ -68,13 +68,13 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Currumbin renovation services summary for search crawlers">
-        <h2>Currumbin Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Currumbin Renovations by {SITE_NAME}</p>
         <p>
           Kitchen, bathroom and whole-home renovations in Currumbin, Gold Coast. Specialists in
           beachside family home renovations with coastal-durable materials. Creating beautiful,
           family-friendly spaces that embrace the Currumbin lifestyle.
         </p>
-        <h2>Our Currumbin Renovation Services:</h2>
+        <p className="font-semibold">Our Currumbin Renovation Services:</p>
         <ul>
           <li>Kitchen renovations Currumbin</li>
           <li>Bathroom renovations Currumbin</li>

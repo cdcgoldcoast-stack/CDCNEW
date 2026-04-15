@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-southport",
+  noIndex: true,
   keywords: [
     "bathroom renovation Southport",
     "Southport bathroom renovation",
@@ -81,7 +82,7 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Southport bathroom renovation services for search crawlers">
-        <h2>Bathroom Renovations in Southport by {SITE_NAME}</h2>
+        <p className="font-semibold">Bathroom Renovations in Southport by {SITE_NAME}</p>
         <p>
           Professional bathroom renovations in Southport, specialising in modernising dated bathrooms in
           older homes. We handle replumbing, asbestos assessment, expert waterproofing, and deliver

@@ -17,9 +17,9 @@ const TITLE_ELLIPSIS = "...";
 
 // Default meta content
 export const DEFAULT_META = {
-  title: "Gold Coast Renovations | Kitchen, Bathroom & Home | CD Construct",
+  title: "Concept Design Construct (CD Construct) | Gold Coast",
   description:
-    "Gold Coast renovation builders for kitchens, bathrooms & whole-home transformations. Design-led planning, QBCC licensed, clear timelines. Free consultation.",
+    "Concept Design Construct (CD Construct) delivers Gold Coast kitchen, bathroom, and whole-home renovations. QBCC licensed since 2000. Free consultation.",
   image: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Gold-Coast-Renovations.webp",
 };
 
@@ -285,6 +285,13 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
     includeInFooter: true,
   },
   // Location pages
+  {
+    path: "/gold-coast-renovations",
+    label: "Gold Coast Renovations",
+    description: withBrandDescription("QBCC licensed Gold Coast renovation specialists since 2000."),
+    includeInHeader: false,
+    includeInFooter: true,
+  },
   {
     path: "/broadbeach-renovations",
     label: "Broadbeach Renovations",

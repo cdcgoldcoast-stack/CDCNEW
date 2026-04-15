@@ -97,13 +97,13 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
       <section className="sr-only" aria-label="Outdoor renovation services summary for search crawlers">
-        <h2>Gold Coast Outdoor Living & Deck Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Gold Coast Outdoor Living & Deck Renovations by {SITE_NAME}</p>
         <p>
           Complete outdoor renovation services including deck construction, alfresco areas,
           outdoor kitchens, pergolas, carports, and pool surrounds. Council-approved builds
           with quality materials. QBCC licensed builders serving all Gold Coast suburbs.
         </p>
-        <h2>Our Outdoor Renovation Services Include:</h2>
+        <p className="font-semibold">Our Outdoor Renovation Services Include:</p>
         <ul>
           <li>Timber and composite deck construction</li>
           <li>Alfresco dining and entertainment areas</li>

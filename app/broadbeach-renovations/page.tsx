@@ -68,12 +68,12 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Broadbeach renovation services summary for search crawlers">
-        <h2>Broadbeach Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Broadbeach Renovations by {SITE_NAME}</p>
         <p>
           Kitchen, bathroom and whole-home renovations in Broadbeach. Specialists in apartment 
           renovations with body corporate experience. Based in Broadbeach - your local Gold Coast builder.
         </p>
-        <h2>Our Broadbeach Renovation Services:</h2>
+        <p className="font-semibold">Our Broadbeach Renovation Services:</p>
         <ul>
           <li>Apartment kitchen renovations</li>
           <li>Apartment bathroom renovations</li>

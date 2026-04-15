@@ -42,6 +42,7 @@ export default function BundallRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Bundall Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Renovation builders in Bundall specialising in established homes and waterfront properties. Kitchen, bathroom and whole-home renovations for Bundall families on the Gold Coast."
@@ -318,6 +319,8 @@ export default function BundallRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

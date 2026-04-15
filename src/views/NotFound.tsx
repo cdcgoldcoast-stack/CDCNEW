@@ -17,7 +17,7 @@ const NotFound = () => {
         url={location.pathname}
         noIndex={true}
       />
-      <div className="text-center">
+      <main id="main-content" className="text-center">
         <h1 className="mb-4 text-4xl font-bold">404</h1>
         <h2 className="mb-4 text-xl font-normal text-muted-foreground">Oops! Page not found</h2>
         <div className="text-sm">
@@ -25,7 +25,7 @@ const NotFound = () => {
             Return to the Gold Coast renovation home page
           </Link>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

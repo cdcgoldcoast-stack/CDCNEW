@@ -42,6 +42,7 @@ export default function MudgeerabaRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Mudgeeraba Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Renovation builders in Mudgeeraba, Gold Coast. Kitchen, bathroom and whole-home renovations for acreage properties and character homes. Design-led planning for semi-rural living."
@@ -317,6 +318,8 @@ export default function MudgeerabaRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

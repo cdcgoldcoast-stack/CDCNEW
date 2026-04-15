@@ -68,13 +68,13 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Coomera renovation services summary for search crawlers">
-        <h2>Coomera Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Coomera Renovations by {SITE_NAME}</p>
         <p>
           Renovation builders in Coomera upgrading builder-grade homes with premium finishes.
           Kitchen, bathroom and whole-home renovations for growing families. Specialists in
           transforming developer-standard homes into personalised living spaces on the Gold Coast.
         </p>
-        <h2>Our Coomera Renovation Services:</h2>
+        <p className="font-semibold">Our Coomera Renovation Services:</p>
         <ul>
           <li>Kitchen renovations Coomera</li>
           <li>Bathroom renovations Coomera</li>

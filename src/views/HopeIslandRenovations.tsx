@@ -42,6 +42,7 @@ export default function HopeIslandRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Hope Island Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Luxury renovation builders in Hope Island. Kitchen, bathroom and whole-home renovations for waterfront, golf course and resort-style homes. QBCC licensed Gold Coast builder."
@@ -295,6 +296,8 @@ export default function HopeIslandRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

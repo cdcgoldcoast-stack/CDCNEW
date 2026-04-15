@@ -67,13 +67,13 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Nerang renovation services summary for search crawlers">
-        <h2>Nerang Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Nerang Renovations by {SITE_NAME}</p>
         <p>
           Kitchen, bathroom and whole-home renovations in Nerang, Gold Coast. Specialists in
           renovating established family homes on larger blocks near the hinterland. QBCC licensed builders
           with extensive experience in the Nerang area.
         </p>
-        <h2>Our Nerang Renovation Services:</h2>
+        <p className="font-semibold">Our Nerang Renovation Services:</p>
         <ul>
           <li>Kitchen renovations Nerang</li>
           <li>Bathroom renovations Nerang</li>

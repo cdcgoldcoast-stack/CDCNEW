@@ -40,6 +40,7 @@ export default function BurleighHeads() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
 
       {/* Hero with Image */}
       <section className="pt-32 pb-20 md:pt-40 md:pb-28 bg-cream">
@@ -342,6 +343,8 @@ export default function BurleighHeads() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );

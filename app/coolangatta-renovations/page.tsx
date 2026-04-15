@@ -68,13 +68,13 @@ export default function Page() {
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
       <section className="sr-only" aria-label="Coolangatta renovation services summary for search crawlers">
-        <h2>Coolangatta Renovations by {SITE_NAME}</h2>
+        <p className="font-semibold">Coolangatta Renovations by {SITE_NAME}</p>
         <p>
           Kitchen, bathroom and whole-home renovations in Coolangatta, Gold Coast. Specialists in
           coastal property renovations using salt-air resistant materials. Apartments and beach house
           renovations with design-led planning.
         </p>
-        <h2>Our Coolangatta Renovation Services:</h2>
+        <p className="font-semibold">Our Coolangatta Renovation Services:</p>
         <ul>
           <li>Kitchen renovations Coolangatta</li>
           <li>Bathroom renovations Coolangatta</li>

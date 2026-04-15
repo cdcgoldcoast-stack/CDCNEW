@@ -99,6 +99,11 @@ const DesignTools = () => {
             <h1 className="font-serif italic text-3xl md:text-4xl lg:text-5xl text-white">
               Gold Coast Renovations Design Tools
             </h1>
+            <p className="mt-6 text-white/70 text-base md:text-lg leading-relaxed">
+              Use these <strong className="text-white">free Gold Coast renovation planning tools</strong> to
+              explore concepts, test finishes, and capture a direction before you book a
+              consultation with our QBCC-licensed design and build team.
+            </p>
           </motion.div>
         </section>
 

@@ -42,6 +42,7 @@ export default function CoomeraRenovations() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <main id="main-content">
       <SEO
         title="Coomera Renovations | Kitchen, Bathroom & Home | CD Construct"
         description="Renovation builders in Coomera upgrading builder-grade homes with premium finishes. Kitchen, bathroom and whole-home renovations for growing families on the Gold Coast."
@@ -318,6 +319,8 @@ export default function CoomeraRenovations() {
         </div>
       </section>
 
+
+      </main>
       <Footer />
     </div>
   );
