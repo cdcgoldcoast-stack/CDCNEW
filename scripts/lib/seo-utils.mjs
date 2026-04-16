@@ -32,6 +32,19 @@ export const EXTENDED_ROUTES = [
   "/renovation-ai-generator/intro",
   "/renovation-ai-generator",
   "/renovation-design-tools/moodboard",
+  // Sub-location service pages (unblocked from noIndex)
+  "/kitchen-renovations-broadbeach",
+  "/kitchen-renovations-helensvale",
+  "/kitchen-renovations-palm-beach",
+  "/kitchen-renovations-robina",
+  "/kitchen-renovations-southport",
+  "/kitchen-renovations-surfers-paradise",
+  "/bathroom-renovations-broadbeach",
+  "/bathroom-renovations-helensvale",
+  "/bathroom-renovations-palm-beach",
+  "/bathroom-renovations-robina",
+  "/bathroom-renovations-southport",
+  "/bathroom-renovations-surfers-paradise",
 ];
 
 export const SITELINK_TARGET_PATHS = [
@@ -71,18 +84,6 @@ export const NOINDEX_EXACT_ROUTES = new Set([
   "/404",
   "/auth",
   "/brand-guidelines",
-  "/bathroom-renovations-broadbeach",
-  "/bathroom-renovations-helensvale",
-  "/bathroom-renovations-palm-beach",
-  "/bathroom-renovations-robina",
-  "/bathroom-renovations-southport",
-  "/bathroom-renovations-surfers-paradise",
-  "/kitchen-renovations-broadbeach",
-  "/kitchen-renovations-helensvale",
-  "/kitchen-renovations-palm-beach",
-  "/kitchen-renovations-robina",
-  "/kitchen-renovations-southport",
-  "/kitchen-renovations-surfers-paradise",
 ]);
 
 export const NOINDEX_PREFIXES = ["/admin"];
