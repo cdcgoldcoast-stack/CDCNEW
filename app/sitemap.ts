@@ -27,7 +27,7 @@ const staticRoutes: Array<{
   { path: "/apartment-renovations-gold-coast", changeFrequency: "weekly", priority: 0.8 },
   { path: "/home-extensions-gold-coast", changeFrequency: "weekly", priority: 0.8 },
   // Location pages
-  { path: "/gold-coast-renovations", changeFrequency: "weekly", priority: 0.8 },
+  // /gold-coast-renovations moved to /lp/gold-coast-renovations (noindex, excluded from sitemap)
   { path: "/broadbeach-renovations", changeFrequency: "weekly", priority: 0.7 },
   { path: "/mermaid-beach-renovations", changeFrequency: "weekly", priority: 0.7 },
   { path: "/palm-beach-renovations", changeFrequency: "weekly", priority: 0.7 },

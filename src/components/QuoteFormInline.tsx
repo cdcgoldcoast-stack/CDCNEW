@@ -53,6 +53,8 @@ type QuoteFormInlineProps = {
   eyebrow?: string;
   heading?: string;
   className?: string;
+  /** Hide post-submit navigation links (for isolated landing pages) */
+  hideNavLinks?: boolean;
 };
 
 export default function QuoteFormInline({
@@ -60,6 +62,7 @@ export default function QuoteFormInline({
   eyebrow = "Get Your Free",
   heading = "Renovation Quote",
   className,
+  hideNavLinks = false,
 }: QuoteFormInlineProps) {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -172,18 +175,20 @@ export default function QuoteFormInline({
         <p className="text-foreground/70 text-base leading-relaxed mb-6">
           First, we listen. We want to understand how you live now and how you want to live next.
         </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link to="/renovation-projects">
-            <Button variant="outline" className="w-full sm:w-auto px-6 h-11 text-xs tracking-widest uppercase font-medium">
-              View Our Projects
-            </Button>
-          </Link>
-          <Link to="/renovation-design-tools">
-            <Button className="w-full sm:w-auto px-6 h-11 text-xs tracking-widest uppercase font-medium">
-              Explore Design Tools
-            </Button>
-          </Link>
-        </div>
+        {!hideNavLinks && (
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link to="/renovation-projects">
+              <Button variant="outline" className="w-full sm:w-auto px-6 h-11 text-xs tracking-widest uppercase font-medium">
+                View Our Projects
+              </Button>
+            </Link>
+            <Link to="/renovation-design-tools">
+              <Button className="w-full sm:w-auto px-6 h-11 text-xs tracking-widest uppercase font-medium">
+                Explore Design Tools
+              </Button>
+            </Link>
+          </div>
+        )}
       </motion.div>
     );
   }

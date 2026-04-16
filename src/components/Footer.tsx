@@ -12,7 +12,6 @@ const Footer = () => {
   const logo = useResolvedAsset("logo", { staticFirst: true, deferRemoteOverrides: true });
 
   const serviceLinks = [
-    { label: "Gold Coast Renovations", href: "/gold-coast-renovations" },
     { label: "Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
     { label: "Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
     { label: "Whole-Home Renovations", href: "/whole-home-renovations-gold-coast" },

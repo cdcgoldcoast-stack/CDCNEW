@@ -90,9 +90,6 @@ const HomeExtensionsPage = dynamic(() => import("@/views/HomeExtensions"), {
 });
 
 // Location pages
-const GoldCoastRenovationsPage = dynamic(() => import("@/views/GoldCoastRenovations"), {
-  loading: pageLoader,
-});
 const BroadbeachRenovationsPage = dynamic(() => import("@/views/BroadbeachRenovations"), {
   loading: pageLoader,
 });
@@ -399,10 +396,6 @@ export function HomeExtensionsClient() {
 }
 
 // Location pages
-export function GoldCoastRenovationsClient() {
-  return <GoldCoastRenovationsPage />;
-}
-
 export function BroadbeachRenovationsClient() {
   return <BroadbeachRenovationsPage />;
 }

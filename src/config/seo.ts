@@ -287,13 +287,6 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
   },
   // Location pages
   {
-    path: "/gold-coast-renovations",
-    label: "Gold Coast Renovations",
-    description: withBrandDescription("QBCC licensed Gold Coast renovation specialists since 2000."),
-    includeInHeader: false,
-    includeInFooter: true,
-  },
-  {
     path: "/broadbeach-renovations",
     label: "Broadbeach Renovations",
     description: withBrandDescription("Renovation builders in Broadbeach. Based locally."),
