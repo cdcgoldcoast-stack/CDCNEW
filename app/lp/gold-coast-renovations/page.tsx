@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 
 const HERO_IMAGE =
-  "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/render/image/public/gallery-images/Living-renovation-Helensvale.webp?width=800&quality=50";
+  "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Living-renovation-Helensvale.webp";
 
 const GoldCoastRenovationsLP = dynamic(
   () => import("@/views/GoldCoastRenovationsLP"),

@@ -12,7 +12,6 @@ export default function robots(): MetadataRoute.Robots {
           "/auth",
           "/brand-guidelines",
           "/api/",
-          "/lp/",
         ],
       },
       { userAgent: "Googlebot", allow: "/" },

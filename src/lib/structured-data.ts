@@ -38,6 +38,25 @@ export interface BlogPostingData {
 }
 
 const ORGANIZATION_ID = `${PRODUCTION_DOMAIN}#organization`;
+const FOUNDER_ID = `${PRODUCTION_DOMAIN}#mark-mayne`;
+
+/**
+ * Person schema for the founder/director — used in LocalBusiness and blog authorship.
+ */
+export const generateFounderSchema = () => ({
+  "@type": "Person",
+  "@id": FOUNDER_ID,
+  name: "Mark Mayne",
+  jobTitle: "Director",
+  worksFor: { "@type": "Organization", "@id": ORGANIZATION_ID, name: SITE_NAME },
+  knowsAbout: [
+    "Gold Coast home renovations",
+    "kitchen renovations",
+    "bathroom renovations",
+    "QBCC licensed building",
+    "project management",
+  ],
+});
 
 /**
  * Generate FAQ Page structured data for rich snippets
@@ -276,6 +295,7 @@ export const generateLocalBusinessSchema = () => ({
       name: "Queensland Building and Construction Commission",
     },
   },
+  founder: generateFounderSchema(),
   sameAs: [
     "https://www.instagram.com/conceptdesignconstruct_",
     "https://www.facebook.com/conceptdesignconstruct",
@@ -298,7 +318,7 @@ export const generateLocalBusinessSchema = () => ({
   areaServed: [
     ...SERVICE_AREAS.primary.map((city) => ({ "@type": "City", name: city })),
     ...SERVICE_AREAS.suburbs.map((suburb) => ({ "@type": "City", name: suburb })),
-    { "@type": "State", name: SERVICE_AREAS.state },
+    { "@type": "AdministrativeArea", name: SERVICE_AREAS.region },
   ],
   priceRange: BUSINESS_INFO.priceRange,
   geo: {

@@ -257,6 +257,11 @@ const nextConfig = {
         destination: "/burleigh-heads-renovations",
         permanent: true,
       },
+      {
+        source: "/gold-coast-renovations",
+        destination: "/renovation-services",
+        permanent: true,
+      },
     ];
   },
   webpack: (config) => {
