@@ -65,21 +65,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
-      <section className="sr-only" aria-label="Helensvale renovation services summary for search crawlers">
-        <p className="font-semibold">Helensvale Renovations by {SITE_NAME}</p>
-        <p>
-          Kitchen, bathroom and whole-home renovations in Helensvale. Specialists in refreshing
-          established family homes with modern open-plan designs. Trusted Gold Coast builders.
-        </p>
-        <p className="font-semibold">Our Helensvale Renovation Services:</p>
-        <ul>
-          <li>Kitchen renovations</li>
-          <li>Bathroom renovations</li>
-          <li>Whole-home renovations</li>
-          <li>Open-plan conversions</li>
-          <li>Family home upgrades</li>
-        </ul>
-      </section>
       <HelensvaleRenovationsClient />
     </>
   );

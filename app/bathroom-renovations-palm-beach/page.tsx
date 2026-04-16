@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-palm-beach",
+  noIndex: true,
   keywords: [
     "bathroom renovation Palm Beach",
     "Palm Beach bathroom renovation",
@@ -80,26 +81,40 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Palm Beach bathroom renovation services for search crawlers">
-        <p className="font-semibold">Bathroom Renovations in Palm Beach by {SITE_NAME}</p>
-        <p>
-          Professional bathroom renovations in Palm Beach, specialising in coastal-inspired designs with
-          salt-air resistant finishes. We deliver expert waterproofing, quality tiling, and premium
-          fixtures suited to Palm Beach&apos;s beachside lifestyle.
-        </p>
-        <ul>
-          <li>Custom bathroom design in Palm Beach</li>
-          <li>Waterproofing with 10-year warranty</li>
-          <li>Floor and wall tiling</li>
-          <li>Vanity, shower and fixture installation</li>
-          <li>Full bathroom renovation project management</li>
-        </ul>
-        <p>
-          View our <a href="/bathroom-renovations-gold-coast">Gold Coast bathroom renovations</a> or{" "}
-          <a href="/palm-beach-renovations">Palm Beach renovations</a> for more details.
-        </p>
-      </section>
-      <BathroomRenovationsClient />
+      <BathroomRenovationsClient
+        pageContext={{
+          breadcrumbItems: [
+            { label: "Home", href: "/" },
+            { label: "Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
+            { label: "Palm Beach" },
+          ],
+          heroEyebrow: "Palm Beach Bathroom Builders",
+          heroTitle: "Bathroom Renovations in Palm Beach",
+          heroDescription:
+            "Professional bathroom renovations in Palm Beach, specialising in coastal-inspired designs with salt-air resistant finishes, strong waterproofing detail, and fixtures suited to beachside living.",
+          faqHeading: "Palm Beach Bathroom Renovation Questions",
+          faqItems: serviceFaqs,
+          localFocus: {
+            eyebrow: "Palm Beach Project Fit",
+            title: "Bathroom Renovations Built For Palm Beach Coastal Conditions",
+            description:
+              "Palm Beach bathrooms need material selections and detailing that suit moisture, salt air, and a relaxed coastal aesthetic. We plan for those conditions before waterproofing, tiling, and fixture decisions are locked.",
+            bullets: [
+              "Custom bathroom design in Palm Beach",
+              "Waterproofing with 10-year warranty",
+              "Floor and wall tiling",
+              "Vanity, shower and fixture installation",
+              "Full bathroom renovation project management",
+            ],
+            links: [
+              { label: "Gold Coast Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
+              { label: "Palm Beach Renovations", href: "/palm-beach-renovations" },
+            ],
+          },
+          areasSectionDescription:
+            "We renovate bathrooms across the Gold Coast, including Palm Beach homes that need coastal-ready finishes and moisture-resilient detailing.",
+        }}
+      />
     </>
   );
 }

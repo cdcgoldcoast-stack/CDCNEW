@@ -66,23 +66,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
-      <section className="sr-only" aria-label="Varsity Lakes renovation services summary for search crawlers">
-        <p className="font-semibold">Varsity Lakes Renovations by {SITE_NAME}</p>
-        <p>
-          Kitchen, bathroom and whole-home renovations in Varsity Lakes, Gold Coast. Specialists in
-          upgrading modern homes with premium finishes and open-plan transformations. Trusted by
-          families throughout the Varsity Lakes community.
-        </p>
-        <p className="font-semibold">Our Varsity Lakes Renovation Services:</p>
-        <ul>
-          <li>Kitchen renovations Varsity Lakes</li>
-          <li>Bathroom renovations Varsity Lakes</li>
-          <li>Whole-home renovations Varsity Lakes</li>
-          <li>Open-plan living conversions</li>
-          <li>Premium finish upgrades</li>
-          <li>Modern home transformations</li>
-        </ul>
-      </section>
       <VarsityLakesRenovationsClient />
     </>
   );

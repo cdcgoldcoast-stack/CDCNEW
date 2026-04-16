@@ -60,17 +60,6 @@ export default async function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, collectionSchema, itemListSchema, breadcrumbSchema]} />
-      <section className="sr-only" aria-label="Gallery route summary for search crawlers">
-        <p>Gold Coast Renovation Inspiration Gallery.</p>
-        <p>
-          This gallery page is for visual inspiration across kitchens, bathrooms, living rooms, and whole-home design
-          direction.
-        </p>
-        <p>
-          Looking for complete project breakdowns and outcomes? Visit{" "}
-          <a href="/renovation-projects">Gold Coast renovation projects</a>.
-        </p>
-      </section>
       <ProjectGalleryClient initialItems={galleryItems} />
     </>
   );

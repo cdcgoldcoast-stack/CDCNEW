@@ -95,29 +95,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Home extension services summary for search crawlers">
-        <p className="font-semibold">Gold Coast Home Extensions by {SITE_NAME}</p>
-        <p>
-          Complete home extension services including room additions, second storey additions,
-          granny flats, and garage conversions. Council approvals, structural engineering, and
-          seamless construction. QBCC licensed builders serving all Gold Coast suburbs.
-        </p>
-        <p className="font-semibold">Our Home Extension Services Include:</p>
-        <ul>
-          <li>Ground floor room additions</li>
-          <li>Second storey additions</li>
-          <li>Granny flat design and construction</li>
-          <li>Garage conversions and transformations</li>
-          <li>Council DA and BA approvals</li>
-          <li>Structural engineering and design</li>
-          <li>Seamless integration with existing homes</li>
-          <li>Full project management from design to handover</li>
-        </ul>
-        <p>
-          View our <a href="/renovation-projects">extension project portfolio</a> or
-          <a href="/book-renovation-consultation">book a free consultation</a> to discuss your project.
-        </p>
-      </section>
       <HomeExtensionsClient />
     </>
   );

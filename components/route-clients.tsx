@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 import type { ProjectDetailProps } from "@/views/ProjectDetail";
 import type { Project } from "@/data/projects";
 import type { GalleryItemRow } from "@/data/gallery";
+import type { KitchenRenovationsPageContext } from "@/views/KitchenRenovations";
+import type { BathroomRenovationsPageContext } from "@/views/BathroomRenovations";
 
 const pageLoader = () => <div className="min-h-screen bg-background animate-pulse" />;
 
@@ -198,7 +200,7 @@ const AdminUsersPage = dynamic(() => import("@/views/admin/AdminUsers"), {
   ssr: false,
 });
 const BurleighHeadsPage = dynamic(() => import("@/views/BurleighHeads"), {
-  ssr: false,
+  loading: pageLoader,
 });
 
 export function AboutUsClient() {
@@ -367,12 +369,20 @@ export function AdminUsersClient() {
   );
 }
 
-export function KitchenRenovationsClient() {
-  return <KitchenRenovationsPage />;
+export function KitchenRenovationsClient({
+  pageContext,
+}: {
+  pageContext?: KitchenRenovationsPageContext;
+} = {}) {
+  return <KitchenRenovationsPage pageContext={pageContext} />;
 }
 
-export function BathroomRenovationsClient() {
-  return <BathroomRenovationsPage />;
+export function BathroomRenovationsClient({
+  pageContext,
+}: {
+  pageContext?: BathroomRenovationsPageContext;
+} = {}) {
+  return <BathroomRenovationsPage pageContext={pageContext} />;
 }
 
 export function WholeHomeRenovationsClient() {

@@ -145,11 +145,6 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <JsonLd data={[projectSchema, breadcrumbSchema]} />
-      <section className="sr-only">
-        <p>{`${projectName} Gold Coast Renovations Case Study`}</p>
-        <p>{`${projectCategory.replace("-", " ")} renovations in ${projectLocation}`}</p>
-        <p>{projectDescription}</p>
-      </section>
       <ProjectDetailClient initialProject={project} initialProjects={allProjects} />
     </>
   );

@@ -22,23 +22,23 @@ const features = [
 const processSteps = [
   {
     step: "01",
-    title: "Design & Planning",
-    description: "Comprehensive design including floor plans, 3D renders, material selection, and council approval documentation.",
+    title: "Whole-Home Walk-Through",
+    description: "We walk every room with you, discuss how each space is used and what's not working. We assess structure, services, and flow to understand the full scope before quoting.",
   },
   {
     step: "02",
-    title: "Approvals",
-    description: "We handle all council approvals, building certification, and documentation required for your renovation.",
+    title: "Phased Design & Staging Plan",
+    description: "We design the renovation in stages so you can live in parts of the home during the build. Material selections, colour palettes, and layouts are coordinated across all rooms.",
   },
   {
     step: "03",
-    title: "Construction",
-    description: "Professional demolition, structural work, and construction with milestone-based progress updates.",
+    title: "Staged Construction",
+    description: "Work proceeds room by room or zone by zone. Structure first, then services, then finishes. You always know which phase you're in and what's coming next.",
   },
   {
     step: "04",
-    title: "Finishing",
-    description: "Kitchen and bathroom fit-out, flooring, painting, and final touches to complete your transformation.",
+    title: "Room-by-Room Handover",
+    description: "We walk every room together. Doors, drawers, taps, lights — everything gets checked. Defect list completed on the day, with anything outstanding fixed within the week.",
   },
 ];
 

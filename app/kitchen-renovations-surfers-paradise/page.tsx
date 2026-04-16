@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-surfers-paradise",
+  noIndex: true,
   keywords: [
     "kitchen renovation Surfers Paradise",
     "Surfers Paradise kitchen renovation",
@@ -80,26 +81,40 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Surfers Paradise kitchen renovation services for search crawlers">
-        <p className="font-semibold">Kitchen Renovations in Surfers Paradise by {SITE_NAME}</p>
-        <p>
-          Professional kitchen renovations in Surfers Paradise, from compact apartment kitchens to luxury
-          penthouse entertainer&apos;s kitchens. We specialise in high-rise renovations with body corporate
-          coordination and building management liaison.
-        </p>
-        <ul>
-          <li>Custom kitchen design in Surfers Paradise</li>
-          <li>Kitchen cabinetry and stone benchtops</li>
-          <li>Appliance integration and selection</li>
-          <li>Kitchen lighting and splashbacks</li>
-          <li>Full kitchen renovation project management</li>
-        </ul>
-        <p>
-          View our <a href="/kitchen-renovations-gold-coast">Gold Coast kitchen renovations</a> or{" "}
-          <a href="/surfers-paradise-renovations">Surfers Paradise renovations</a> for more details.
-        </p>
-      </section>
-      <KitchenRenovationsClient />
+      <KitchenRenovationsClient
+        pageContext={{
+          breadcrumbItems: [
+            { label: "Home", href: "/" },
+            { label: "Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+            { label: "Surfers Paradise" },
+          ],
+          heroEyebrow: "Surfers Paradise Kitchen Builders",
+          heroTitle: "Kitchen Renovations in Surfers Paradise",
+          heroDescription:
+            "Professional kitchen renovations in Surfers Paradise, from compact apartment kitchens to luxury penthouse entertainer's kitchens planned around body corporate requirements and premium coastal finishes.",
+          faqHeading: "Surfers Paradise Kitchen Renovation Questions",
+          faqItems: serviceFaqs,
+          localFocus: {
+            eyebrow: "Surfers Paradise Project Fit",
+            title: "Kitchen Renovations For High-Rise And Premium Coastal Properties",
+            description:
+              "Surfers Paradise kitchen projects live or die on access planning, work-hour compliance, and finish selections that suit exposed coastal environments. We structure the job around those constraints before demolition starts.",
+            bullets: [
+              "Custom kitchen design in Surfers Paradise",
+              "Kitchen cabinetry and stone benchtops",
+              "Appliance integration and selection",
+              "Kitchen lighting and splashbacks",
+              "Full kitchen renovation project management",
+            ],
+            links: [
+              { label: "Gold Coast Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+              { label: "Surfers Paradise Renovations", href: "/surfers-paradise-renovations" },
+            ],
+          },
+          areasSectionDescription:
+            "We renovate kitchens across the Gold Coast, including Surfers Paradise apartments and premium coastal properties with tighter building logistics.",
+        }}
+      />
     </>
   );
 }

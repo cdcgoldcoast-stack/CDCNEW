@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-surfers-paradise",
+  noIndex: true,
   keywords: [
     "bathroom renovation Surfers Paradise",
     "Surfers Paradise bathroom renovation",
@@ -80,26 +81,40 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Surfers Paradise bathroom renovation services for search crawlers">
-        <p className="font-semibold">Bathroom Renovations in Surfers Paradise by {SITE_NAME}</p>
-        <p>
-          Professional bathroom renovations in Surfers Paradise, from compact apartment ensuites to luxury
-          penthouse bathrooms. We specialise in high-rise bathroom renovations with expert waterproofing
-          and body corporate compliant processes.
-        </p>
-        <ul>
-          <li>Custom bathroom design in Surfers Paradise</li>
-          <li>Waterproofing with 10-year warranty</li>
-          <li>Floor and wall tiling</li>
-          <li>Vanity, shower and fixture installation</li>
-          <li>Full bathroom renovation project management</li>
-        </ul>
-        <p>
-          View our <a href="/bathroom-renovations-gold-coast">Gold Coast bathroom renovations</a> or{" "}
-          <a href="/surfers-paradise-renovations">Surfers Paradise renovations</a> for more details.
-        </p>
-      </section>
-      <BathroomRenovationsClient />
+      <BathroomRenovationsClient
+        pageContext={{
+          breadcrumbItems: [
+            { label: "Home", href: "/" },
+            { label: "Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
+            { label: "Surfers Paradise" },
+          ],
+          heroEyebrow: "Surfers Paradise Bathroom Builders",
+          heroTitle: "Bathroom Renovations in Surfers Paradise",
+          heroDescription:
+            "Professional bathroom renovations in Surfers Paradise, from compact apartment ensuites to luxury penthouse bathrooms planned around high-rise logistics, waterproofing detail, and premium coastal finishes.",
+          faqHeading: "Surfers Paradise Bathroom Renovation Questions",
+          faqItems: serviceFaqs,
+          localFocus: {
+            eyebrow: "Surfers Paradise Project Fit",
+            title: "Bathroom Renovations For High-Rise And Premium Coastal Apartments",
+            description:
+              "Surfers Paradise bathroom projects need careful access planning, body corporate compliance, and waterproofing that protects neighbouring lots as well as your own space. We build that into the scope before work starts.",
+            bullets: [
+              "Custom bathroom design in Surfers Paradise",
+              "Waterproofing with 10-year warranty",
+              "Floor and wall tiling",
+              "Vanity, shower and fixture installation",
+              "Full bathroom renovation project management",
+            ],
+            links: [
+              { label: "Gold Coast Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
+              { label: "Surfers Paradise Renovations", href: "/surfers-paradise-renovations" },
+            ],
+          },
+          areasSectionDescription:
+            "We renovate bathrooms across the Gold Coast, including Surfers Paradise apartments and premium coastal properties with more complex building logistics.",
+        }}
+      />
     </>
   );
 }

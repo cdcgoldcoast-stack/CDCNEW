@@ -67,22 +67,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
-      <section className="sr-only" aria-label="Broadbeach renovation services summary for search crawlers">
-        <p className="font-semibold">Broadbeach Renovations by {SITE_NAME}</p>
-        <p>
-          Kitchen, bathroom and whole-home renovations in Broadbeach. Specialists in apartment 
-          renovations with body corporate experience. Your trusted Gold Coast renovation builder.
-        </p>
-        <p className="font-semibold">Our Broadbeach Renovation Services:</p>
-        <ul>
-          <li>Apartment kitchen renovations</li>
-          <li>Apartment bathroom renovations</li>
-          <li>Full apartment transformations</li>
-          <li>House renovations in Broadbeach</li>
-          <li>Body corporate compliant renovations</li>
-          <li>Space-maximising designs for apartments</li>
-        </ul>
-      </section>
       <BroadbeachRenovationsClient />
     </>
   );

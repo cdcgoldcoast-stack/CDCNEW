@@ -19,27 +19,27 @@ const features = [
 const processSteps = [
   {
     step: "01",
-    title: "Consultation",
+    title: "Space & Plumbing Assessment",
     description:
-      "We assess your current laundry, discuss storage needs, appliance requirements, and design preferences to understand your ideal space.",
+      "We measure your laundry, check existing plumbing and drainage positions, and discuss how the space connects to bathrooms or outdoor areas. Most Gold Coast laundries have untapped potential.",
   },
   {
     step: "02",
-    title: "Design & Quoting",
+    title: "Layout & Storage Design",
     description:
-      "Detailed cabinetry design, material selection, and a comprehensive fixed-price quote so you know exactly what to expect.",
+      "We design custom cabinetry, benchtop workspace, and storage solutions. If you're combining laundry with a bathroom or mudroom, we plan the layout to serve both functions.",
   },
   {
     step: "03",
-    title: "Construction",
+    title: "Plumbing, Cabinetry & Install",
     description:
-      "Professional demolition, plumbing, cabinetry installation, benchtops, tiling, and finishing with minimal disruption to your home.",
+      "Plumbing repositioned if needed, custom cabinetry fitted, benchtops installed, tiling completed, and appliance connections set up. Typically completed in 1-2 weeks.",
   },
   {
     step: "04",
-    title: "Handover",
+    title: "Final Check & Handover",
     description:
-      "Final inspection, cleaning, and walkthrough to ensure every detail meets your expectations. Warranty documentation provided.",
+      "Every cabinet door, drawer runner, and tap is tested. We make sure your washing machine, dryer, and sink all connect cleanly and the space works exactly as planned.",
   },
 ];
 

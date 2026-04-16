@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface MarkdownContentProps {
@@ -9,6 +8,9 @@ interface MarkdownContentProps {
 
 export default function MarkdownContent({ content }: MarkdownContentProps) {
   const [headings, setHeadings] = useState<{ id: string; text: string; level: number }[]>([]);
+
+  const slugifyHeading = (value: string) =>
+    value.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
 
   useEffect(() => {
     // Extract headings for TOC
@@ -20,7 +22,7 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
       if (match) {
         const level = match[1].length;
         const text = match[2].trim();
-        const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+        const id = slugifyHeading(text);
         extractedHeadings.push({ id, text, level });
       }
     });
@@ -32,8 +34,14 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
   const renderMarkdown = (text: string) => {
     return text
       // Headers
-      .replace(/^### (.*$)/gim, '<h3 class="font-serif text-xl text-primary mt-10 mb-4" id="$1">$1</h3>')
-      .replace(/^## (.*$)/gim, '<h2 class="font-serif text-2xl md:text-3xl text-primary mt-12 mb-6" id="$1">$1</h2>')
+      .replace(/^### (.*$)/gim, (_match, headingText) => {
+        const heading = `${headingText}`.trim();
+        return `<h3 class="font-serif text-xl text-primary mt-10 mb-4" id="${slugifyHeading(heading)}">${heading}</h3>`;
+      })
+      .replace(/^## (.*$)/gim, (_match, headingText) => {
+        const heading = `${headingText}`.trim();
+        return `<h2 class="font-serif text-2xl md:text-3xl text-primary mt-12 mb-6" id="${slugifyHeading(heading)}">${heading}</h2>`;
+      })
       // Bold
       .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
       // Italic within bold (handle nested)

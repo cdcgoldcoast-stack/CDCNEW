@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-helensvale",
+  noIndex: true,
   keywords: [
     "bathroom renovation Helensvale",
     "Helensvale bathroom renovation",
@@ -80,26 +81,40 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Helensvale bathroom renovation services for search crawlers">
-        <p className="font-semibold">Bathroom Renovations in Helensvale by {SITE_NAME}</p>
-        <p>
-          Professional bathroom renovations in Helensvale, from family bathrooms and master ensuites to
-          kids&apos; bathrooms and powder rooms. We deliver quality waterproofing, premium fixtures, and
-          designs tailored to Helensvale&apos;s family homes.
-        </p>
-        <ul>
-          <li>Custom bathroom design in Helensvale</li>
-          <li>Waterproofing with 10-year warranty</li>
-          <li>Floor and wall tiling</li>
-          <li>Vanity, shower and fixture installation</li>
-          <li>Full bathroom renovation project management</li>
-        </ul>
-        <p>
-          View our <a href="/bathroom-renovations-gold-coast">Gold Coast bathroom renovations</a> or{" "}
-          <a href="/helensvale-renovations">Helensvale renovations</a> for more details.
-        </p>
-      </section>
-      <BathroomRenovationsClient />
+      <BathroomRenovationsClient
+        pageContext={{
+          breadcrumbItems: [
+            { label: "Home", href: "/" },
+            { label: "Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
+            { label: "Helensvale" },
+          ],
+          heroEyebrow: "Helensvale Bathroom Builders",
+          heroTitle: "Bathroom Renovations in Helensvale",
+          heroDescription:
+            "Professional bathroom renovations in Helensvale, from family bathrooms and master ensuites to kids' bathrooms and powder rooms built for busy everyday use and long-term durability.",
+          faqHeading: "Helensvale Bathroom Renovation Questions",
+          faqItems: serviceFaqs,
+          localFocus: {
+            eyebrow: "Helensvale Project Fit",
+            title: "Bathroom Renovations For Helensvale Family Homes",
+            description:
+              "Helensvale bathroom briefs often focus on better family function, smarter storage, and finishes that can handle daily wear. We plan layout, waterproofing, and fixture selection around that practical reality.",
+            bullets: [
+              "Custom bathroom design in Helensvale",
+              "Waterproofing with 10-year warranty",
+              "Floor and wall tiling",
+              "Vanity, shower and fixture installation",
+              "Full bathroom renovation project management",
+            ],
+            links: [
+              { label: "Gold Coast Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
+              { label: "Helensvale Renovations", href: "/helensvale-renovations" },
+            ],
+          },
+          areasSectionDescription:
+            "We renovate bathrooms across the Gold Coast, including Helensvale family homes where durability, storage, and layout efficiency matter most.",
+        }}
+      />
     </>
   );
 }

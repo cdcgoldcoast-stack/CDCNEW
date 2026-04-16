@@ -46,24 +46,6 @@ export default async function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, itemListSchema, breadcrumbSchema]} />
-      <section className="sr-only" aria-label="Project route index for search crawlers">
-        <p>Gold Coast Renovation Case Studies.</p>
-        <p>
-          This page is a case-study index of completed Concept Design Construct renovations with real project outcomes,
-          suburb context, and detailed project pages.
-        </p>
-        <p>
-          Looking for visual inspiration only? Browse the{" "}
-          <a href="/renovation-gallery">Gold Coast renovation gallery</a> for room-by-room ideas.
-        </p>
-        <ul>
-          {slugs.map((slug) => (
-            <li key={slug}>
-              <a href={`/renovation-projects/${slug}`}>{titleFromSlug(slug)} renovation project</a>
-            </li>
-          ))}
-        </ul>
-      </section>
       <RenovationProjectsClient initialProjects={projects} />
     </>
   );

@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-robina",
+  noIndex: true,
   keywords: [
     "kitchen renovation Robina",
     "Robina kitchen renovation",
@@ -80,26 +81,40 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Robina kitchen renovation services for search crawlers">
-        <p className="font-semibold">Kitchen Renovations in Robina by {SITE_NAME}</p>
-        <p>
-          Professional kitchen renovations in Robina, specialising in family-sized kitchens with modern
-          open-plan layouts. From contemporary island kitchens to butler&apos;s pantry additions, we deliver
-          quality craftsmanship for Robina homeowners.
-        </p>
-        <ul>
-          <li>Custom kitchen design in Robina</li>
-          <li>Kitchen cabinetry and stone benchtops</li>
-          <li>Appliance integration and selection</li>
-          <li>Kitchen lighting and splashbacks</li>
-          <li>Full kitchen renovation project management</li>
-        </ul>
-        <p>
-          View our <a href="/kitchen-renovations-gold-coast">Gold Coast kitchen renovations</a> or{" "}
-          <a href="/robina-renovations">Robina renovations</a> for more details.
-        </p>
-      </section>
-      <KitchenRenovationsClient />
+      <KitchenRenovationsClient
+        pageContext={{
+          breadcrumbItems: [
+            { label: "Home", href: "/" },
+            { label: "Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+            { label: "Robina" },
+          ],
+          heroEyebrow: "Robina Kitchen Builders",
+          heroTitle: "Kitchen Renovations in Robina",
+          heroDescription:
+            "Professional kitchen renovations in Robina, specialising in family-sized kitchens with modern open-plan layouts that upgrade builder-grade spaces into better everyday living hubs.",
+          faqHeading: "Robina Kitchen Renovation Questions",
+          faqItems: serviceFaqs,
+          localFocus: {
+            eyebrow: "Robina Project Fit",
+            title: "Kitchen Renovations For Modern Robina Family Living",
+            description:
+              "Robina kitchens are often about improving flow, increasing storage, and making the main living space work harder for families. We plan layout changes and selections around daily use, entertaining, and clean long-term maintenance.",
+            bullets: [
+              "Custom kitchen design in Robina",
+              "Kitchen cabinetry and stone benchtops",
+              "Appliance integration and selection",
+              "Kitchen lighting and splashbacks",
+              "Full kitchen renovation project management",
+            ],
+            links: [
+              { label: "Gold Coast Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+              { label: "Robina Renovations", href: "/robina-renovations" },
+            ],
+          },
+          areasSectionDescription:
+            "We renovate kitchens across the Gold Coast, including Robina homes where family use, storage, and open-plan flow usually drive the brief.",
+        }}
+      />
     </>
   );
 }

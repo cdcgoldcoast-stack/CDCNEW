@@ -49,7 +49,7 @@ const AboutUs = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="Meet Our Team | Gold Coast Renovation Builders | CD Construct"
-        description="Meet the Concept Design Construct team - QBCC licensed Gold Coast renovation builders with 25+ years experience. Kitchen, bathroom & home renovation specialists."
+        description="Meet the Concept Design Construct team - QBCC licensed Gold Coast renovation builders operating since 2000. Kitchen, bathroom & home renovation specialists."
         url="/about-us"
         jsonLd={aboutSchema}
       />
@@ -171,23 +171,6 @@ const AboutUs = () => {
 
       {/* 4b. MEET THE TEAM - Gallery */}
       <section className="py-20 md:py-28 bg-background relative z-10" itemScope itemType="https://schema.org/Organization">
-        {/* Hidden semantic content for SEO */}
-        <div className="sr-only">
-          <h2>Meet the Concept Design Construct Team</h2>
-          <p>
-            Our Gold Coast renovation team includes licensed builders, project managers, 
-            carpenters, plumbers, electricians, and specialist tradespeople. With over 25 years 
-            of combined experience, we've completed 100+ renovation projects across the Gold Coast 
-            including Broadbeach, Burleigh Heads, Mermaid Beach, Robina, Southport, and Palm Beach.
-          </p>
-          <ul>
-            <li>QBCC Licensed Builders</li>
-            <li>Master Builders Association Members</li>
-            <li>Licensed Plumbers and Electricians</li>
-            <li>Experienced Project Managers</li>
-            <li>Specialist Renovation Tradespeople</li>
-          </ul>
-        </div>
         <meta itemProp="name" content="Concept Design Construct" />
         <div className="container-wide">
           <div className="max-w-3xl mx-auto text-center mb-16">
@@ -231,12 +214,12 @@ const AboutUs = () => {
           {/* Team Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-16 border-t border-foreground/10">
             <div className="text-center" itemProp="foundingDate" content="2000">
-              <span className="text-4xl md:text-5xl font-serif text-primary block mb-2">25+</span>
-              <p className="text-sm text-foreground/60">Years Experience</p>
+              <span className="text-4xl md:text-5xl font-serif text-primary block mb-2">2000</span>
+              <p className="text-sm text-foreground/60">Founded</p>
             </div>
             <div className="text-center">
-              <span className="text-4xl md:text-5xl font-serif text-primary block mb-2">100+</span>
-              <p className="text-sm text-foreground/60">Projects Completed</p>
+              <span className="text-4xl md:text-5xl font-serif text-primary block mb-2">9</span>
+              <p className="text-sm text-foreground/60">Featured Projects</p>
             </div>
             <div className="text-center">
               <span className="text-4xl md:text-5xl font-serif text-primary block mb-2">15+</span>

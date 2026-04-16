@@ -95,29 +95,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Apartment renovation services summary for search crawlers">
-        <p className="font-semibold">Gold Coast Apartment & Unit Renovations by {SITE_NAME}</p>
-        <p>
-          Specialist apartment renovation services for high-rise and low-rise buildings across
-          the Gold Coast. Body corporate compliant builds with strata experience, premium finishes,
-          and space-maximising designs. QBCC licensed builders.
-        </p>
-        <p className="font-semibold">Our Apartment Renovation Services Include:</p>
-        <ul>
-          <li>Full apartment renovations and makeovers</li>
-          <li>Apartment kitchen and bathroom renovations</li>
-          <li>Body corporate approval management</li>
-          <li>Space maximisation and open-plan conversions</li>
-          <li>High-rise logistics and material coordination</li>
-          <li>Premium finishes and compact design solutions</li>
-          <li>Flooring, lighting, and electrical upgrades</li>
-          <li>Custom joinery and built-in storage</li>
-        </ul>
-        <p>
-          View our <a href="/renovation-projects">apartment renovation portfolio</a> or
-          <a href="/book-renovation-consultation">book a free consultation</a> to discuss your project.
-        </p>
-      </section>
       <ApartmentRenovationsClient />
     </>
   );

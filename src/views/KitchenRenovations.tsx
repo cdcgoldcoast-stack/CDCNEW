@@ -2,13 +2,48 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { ALL_SUBURB_LINKS } from "@/config/suburbs";
 import { useSiteAssets } from "@/hooks/useSiteAssets";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { Phone, Check, ArrowRight } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumb";
+
+type BreadcrumbItem = {
+  label: string;
+  href?: string;
+};
+
+type LocalServiceLink = {
+  label: string;
+  href: string;
+};
+
+type LocalServiceFocus = {
+  eyebrow?: string;
+  title: string;
+  description: string;
+  bullets: string[];
+  links?: LocalServiceLink[];
+};
+
+export type KitchenRenovationsFaqItem = {
+  question: string;
+  answer: string;
+};
+
+export type KitchenRenovationsPageContext = {
+  heroEyebrow?: string;
+  heroTitle?: string;
+  heroDescription?: string;
+  breadcrumbItems?: BreadcrumbItem[];
+  featureList?: string[];
+  faqHeading?: string;
+  faqItems?: KitchenRenovationsFaqItem[];
+  localFocus?: LocalServiceFocus;
+  areasSectionTitle?: string;
+  areasSectionDescription?: string;
+};
 
 const features = [
   "Custom kitchen design & 3D renders",
@@ -22,23 +57,23 @@ const features = [
 const processSteps = [
   {
     step: "01",
-    title: "Consultation",
-    description: "We discuss your vision, lifestyle needs, and budget to understand exactly what you want from your new kitchen.",
+    title: "Kitchen Assessment",
+    description: "We measure your kitchen, assess plumbing and electrical positions, discuss how you cook and use the space, and identify what's not working in your current layout.",
   },
   {
     step: "02",
-    title: "Design & Planning",
-    description: "Detailed kitchen design with 3D visualisation, material selection, and fixed-price quoting.",
+    title: "Layout & Material Selection",
+    description: "We design your new kitchen layout, help you choose benchtops, cabinetry, splashback, and appliances, and present a 3D concept so you can see it before we build it.",
   },
   {
     step: "03",
-    title: "Construction",
-    description: "Professional demolition, installation, and finishing with clear communication throughout.",
+    title: "Demolition & Install",
+    description: "Old kitchen removed, plumbing and electrical repositioned if needed, new cabinetry fitted, benchtops templated and installed, splashback tiled, and appliances connected.",
   },
   {
     step: "04",
-    title: "Handover",
-    description: "Final inspection, cleaning, and walkthrough with warranty documentation.",
+    title: "Final Fit-Off & Handover",
+    description: "Handles, fixtures, and final adjustments. We clean the kitchen, walk you through everything, and make sure every drawer, door, and appliance works perfectly.",
   },
 ];
 
@@ -85,37 +120,53 @@ const kitchenImages = {
   portfolio: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Helensvale-Renovations-Kitchen.webp",
 };
 
-const KitchenRenovations = () => {
+const KitchenRenovations = ({
+  pageContext,
+}: {
+  pageContext?: KitchenRenovationsPageContext;
+} = {}) => {
   const { assets } = useSiteAssets();
   const heroImage = assets["service-bg-kitchen"] || kitchenImages.hero;
+  const breadcrumbItems = pageContext?.breadcrumbItems || [
+    { label: "Home", href: "/" },
+    { label: "Services", href: "/renovation-services" },
+    { label: "Kitchen Renovations" },
+  ];
+  const heroEyebrow = pageContext?.heroEyebrow || "Kitchen Specialists";
+  const heroTitle = pageContext?.heroTitle || "Gold Coast Kitchen Renovations";
+  const heroDescription =
+    pageContext?.heroDescription ||
+    "Bespoke kitchen designs built around how you cook, entertain, and live. From compact apartment kitchens to large family spaces, we deliver beautiful, functional kitchens that stand the test of time.";
+  const featureList = pageContext?.featureList || features;
+  const faqHeading = pageContext?.faqHeading || "Common Kitchen Renovation Questions";
+  const faqItems = pageContext?.faqItems || serviceFaqs;
+  const localFocus = pageContext?.localFocus;
+  const areasSectionTitle =
+    pageContext?.areasSectionTitle || "Kitchen Renovations Across the Gold Coast";
+  const areasSectionDescription =
+    pageContext?.areasSectionDescription ||
+    "We deliver kitchen renovations throughout the Gold Coast. Find your local area below.";
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO
-        title="Gold Coast Kitchen Renovations | Design & Build by CD Construct"
-        description="Gold Coast kitchen renovations and remodelling with bespoke designs, quality craftsmanship & smooth project management. Fixed price quotes. QBCC licensed."
-        url="/kitchen-renovations-gold-coast"
-      />
       <Header />
       <main id="main-content">
 
       {/* Hero Section */}
       <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-cream relative z-10">
         <div className="container-wide">
-          <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Services", href: "/renovation-services" }, { label: "Kitchen Renovations" }]} />
+          <Breadcrumb items={breadcrumbItems} />
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
-              <p className="text-label text-primary mb-6">Kitchen Specialists</p>
+              <p className="text-label text-primary mb-6">{heroEyebrow}</p>
               <h1 className="font-serif text-h1-mobile md:text-h1 text-primary leading-tight mb-6">
-                Gold Coast Kitchen Renovations
+                {heroTitle}
               </h1>
               <p className="text-foreground/80 text-lg leading-relaxed mb-6">
-                Bespoke kitchen designs built around how you cook, entertain, and live. 
-                From compact apartment kitchens to large family spaces, we deliver 
-                <strong> beautiful, functional kitchens</strong> that stand the test of time.
+                {heroDescription}
               </p>
               <ul className="space-y-3 mb-8">
-                {features.map((feature) => (
+                {featureList.map((feature) => (
                   <li key={feature} className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                     <span className="text-foreground/80">{feature}</span>
@@ -155,6 +206,53 @@ const KitchenRenovations = () => {
           </div>
         </div>
       </section>
+
+      {localFocus ? (
+        <section className="py-16 md:py-20 bg-background relative z-10">
+          <div className="container-wide">
+            <div className="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-10 lg:gap-16 items-start">
+              <div>
+                <p className="text-label text-primary mb-4">
+                  {localFocus.eyebrow || "Local Project Fit"}
+                </p>
+                <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-5">
+                  {localFocus.title}
+                </h2>
+                <p className="text-foreground/75 leading-relaxed mb-6">
+                  {localFocus.description}
+                </p>
+                {localFocus.links?.length ? (
+                  <div className="flex flex-wrap gap-4">
+                    {localFocus.links.map((link) => (
+                      <Link
+                        key={link.href}
+                        to={link.href}
+                        className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-primary hover:opacity-70 transition-opacity"
+                      >
+                        {link.label}
+                        <ArrowRight className="w-4 h-4" />
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+              <div className="bg-cream p-8 md:p-10 border border-foreground/5">
+                <h3 className="font-serif text-xl md:text-2xl text-primary mb-5">
+                  What We Plan For
+                </h3>
+                <ul className="space-y-3">
+                  {localFocus.bullets.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-foreground/80">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* Kitchen Styles Section with Images */}
       <section className="py-16 md:py-24 bg-background relative z-10">
@@ -297,10 +395,10 @@ const KitchenRenovations = () => {
       <section className="py-16 md:py-24 bg-cream relative z-10">
         <div className="container-wide">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-4 text-center">
-            Kitchen Renovations Across the Gold Coast
+            {areasSectionTitle}
           </h2>
           <p className="text-foreground/70 text-center mb-10 max-w-2xl mx-auto">
-            We deliver kitchen renovations throughout the Gold Coast. Find your local area below.
+            {areasSectionDescription}
           </p>
           <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
             {ALL_SUBURB_LINKS.map((area) => (
@@ -317,10 +415,10 @@ const KitchenRenovations = () => {
         <div className="container-wide max-w-4xl">
           <p className="text-label text-primary mb-4">FAQs</p>
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-8">
-            Common Kitchen Renovation Questions
+            {faqHeading}
           </h2>
           <div className="space-y-6">
-            {serviceFaqs.map((faq) => (
+            {faqItems.map((faq) => (
               <article key={faq.question} className="border-b border-foreground/10 pb-6">
                 <h3 className="font-serif text-xl md:text-2xl text-primary mb-3">{faq.question}</h3>
                 <p className="text-foreground/75 leading-relaxed">{faq.answer}</p>

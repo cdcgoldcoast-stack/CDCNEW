@@ -65,21 +65,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
-      <section className="sr-only" aria-label="Miami renovation services summary for search crawlers">
-        <p className="font-semibold">Miami Renovations by {SITE_NAME}</p>
-        <p>
-          Kitchen, bathroom and whole-home renovations in Miami, Gold Coast. Specialists in
-          transforming beach cottages into modern coastal homes. Trusted Gold Coast builders.
-        </p>
-        <p className="font-semibold">Our Miami Renovation Services:</p>
-        <ul>
-          <li>Kitchen renovations</li>
-          <li>Bathroom renovations</li>
-          <li>Whole-home renovations</li>
-          <li>Beach cottage transformations</li>
-          <li>Compact lot renovations</li>
-        </ul>
-      </section>
       <MiamiRenovationsClient />
     </>
   );

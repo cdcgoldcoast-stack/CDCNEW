@@ -32,19 +32,7 @@ export const EXTENDED_ROUTES = [
   "/renovation-ai-generator/intro",
   "/renovation-ai-generator",
   "/renovation-design-tools/moodboard",
-  // Sub-location service pages (unblocked from noIndex)
-  "/kitchen-renovations-broadbeach",
-  "/kitchen-renovations-helensvale",
-  "/kitchen-renovations-palm-beach",
-  "/kitchen-renovations-robina",
-  "/kitchen-renovations-southport",
-  "/kitchen-renovations-surfers-paradise",
-  "/bathroom-renovations-broadbeach",
-  "/bathroom-renovations-helensvale",
-  "/bathroom-renovations-palm-beach",
-  "/bathroom-renovations-robina",
-  "/bathroom-renovations-southport",
-  "/bathroom-renovations-surfers-paradise",
+  // Sub-location service pages — noIndex (95% duplicate of parent, only FAQs differ)
 ];
 
 export const SITELINK_TARGET_PATHS = [

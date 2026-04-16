@@ -66,22 +66,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
-      <section className="sr-only" aria-label="Surfers Paradise renovation services summary for search crawlers">
-        <p className="font-semibold">Surfers Paradise Renovations by {SITE_NAME}</p>
-        <p>
-          Luxury apartment and penthouse renovations in Surfers Paradise. High-rise renovation specialists
-          with body corporate expertise. Kitchen, bathroom and whole-home transformations on the Gold Coast.
-        </p>
-        <p className="font-semibold">Our Surfers Paradise Renovation Services:</p>
-        <ul>
-          <li>Kitchen renovations Surfers Paradise</li>
-          <li>Bathroom renovations Surfers Paradise</li>
-          <li>Penthouse and luxury apartment renovations</li>
-          <li>High-rise apartment transformations</li>
-          <li>Body corporate compliant renovations</li>
-          <li>Investment property upgrades Surfers Paradise</li>
-        </ul>
-      </section>
       <SurfersParadiseRenovationsClient />
     </>
   );

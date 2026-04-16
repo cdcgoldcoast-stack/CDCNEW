@@ -66,13 +66,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
-      <section className="sr-only" aria-label="Southport renovation services summary for search crawlers">
-        <p className="font-semibold">Southport Renovations by {SITE_NAME}</p>
-        <p>
-          Kitchen, bathroom and whole-home renovations in Southport. Specialists in character 
-          homes, Queenslanders, and waterfront properties. Trusted Gold Coast builders.
-        </p>
-      </section>
       <SouthportRenovationsClient />
     </>
   );

@@ -66,23 +66,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
-      <section className="sr-only" aria-label="Runaway Bay renovation services summary for search crawlers">
-        <p className="font-semibold">Runaway Bay Renovations by {SITE_NAME}</p>
-        <p>
-          Canal-front and family home renovations in Runaway Bay. Kitchen, bathroom and whole-home
-          upgrades for waterfront properties and established homes. Specialists in flood-smart design
-          and indoor-outdoor living on the Gold Coast.
-        </p>
-        <p className="font-semibold">Our Runaway Bay Renovation Services:</p>
-        <ul>
-          <li>Kitchen renovations Runaway Bay</li>
-          <li>Bathroom renovations Runaway Bay</li>
-          <li>Canal-front home renovations</li>
-          <li>Whole-home renovations Runaway Bay</li>
-          <li>Outdoor entertaining areas</li>
-          <li>Flood-smart waterfront design</li>
-        </ul>
-      </section>
       <RunawayBayRenovationsClient />
     </>
   );

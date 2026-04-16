@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-southport",
+  noIndex: true,
   keywords: [
     "bathroom renovation Southport",
     "Southport bathroom renovation",
@@ -80,26 +81,40 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Southport bathroom renovation services for search crawlers">
-        <p className="font-semibold">Bathroom Renovations in Southport by {SITE_NAME}</p>
-        <p>
-          Professional bathroom renovations in Southport, specialising in modernising dated bathrooms in
-          older homes. We handle replumbing, asbestos assessment, expert waterproofing, and deliver
-          contemporary bathroom designs that transform your space.
-        </p>
-        <ul>
-          <li>Custom bathroom design in Southport</li>
-          <li>Waterproofing with 10-year warranty</li>
-          <li>Floor and wall tiling</li>
-          <li>Vanity, shower and fixture installation</li>
-          <li>Full bathroom renovation project management</li>
-        </ul>
-        <p>
-          View our <a href="/bathroom-renovations-gold-coast">Gold Coast bathroom renovations</a> or{" "}
-          <a href="/southport-renovations">Southport renovations</a> for more details.
-        </p>
-      </section>
-      <BathroomRenovationsClient />
+      <BathroomRenovationsClient
+        pageContext={{
+          breadcrumbItems: [
+            { label: "Home", href: "/" },
+            { label: "Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
+            { label: "Southport" },
+          ],
+          heroEyebrow: "Southport Bathroom Builders",
+          heroTitle: "Bathroom Renovations in Southport",
+          heroDescription:
+            "Professional bathroom renovations in Southport, specialising in modernising dated bathrooms in older homes with replumbing, asbestos-aware planning, strong waterproofing, and contemporary finishes.",
+          faqHeading: "Southport Bathroom Renovation Questions",
+          faqItems: serviceFaqs,
+          localFocus: {
+            eyebrow: "Southport Project Fit",
+            title: "Bathroom Renovations That Update Older Southport Homes",
+            description:
+              "Southport bathroom projects often uncover ageing plumbing, older wall substrates, or asbestos-related constraints. We plan for those issues early so waterproofing, scheduling, and final selections stay under control.",
+            bullets: [
+              "Custom bathroom design in Southport",
+              "Waterproofing with 10-year warranty",
+              "Floor and wall tiling",
+              "Vanity, shower and fixture installation",
+              "Full bathroom renovation project management",
+            ],
+            links: [
+              { label: "Gold Coast Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
+              { label: "Southport Renovations", href: "/southport-renovations" },
+            ],
+          },
+          areasSectionDescription:
+            "We renovate bathrooms across the Gold Coast, including Southport homes and apartments that need dated wet areas modernised properly.",
+        }}
+      />
     </>
   );
 }

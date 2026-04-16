@@ -94,7 +94,7 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
         {service.bgImage ? (
           <ResponsiveImage
             src={service.bgImage}
-            alt={`${service.title} background example`}
+            alt={`${service.title} example renovation on the Gold Coast`}
             width={1200}
             height={900}
             sizes="(min-width: 768px) 50vw, 100vw"

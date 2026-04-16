@@ -27,10 +27,19 @@ const LEGACY_GONE_PATHS = new Set([
   "/home-renovations-melbourne",
   "/new-home-builders-melbourne",
   "/building-designer",
+  "/architectural-drafting-melbourne",
+  "/architectural-drafting-services",
   "/best-renovation-builder-melbourne-checks",
   "/custom-cabinetry-the-heart-of-your-home",
   "/home-extension-cost",
   "/projects/country-home-builders",
+]);
+
+const CANONICAL_HOST = "www.cdconstruct.com.au";
+
+const LEGACY_REDIRECTS = new Map([
+  ["/about", "/about-us"],
+  ["/projects", "/renovation-projects"],
 ]);
 
 const normalizePathname = (pathname: string) => {
@@ -47,18 +56,36 @@ const isLegacyGonePath = (pathname: string) => {
 };
 
 export function middleware(request: NextRequest) {
-  if (!isLegacyGonePath(request.nextUrl.pathname)) {
-    return NextResponse.next();
+  const currentPath = request.nextUrl.pathname;
+  const normalizedPath = normalizePathname(currentPath);
+  const hostHeader = (request.headers.get("host") || request.nextUrl.host || "")
+    .toLowerCase()
+    .replace(/:\d+$/, "");
+
+  if (isLegacyGonePath(normalizedPath)) {
+    return new NextResponse("Gone", {
+      status: 410,
+      headers: {
+        "content-type": "text/plain; charset=utf-8",
+        "cache-control": "public, max-age=3600",
+        "x-robots-tag": "noindex, nofollow",
+      },
+    });
   }
 
-  return new NextResponse("Gone", {
-    status: 410,
-    headers: {
-      "content-type": "text/plain; charset=utf-8",
-      "cache-control": "public, max-age=3600",
-      "x-robots-tag": "noindex, nofollow",
-    },
-  });
+  const redirectPath = LEGACY_REDIRECTS.get(normalizedPath) || normalizedPath;
+  const requiresCanonicalHost = hostHeader === "cdconstruct.com.au";
+  const requiresPathRedirect = redirectPath !== currentPath;
+
+  if (requiresCanonicalHost || requiresPathRedirect) {
+    const destinationUrl = request.nextUrl.clone();
+    destinationUrl.hostname = CANONICAL_HOST;
+    destinationUrl.pathname = redirectPath;
+    destinationUrl.search = request.nextUrl.search;
+    return NextResponse.redirect(destinationUrl, 308);
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {

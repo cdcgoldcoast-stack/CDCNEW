@@ -163,11 +163,6 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: "/home-extensions-gold-coast",
-        destination: "/renovation-services",
-        permanent: true,
-      },
-      {
         source: "/projects/:slug",
         destination: "/renovation-projects/:slug",
         permanent: true,
@@ -199,16 +194,6 @@ const nextConfig = {
       },
       {
         source: "/extensions",
-        destination: "/renovation-services",
-        permanent: true,
-      },
-      {
-        source: "/architectural-drafting-melbourne",
-        destination: "/renovation-services",
-        permanent: true,
-      },
-      {
-        source: "/architectural-drafting-services",
         destination: "/renovation-services",
         permanent: true,
       },

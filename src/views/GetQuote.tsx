@@ -161,21 +161,17 @@ const GetQuote = () => {
                   Thank you, we have received your details
                 </p>
 
-                <h2 className="font-display text-3xl lg:text-4xl xl:text-5xl text-foreground leading-tight italic">
-                  This Is The Beginning Of Something Thoughtful.
+                <h2 className="font-display text-3xl lg:text-4xl xl:text-5xl text-foreground leading-tight">
+                  We've received your details.
                 </h2>
 
                 <p className="text-foreground/70 text-lg lg:text-xl leading-relaxed max-w-xl mx-auto pt-2">
-                  Not plans or drawings just yet.
-                </p>
-
-                <p className="text-foreground/70 text-lg lg:text-xl leading-relaxed max-w-xl mx-auto">
-                  First, we listen. We want to understand how you live now<br />and how you want to live next.
+                  Mark or a member of our team will be in touch within 24 hours to arrange your free consultation.
                 </p>
 
                 <div className="pt-8">
                   <p className="text-foreground/50 text-base mb-4">
-                    Until we speak, take a look around and get inspired.
+                    In the meantime, take a look at some of our recent work.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Link to="/renovation-projects">
@@ -228,7 +224,7 @@ const GetQuote = () => {
                 {[
                   "QBCC Licensed",
                   "4.9 Google Rating",
-                  "100+ Projects",
+                  "Since 2000",
                   "Fixed-Price Quotes",
                 ].map((item, i) => (
                   <span

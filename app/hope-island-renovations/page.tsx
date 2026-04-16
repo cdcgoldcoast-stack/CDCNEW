@@ -65,21 +65,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
-      <section className="sr-only" aria-label="Hope Island renovation services summary for search crawlers">
-        <p className="font-semibold">Hope Island Renovations by {SITE_NAME}</p>
-        <p>
-          Luxury kitchen, bathroom and whole-home renovations in Hope Island. Specialists in
-          waterfront properties, golf course homes, and resort-style living. Based on the Gold Coast.
-        </p>
-        <p className="font-semibold">Our Hope Island Renovation Services:</p>
-        <ul>
-          <li>Kitchen renovations</li>
-          <li>Bathroom renovations</li>
-          <li>Whole-home renovations</li>
-          <li>Waterfront home upgrades</li>
-          <li>Resort-style transformations</li>
-        </ul>
-      </section>
       <HopeIslandRenovationsClient />
     </>
   );

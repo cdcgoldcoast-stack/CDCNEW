@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-helensvale",
+  noIndex: true,
   keywords: [
     "kitchen renovation Helensvale",
     "Helensvale kitchen renovation",
@@ -80,26 +81,40 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Helensvale kitchen renovation services for search crawlers">
-        <p className="font-semibold">Kitchen Renovations in Helensvale by {SITE_NAME}</p>
-        <p>
-          Professional kitchen renovations in Helensvale, specialising in spacious family kitchens with
-          island benches, butler&apos;s pantries, and open-plan layouts. We deliver quality craftsmanship
-          for Helensvale&apos;s growing family community.
-        </p>
-        <ul>
-          <li>Custom kitchen design in Helensvale</li>
-          <li>Kitchen cabinetry and stone benchtops</li>
-          <li>Appliance integration and selection</li>
-          <li>Kitchen lighting and splashbacks</li>
-          <li>Full kitchen renovation project management</li>
-        </ul>
-        <p>
-          View our <a href="/kitchen-renovations-gold-coast">Gold Coast kitchen renovations</a> or{" "}
-          <a href="/helensvale-renovations">Helensvale renovations</a> for more details.
-        </p>
-      </section>
-      <KitchenRenovationsClient />
+      <KitchenRenovationsClient
+        pageContext={{
+          breadcrumbItems: [
+            { label: "Home", href: "/" },
+            { label: "Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+            { label: "Helensvale" },
+          ],
+          heroEyebrow: "Helensvale Kitchen Builders",
+          heroTitle: "Kitchen Renovations in Helensvale",
+          heroDescription:
+            "Professional kitchen renovations in Helensvale, specialising in spacious family kitchens with island benches, butler's pantries, and open-plan layouts built for everyday use and entertaining.",
+          faqHeading: "Helensvale Kitchen Renovation Questions",
+          faqItems: serviceFaqs,
+          localFocus: {
+            eyebrow: "Helensvale Project Fit",
+            title: "Kitchen Renovations For Larger Helensvale Family Homes",
+            description:
+              "Helensvale kitchens often have the footprint to support bigger layout moves, pantry additions, and stronger links to outdoor living. We use that flexibility to improve workflow, storage, and family function without overcomplicating the build.",
+            bullets: [
+              "Custom kitchen design in Helensvale",
+              "Kitchen cabinetry and stone benchtops",
+              "Appliance integration and selection",
+              "Kitchen lighting and splashbacks",
+              "Full kitchen renovation project management",
+            ],
+            links: [
+              { label: "Gold Coast Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+              { label: "Helensvale Renovations", href: "/helensvale-renovations" },
+            ],
+          },
+          areasSectionDescription:
+            "We renovate kitchens across the Gold Coast, including Helensvale family homes and nearby suburbs where larger layouts need smarter planning.",
+        }}
+      />
     </>
   );
 }

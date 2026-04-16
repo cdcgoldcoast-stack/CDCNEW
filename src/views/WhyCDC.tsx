@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 
 const stats = [
-  { value: "25+", label: "Years Experience" },
+  { value: "2000", label: "Founded" },
   { value: "4.9", label: "Google Rating" },
   { value: "50", label: "Reviews" },
   { value: "QBCC", label: "Licensed" },
@@ -68,20 +68,20 @@ const differentiators = [
 const reviews = [
   {
     quote:
-      "Throughout the process they have been professional, communicative and supporting. We couldn't have asked for a better team for our first experience with renovating.",
-    name: "Trish",
+      "We were so impressed by the timeliness, attitude and workmanship that when we needed an insurance repair on our main bathroom, we engaged CDC again. A builder who does what he says he will do.",
+    name: "Daryl Weavers",
     suburb: "Gold Coast",
   },
   {
     quote:
-      "The finish is absolutely incredible and was finished within the timeframe provided. Mark is extremely detail conscious and this shines through in the trades he uses.",
-    name: "Erin & Sam",
+      "They are on time, efficient, well mannered and clean up after themselves. You can't ask for more. I would highly recommend them for any building or renovation.",
+    name: "Fran",
     suburb: "Gold Coast",
   },
   {
     quote:
-      "Not only were we astonished by the finished product, we were amazed by the workmanship. Every little bit of attention to detail was made. Highly recommended!",
-    name: "Emmanuel Vella",
+      "Mark managed to deliver great work within really tight timelines for our bathroom renovation. Really happy with the outcome and the result didn't disappoint our expectations.",
+    name: "Jonathan",
     suburb: "Gold Coast",
   },
 ];
@@ -104,7 +104,7 @@ const WhyCDC = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="Why Choose CDC | Gold Coast Renovation Builders"
-        description="25+ years experience, 4.9 Google rating, QBCC licensed. Discover why Gold Coast homeowners choose Concept Design Construct."
+        description="Operating since 2000, 4.9 Google rating, QBCC licensed. Discover why Gold Coast homeowners choose Concept Design Construct."
         url="/why-cdc"
       />
       <Header />
@@ -121,7 +121,7 @@ const WhyCDC = () => {
               Why Gold Coast Homeowners Choose Us
             </h1>
             <p className="text-primary-foreground/80 text-lg leading-relaxed">
-              For over 25 years, we have helped Gold Coast families transform
+              Since 2000, we have helped Gold Coast families transform
               their homes with a design-led process, fixed-price contracts, and
               clear communication from start to finish.
             </p>

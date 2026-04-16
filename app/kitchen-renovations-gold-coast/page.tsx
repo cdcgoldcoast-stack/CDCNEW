@@ -96,28 +96,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Kitchen renovation services summary for search crawlers">
-        <p className="font-semibold">Gold Coast Kitchen Renovations by {SITE_NAME}</p>
-        <p>
-          Complete kitchen renovation services including design, cabinetry, benchtops, appliances, 
-          splashbacks, and installation. QBCC licensed builders serving all Gold Coast suburbs.
-        </p>
-        <p className="font-semibold">Our Kitchen Renovation Services Include:</p>
-        <ul>
-          <li>Custom kitchen design and 3D visualisation</li>
-          <li>Cabinetry supply and installation</li>
-          <li>Stone and engineered benchtops</li>
-          <li>Appliance selection and integration</li>
-          <li>Splashback tiling</li>
-          <li>Lighting design and installation</li>
-          <li>Plumbing and electrical work</li>
-          <li>Project management from start to finish</li>
-        </ul>
-        <p>
-          View our <a href="/renovation-projects">kitchen renovation portfolio</a> or 
-          <a href="/book-renovation-consultation">book a free consultation</a> to discuss your project.
-        </p>
-      </section>
       <KitchenRenovationsClient />
     </>
   );

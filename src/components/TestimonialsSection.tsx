@@ -17,10 +17,10 @@ const testimonials = [
   },
   {
     quote:
-      "In a word, CDC are 'Exceptional'. Their team workmanship, punctual attendance and tidiness exceeded my expectations and building industry standards.",
-    name: "Verified Google Review",
+      "Mark was an amazing project manager always one step ahead of the build, completing my project in 6 weeks. Transformed a tired '70s home into a modern beauty.",
+    name: "Susan",
     suburb: "Gold Coast",
-    project: "Home Renovation",
+    project: "Whole-Home Renovation",
   },
 ];
 

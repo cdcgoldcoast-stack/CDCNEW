@@ -1231,6 +1231,24 @@ const buildPreferenceSentence = (
             onChange={handleFileUpload}
             className="hidden"
           />
+          <section className="px-4 md:px-6 py-4 md:py-5 border-b border-border/40 bg-muted/20 shrink-0">
+            <p className="text-label text-primary mb-2">Design Preview Tool</p>
+            <h1 className="font-serif text-2xl md:text-3xl text-primary leading-tight mb-2">
+              Gold Coast Renovations AI Visualiser
+            </h1>
+            <p className="text-sm md:text-base text-foreground/70 max-w-3xl leading-relaxed">
+              Upload a room photo to explore renovation direction before detailed design begins.
+              The visualiser helps you compare finishes, mood, and layout intent while keeping your
+              existing space recognisable.
+            </p>
+            <h2 className="font-medium text-sm text-foreground mt-4 mb-1">
+              Best used for early-stage concept review
+            </h2>
+            <p className="text-sm text-foreground/65 max-w-3xl leading-relaxed">
+              Use the preview to gather direction, then bring the result into a consultation for
+              real scope, documentation, approvals, and pricing.
+            </p>
+          </section>
           <div className="flex-1 min-h-0 flex flex-col">
             <div className="w-full flex-1 min-h-0">
               <div className="bg-background md:border-x md:border-t md:border-border/40 overflow-hidden flex flex-col h-full">

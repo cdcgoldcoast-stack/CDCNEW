@@ -96,29 +96,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Outdoor renovation services summary for search crawlers">
-        <p className="font-semibold">Gold Coast Outdoor Living & Deck Renovations by {SITE_NAME}</p>
-        <p>
-          Complete outdoor renovation services including deck construction, alfresco areas,
-          outdoor kitchens, pergolas, carports, and pool surrounds. Council-approved builds
-          with quality materials. QBCC licensed builders serving all Gold Coast suburbs.
-        </p>
-        <p className="font-semibold">Our Outdoor Renovation Services Include:</p>
-        <ul>
-          <li>Timber and composite deck construction</li>
-          <li>Alfresco dining and entertainment areas</li>
-          <li>Outdoor kitchen design and build</li>
-          <li>Pergola and shade structure construction</li>
-          <li>Carport and covered parking builds</li>
-          <li>Pool surrounds and poolside decking</li>
-          <li>Council approvals and engineering</li>
-          <li>Weatherproof roofing and screening</li>
-        </ul>
-        <p>
-          View our <a href="/renovation-projects">outdoor renovation portfolio</a> or
-          <a href="/book-renovation-consultation">book a free consultation</a> to discuss your project.
-        </p>
-      </section>
       <OutdoorRenovationsClient />
     </>
   );

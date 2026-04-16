@@ -96,29 +96,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Bathroom renovation services summary for search crawlers">
-        <p className="font-semibold">Gold Coast Bathroom Renovations by {SITE_NAME}</p>
-        <p>
-          Complete bathroom renovation services including design, waterproofing, tiling, fixtures, 
-          and installation. Specialists in ensuites, family bathrooms, and powder rooms. 
-          QBCC licensed builders serving all Gold Coast suburbs.
-        </p>
-        <p className="font-semibold">Our Bathroom Renovation Services Include:</p>
-        <ul>
-          <li>Custom bathroom design and 3D visualisation</li>
-          <li>Full waterproofing with 10-year warranty</li>
-          <li>Floor and wall tiling</li>
-          <li>Vanity, toilet, and basin installation</li>
-          <li>Shower and bath installation</li>
-          <li>Lighting and ventilation</li>
-          <li>Plumbing and electrical work</li>
-          <li>Project management from start to finish</li>
-        </ul>
-        <p>
-          View our <a href="/renovation-projects">bathroom renovation portfolio</a> or 
-          <a href="/book-renovation-consultation">book a free consultation</a> to discuss your project.
-        </p>
-      </section>
       <BathroomRenovationsClient />
     </>
   );

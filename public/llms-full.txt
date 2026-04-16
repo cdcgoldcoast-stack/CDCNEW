@@ -1,333 +1,443 @@
 # www.cdconstruct.com.au Full AI Content Inventory
-Generated: 2026-04-15T21:58:23.490Z
+Generated: 2026-04-16T11:44:01.572Z
 
 ## /
 URL: https://www.cdconstruct.com.au
+Title: Gold Coast Renovations | Kitchen, Bathroom & Home | CD...
+Description: Gold Coast renovation builders for kitchens, bathrooms & whole-home transformations. Design-led planning, QBCC licensed, clear timelines. Free consultation…
 Type: homepage
-Last-Modified: 2026-04-15
-Structured-Data-Types: AggregateRating, Answer, Brand, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, SiteNavigationElement, State, WebPage, WebSite
+Last-Modified: 2026-04-16
+Structured-Data-Types: AdministrativeArea, AggregateRating, Answer, Brand, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, SiteNavigationElement, WebPage, WebSite
 
 ## /about-us
 URL: https://www.cdconstruct.com.au/about-us
+Title: About Our Gold Coast Renovation Team | Since 2000
+Description: Meet Concept Design Construct, QBCC licensed specialists delivering Gold Coast renovations across kitchen, bathroom, extension, and whole-home projects since…
 Type: about-page
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: AboutPage, BreadcrumbList, City, HomeAndConstructionBusiness, ListItem, WebPage
 
 ## /blog
 URL: https://www.cdconstruct.com.au/blog
+Title: Gold Coast Renovation Blog | Concept Design Construct
+Description: Read practical renovation guides, planning tips, and design insights from the Concept Design Construct team on the Gold Coast (CD Construct).
 Type: blog-index
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, CreativeWork, ItemList, ListItem, WebPage
 
 ## /renovation-projects
 URL: https://www.cdconstruct.com.au/renovation-projects
+Title: Gold Coast Renovation Projects | Real Case Studies
+Description: Browse Gold Coast renovations case studies with completed kitchen, bathroom, and whole-home transformations across key Gold Coast suburbs by Concept Design…
 Type: projects-index
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, CreativeWork, ItemList, ListItem, WebPage
 
 ## /renovation-services
 URL: https://www.cdconstruct.com.au/renovation-services
+Title: Gold Coast Renovation Services | Kitchen & Bathroom
+Description: Explore Gold Coast renovations for kitchens, bathrooms, whole-home upgrades, and extensions with design-led planning and QBCC licensed delivery by Concept…
 Type: services-page
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Answer, BreadcrumbList, City, FAQPage, ItemList, ListItem, Organization, Question, Service, WebPage
 
 ## /kitchen-renovations-gold-coast
 URL: https://www.cdconstruct.com.au/kitchen-renovations-gold-coast
+Title: Gold Coast Kitchen Renovations | CD Construct
+Description: Gold Coast kitchen renovations and remodelling with bespoke designs, quality craftsmanship & smooth project management. Fixed price quotes. QBCC licensed by…
 Type: content-page
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Answer, BreadcrumbList, City, FAQPage, HomeAndConstructionBusiness, ListItem, Question, Service, WebPage
 
 ## /bathroom-renovations-gold-coast
 URL: https://www.cdconstruct.com.au/bathroom-renovations-gold-coast
+Title: Gold Coast Bathroom Renovations | CD Construct
+Description: Gold Coast bathroom renovations with waterproofing-led construction, quality fixtures, and timeless design. Ensuite, family bathroom & powder room…
 Type: content-page
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Answer, BreadcrumbList, City, FAQPage, HomeAndConstructionBusiness, ListItem, Question, Service, WebPage
 
 ## /whole-home-renovations-gold-coast
 URL: https://www.cdconstruct.com.au/whole-home-renovations-gold-coast
+Title: Gold Coast Whole-Home Renovations | CD Construct
+Description: Transform your entire Gold Coast home with whole-home renovations. Open-plan living, modern layouts & quality finishes. QBCC licensed builders. Free…
 Type: content-page
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Answer, BreadcrumbList, City, FAQPage, HomeAndConstructionBusiness, ListItem, Question, Service, WebPage
 
 ## /broadbeach-renovations
 URL: https://www.cdconstruct.com.au/broadbeach-renovations
+Title: Broadbeach Renovations | Kitchen, Bathroom & Home
+Description: Renovation builders in Broadbeach. Kitchen, bathroom and whole-home renovations with design-led planning. Your trusted Gold Coast renovation builder by…
 Type: content-page
-Last-Modified: 2026-04-15
-Structured-Data-Types: AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, State, WebPage
+Last-Modified: 2026-04-16
+Structured-Data-Types: AdministrativeArea, AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, WebPage
 
 ## /mermaid-beach-renovations
 URL: https://www.cdconstruct.com.au/mermaid-beach-renovations
+Title: Mermaid Beach Renovations | Kitchen, Bathroom & Home
+Description: Renovation builders in Mermaid Beach. Kitchen, bathroom and whole-home renovations for beachside homes. QBCC licensed. Your trusted Gold Coast renovation…
 Type: content-page
-Last-Modified: 2026-04-15
-Structured-Data-Types: AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, State, WebPage
+Last-Modified: 2026-04-16
+Structured-Data-Types: AdministrativeArea, AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, WebPage
 
 ## /palm-beach-renovations
 URL: https://www.cdconstruct.com.au/palm-beach-renovations
+Title: Palm Beach Renovations | Kitchen, Bathroom & Home
+Description: Renovation builders in Palm Beach. Kitchen, bathroom and whole-home renovations for beachside homes. Family-focused designs. QBCC licensed. Trusted Gold…
 Type: content-page
-Last-Modified: 2026-04-15
-Structured-Data-Types: AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, State, WebPage
+Last-Modified: 2026-04-16
+Structured-Data-Types: AdministrativeArea, AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, WebPage
 
 ## /robina-renovations
 URL: https://www.cdconstruct.com.au/robina-renovations
+Title: Robina Renovations | Kitchen, Bathroom & Home
+Description: Modernise 1990s and 2000s homes in Robina with open-plan kitchen, bathroom and whole-home renovations. QBCC licensed builders with fixed-price quotes. Free…
 Type: content-page
-Last-Modified: 2026-04-15
-Structured-Data-Types: AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, State, WebPage
+Last-Modified: 2026-04-16
+Structured-Data-Types: AdministrativeArea, AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, WebPage
 
 ## /southport-renovations
 URL: https://www.cdconstruct.com.au/southport-renovations
+Title: Southport Renovations | Kitchen, Bathroom & Home
+Description: Renovation builders in Southport. Kitchen, bathroom and whole-home renovations for character homes and waterfront properties. QBCC licensed. Trusted Gold…
 Type: content-page
-Last-Modified: 2026-04-15
-Structured-Data-Types: AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, State, WebPage
+Last-Modified: 2026-04-16
+Structured-Data-Types: AdministrativeArea, AggregateRating, Answer, Brand, BreadcrumbList, City, EducationalOccupationalCredential, FAQPage, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Question, Rating, Review, Service, WebPage
 
 ## /burleigh-heads-renovations
 URL: https://www.cdconstruct.com.au/burleigh-heads-renovations
+Title: Burleigh Heads Renovations | Kitchen, Bathroom & Home
+Description: Coastal home renovations in Burleigh Heads capturing beachside character. Kitchen, bathroom and whole-home transformations. 25+ years on the Gold Coast. QBCC…
 Type: content-page
-Last-Modified: 2026-04-15
-Structured-Data-Types: City, GeoCoordinates, LocalBusiness, PostalAddress
+Last-Modified: 2026-04-16
+Structured-Data-Types: AdministrativeArea, AggregateRating, Brand, BreadcrumbList, City, EducationalOccupationalCredential, GeoCoordinates, HomeAndConstructionBusiness, ListItem, Offer, OfferCatalog, OpeningHoursSpecification, Organization, Person, PostalAddress, Rating, Review, Service, WebPage
 
 ## /renovation-life-stages
 URL: https://www.cdconstruct.com.au/renovation-life-stages
+Title: Gold Coast Renovations for Every Life Stage
+Description: Find the right Gold Coast renovations approach for each life stage, from first-home upgrades to future-ready living and accessibility planning by Concept…
 Type: content-page
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Answer, BreadcrumbList, FAQPage, ListItem, Question, WebPage
 
 ## /book-renovation-consultation
 URL: https://www.cdconstruct.com.au/book-renovation-consultation
+Title: Gold Coast Renovations Quote | Book Your Consultation
+Description: Start your Gold Coast renovations plan with a consultation and scope discussion for kitchen, bathroom, and whole-home projects by Concept Design Construct…
 Type: contact-page
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, City, ContactPage, HomeAndConstructionBusiness, ListItem, WebPage
 
 ## /renovation-gallery
 URL: https://www.cdconstruct.com.au/renovation-gallery
+Title: Gold Coast Renovation Gallery | Kitchen & Bathroom
+Description: Explore Gold Coast renovations inspiration with kitchen, bathroom, and living space design examples by Concept Design Construct (CD Construct).
 Type: gallery-page
-Last-Modified: 2026-04-15
-Structured-Data-Types: BreadcrumbList, CollectionPage, ListItem, Thing, WebPage
+Last-Modified: 2026-04-16
+Structured-Data-Types: BreadcrumbList, CollectionPage, CreativeWork, ItemList, ListItem, Thing, WebPage
 
 ## /renovation-design-tools
 URL: https://www.cdconstruct.com.au/renovation-design-tools
+Title: Renovation Design Tools | Visualise Before You Build
+Description: Use our design tools to preview Gold Coast renovations, compare style directions, and plan decisions before construction by Concept Design Construct (CD…
 Type: design-tools
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /renovation-ai-generator/intro
 URL: https://www.cdconstruct.com.au/renovation-ai-generator/intro
+Title: Gold Coast Renovations AI Design Generator | Preview
+Description: Preview Gold Coast renovations concepts in minutes. Upload room photos, test finishes, and generate visual directions before your project planning phase by…
 Type: content-page
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /renovation-ai-generator
 URL: https://www.cdconstruct.com.au/renovation-ai-generator
+Title: Gold Coast Renovations AI Visualiser | Design Preview
+Description: Upload your room and preview Gold Coast renovations concepts while keeping your existing layout. Compare finishes and design direction before final…
 Type: content-page
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /renovation-design-tools/moodboard
 URL: https://www.cdconstruct.com.au/renovation-design-tools/moodboard
+Title: Gold Coast Renovations Moodboard Creator | Plan Your Style
+Description: Collect inspiration, curate palettes, and organise references for your Gold Coast renovations using our online moodboard creator by Concept Design Construct…
 Type: design-tool
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /privacy-policy
 URL: https://www.cdconstruct.com.au/privacy-policy
+Title: Gold Coast Renovations Privacy Policy
+Description: Read how Concept Design Construct manages personal information for visitors exploring Gold Coast renovation services and requesting consultations (CD…
 Type: legal-page
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /terms-conditions
 URL: https://www.cdconstruct.com.au/terms-conditions
+Title: Gold Coast Renovations Terms & Conditions
+Description: Review terms and conditions for using Concept Design Construct resources related to Gold Coast renovation planning, consultations, and site content (CD…
 Type: legal-page
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, ListItem, WebPage
 
 ## /renovation-projects/everyday-ease
 URL: https://www.cdconstruct.com.au/renovation-projects/everyday-ease
+Title: Everyday Ease | whole home Renovations in Burleigh Heads
+Description: Bathroom and laundry transformation. Everyday Ease is a whole home renovation project in Burleigh Heads by Concept Design Construct (CD Construct).
 Type: project-detail
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /renovation-projects/family-hub
 URL: https://www.cdconstruct.com.au/renovation-projects/family-hub
+Title: Family Hub | whole home Renovations in Helensvale
+Description: Complete home transformation. Family Hub is a whole home renovation project in Helensvale by Concept Design Construct (CD Construct).
 Type: project-detail
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /renovation-projects/light-and-flow-house
 URL: https://www.cdconstruct.com.au/renovation-projects/light-and-flow-house
+Title: Light & Flow House | whole home Renovations in Robina
+Description: Complete home transformation. Light & Flow House is a whole home renovation project in Robina by Concept Design Construct (CD Construct).
 Type: project-detail
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /renovation-projects/seamless-bathroom
 URL: https://www.cdconstruct.com.au/renovation-projects/seamless-bathroom
+Title: Seamless Bathroom | bathroom Renovations in Hope Island
+Description: Premium bathroom renovation. Seamless Bathroom is a bathroom renovation project in Hope Island by Concept Design Construct (CD Construct).
 Type: project-detail
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /renovation-projects/stone-and-light
 URL: https://www.cdconstruct.com.au/renovation-projects/stone-and-light
+Title: Stone & Light | bathroom Renovations in Broadbeach
+Description: Architectural bathroom renovation. Stone & Light is a bathroom renovation project in Broadbeach by Concept Design Construct (CD Construct).
 Type: project-detail
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /renovation-projects/terrazzo-retreat
 URL: https://www.cdconstruct.com.au/renovation-projects/terrazzo-retreat
+Title: Terrazzo Retreat | bathroom Renovations in Broadbeach
+Description: Warm modern bathroom renovation. Terrazzo Retreat is a bathroom renovation project in Broadbeach by Concept Design Construct (CD Construct).
 Type: project-detail
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /renovation-projects/the-calm-edit
 URL: https://www.cdconstruct.com.au/renovation-projects/the-calm-edit
+Title: The Calm Edit | whole home Renovations in Palm Beach
+Description: Bright and airy coastal renovation. The Calm Edit is a whole home renovation project in Palm Beach by Concept Design Construct (CD Construct).
 Type: project-detail
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /renovation-projects/the-elanora-residence
 URL: https://www.cdconstruct.com.au/renovation-projects/the-elanora-residence
+Title: The Elanora Residence | whole home Renovations in Elanora
+Description: Contemporary family renovation. The Elanora Residence is a whole home renovation project in Elanora by Concept Design Construct (CD Construct).
 Type: project-detail
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /renovation-projects/warm-minimal-bathroom
 URL: https://www.cdconstruct.com.au/renovation-projects/warm-minimal-bathroom
+Title: Warm Minimal Bathroom | bathroom Renovations in Surfers...
+Description: Modern bathroom and laundry refresh. Warm Minimal Bathroom is a bathroom renovation project in Surfers Paradise by Concept Design Construct (CD Construct).
 Type: project-detail
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: BreadcrumbList, CreativeWork, ListItem, Person, Place, PostalAddress, WebPage
 
 ## /blog/apartment-renovation-body-corporate-guide-gold-coast
 URL: https://www.cdconstruct.com.au/blog/apartment-renovation-body-corporate-guide-gold-coast
+Title: Apartment Renovation Rules on the Gold Coast: Body...
+Description: Everything you need to know about body corporate rules, approvals, and logistics before renovating your Gold Coast apartment or unit by Concept Design…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/bathroom-renovation-cost-gold-coast
 URL: https://www.cdconstruct.com.au/blog/bathroom-renovation-cost-gold-coast
+Title: How Much Does a Bathroom Renovation Cost on the Gold Coast?
+Description: A realistic breakdown of Gold Coast bathroom renovation costs in 2026, from budget refreshes to premium transformations, with tips on where to invest by…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/bathroom-renovation-timeline-what-to-expect
 URL: https://www.cdconstruct.com.au/blog/bathroom-renovation-timeline-what-to-expect
+Title: How Long Does a Bathroom Renovation Really Take?
+Description: A realistic timeline for your bathroom renovation, from the first design meeting to your first relaxing soak in the finished space by Concept Design…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/coastal-interior-design-gold-coast
 URL: https://www.cdconstruct.com.au/blog/coastal-interior-design-gold-coast
+Title: Coastal Interior Design on the Gold Coast: Beyond the...
+Description: Modern coastal interior design ideas for Gold Coast homes — how to create a relaxed, light-filled space without falling into clichéd beach house styling by…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/deck-patio-renovation-gold-coast
 URL: https://www.cdconstruct.com.au/blog/deck-patio-renovation-gold-coast
+Title: Deck and Patio Renovations on the Gold Coast:...
+Description: A practical guide to deck and patio renovations on the Gold Coast — comparing timber, composite, and concrete options with costs, maintenance, and design…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/energy-efficient-renovation-gold-coast
 URL: https://www.cdconstruct.com.au/blog/energy-efficient-renovation-gold-coast
+Title: Energy-Efficient Home Renovations on the Gold Coast
+Description: Practical ways to make your Gold Coast home more energy-efficient during a renovation — from insulation and glazing to solar, ventilation, and smart design…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/first-renovation-planning-checklist-gold-coast
 URL: https://www.cdconstruct.com.au/blog/first-renovation-planning-checklist-gold-coast
+Title: First Time Renovating? Start Here | Concept Design Construct
+Description: A simple checklist for Gold Coast homeowners planning their first renovation. What to do first, what to avoid, and how to enjoy the process by Concept Design…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/flood-resilient-renovation-gold-coast
 URL: https://www.cdconstruct.com.au/blog/flood-resilient-renovation-gold-coast
+Title: Flood-Resilient Renovations for Gold Coast Homes
+Description: How to renovate your Gold Coast home with flood resilience in mind — materials, design strategies, insurance considerations, and council requirements for…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/gold-coast-renovation-costs-complete-guide
 URL: https://www.cdconstruct.com.au/blog/gold-coast-renovation-costs-complete-guide
+Title: Gold Coast Renovation Costs 2026: Complete Price Guide
+Description: Realistic renovation costs for Gold Coast kitchens, bathrooms, and whole homes in 2026 — with breakdowns, cost drivers, and where to save by Concept Design…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/granny-flat-gold-coast-rules-costs
 URL: https://www.cdconstruct.com.au/blog/granny-flat-gold-coast-rules-costs
+Title: Granny Flats on the Gold Coast: Rules, Costs, and What...
+Description: Everything Gold Coast homeowners need to know about building a granny flat — council rules, secondary dwelling requirements, costs, and whether it's worth…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/heritage-character-home-renovation-gold-coast
 URL: https://www.cdconstruct.com.au/blog/heritage-character-home-renovation-gold-coast
+Title: Renovating a Character or Heritage Home on the Gold Coast
+Description: How to renovate a Queenslander or character home on the Gold Coast — preserving charm while adding modern comfort, council heritage rules, and common…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/home-office-renovation-ideas-gold-coast
 URL: https://www.cdconstruct.com.au/blog/home-office-renovation-ideas-gold-coast
+Title: Home Office Renovation Ideas for Gold Coast Homes
+Description: How to design a home office that actually works — layout ideas, lighting, soundproofing, and renovation tips for Gold Coast homeowners working from home by…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/how-to-choose-renovation-builder-gold-coast
 URL: https://www.cdconstruct.com.au/blog/how-to-choose-renovation-builder-gold-coast
+Title: How to Choose a Renovation Builder on the Gold Coast
+Description: A practical guide to finding and vetting a renovation builder on the Gold Coast — QBCC licensing, contracts, red flags, and the questions worth asking by…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/kitchen-renovation-budget-breakdown-gold-coast
 URL: https://www.cdconstruct.com.au/blog/kitchen-renovation-budget-breakdown-gold-coast
+Title: What Does a Kitchen Renovation Cost on the Gold Coast?
+Description: A straightforward guide to kitchen renovation costs, what drives the price, and where to invest for the biggest impact by Concept Design Construct (CD…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/kitchen-renovation-trends-gold-coast-2026
 URL: https://www.cdconstruct.com.au/blog/kitchen-renovation-trends-gold-coast-2026
+Title: Gold Coast Kitchen Renovation Trends in 2026
+Description: The kitchen design trends shaping Gold Coast renovations in 2026 — from warm minimalism and integrated appliances to curved islands and natural materials by…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/laundry-renovation-ideas-gold-coast
 URL: https://www.cdconstruct.com.au/blog/laundry-renovation-ideas-gold-coast
+Title: Laundry Renovation Ideas: Small Space, Big Impact
+Description: Practical laundry renovation ideas for Gold Coast homes — smart layouts, storage solutions, and design tips for a room that actually works by Concept Design…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/open-plan-living-renovation-gold-coast
 URL: https://www.cdconstruct.com.au/blog/open-plan-living-renovation-gold-coast
+Title: Open Plan Living Renovations on the Gold Coast: What...
+Description: Thinking about knocking down walls for open plan living? Here's what Gold Coast homeowners need to know about layout, structural costs, and making the space…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/outdoor-alfresco-renovation-gold-coast
 URL: https://www.cdconstruct.com.au/blog/outdoor-alfresco-renovation-gold-coast
+Title: Outdoor Alfresco Renovations on the Gold Coast: Design...
+Description: Gold Coast alfresco and outdoor living renovation ideas — from covered patios and outdoor kitchens to material choices that handle the subtropical climate by…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/renovation-add-value-gold-coast-home
 URL: https://www.cdconstruct.com.au/blog/renovation-add-value-gold-coast-home
+Title: Which Renovations Add the Most Value to Gold Coast Homes?
+Description: A data-backed guide to which home renovations deliver the best return on investment on the Gold Coast — and which ones don't pay for themselves by Concept…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/renovation-mistakes-cost-thousands
 URL: https://www.cdconstruct.com.au/blog/renovation-mistakes-cost-thousands
+Title: 5 Renovation Mistakes That Could Cost You Thousands
+Description: The most common (and expensive) renovation mistakes Gold Coast homeowners make — and how to avoid every one of them before you start by Concept Design…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/signs-your-gold-coast-home-needs-renovating
 URL: https://www.cdconstruct.com.au/blog/signs-your-gold-coast-home-needs-renovating
+Title: 7 Signs Your Gold Coast Home Is Ready for a Renovation
+Description: Not sure if it's time to renovate? Here are the telltale signs that your Gold Coast home is due for an upgrade — and what to do about each one by Concept…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/small-bathroom-renovation-ideas-gold-coast
 URL: https://www.cdconstruct.com.au/blog/small-bathroom-renovation-ideas-gold-coast
+Title: Small Bathroom Renovation Ideas That Actually Work
+Description: Practical design ideas for small Gold Coast bathroom renovations — smart layouts, space-saving fixtures, and material choices that make compact spaces feel…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 
 ## /blog/what-to-expect-during-gold-coast-home-renovation
 URL: https://www.cdconstruct.com.au/blog/what-to-expect-during-gold-coast-home-renovation
+Title: What to Expect During a Gold Coast Home Renovation
+Description: A week-by-week guide to the Gold Coast renovation process — from first consultation through design, construction, and final handover by Concept Design…
 Type: blog-post
-Last-Modified: 2026-04-15
+Last-Modified: 2026-04-16
 Structured-Data-Types: Blog, BlogPosting, BreadcrumbList, ListItem, Person
 

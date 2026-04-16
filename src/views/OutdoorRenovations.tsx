@@ -20,27 +20,27 @@ const features = [
 const processSteps = [
   {
     step: "01",
-    title: "Site Assessment",
+    title: "Site & Council Assessment",
     description:
-      "We visit your property to assess the space, discuss your vision for outdoor living, and identify any council or engineering requirements.",
+      "We inspect your outdoor space, check council setback requirements, assess drainage and ground conditions, and discuss how you want to use the area — entertaining, relaxing, or both.",
   },
   {
     step: "02",
-    title: "Design & Approvals",
+    title: "Material Selection & Design",
     description:
-      "Detailed design with material selection, engineering drawings, and council submissions where required. Fixed-price quoting included.",
+      "We recommend materials suited to Gold Coast conditions — composite vs hardwood decking, roofing options, and outdoor kitchen specifications. Everything is chosen for durability in salt air and UV.",
   },
   {
     step: "03",
-    title: "Construction",
+    title: "Ground Works & Build",
     description:
-      "Professional construction with quality materials, regular updates, and strict adherence to building standards and approved plans.",
+      "Site preparation, footings, frame construction, roofing, and decking installation. For outdoor kitchens, we coordinate plumbing, gas, and electrical in parallel.",
   },
   {
     step: "04",
-    title: "Handover",
+    title: "Finishing & Handover",
     description:
-      "Final inspection, cleaning, and walkthrough. All compliance certificates and warranty documentation provided.",
+      "Final staining or sealing, lighting installation, and hardware fitted. We walk the completed space with you and provide maintenance guidance specific to your materials and location.",
   },
 ];
 

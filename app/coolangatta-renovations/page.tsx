@@ -67,23 +67,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
-      <section className="sr-only" aria-label="Coolangatta renovation services summary for search crawlers">
-        <p className="font-semibold">Coolangatta Renovations by {SITE_NAME}</p>
-        <p>
-          Kitchen, bathroom and whole-home renovations in Coolangatta, Gold Coast. Specialists in
-          coastal property renovations using salt-air resistant materials. Apartments and beach house
-          renovations with design-led planning.
-        </p>
-        <p className="font-semibold">Our Coolangatta Renovation Services:</p>
-        <ul>
-          <li>Kitchen renovations Coolangatta</li>
-          <li>Bathroom renovations Coolangatta</li>
-          <li>Whole-home renovations Coolangatta</li>
-          <li>Beach house renovations</li>
-          <li>Coastal apartment renovations</li>
-          <li>Salt-air resistant material selection</li>
-        </ul>
-      </section>
       <CoolangattaRenovationsClient />
     </>
   );

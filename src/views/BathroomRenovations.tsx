@@ -2,13 +2,48 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import { ALL_SUBURB_LINKS } from "@/config/suburbs";
 import { useSiteAssets } from "@/hooks/useSiteAssets";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { Phone, Check, ArrowRight, Shield } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumb";
+
+type BreadcrumbItem = {
+  label: string;
+  href?: string;
+};
+
+type LocalServiceLink = {
+  label: string;
+  href: string;
+};
+
+type LocalServiceFocus = {
+  eyebrow?: string;
+  title: string;
+  description: string;
+  bullets: string[];
+  links?: LocalServiceLink[];
+};
+
+export type BathroomRenovationsFaqItem = {
+  question: string;
+  answer: string;
+};
+
+export type BathroomRenovationsPageContext = {
+  heroEyebrow?: string;
+  heroTitle?: string;
+  heroDescription?: string;
+  breadcrumbItems?: BreadcrumbItem[];
+  featureList?: string[];
+  faqHeading?: string;
+  faqItems?: BathroomRenovationsFaqItem[];
+  localFocus?: LocalServiceFocus;
+  areasSectionTitle?: string;
+  areasSectionDescription?: string;
+};
 
 const features = [
   "Complete bathroom design & 3D renders",
@@ -22,23 +57,23 @@ const features = [
 const processSteps = [
   {
     step: "01",
-    title: "Consultation",
-    description: "We assess your bathroom, discuss your vision, and provide initial guidance on layout and budget.",
+    title: "Bathroom Inspection",
+    description: "We assess your bathroom's waterproofing, plumbing, ventilation, and structural condition. We discuss what you want and identify anything hidden behind the walls that could affect scope.",
   },
   {
     step: "02",
-    title: "Design & Planning",
-    description: "Detailed bathroom design with 3D visualisation, fixture selection, and comprehensive quoting.",
+    title: "Design & Waterproofing Plan",
+    description: "We finalise your layout, fixtures, tiles, and vanity selections. Waterproofing is planned to exceed AS 3740 requirements — it's the most important step in any bathroom renovation.",
   },
   {
     step: "03",
-    title: "Construction",
-    description: "Professional demolition, waterproofing, tiling, and fixture installation with strict quality control.",
+    title: "Strip-Out & Rebuild",
+    description: "Complete strip-out, waterproofing with certification, plumbing rough-in, wall and floor tiling, vanity and shower screen installation, and electrical fit-off.",
   },
   {
     step: "04",
-    title: "Handover",
-    description: "Final inspection, waterproofing certificate, cleaning, and warranty documentation.",
+    title: "Inspection & Certificate",
+    description: "Final plumbing connections, silicone sealing, grout clean, and waterproofing certificate issued. We walk the bathroom with you and fix anything on the spot.",
   },
 ];
 
@@ -85,37 +120,53 @@ const bathroomImages = {
   portfolio: "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Elanora-Bathroom-Renovations.webp",
 };
 
-const BathroomRenovations = () => {
+const BathroomRenovations = ({
+  pageContext,
+}: {
+  pageContext?: BathroomRenovationsPageContext;
+} = {}) => {
   const { assets } = useSiteAssets();
   const heroImage = assets["service-bg-bathroom"] || bathroomImages.hero;
+  const breadcrumbItems = pageContext?.breadcrumbItems || [
+    { label: "Home", href: "/" },
+    { label: "Services", href: "/renovation-services" },
+    { label: "Bathroom Renovations" },
+  ];
+  const heroEyebrow = pageContext?.heroEyebrow || "Bathroom Specialists";
+  const heroTitle = pageContext?.heroTitle || "Gold Coast Bathroom Renovations";
+  const heroDescription =
+    pageContext?.heroDescription ||
+    "Beautiful, functional bathrooms built with quality waterproofing and expert craftsmanship. From ensuites to family bathrooms, we deliver spaces that combine luxury with lasting durability.";
+  const featureList = pageContext?.featureList || features;
+  const faqHeading = pageContext?.faqHeading || "Common Bathroom Renovation Questions";
+  const faqItems = pageContext?.faqItems || serviceFaqs;
+  const localFocus = pageContext?.localFocus;
+  const areasSectionTitle =
+    pageContext?.areasSectionTitle || "Bathroom Renovations Across the Gold Coast";
+  const areasSectionDescription =
+    pageContext?.areasSectionDescription ||
+    "We deliver bathroom renovations throughout the Gold Coast. Find your local area below.";
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO
-        title="Gold Coast Bathroom Renovations | Design & Build by CD Construct"
-        description="Gold Coast bathroom renovations with waterproofing-led construction, quality fixtures, and timeless design. Ensuite, family bathroom & powder room specialists. QBCC licensed."
-        url="/bathroom-renovations-gold-coast"
-      />
       <Header />
       <main id="main-content">
 
       {/* Hero Section */}
       <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-cream relative z-10">
         <div className="container-wide">
-          <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Services", href: "/renovation-services" }, { label: "Bathroom Renovations" }]} />
+          <Breadcrumb items={breadcrumbItems} />
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
-              <p className="text-label text-primary mb-6">Bathroom Specialists</p>
+              <p className="text-label text-primary mb-6">{heroEyebrow}</p>
               <h1 className="font-serif text-h1-mobile md:text-h1 text-primary leading-tight mb-6">
-                Gold Coast Bathroom Renovations
+                {heroTitle}
               </h1>
               <p className="text-foreground/80 text-lg leading-relaxed mb-6">
-                Beautiful, functional bathrooms built with quality waterproofing and expert craftsmanship. 
-                From ensuites to family bathrooms, we deliver <strong>spaces that combine 
-                luxury with lasting durability</strong>.
+                {heroDescription}
               </p>
               <ul className="space-y-3 mb-8">
-                {features.map((feature) => (
+                {featureList.map((feature) => (
                   <li key={feature} className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                     <span className="text-foreground/80">{feature}</span>
@@ -155,6 +206,53 @@ const BathroomRenovations = () => {
           </div>
         </div>
       </section>
+
+      {localFocus ? (
+        <section className="py-16 md:py-20 bg-background relative z-10">
+          <div className="container-wide">
+            <div className="grid lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] gap-10 lg:gap-16 items-start">
+              <div>
+                <p className="text-label text-primary mb-4">
+                  {localFocus.eyebrow || "Local Project Fit"}
+                </p>
+                <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-5">
+                  {localFocus.title}
+                </h2>
+                <p className="text-foreground/75 leading-relaxed mb-6">
+                  {localFocus.description}
+                </p>
+                {localFocus.links?.length ? (
+                  <div className="flex flex-wrap gap-4">
+                    {localFocus.links.map((link) => (
+                      <Link
+                        key={link.href}
+                        to={link.href}
+                        className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-primary hover:opacity-70 transition-opacity"
+                      >
+                        {link.label}
+                        <ArrowRight className="w-4 h-4" />
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+              <div className="bg-cream p-8 md:p-10 border border-foreground/5">
+                <h3 className="font-serif text-xl md:text-2xl text-primary mb-5">
+                  What We Plan For
+                </h3>
+                <ul className="space-y-3">
+                  {localFocus.bullets.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <span className="text-foreground/80">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* Waterproofing Section with Image */}
       <section className="py-16 md:py-24 bg-primary text-primary-foreground relative z-10">
@@ -332,10 +430,10 @@ const BathroomRenovations = () => {
       <section className="py-16 md:py-24 bg-cream relative z-10">
         <div className="container-wide">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-4 text-center">
-            Bathroom Renovations Across the Gold Coast
+            {areasSectionTitle}
           </h2>
           <p className="text-foreground/70 text-center mb-10 max-w-2xl mx-auto">
-            We deliver bathroom renovations throughout the Gold Coast. Find your local area below.
+            {areasSectionDescription}
           </p>
           <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
             {ALL_SUBURB_LINKS.map((area) => (
@@ -352,10 +450,10 @@ const BathroomRenovations = () => {
         <div className="container-wide max-w-4xl">
           <p className="text-label text-primary mb-4">FAQs</p>
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary leading-tight mb-8">
-            Common Bathroom Renovation Questions
+            {faqHeading}
           </h2>
           <div className="space-y-6">
-            {serviceFaqs.map((faq) => (
+            {faqItems.map((faq) => (
               <article key={faq.question} className="border-b border-foreground/10 pb-6">
                 <h3 className="font-serif text-xl md:text-2xl text-primary mb-3">{faq.question}</h3>
                 <p className="text-foreground/75 leading-relaxed">{faq.answer}</p>

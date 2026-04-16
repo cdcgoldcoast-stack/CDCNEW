@@ -7,8 +7,6 @@ const HERO_IMAGE = "/home/hero-v2.webp";
 const Hero = () => {
   return (
     <section className="min-h-screen relative z-20 overflow-hidden bg-background">
-      <p className="sr-only">Gold Coast renovations by Concept Design Construct.</p>
-
       {/*
         Single layout container:
         - Mobile:  flex-col, pt-20, image top (40vh) + text bottom (fills rest)
@@ -39,7 +37,7 @@ const Hero = () => {
             </h1>
 
             <p className="text-base sm:text-lg md:text-lg text-primary leading-relaxed mb-4 md:mb-5">
-              Clear communication, realistic timelines, and quality results.
+              Kitchen renovations from 2 weeks. Bathroom renovations from 4 weeks. Fixed-price quotes, no surprises.
             </p>
 
             <p className="text-sm md:text-base text-body-text leading-relaxed mb-5 md:mb-6">

@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-robina",
+  noIndex: true,
   keywords: [
     "bathroom renovation Robina",
     "Robina bathroom renovation",
@@ -80,26 +81,40 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Robina bathroom renovation services for search crawlers">
-        <p className="font-semibold">Bathroom Renovations in Robina by {SITE_NAME}</p>
-        <p>
-          Professional bathroom renovations in Robina, from family bathrooms and ensuites to powder rooms.
-          We specialise in quality waterproofing, premium fixtures, and designs that suit Robina&apos;s
-          family-friendly lifestyle.
-        </p>
-        <ul>
-          <li>Custom bathroom design in Robina</li>
-          <li>Waterproofing with 10-year warranty</li>
-          <li>Floor and wall tiling</li>
-          <li>Vanity, shower and fixture installation</li>
-          <li>Full bathroom renovation project management</li>
-        </ul>
-        <p>
-          View our <a href="/bathroom-renovations-gold-coast">Gold Coast bathroom renovations</a> or{" "}
-          <a href="/robina-renovations">Robina renovations</a> for more details.
-        </p>
-      </section>
-      <BathroomRenovationsClient />
+      <BathroomRenovationsClient
+        pageContext={{
+          breadcrumbItems: [
+            { label: "Home", href: "/" },
+            { label: "Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
+            { label: "Robina" },
+          ],
+          heroEyebrow: "Robina Bathroom Builders",
+          heroTitle: "Bathroom Renovations in Robina",
+          heroDescription:
+            "Professional bathroom renovations in Robina, from family bathrooms and ensuites to powder rooms built around quality waterproofing, durable fixtures, and layouts that support family life.",
+          faqHeading: "Robina Bathroom Renovation Questions",
+          faqItems: serviceFaqs,
+          localFocus: {
+            eyebrow: "Robina Project Fit",
+            title: "Bathroom Renovations For Practical Robina Family Living",
+            description:
+              "Robina bathroom projects are usually about making everyday routines smoother, improving storage, and lifting tired finishes without sacrificing durability. We scope those priorities into the layout and spec from the start.",
+            bullets: [
+              "Custom bathroom design in Robina",
+              "Waterproofing with 10-year warranty",
+              "Floor and wall tiling",
+              "Vanity, shower and fixture installation",
+              "Full bathroom renovation project management",
+            ],
+            links: [
+              { label: "Gold Coast Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
+              { label: "Robina Renovations", href: "/robina-renovations" },
+            ],
+          },
+          areasSectionDescription:
+            "We renovate bathrooms across the Gold Coast, including Robina homes where family use, storage, and durable finishes are usually the priority.",
+        }}
+      />
     </>
   );
 }

@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-palm-beach",
+  noIndex: true,
   keywords: [
     "kitchen renovation Palm Beach",
     "Palm Beach kitchen renovation",
@@ -80,26 +81,40 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Palm Beach kitchen renovation services for search crawlers">
-        <p className="font-semibold">Kitchen Renovations in Palm Beach by {SITE_NAME}</p>
-        <p>
-          Professional kitchen renovations in Palm Beach, specialising in coastal kitchen designs with
-          durable, salt-air resistant finishes. From beachside cottage kitchens to modern entertainer&apos;s
-          kitchens, we deliver quality craftsmanship for Palm Beach homeowners.
-        </p>
-        <ul>
-          <li>Custom kitchen design in Palm Beach</li>
-          <li>Kitchen cabinetry and stone benchtops</li>
-          <li>Appliance integration and selection</li>
-          <li>Kitchen lighting and splashbacks</li>
-          <li>Full kitchen renovation project management</li>
-        </ul>
-        <p>
-          View our <a href="/kitchen-renovations-gold-coast">Gold Coast kitchen renovations</a> or{" "}
-          <a href="/palm-beach-renovations">Palm Beach renovations</a> for more details.
-        </p>
-      </section>
-      <KitchenRenovationsClient />
+      <KitchenRenovationsClient
+        pageContext={{
+          breadcrumbItems: [
+            { label: "Home", href: "/" },
+            { label: "Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+            { label: "Palm Beach" },
+          ],
+          heroEyebrow: "Palm Beach Kitchen Builders",
+          heroTitle: "Kitchen Renovations in Palm Beach",
+          heroDescription:
+            "Professional kitchen renovations in Palm Beach, specialising in coastal kitchen designs with durable, salt-air resistant finishes for beachside cottages, modern homes, and relaxed entertainer's layouts.",
+          faqHeading: "Palm Beach Kitchen Renovation Questions",
+          faqItems: serviceFaqs,
+          localFocus: {
+            eyebrow: "Palm Beach Project Fit",
+            title: "Kitchen Renovations Designed For Palm Beach Coastal Conditions",
+            description:
+              "Palm Beach projects need finishes and detailing that suit salt air, natural light, and indoor-outdoor living. We plan material choices and layout decisions around those conditions so the kitchen still works hard years after handover.",
+            bullets: [
+              "Custom kitchen design in Palm Beach",
+              "Kitchen cabinetry and stone benchtops",
+              "Appliance integration and selection",
+              "Kitchen lighting and splashbacks",
+              "Full kitchen renovation project management",
+            ],
+            links: [
+              { label: "Gold Coast Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+              { label: "Palm Beach Renovations", href: "/palm-beach-renovations" },
+            ],
+          },
+          areasSectionDescription:
+            "We renovate kitchens across the Gold Coast, including Palm Beach homes that need coastal-ready finishes and entertaining-focused layouts.",
+        }}
+      />
     </>
   );
 }

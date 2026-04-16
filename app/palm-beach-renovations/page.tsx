@@ -65,13 +65,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
-      <section className="sr-only" aria-label="Palm Beach renovation services summary for search crawlers">
-        <p className="font-semibold">Palm Beach Renovations by {SITE_NAME}</p>
-        <p>
-          Kitchen, bathroom and whole-home renovations in Palm Beach. Family-focused designs 
-          with durable finishes and outdoor living. Trusted Gold Coast builders.
-        </p>
-      </section>
       <PalmBeachRenovationsClient />
     </>
   );

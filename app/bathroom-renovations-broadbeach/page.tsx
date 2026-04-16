@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-broadbeach",
+  noIndex: true,
   keywords: [
     "bathroom renovation Broadbeach",
     "Broadbeach bathroom renovation",
@@ -80,26 +81,40 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Broadbeach bathroom renovation services for search crawlers">
-        <p className="font-semibold">Bathroom Renovations in Broadbeach by {SITE_NAME}</p>
-        <p>
-          Professional bathroom renovations in Broadbeach, from compact apartment ensuites to luxurious
-          family bathrooms. We specialise in high-rise apartment bathrooms with expert waterproofing and
-          body corporate compliant renovations.
-        </p>
-        <ul>
-          <li>Custom bathroom design in Broadbeach</li>
-          <li>Waterproofing with 10-year warranty</li>
-          <li>Floor and wall tiling</li>
-          <li>Vanity, shower and fixture installation</li>
-          <li>Full bathroom renovation project management</li>
-        </ul>
-        <p>
-          View our <a href="/bathroom-renovations-gold-coast">Gold Coast bathroom renovations</a> or{" "}
-          <a href="/broadbeach-renovations">Broadbeach renovations</a> for more details.
-        </p>
-      </section>
-      <BathroomRenovationsClient />
+      <BathroomRenovationsClient
+        pageContext={{
+          breadcrumbItems: [
+            { label: "Home", href: "/" },
+            { label: "Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
+            { label: "Broadbeach" },
+          ],
+          heroEyebrow: "Broadbeach Bathroom Builders",
+          heroTitle: "Bathroom Renovations in Broadbeach",
+          heroDescription:
+            "Professional bathroom renovations in Broadbeach, from compact apartment ensuites to luxurious family bathrooms. We plan around high-rise access, body corporate requirements, and waterproofing detail from day one.",
+          faqHeading: "Broadbeach Bathroom Renovation Questions",
+          faqItems: serviceFaqs,
+          localFocus: {
+            eyebrow: "Broadbeach Project Fit",
+            title: "Bathroom Renovations Planned For Broadbeach Apartments And Coastal Homes",
+            description:
+              "Broadbeach bathroom projects often need access coordination, tighter sequencing, and waterproofing that protects adjoining apartments as well as your own space. We build those realities into the scope early.",
+            bullets: [
+              "Custom bathroom design in Broadbeach",
+              "Waterproofing with 10-year warranty",
+              "Floor and wall tiling",
+              "Vanity, shower and fixture installation",
+              "Full bathroom renovation project management",
+            ],
+            links: [
+              { label: "Gold Coast Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
+              { label: "Broadbeach Renovations", href: "/broadbeach-renovations" },
+            ],
+          },
+          areasSectionDescription:
+            "We renovate bathrooms across the Gold Coast, including Broadbeach apartments, beachside homes, and nearby family properties.",
+        }}
+      />
     </>
   );
 }

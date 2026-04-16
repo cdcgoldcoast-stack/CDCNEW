@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-southport",
+  noIndex: true,
   keywords: [
     "kitchen renovation Southport",
     "Southport kitchen renovation",
@@ -80,26 +81,40 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Southport kitchen renovation services for search crawlers">
-        <p className="font-semibold">Kitchen Renovations in Southport by {SITE_NAME}</p>
-        <p>
-          Professional kitchen renovations in Southport, specialising in transforming dated kitchens in
-          older homes into modern open-plan designs. We handle everything from asbestos assessment to
-          structural modifications and premium finishes.
-        </p>
-        <ul>
-          <li>Custom kitchen design in Southport</li>
-          <li>Kitchen cabinetry and stone benchtops</li>
-          <li>Appliance integration and selection</li>
-          <li>Kitchen lighting and splashbacks</li>
-          <li>Full kitchen renovation project management</li>
-        </ul>
-        <p>
-          View our <a href="/kitchen-renovations-gold-coast">Gold Coast kitchen renovations</a> or{" "}
-          <a href="/southport-renovations">Southport renovations</a> for more details.
-        </p>
-      </section>
-      <KitchenRenovationsClient />
+      <KitchenRenovationsClient
+        pageContext={{
+          breadcrumbItems: [
+            { label: "Home", href: "/" },
+            { label: "Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+            { label: "Southport" },
+          ],
+          heroEyebrow: "Southport Kitchen Builders",
+          heroTitle: "Kitchen Renovations in Southport",
+          heroDescription:
+            "Professional kitchen renovations in Southport, specialising in transforming dated kitchens in older homes into modern open-plan designs with better storage, cleaner circulation, and premium finishes.",
+          faqHeading: "Southport Kitchen Renovation Questions",
+          faqItems: serviceFaqs,
+          localFocus: {
+            eyebrow: "Southport Project Fit",
+            title: "Kitchen Renovations That Modernise Older Southport Properties",
+            description:
+              "Southport projects often involve older services, tighter footprints, and the need to modernise without losing practical durability. We scope those constraints early so allowances, sequencing, and selections stay realistic.",
+            bullets: [
+              "Custom kitchen design in Southport",
+              "Kitchen cabinetry and stone benchtops",
+              "Appliance integration and selection",
+              "Kitchen lighting and splashbacks",
+              "Full kitchen renovation project management",
+            ],
+            links: [
+              { label: "Gold Coast Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+              { label: "Southport Renovations", href: "/southport-renovations" },
+            ],
+          },
+          areasSectionDescription:
+            "We renovate kitchens across the Gold Coast, including Southport homes and apartments that need dated layouts brought up to current standards.",
+        }}
+      />
     </>
   );
 }

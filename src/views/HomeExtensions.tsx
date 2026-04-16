@@ -21,27 +21,27 @@ const features = [
 const processSteps = [
   {
     step: "01",
-    title: "Feasibility & Design",
+    title: "Site Assessment & Feasibility",
     description:
-      "We assess your property, discuss your needs, and develop preliminary designs. We identify council requirements, setbacks, and structural considerations early.",
+      "We inspect your property, check council overlays, assess structural capacity, and determine what's possible on your block before any design work begins.",
   },
   {
     step: "02",
-    title: "Approvals & Engineering",
+    title: "Design, Engineering & Approvals",
     description:
-      "Detailed architectural drawings, structural engineering, and council submissions. We manage DA and BA applications and coordinate with building certifiers.",
+      "Architectural plans, structural engineering, and council submissions handled by our team. We manage the approval process so you don't have to chase council.",
   },
   {
     step: "03",
-    title: "Construction",
+    title: "Foundation & Build",
     description:
-      "Professional construction with regular inspections, clear communication, and strict quality control. We manage all trades and keep you updated throughout.",
+      "Footings poured, frame erected, roof connected to existing structure, services extended. The new space takes shape while we protect your existing home from dust and disruption.",
   },
   {
     step: "04",
-    title: "Completion & Handover",
+    title: "Integration & Handover",
     description:
-      "Final inspections, compliance certificates, cleaning, and a thorough walkthrough. Full warranty documentation provided at handover.",
+      "New and old are connected seamlessly — matching flooring, paint, and finishes. The extension should feel like it was always part of the house, not an addition.",
   },
 ];
 

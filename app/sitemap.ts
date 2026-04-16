@@ -26,19 +26,7 @@ const staticRoutes: Array<{
   { path: "/outdoor-renovations-gold-coast", changeFrequency: "weekly", priority: 0.8 },
   { path: "/apartment-renovations-gold-coast", changeFrequency: "weekly", priority: 0.8 },
   { path: "/home-extensions-gold-coast", changeFrequency: "weekly", priority: 0.8 },
-  // Service + location hybrid pages
-  { path: "/kitchen-renovations-broadbeach", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/kitchen-renovations-helensvale", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/kitchen-renovations-palm-beach", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/kitchen-renovations-robina", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/kitchen-renovations-southport", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/kitchen-renovations-surfers-paradise", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/bathroom-renovations-broadbeach", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/bathroom-renovations-helensvale", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/bathroom-renovations-palm-beach", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/bathroom-renovations-robina", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/bathroom-renovations-southport", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/bathroom-renovations-surfers-paradise", changeFrequency: "monthly", priority: 0.7 },
+  // Service + location hybrid pages — noIndex (95% duplicate of parent service pages, only FAQs differ)
   // Location pages
   // /gold-coast-renovations moved to /lp/gold-coast-renovations (noindex, excluded from sitemap)
   { path: "/broadbeach-renovations", changeFrequency: "weekly", priority: 0.7 },

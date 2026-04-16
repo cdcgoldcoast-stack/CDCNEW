@@ -93,24 +93,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Whole-home renovation services summary for search crawlers">
-        <p className="font-semibold">Gold Coast Whole-Home Renovations by {SITE_NAME}</p>
-        <p>
-          Complete whole-home renovation services including structural changes, kitchen, bathrooms, 
-          flooring, electrical, and finishing. Transform your entire home with QBCC licensed builders.
-        </p>
-        <p className="font-semibold">Our Whole-Home Renovation Services Include:</p>
-        <ul>
-          <li>Complete home design and planning</li>
-          <li>Structural modifications and extensions</li>
-          <li>Kitchen and bathroom renovation</li>
-          <li>Open-plan living transformation</li>
-          <li>Indoor-outdoor flow improvements</li>
-          <li>Electrical and plumbing upgrades</li>
-          <li>Flooring, painting, and finishing</li>
-          <li>Project management from start to finish</li>
-        </ul>
-      </section>
       <WholeHomeRenovationsClient />
     </>
   );

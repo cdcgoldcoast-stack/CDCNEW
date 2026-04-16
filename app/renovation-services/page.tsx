@@ -59,19 +59,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, serviceCatalogSchema, breadcrumbSchema, faqSchema]} />
-      <section className="sr-only" aria-label="Services summary for search crawlers">
-        <p>Gold Coast renovation service scope.</p>
-        <ul>
-          <li>Kitchen renovation planning and delivery focused on workflow and storage.</li>
-          <li>Bathroom renovation services with durable finishes and waterproofing detail.</li>
-          <li>Whole-home renovation services aligned to family lifestyle and long-term value.</li>
-          <li>Extension planning support where additional living space is needed.</li>
-        </ul>
-        <p>
-          Start with a scope consultation through <a href="/book-renovation-consultation">our renovation quote page</a> or review
-          examples in the <a href="/renovation-projects">Gold Coast renovations project portfolio</a>.
-        </p>
-      </section>
       <ServicesClient />
     </>
   );

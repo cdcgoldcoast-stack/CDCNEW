@@ -36,6 +36,7 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-broadbeach",
+  noIndex: true,
   keywords: [
     "kitchen renovation Broadbeach",
     "Broadbeach kitchen renovation",
@@ -80,26 +81,40 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Broadbeach kitchen renovation services for search crawlers">
-        <p className="font-semibold">Kitchen Renovations in Broadbeach by {SITE_NAME}</p>
-        <p>
-          Professional kitchen renovations in Broadbeach, from beachside apartment kitchens to spacious
-          entertainer&apos;s kitchens. We specialise in compact apartment layouts and body corporate compliant
-          renovations throughout Broadbeach and the surrounding Gold Coast area.
-        </p>
-        <ul>
-          <li>Custom kitchen design in Broadbeach</li>
-          <li>Kitchen cabinetry and stone benchtops</li>
-          <li>Appliance integration and selection</li>
-          <li>Kitchen lighting and splashbacks</li>
-          <li>Full kitchen renovation project management</li>
-        </ul>
-        <p>
-          View our <a href="/kitchen-renovations-gold-coast">Gold Coast kitchen renovations</a> or{" "}
-          <a href="/broadbeach-renovations">Broadbeach renovations</a> for more details.
-        </p>
-      </section>
-      <KitchenRenovationsClient />
+      <KitchenRenovationsClient
+        pageContext={{
+          breadcrumbItems: [
+            { label: "Home", href: "/" },
+            { label: "Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+            { label: "Broadbeach" },
+          ],
+          heroEyebrow: "Broadbeach Kitchen Builders",
+          heroTitle: "Kitchen Renovations in Broadbeach",
+          heroDescription:
+            "Professional kitchen renovations in Broadbeach, from beachside apartment kitchens to spacious entertainer's kitchens. We plan around apartment access, body corporate requirements, and high-use entertaining layouts.",
+          faqHeading: "Broadbeach Kitchen Renovation Questions",
+          faqItems: serviceFaqs,
+          localFocus: {
+            eyebrow: "Broadbeach Project Fit",
+            title: "Kitchen Renovations Planned For Broadbeach Apartments And Homes",
+            description:
+              "Broadbeach projects often need tighter coordination around access, noise, storage, and finishes that suit coastal living. We account for those constraints up front so the design and construction phases stay practical.",
+            bullets: [
+              "Custom kitchen design in Broadbeach",
+              "Kitchen cabinetry and stone benchtops",
+              "Appliance integration and selection",
+              "Kitchen lighting and splashbacks",
+              "Full kitchen renovation project management",
+            ],
+            links: [
+              { label: "Gold Coast Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+              { label: "Broadbeach Renovations", href: "/broadbeach-renovations" },
+            ],
+          },
+          areasSectionDescription:
+            "We renovate kitchens across the Gold Coast, including Broadbeach apartments, beachside homes, and family properties in nearby suburbs.",
+        }}
+      />
     </>
   );
 }

@@ -20,27 +20,27 @@ const features = [
 const processSteps = [
   {
     step: "01",
-    title: "Site & Strata Review",
+    title: "Body Corporate & Site Review",
     description:
-      "We inspect your apartment, review body corporate by-laws, and identify any building-specific requirements before design begins.",
+      "We review your CMS, identify lot boundaries, and submit the renovation application to your body corporate. We coordinate building access, service elevator bookings, and work hour restrictions.",
   },
   {
     step: "02",
-    title: "Design & Approvals",
+    title: "Design Within Constraints",
     description:
-      "Detailed design with 3D visualisation, material selection, body corporate application, and fixed-price quoting.",
+      "We design around apartment-specific constraints: load-bearing walls, shared plumbing stacks, noise restrictions, and floor height limits. Every selection is compliant with body corporate rules.",
   },
   {
     step: "03",
-    title: "Construction",
+    title: "Managed Apartment Build",
     description:
-      "Professional construction within strata working hours, with service elevator coordination, noise management, and regular updates.",
+      "Materials delivered via service elevator, work kept within approved hours, dust and noise minimised for neighbours. We coordinate with building management throughout.",
   },
   {
     step: "04",
-    title: "Handover",
+    title: "Inspection & Body Corp Sign-Off",
     description:
-      "Final inspection, cleaning, and walkthrough. All compliance certificates and warranty documentation provided.",
+      "Final inspection with you and body corporate representative if required. Common areas cleaned, any building protection removed, and all compliance documentation provided.",
   },
 ];
 

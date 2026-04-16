@@ -94,29 +94,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, serviceSchema]} />
-      <section className="sr-only" aria-label="Laundry renovation services summary for search crawlers">
-        <p className="font-semibold">Gold Coast Laundry Renovations by {SITE_NAME}</p>
-        <p>
-          Complete laundry renovation services including custom cabinetry, stone benchtops,
-          utility sinks, storage solutions, and combined bathroom-laundry designs.
-          QBCC licensed builders serving all Gold Coast suburbs.
-        </p>
-        <p className="font-semibold">Our Laundry Renovation Services Include:</p>
-        <ul>
-          <li>Custom laundry cabinetry and joinery</li>
-          <li>Stone and laminate benchtops</li>
-          <li>Integrated hamper and storage systems</li>
-          <li>Utility sink and trough installation</li>
-          <li>Combined bathroom-laundry renovations</li>
-          <li>Drying area and airing cupboard solutions</li>
-          <li>Plumbing and electrical upgrades</li>
-          <li>Tiling and waterproofing</li>
-        </ul>
-        <p>
-          View our <a href="/renovation-projects">renovation portfolio</a> or
-          <a href="/book-renovation-consultation">book a free consultation</a> to discuss your project.
-        </p>
-      </section>
       <LaundryRenovationsClient />
     </>
   );

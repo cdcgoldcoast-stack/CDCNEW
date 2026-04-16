@@ -73,10 +73,6 @@ export default function HomePage() {
         <Hero />
         <SSRHomeClient />
       </div>
-      <p className="sr-only">
-        Concept Design Construct, also known as CD Construct, delivers design-led home renovations across the Gold
-        Coast including kitchens, bathrooms, and whole-home transformations.
-      </p>
     </>
   );
 }

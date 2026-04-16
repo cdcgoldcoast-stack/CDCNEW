@@ -65,13 +65,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[webPageSchema, breadcrumbSchema, faqSchema, localBusinessSchema]} />
-      <section className="sr-only" aria-label="Robina renovation services summary for search crawlers">
-        <p className="font-semibold">Robina Renovations by {SITE_NAME}</p>
-        <p>
-          Kitchen, bathroom and whole-home renovations in Robina. Specialists in modernising 
-          90s homes with open-plan designs. Trusted Gold Coast builders.
-        </p>
-      </section>
       <RobinaRenovationsClient />
     </>
   );

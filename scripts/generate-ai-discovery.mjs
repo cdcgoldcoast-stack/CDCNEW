@@ -25,6 +25,53 @@ const AI_DISCOVERY_PATH = path.join(PUBLIC_DIR, "ai-discovery.json");
 const LLMS_PATH = path.join(PUBLIC_DIR, "llms.txt");
 const LLMS_FULL_PATH = path.join(PUBLIC_DIR, "llms-full.txt");
 
+const BUSINESS_PROFILE = {
+  name: "Concept Design Construct",
+  alternateName: "CD Construct",
+  canonicalDomain: PRODUCTION_DOMAIN,
+  summary:
+    "Gold Coast renovation builder focused on kitchen, bathroom, whole-home, apartment, outdoor, laundry, and home extension projects with design-led planning and QBCC-licensed delivery.",
+  expertise: [
+    "Kitchen renovations",
+    "Bathroom renovations",
+    "Whole-home renovations",
+    "Apartment renovations",
+    "Outdoor renovations",
+    "Laundry renovations",
+    "Home extensions",
+  ],
+  serviceAreas: [
+    "Gold Coast",
+    "Broadbeach",
+    "Burleigh Heads",
+    "Mermaid Beach",
+    "Palm Beach",
+    "Robina",
+    "Southport",
+    "Helensvale",
+    "Surfers Paradise",
+  ],
+  contact: {
+    phone: "+61 413 468 928",
+    email: "info@cdconstruct.com.au",
+    consultationUrl: `${PRODUCTION_DOMAIN}/book-renovation-consultation`,
+  },
+};
+
+const PRIMARY_ROUTE_PATHS = new Set([
+  "/",
+  "/about-us",
+  "/renovation-services",
+  "/kitchen-renovations-gold-coast",
+  "/bathroom-renovations-gold-coast",
+  "/whole-home-renovations-gold-coast",
+  "/home-extensions-gold-coast",
+  "/renovation-projects",
+  "/renovation-gallery",
+  "/blog",
+  "/book-renovation-consultation",
+]);
+
 const FALLBACK_SCHEMA_TYPES_BY_ROUTE = {
   "/": ["HomeAndConstructionBusiness", "FAQPage"],
   "/about-us": ["AboutPage"],
@@ -36,6 +83,22 @@ const FALLBACK_SCHEMA_TYPES_BY_ROUTE = {
 const routeToHtmlFile = (routePath) => {
   if (routePath === "/") return path.join(NEXT_SERVER_APP_DIR, "index.html");
   return path.join(NEXT_SERVER_APP_DIR, `${routePath.replace(/^\//, "")}.html`);
+};
+
+const humanizeRoutePath = (routePath) => {
+  if (routePath === "/") return "Homepage";
+  return routePath
+    .replace(/^\//, "")
+    .split("/")
+    .filter(Boolean)
+    .map((segment) =>
+      segment
+        .split("-")
+        .filter(Boolean)
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" "),
+    )
+    .join(" / ");
 };
 
 function collectSchemaTypes(node, sink) {
@@ -104,24 +167,82 @@ async function extractStructuredDataTypes(routePath) {
   return [...types].sort();
 }
 
+async function extractRouteSummary(routePath) {
+  const htmlPath = routeToHtmlFile(routePath);
+
+  try {
+    const html = await fs.readFile(htmlPath, "utf8");
+    const document = new JSDOM(html).window.document;
+    const title = document.querySelector("title")?.textContent?.trim() || "";
+    const description =
+      document.querySelector('meta[name="description"]')?.getAttribute("content")?.trim() || "";
+    return {
+      title,
+      description,
+    };
+  } catch {
+    return {
+      title: "",
+      description: "",
+    };
+  }
+}
+
 function buildLlmsText({
   generatedAt,
   domain,
   routes,
   projectRoutes,
 }) {
-  const primaryRoutes = routes.filter((route) => route.contentType !== "project-detail");
+  const primaryRoutes = routes.filter((route) => PRIMARY_ROUTE_PATHS.has(route.path));
+  const locationRoutes = routes
+    .filter(
+      (route) =>
+        route.path.endsWith("-renovations") &&
+        !route.path.includes("/renovation-projects/") &&
+        !route.path.endsWith("-gold-coast"),
+    )
+    .slice(0, 12);
+  const blogRoutes = routes.filter((route) => route.path.startsWith("/blog/")).slice(0, 6);
   const lines = [];
 
   lines.push(`# ${new URL(domain).hostname} AI Content Index`);
   lines.push(`Generated: ${generatedAt}`);
   lines.push("");
-  lines.push("## Canonical Domain");
-  lines.push(domain);
+  lines.push("## Business");
+  lines.push(`Name: ${BUSINESS_PROFILE.name}`);
+  lines.push(`Also known as: ${BUSINESS_PROFILE.alternateName}`);
+  lines.push(`Canonical domain: ${domain}`);
+  lines.push(`Summary: ${BUSINESS_PROFILE.summary}`);
+  lines.push(`Core services: ${BUSINESS_PROFILE.expertise.join(", ")}`);
+  lines.push(`Primary service areas: ${BUSINESS_PROFILE.serviceAreas.join(", ")}`);
+  lines.push(`Contact phone: ${BUSINESS_PROFILE.contact.phone}`);
+  lines.push(`Contact email: ${BUSINESS_PROFILE.contact.email}`);
+  lines.push(`Consultation URL: ${BUSINESS_PROFILE.contact.consultationUrl}`);
   lines.push("");
-  lines.push("## Primary Public Pages");
+  lines.push("## Core Public Pages");
   for (const route of primaryRoutes) {
-    lines.push(`- ${route.url}`);
+    lines.push(`- ${route.url} | ${route.title || route.path}`);
+  }
+
+  lines.push("");
+  lines.push("## Local Service Area Pages");
+  if (locationRoutes.length === 0) {
+    lines.push("- None listed");
+  } else {
+    for (const route of locationRoutes) {
+      lines.push(`- ${route.url} | ${route.title || route.path}`);
+    }
+  }
+
+  lines.push("");
+  lines.push("## Renovation Guides");
+  if (blogRoutes.length === 0) {
+    lines.push("- None listed");
+  } else {
+    for (const route of blogRoutes) {
+      lines.push(`- ${route.url} | ${route.title || route.path}`);
+    }
   }
 
   lines.push("");
@@ -130,7 +251,7 @@ function buildLlmsText({
     lines.push("- None listed");
   } else {
     for (const route of projectRoutes) {
-      lines.push(`- ${route.url}`);
+      lines.push(`- ${route.url} | ${route.title || route.path}`);
     }
   }
 
@@ -146,6 +267,8 @@ function buildLlmsFullText({ generatedAt, domain, routes }) {
   for (const route of routes) {
     lines.push(`## ${route.path}`);
     lines.push(`URL: ${route.url}`);
+    lines.push(`Title: ${route.title || humanizeRoutePath(route.path)}`);
+    lines.push(`Description: ${route.description || "unknown"}`);
     lines.push(`Type: ${route.contentType}`);
     lines.push(`Last-Modified: ${route.lastmod || "unknown"}`);
     lines.push(
@@ -192,11 +315,16 @@ async function main() {
   const routeInventory = [];
   for (const entry of entries) {
     const routePath = normalizePath(pathFromUrl(entry.loc, PRODUCTION_DOMAIN));
-    const structuredDataTypes = await extractStructuredDataTypes(routePath);
+    const [structuredDataTypes, routeSummary] = await Promise.all([
+      extractStructuredDataTypes(routePath),
+      extractRouteSummary(routePath),
+    ]);
     routeInventory.push({
       path: routePath,
       url: entry.loc,
       lastmod: entry.lastmod,
+      title: routeSummary.title || humanizeRoutePath(routePath),
+      description: routeSummary.description,
       contentType: classifyContentType(routePath),
       structuredDataTypes,
     });
@@ -218,10 +346,12 @@ async function main() {
   const payload = {
     generatedAt,
     domain: PRODUCTION_DOMAIN,
+    business: BUSINESS_PROFILE,
     urlCount: routeInventory.length,
     projectUrlCount: projectRoutes.length,
     contentTypeCounts,
     structuredDataTypeCounts,
+    primaryRoutes: routeInventory.filter((route) => PRIMARY_ROUTE_PATHS.has(route.path)),
     routes: routeInventory,
   };
 
