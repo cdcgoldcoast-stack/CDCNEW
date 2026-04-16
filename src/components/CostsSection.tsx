@@ -52,7 +52,7 @@ const CostsSection = () => {
           transition={{ duration: 0.7 }}
         >
           <motion.p 
-            className="text-label text-primary-foreground/60 mb-3 md:mb-4 text-xs md:text-sm"
+            className="text-label text-primary-foreground/85 mb-3 md:mb-4 text-xs md:text-sm"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -72,7 +72,7 @@ const CostsSection = () => {
         </motion.div>
 
         {/* We renovate label - on its own line */}
-        <motion.span className="text-primary-foreground/60 text-xs md:text-sm block mb-4 md:mb-6" initial={{
+        <motion.span className="text-primary-foreground/85 text-xs md:text-sm block mb-4 md:mb-6" initial={{
         opacity: 0,
         y: 10
       }} whileInView={{
@@ -118,7 +118,7 @@ const CostsSection = () => {
           y: -2
         }}>
               <span className="text-primary-foreground font-serif text-sm md:text-lg">{service.name}</span>
-              <span className="text-primary-foreground/50 text-[10px] md:text-xs uppercase tracking-wider">{service.subtitle}</span>
+              <span className="text-primary-foreground/75 text-[10px] md:text-xs uppercase tracking-wider">{service.subtitle}</span>
             </motion.div>)}
         </motion.div>
 
@@ -137,7 +137,7 @@ const CostsSection = () => {
         {/* Invitation / CTA Section - Centered */}
         <div className="flex flex-col items-center text-center">
           {/* Left: Invitation content - now centered */}
-          <motion.p className="text-label text-primary-foreground/60 mb-4 md:mb-6 text-xs md:text-sm" initial={{
+          <motion.p className="text-label text-primary-foreground/85 mb-4 md:mb-6 text-xs md:text-sm" initial={{
           opacity: 0,
           y: 20
         }} whileInView={{
@@ -190,7 +190,7 @@ const CostsSection = () => {
             </Link>
           </motion.div>
 
-          <motion.p className="text-primary-foreground/70 text-sm md:text-base leading-relaxed font-serif italic" initial={{
+          <motion.p className="text-primary-foreground/90 text-sm md:text-base leading-relaxed font-serif italic" initial={{
           opacity: 0
         }} whileInView={{
           opacity: 1

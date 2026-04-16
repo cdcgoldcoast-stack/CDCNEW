@@ -150,7 +150,7 @@ const HowWeWork = () => {
           >
             {steps.map((step) => (
               <motion.div key={step.number} variants={itemVariants} className="group">
-                <span className="block font-serif text-5xl text-primary/15 mb-4 group-hover:text-primary/30 transition-colors duration-300">
+                <span className="block font-serif text-5xl text-primary/35 mb-4 group-hover:text-primary/55 transition-colors duration-300">
                   {step.number}
                 </span>
                 <h3 className="font-serif text-xl md:text-2xl text-primary mb-3 leading-tight">
@@ -175,7 +175,7 @@ const HowWeWork = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-12 md:mb-16"
           >
-            <p className="text-label text-primary-foreground/60 mb-4">
+            <p className="text-label text-primary-foreground/85 mb-4">
               The CDC Difference
             </p>
             <h2 className="font-serif text-h2-mobile md:text-h2 text-primary-foreground leading-tight">
@@ -203,7 +203,7 @@ const HowWeWork = () => {
                   <h3 className="font-serif text-lg text-primary-foreground mb-2">
                     {item.title}
                   </h3>
-                  <p className="text-primary-foreground/70 text-sm leading-relaxed">
+                  <p className="text-primary-foreground/90 text-sm leading-relaxed">
                     {item.description}
                   </p>
                 </div>

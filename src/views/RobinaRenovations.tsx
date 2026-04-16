@@ -45,7 +45,7 @@ export default function RobinaRenovations() {
       <main id="main-content">
       <SEO
         title="Robina Renovations | Kitchen, Bathroom & Home | CD Construct"
-        description="Renovation builders in Robina. Kitchen, bathroom and whole-home renovations for modern family homes. QBCC licensed. Based in Broadbeach - your local Gold Coast builder."
+        description="Renovation builders in Robina. Kitchen, bathroom and whole-home renovations for modern family homes. QBCC licensed. Your trusted Gold Coast renovation builder."
         url="/robina-renovations"
       />
 

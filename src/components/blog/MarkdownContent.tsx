@@ -63,34 +63,42 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
     // Remove empty paragraphs
     .replace(/<p class="mb-6 text-foreground\/70 leading-relaxed"><\/p>/g, '');
 
+  const hasToc = headings.length > 0;
+
   return (
-    <div className="relative">
-      {/* Table of Contents */}
-      {headings.length > 0 && (
-        <nav className="hidden lg:block fixed right-8 top-32 w-64 bg-muted/50 p-6 border border-border">
-          <p className="text-label text-foreground/80 mb-4">On this page</p>
-          <ul className="space-y-2">
-            {headings.map((heading) => (
-              <li key={heading.id}>
-                <a 
-                  href={`#${heading.id}`}
-                  className={`text-sm hover:text-primary transition-colors ${
-                    heading.level === 3 ? 'pl-4 text-foreground/80' : 'text-foreground/80'
-                  }`}
-                >
-                  {heading.text}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
-      
-      {/* Content */}
-      <div 
-        className="prose-content max-w-3xl"
+    <div
+      className={
+        hasToc
+          ? "lg:grid lg:grid-cols-[minmax(0,1fr)_16rem] lg:gap-12"
+          : ""
+      }
+    >
+      <div
+        className="prose-content max-w-3xl min-w-0"
         dangerouslySetInnerHTML={{ __html: processedHtml }}
       />
+
+      {hasToc && (
+        <aside className="hidden lg:block">
+          <nav className="sticky top-32 bg-muted/50 p-6 border border-border">
+            <p className="text-label text-foreground/80 mb-4">On this page</p>
+            <ul className="space-y-2">
+              {headings.map((heading) => (
+                <li key={heading.id}>
+                  <a
+                    href={`#${heading.id}`}
+                    className={`text-sm hover:text-primary transition-colors ${
+                      heading.level === 3 ? 'pl-4 text-foreground/80' : 'text-foreground/80'
+                    }`}
+                  >
+                    {heading.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </aside>
+      )}
     </div>
   );
 }

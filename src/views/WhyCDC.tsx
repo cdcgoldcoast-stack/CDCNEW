@@ -114,7 +114,7 @@ const WhyCDC = () => {
       <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-primary relative z-10">
         <div className="container-wide">
           <div className="max-w-3xl">
-            <p className="text-label text-primary-foreground/60 mb-6">
+            <p className="text-label text-primary-foreground/85 mb-6">
               Why CDC
             </p>
             <h1 className="font-serif text-h1-mobile md:text-h1 text-primary-foreground leading-tight mb-8">

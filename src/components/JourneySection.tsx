@@ -67,7 +67,7 @@ const JourneySection = () => {
           transition={{ duration: 0.7 }}
           className="mb-4 md:mb-6"
         >
-          <p className="text-primary/50 text-xs md:text-sm tracking-[0.2em] uppercase mb-4 md:mb-6">The Journey</p>
+          <p className="text-primary/80 text-xs md:text-sm tracking-[0.2em] uppercase mb-4 md:mb-6">The Journey</p>
           <h2 className="font-serif text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl text-primary leading-[1.1] tracking-tight italic">
             Steps Away From Your Dream Space!
           </h2>
@@ -94,7 +94,7 @@ const JourneySection = () => {
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 className="w-[200px] flex-shrink-0 border-l-2 border-primary/20 pl-4"
               >
-                <span className="font-serif text-3xl text-primary/30 block mb-2">
+                <span className="font-serif text-3xl text-primary/55 block mb-2">
                   {step.number}
                 </span>
                 <p className="font-serif text-sm text-primary italic mb-2">
@@ -119,9 +119,9 @@ const JourneySection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: index * 0.06 }}
-                className={`border-l-2 border-primary/10 pl-5 ${index === 0 ? "border-l-0" : ""}`}
+                className={`border-l-2 border-primary/20 pl-5 ${index === 0 ? "border-l-0" : ""}`}
               >
-                <span className="block font-serif text-4xl lg:text-5xl mb-3 text-primary/20">
+                <span className="block font-serif text-4xl lg:text-5xl mb-3 text-primary/40">
                   {step.number}
                 </span>
                 <h3 className="font-serif text-sm lg:text-base xl:text-lg mb-3 leading-snug text-primary italic">
@@ -141,10 +141,10 @@ const JourneySection = () => {
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: (index + 4) * 0.06 }}
-                className={`border-l-2 border-primary/10 pl-5 ${index === 0 ? "border-l-0" : ""}`}
+                transition={{ duration: 0.45, delay: index * 0.06 }}
+                className={`border-l-2 border-primary/20 pl-5 ${index === 0 ? "border-l-0" : ""}`}
               >
-                <span className="block font-serif text-4xl lg:text-5xl mb-3 text-primary/20">
+                <span className="block font-serif text-4xl lg:text-5xl mb-3 text-primary/40">
                   {step.number}
                 </span>
                 <h3 className="font-serif text-sm lg:text-base xl:text-lg mb-3 leading-snug text-primary italic">

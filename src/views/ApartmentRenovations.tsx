@@ -288,7 +288,7 @@ const ApartmentRenovations = () => {
         <div className="container-wide">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
-              <p className="text-xs uppercase tracking-wider text-primary-foreground/60 mb-4">
+              <p className="text-xs uppercase tracking-wider text-primary-foreground/85 mb-4">
                 Investment Guide
               </p>
               <h2 className="font-serif text-h2-mobile md:text-h2 mb-6">
@@ -354,7 +354,7 @@ const ApartmentRenovations = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {processSteps.map((step) => (
               <article key={step.step} className="bg-background p-6 md:p-8">
-                <span className="text-4xl md:text-5xl font-serif text-primary/20">
+                <span className="text-4xl md:text-5xl font-serif text-primary/40">
                   {step.step}
                 </span>
                 <h3 className="font-serif text-xl text-primary mt-4 mb-3">

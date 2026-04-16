@@ -242,7 +242,7 @@ const LifeStagesPage = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
               >
-                <span className="text-primary/40 font-serif italic text-3xl leading-none group-hover:text-primary transition-colors">
+                <span className="text-primary/70 font-serif italic text-3xl leading-none group-hover:text-primary transition-colors">
                   {benefit.number}
                 </span>
                 <p className="text-foreground/70 text-base leading-relaxed pt-1">

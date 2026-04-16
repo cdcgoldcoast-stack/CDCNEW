@@ -7,7 +7,7 @@ import { SITE_NAME } from "@/config/seo";
 
 const pageTitle = "Helensvale Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
-  "Renovation builders in Helensvale. Kitchen, bathroom and whole-home renovations for established family homes. QBCC licensed. Based in Broadbeach - your local Gold Coast builder.";
+  "Renovation builders in Helensvale. Kitchen, bathroom and whole-home renovations for established family homes. QBCC licensed. Your trusted Gold Coast renovation builder.";
 
 const serviceFaqs = [
   {
@@ -69,7 +69,7 @@ export default function Page() {
         <p className="font-semibold">Helensvale Renovations by {SITE_NAME}</p>
         <p>
           Kitchen, bathroom and whole-home renovations in Helensvale. Specialists in refreshing
-          established family homes with modern open-plan designs. Based in Broadbeach.
+          established family homes with modern open-plan designs. Trusted Gold Coast builders.
         </p>
         <p className="font-semibold">Our Helensvale Renovation Services:</p>
         <ul>

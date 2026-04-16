@@ -7,7 +7,7 @@ import { SITE_NAME } from "@/config/seo";
 
 const pageTitle = "Miami Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
-  "Renovation builders in Miami, Gold Coast. Kitchen, bathroom and whole-home renovations for beach cottages and coastal homes. QBCC licensed. Based in Broadbeach - your local builder.";
+  "Renovation builders in Miami, Gold Coast. Kitchen, bathroom and whole-home renovations for beach cottages and coastal homes. QBCC licensed. Your trusted Gold Coast renovation builder.";
 
 const serviceFaqs = [
   {
@@ -69,7 +69,7 @@ export default function Page() {
         <p className="font-semibold">Miami Renovations by {SITE_NAME}</p>
         <p>
           Kitchen, bathroom and whole-home renovations in Miami, Gold Coast. Specialists in
-          transforming beach cottages into modern coastal homes. Based in Broadbeach.
+          transforming beach cottages into modern coastal homes. Trusted Gold Coast builders.
         </p>
         <p className="font-semibold">Our Miami Renovation Services:</p>
         <ul>

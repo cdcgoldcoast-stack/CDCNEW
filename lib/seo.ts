@@ -6,6 +6,7 @@ import {
   SITE_ALTERNATE_NAME,
   PRIORITY_SITELINK_TARGETS,
   formatPageTitle,
+  truncateMetaDescription,
   withBrandDescription,
 } from "@/config/seo";
 
@@ -54,7 +55,7 @@ export const buildMetadata = ({
   title,
   description,
   path,
-  image: _image = DEFAULT_OG_IMAGE,
+  image = DEFAULT_OG_IMAGE,
   type = "website",
   noIndex = false,
   keywords = [],
@@ -66,7 +67,8 @@ export const buildMetadata = ({
   const safeTitle = formatPageTitle(title);
   const normalizedPath = normalizePath(path);
   const isInternalRoute = normalizedPath.startsWith("/admin") || normalizedPath.startsWith("/auth");
-  const safeDescription = noIndex || isInternalRoute ? description : withBrandDescription(description);
+  const rawDescription = noIndex || isInternalRoute ? description : withBrandDescription(description);
+  const safeDescription = truncateMetaDescription(rawDescription);
   const baseKeywords = noIndex || isInternalRoute ? [] : [SITE_NAME, SITE_ALTERNATE_NAME];
   const allKeywords = Array.from(
     new Set(
@@ -76,7 +78,7 @@ export const buildMetadata = ({
     ),
   );
   const canonical = absoluteUrl(path);
-  void _image;
+  const ogImage = image || DEFAULT_OG_IMAGE;
   const cleanArticleTags = articleTags.filter(Boolean);
 
   const otherMeta: Record<string, string> = {};
@@ -135,7 +137,7 @@ export const buildMetadata = ({
       description: safeDescription,
       images: [
         {
-          url: DEFAULT_OG_IMAGE,
+          url: ogImage,
           width: 1200,
           height: 630,
           alt: `${SITE_NAME} - Gold Coast Renovations`,
@@ -147,7 +149,7 @@ export const buildMetadata = ({
       card: "summary_large_image",
       title: safeTitle,
       description: safeDescription,
-      images: [DEFAULT_OG_IMAGE],
+      images: [ogImage],
     },
     other: otherMeta,
   };

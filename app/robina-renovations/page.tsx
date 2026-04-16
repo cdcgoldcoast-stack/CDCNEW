@@ -7,7 +7,7 @@ import { SITE_NAME } from "@/config/seo";
 
 const pageTitle = "Robina Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
-  "Renovation builders in Robina. Kitchen, bathroom and whole-home renovations for modern family homes. QBCC licensed. Based in Broadbeach - your local Gold Coast builder.";
+  "Renovation builders in Robina. Kitchen, bathroom and whole-home renovations for modern family homes. QBCC licensed. Your trusted Gold Coast renovation builder.";
 
 const serviceFaqs = [
   {
@@ -69,7 +69,7 @@ export default function Page() {
         <p className="font-semibold">Robina Renovations by {SITE_NAME}</p>
         <p>
           Kitchen, bathroom and whole-home renovations in Robina. Specialists in modernising 
-          90s homes with open-plan designs. Based in Broadbeach.
+          90s homes with open-plan designs. Trusted Gold Coast builders.
         </p>
       </section>
       <RobinaRenovationsClient />

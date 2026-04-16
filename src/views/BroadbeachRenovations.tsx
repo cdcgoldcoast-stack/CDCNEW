@@ -16,7 +16,7 @@ const faqs = [
   {
     question: "How much does a renovation cost in Broadbeach?",
     answer:
-      "Broadbeach renovation costs vary by property type. Apartment kitchen renovations typically range from $30,000-$60,000, bathrooms from $25,000-$45,000, and whole-home renovations from $100,000-$250,000+. We're based in Broadbeach, so our local knowledge helps us provide accurate quotes for your specific building.",
+      "Broadbeach renovation costs vary by property type. Apartment kitchen renovations typically range from $30,000-$60,000, bathrooms from $25,000-$45,000, and whole-home renovations from $100,000-$250,000+. Our Gold Coast team knows Broadbeach buildings well, which helps us provide accurate quotes for your specific property.",
   },
   {
     question: "Do you work with body corporates in Broadbeach?",
@@ -45,7 +45,7 @@ export default function BroadbeachRenovations() {
       <main id="main-content">
       <SEO
         title="Broadbeach Renovations | Kitchen, Bathroom & Home | CD Construct"
-        description="Renovation builders in Broadbeach. Kitchen, bathroom and whole-home renovations with design-led planning. We're based in Broadbeach - your local Gold Coast builder."
+        description="Broadbeach kitchen, bathroom and whole-home renovations with design-led planning by your trusted Gold Coast builder. QBCC licensed."
         url="/broadbeach-renovations"
       />
 
@@ -59,9 +59,9 @@ export default function BroadbeachRenovations() {
                 Broadbeach Renovations
               </h1>
               <p className="text-lg md:text-xl text-foreground/80 leading-relaxed mb-8">
-                Kitchen, bathroom and whole-home renovations in Broadbeach. We&apos;re based right 
-                here in Broadbeach, so we understand the unique challenges of renovating apartments 
-                and homes in this vibrant coastal suburb.
+                Kitchen, bathroom and whole-home renovations in Broadbeach. Our Gold Coast team
+                understands the unique challenges of renovating apartments and homes in this
+                vibrant coastal suburb.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
@@ -77,8 +77,8 @@ export default function BroadbeachRenovations() {
                   Call 0413 468 928
                 </a>
               </div>
-              <p className="text-sm text-foreground/50 mt-6">
-                📍 Based in Broadbeach • 5 minutes from your door
+              <p className="text-sm text-foreground/80 mt-6">
+                📍 Gold Coast renovation specialists • QBCC Licensed
               </p>
             </div>
             <div className="aspect-[4/3] overflow-hidden bg-muted">
@@ -239,15 +239,15 @@ export default function BroadbeachRenovations() {
               Why Broadbeach Residents Choose Us
             </h2>
             <p className="text-lg text-foreground/70">
-              We&apos;re not just builders who work in Broadbeach - we&apos;re based here. 
-              Our office is in your suburb, which means faster response times and local knowledge.
+              We&apos;ve been renovating Broadbeach homes and apartments for years. Our Gold Coast team
+              knows the buildings, the body corporates, and what makes a Broadbeach renovation run smoothly.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">📍</div>
               <div className="text-4xl font-serif text-primary mb-2">Local</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Based in Broadbeach</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/80">Gold Coast Team</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">🏢</div>
@@ -291,8 +291,8 @@ export default function BroadbeachRenovations() {
             Ready to Renovate Your Broadbeach Property?
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Book a free consultation. We&apos;re based in Broadbeach, so we can meet you 
-            at your property quickly to discuss your renovation plans.
+            Book a free consultation. Our Gold Coast team will visit your Broadbeach
+            property to talk through your renovation plans in person.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
@@ -308,8 +308,8 @@ export default function BroadbeachRenovations() {
               Call 0413 468 928
             </a>
           </div>
-          <p className="text-sm text-foreground/50 mt-6">
-            📍 Based in Broadbeach • QBCC Licensed • Local Knowledge
+          <p className="text-sm text-foreground/80 mt-6">
+            📍 Gold Coast team • QBCC Licensed • Local Knowledge
           </p>
         </div>
       </section>

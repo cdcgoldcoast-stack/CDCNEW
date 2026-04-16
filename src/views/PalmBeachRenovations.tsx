@@ -45,7 +45,7 @@ export default function PalmBeachRenovations() {
       <main id="main-content">
       <SEO
         title="Palm Beach Renovations | Kitchen, Bathroom & Home | CD Construct"
-        description="Renovation builders in Palm Beach. Kitchen, bathroom and whole-home renovations for beachside homes. Family-focused designs. QBCC licensed. Based in Broadbeach."
+        description="Renovation builders in Palm Beach. Kitchen, bathroom and whole-home renovations for beachside homes. Family-focused designs. QBCC licensed. Trusted Gold Coast builders."
         url="/palm-beach-renovations"
       />
 

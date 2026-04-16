@@ -7,7 +7,7 @@ import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
 const pageTitle = "Broadbeach Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
-  "Renovation builders in Broadbeach. Kitchen, bathroom and whole-home renovations with design-led planning. We're based in Broadbeach - your local Gold Coast builder.";
+  "Renovation builders in Broadbeach. Kitchen, bathroom and whole-home renovations with design-led planning. Your trusted Gold Coast renovation builder.";
 
 const serviceFaqs = [
   {
@@ -18,7 +18,7 @@ const serviceFaqs = [
   {
     question: "How much does a renovation cost in Broadbeach?",
     answer:
-      "Broadbeach renovation costs vary by property type. Apartment kitchen renovations typically range from $30,000-$60,000, bathrooms from $25,000-$45,000, and whole-home renovations from $100,000-$250,000+. We're based in Broadbeach, so our local knowledge helps us provide accurate quotes for your specific building.",
+      "Broadbeach renovation costs vary by property type. Apartment kitchen renovations typically range from $30,000-$60,000, bathrooms from $25,000-$45,000, and whole-home renovations from $100,000-$250,000+. Our Gold Coast team knows Broadbeach buildings well, which helps us provide accurate quotes for your specific property.",
   },
   {
     question: "Do you work with body corporates in Broadbeach?",
@@ -71,7 +71,7 @@ export default function Page() {
         <p className="font-semibold">Broadbeach Renovations by {SITE_NAME}</p>
         <p>
           Kitchen, bathroom and whole-home renovations in Broadbeach. Specialists in apartment 
-          renovations with body corporate experience. Based in Broadbeach - your local Gold Coast builder.
+          renovations with body corporate experience. Your trusted Gold Coast renovation builder.
         </p>
         <p className="font-semibold">Our Broadbeach Renovation Services:</p>
         <ul>

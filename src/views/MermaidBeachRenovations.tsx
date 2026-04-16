@@ -45,7 +45,7 @@ export default function MermaidBeachRenovations() {
       <main id="main-content">
       <SEO
         title="Mermaid Beach Renovations | Kitchen, Bathroom & Home | CD Construct"
-        description="Renovation builders in Mermaid Beach. Kitchen, bathroom and whole-home renovations for beachside homes. QBCC licensed. Based in Broadbeach - your local Gold Coast builder."
+        description="Renovation builders in Mermaid Beach. Kitchen, bathroom and whole-home renovations for beachside homes. QBCC licensed. Your trusted Gold Coast renovation builder."
         url="/mermaid-beach-renovations"
       />
 

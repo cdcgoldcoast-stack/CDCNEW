@@ -54,7 +54,7 @@ export default function BurleighHeads() {
               <p className="text-lg md:text-xl text-foreground/80 leading-relaxed mb-8">
                 Kitchen, bathroom and whole-home renovations in Burleigh Heads. We understand the
                 unique character of these homes - from original beach shacks to modern hillside
-                architecture. Based in Broadbeach, we're locals too.
+                architecture. We're Gold Coast locals, just like you.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
@@ -272,7 +272,7 @@ export default function BurleighHeads() {
             </h2>
             <p className="text-lg text-foreground/70">
               We're not just builders who work in Burleigh - we're part of the Gold Coast community.
-              Based in Broadbeach, we're 10 minutes away when you need us.
+              Our Gold Coast team is close by when you need us.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -338,7 +338,7 @@ export default function BurleighHeads() {
             </a>
           </div>
           <p className="text-sm text-foreground/50 mt-6">
-            Based in Broadbeach • 10 minutes from Burleigh Heads • QBCC Licensed
+            Gold Coast renovation specialists • QBCC Licensed
           </p>
         </div>
       </section>

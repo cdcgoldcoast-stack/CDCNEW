@@ -7,7 +7,7 @@ import { SITE_NAME } from "@/config/seo";
 
 const pageTitle = "Southport Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
-  "Renovation builders in Southport. Kitchen, bathroom and whole-home renovations for character homes and waterfront properties. QBCC licensed. Based in Broadbeach.";
+  "Renovation builders in Southport. Kitchen, bathroom and whole-home renovations for character homes and waterfront properties. QBCC licensed. Trusted Gold Coast builders.";
 
 const serviceFaqs = [
   {
@@ -70,7 +70,7 @@ export default function Page() {
         <p className="font-semibold">Southport Renovations by {SITE_NAME}</p>
         <p>
           Kitchen, bathroom and whole-home renovations in Southport. Specialists in character 
-          homes, Queenslanders, and waterfront properties. Based in Broadbeach.
+          homes, Queenslanders, and waterfront properties. Trusted Gold Coast builders.
         </p>
       </section>
       <SouthportRenovationsClient />

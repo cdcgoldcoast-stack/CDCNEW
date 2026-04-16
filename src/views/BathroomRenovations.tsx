@@ -283,7 +283,7 @@ const BathroomRenovations = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {processSteps.map((step) => (
               <article key={step.step} className="bg-background p-6 md:p-8">
-                <span className="text-4xl md:text-5xl font-serif text-primary/20">{step.step}</span>
+                <span className="text-4xl md:text-5xl font-serif text-primary/40">{step.step}</span>
                 <h3 className="font-serif text-xl text-primary mt-4 mb-3">{step.title}</h3>
                 <p className="text-foreground/75 text-sm leading-relaxed">{step.description}</p>
               </article>

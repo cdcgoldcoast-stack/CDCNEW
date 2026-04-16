@@ -14,6 +14,7 @@ export const SITE_TAGLINE = "Gold Coast Home Renovations";
 export const SITE_ALTERNATE_NAME = "CD Construct";
 const TITLE_MAX_LENGTH = 60;
 const TITLE_ELLIPSIS = "...";
+const DESCRIPTION_MAX_LENGTH = 160;
 
 // Default meta content
 export const DEFAULT_META = {
@@ -473,6 +474,15 @@ const truncateTitle = (title: string) => {
   const lastWordBoundary = sliced.lastIndexOf(" ");
   const cutAt = lastWordBoundary > 35 ? lastWordBoundary : sliced.length;
   return `${sliced.slice(0, cutAt).trim()}${TITLE_ELLIPSIS}`;
+};
+
+export const truncateMetaDescription = (description: string, maxLength = DESCRIPTION_MAX_LENGTH) => {
+  const clean = description.trim().replace(/\s+/g, " ");
+  if (clean.length <= maxLength) return clean;
+  const sliced = clean.slice(0, maxLength - 1).trim();
+  const lastBoundary = sliced.lastIndexOf(" ");
+  const cutAt = lastBoundary > maxLength * 0.6 ? lastBoundary : sliced.length;
+  return `${sliced.slice(0, cutAt).replace(/[,;:\-–—]+$/, "").trim()}…`;
 };
 
 // Helper function to format page title

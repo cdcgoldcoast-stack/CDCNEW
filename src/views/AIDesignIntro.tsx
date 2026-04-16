@@ -38,7 +38,7 @@ const AIDesignIntro = () => {
         <div className="container-wide h-full flex flex-col lg:grid lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
           <div className="flex flex-col justify-center space-y-8">
             <div className="space-y-4">
-              <p className="text-xs tracking-[0.3em] uppercase text-primary-foreground/70">AI Design Tool</p>
+              <p className="text-xs tracking-[0.3em] uppercase text-primary-foreground/90">AI Design Tool</p>
               <h1 className="font-serif italic text-3xl sm:text-4xl md:text-5xl text-primary-foreground">
                 AI Renovation Visualiser Preview
               </h1>
@@ -48,17 +48,17 @@ const AIDesignIntro = () => {
               </p>
             </div>
 
-            <h2 className="text-sm tracking-[0.2em] uppercase text-primary-foreground/70">
+            <h2 className="text-sm tracking-[0.2em] uppercase text-primary-foreground/90">
               How your AI renovation preview works
             </h2>
             <ol className="grid gap-4 sm:grid-cols-3">
               {steps.map((step, index) => (
                 <li key={step.title} className="bg-primary-foreground/10 border border-primary-foreground/20 rounded-2xl p-4 list-none">
-                  <p className="text-xs uppercase tracking-[0.25em] text-primary-foreground/60 mb-2">
+                  <p className="text-xs uppercase tracking-[0.25em] text-primary-foreground/85 mb-2">
                     Step {index + 1}
                   </p>
                   <p className="text-sm font-medium text-primary-foreground">{step.title}</p>
-                  <p className="text-xs text-primary-foreground/70 mt-2">{step.description}</p>
+                  <p className="text-xs text-primary-foreground/90 mt-2">{step.description}</p>
                 </li>
               ))}
             </ol>
@@ -74,7 +74,7 @@ const AIDesignIntro = () => {
                   Continue to the generator
                 </Link>
               </Button>
-              <p className="text-xs text-primary-foreground/70">
+              <p className="text-xs text-primary-foreground/90">
                 Best results come from bright, clutter-free photos.
               </p>
             </div>

@@ -55,7 +55,7 @@ const WhyRenovate = () => {
               className="mb-10 md:mb-14"
             >
               <p className="text-white font-serif italic text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl leading-[1.2]">
-                "A renovation should improve your life, not take over life"
+                "A renovation should improve your life, not take over your life"
               </p>
             </motion.blockquote>
 

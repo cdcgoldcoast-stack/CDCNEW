@@ -111,7 +111,7 @@ const ProcessSection = () => {
           transition={{ duration: 0.6 }}
           className="mb-16 md:mb-20"
         >
-          <p className="text-primary/50 text-sm tracking-[0.2em] uppercase mb-4">
+          <p className="text-primary/80 text-sm tracking-[0.2em] uppercase mb-4">
             Our Gold Coast Renovation Process
           </p>
           <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-primary leading-tight">
@@ -133,7 +133,7 @@ const ProcessSection = () => {
               variants={stepVariants}
               className="group"
             >
-              <span className="block font-serif text-5xl text-primary/15 mb-4 group-hover:text-primary/30 transition-colors duration-300">
+              <span className="block font-serif text-5xl text-primary/35 mb-4 group-hover:text-primary/60 transition-colors duration-300">
                 {step.number}
               </span>
               <h3 className="font-serif text-xl md:text-2xl text-primary mb-3 leading-tight">

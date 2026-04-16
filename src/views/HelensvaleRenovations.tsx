@@ -45,7 +45,7 @@ export default function HelensvaleRenovations() {
       <main id="main-content">
       <SEO
         title="Helensvale Renovations | Kitchen, Bathroom & Home | CD Construct"
-        description="Renovation builders in Helensvale. Kitchen, bathroom and whole-home renovations for established family homes. QBCC licensed. Based in Broadbeach - your local Gold Coast builder."
+        description="Renovation builders in Helensvale. Kitchen, bathroom and whole-home renovations for established family homes. QBCC licensed. Your trusted Gold Coast renovation builder."
         url="/helensvale-renovations"
       />
 

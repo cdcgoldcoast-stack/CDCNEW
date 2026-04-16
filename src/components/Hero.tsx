@@ -17,29 +17,17 @@ const Hero = () => {
       <div className="min-h-screen flex flex-col pt-20 md:pt-0 md:grid md:grid-cols-2 md:h-screen md:items-center md:gap-12 lg:gap-20 md:max-w-7xl md:mx-auto md:px-12">
 
         {/* Image — stacked full-bleed on mobile, contained on desktop */}
-        <div className="h-[40vh] relative flex-shrink-0 md:order-2 md:h-auto md:flex md:items-center md:justify-center">
-          {/* Mobile image: fill mode, edge-to-edge */}
+        <div className="flex-shrink-0 md:order-2 md:flex md:items-center md:justify-center">
           <Image
             src={HERO_IMAGE}
             alt="Gold Coast kitchen renovation in Helensvale by Concept Design Construct"
-            fill
-            className="absolute inset-0 w-full h-full object-cover object-[70%_center] bg-muted md:hidden"
-            sizes="100vw"
-            priority
-            fetchPriority="high"
-            quality={60}
-          />
-          {/* Desktop image: contained, explicit dimensions */}
-          <Image
-            src={HERO_IMAGE}
-            alt="Gold Coast home renovation interior by Concept Design Construct"
-            className="hidden md:block w-full max-w-[600px] h-[65vh] max-h-[680px] object-cover object-[70%_center] bg-muted"
             width={1200}
             height={800}
-            sizes="(min-width: 768px) 50vw"
+            sizes="(min-width: 768px) 50vw, 100vw"
             priority
             fetchPriority="high"
             quality={60}
+            className="block w-full h-[40vh] md:h-[65vh] md:max-h-[680px] md:max-w-[600px] object-cover object-[70%_center] bg-muted"
           />
         </div>
 

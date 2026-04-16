@@ -10,7 +10,7 @@ interface PromoPopupProps {
   delay?: number; // in seconds
 }
 
-const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
+const PromoPopup = ({ delay = 12 }: PromoPopupProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -128,7 +128,7 @@ const PromoPopup = ({ delay = 7 }: PromoPopupProps) => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-6 left-4 md:left-6 right-4 md:right-auto z-50 w-auto md:w-[380px] max-w-[380px]">
+    <div className="fixed bottom-4 md:bottom-6 left-3 right-3 md:left-auto md:right-6 z-50 w-auto md:w-[340px] max-w-[420px] md:max-w-[340px]">
       <div className="bg-white rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.12)] overflow-hidden animate-in slide-in-from-bottom-4 duration-500 border border-neutral-100">
         {/* Close button */}
         <button

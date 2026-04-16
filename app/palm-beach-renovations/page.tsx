@@ -7,7 +7,7 @@ import { SITE_NAME } from "@/config/seo";
 
 const pageTitle = "Palm Beach Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
-  "Renovation builders in Palm Beach. Kitchen, bathroom and whole-home renovations for beachside homes. Family-focused designs. QBCC licensed. Based in Broadbeach.";
+  "Renovation builders in Palm Beach. Kitchen, bathroom and whole-home renovations for beachside homes. Family-focused designs. QBCC licensed. Trusted Gold Coast builders.";
 
 const serviceFaqs = [
   {
@@ -69,7 +69,7 @@ export default function Page() {
         <p className="font-semibold">Palm Beach Renovations by {SITE_NAME}</p>
         <p>
           Kitchen, bathroom and whole-home renovations in Palm Beach. Family-focused designs 
-          with durable finishes and outdoor living. Based in Broadbeach.
+          with durable finishes and outdoor living. Trusted Gold Coast builders.
         </p>
       </section>
       <PalmBeachRenovationsClient />

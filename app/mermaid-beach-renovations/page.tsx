@@ -7,7 +7,7 @@ import { SITE_NAME } from "@/config/seo";
 
 const pageTitle = "Mermaid Beach Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
-  "Renovation builders in Mermaid Beach. Kitchen, bathroom and whole-home renovations for beachside homes. QBCC licensed. Based in Broadbeach - your local Gold Coast builder.";
+  "Renovation builders in Mermaid Beach. Kitchen, bathroom and whole-home renovations for beachside homes. QBCC licensed. Your trusted Gold Coast renovation builder.";
 
 const serviceFaqs = [
   {
@@ -69,7 +69,7 @@ export default function Page() {
         <p className="font-semibold">Mermaid Beach Renovations by {SITE_NAME}</p>
         <p>
           Kitchen, bathroom and whole-home renovations in Mermaid Beach. Specialists in 
-          coastal homes with materials designed for beachside conditions. Based in Broadbeach.
+          coastal homes with materials designed for beachside conditions. Trusted Gold Coast builders.
         </p>
       </section>
       <MermaidBeachRenovationsClient />

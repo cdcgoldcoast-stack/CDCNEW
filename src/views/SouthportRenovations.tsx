@@ -45,7 +45,7 @@ export default function SouthportRenovations() {
       <main id="main-content">
       <SEO
         title="Southport Renovations | Kitchen, Bathroom & Home | CD Construct"
-        description="Renovation builders in Southport. Kitchen, bathroom and whole-home renovations for character homes and waterfront properties. QBCC licensed. Based in Broadbeach."
+        description="Renovation builders in Southport. Kitchen, bathroom and whole-home renovations for character homes and waterfront properties. QBCC licensed. Trusted Gold Coast builders."
         url="/southport-renovations"
       />
 
