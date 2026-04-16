@@ -101,6 +101,15 @@ const Testimonials = () => {
         </div>
       </section>
 
+      {/* Stats Line */}
+      <section className="pb-8 md:pb-12 bg-background relative z-10">
+        <div className="container-wide max-w-3xl text-center">
+          <p className="text-foreground/70 text-base md:text-lg leading-relaxed">
+            Rated 4.9 out of 5 stars from 50+ verified Google reviews. Our clients consistently highlight our communication, craftsmanship, and transparent pricing.
+          </p>
+        </div>
+      </section>
+
       {/* Reviews Grid */}
       <section className="py-16 md:py-24 bg-background relative z-10">
         <div className="container-wide">
@@ -153,6 +162,25 @@ const Testimonials = () => {
               4.9 stars from 50 reviews on Google
             </p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* FAQs */}
+      <section className="py-16 md:py-24 bg-background relative z-10">
+        <div className="container-wide max-w-3xl">
+          <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-12 text-center">
+            Client Review FAQs
+          </h2>
+          <div className="space-y-6">
+            <div className="border-b border-foreground/10 pb-6">
+              <h3 className="font-serif italic text-lg text-primary mb-2">How do clients rate working with CD Construct?</h3>
+              <p className="text-foreground/70">We maintain a 4.9-star rating on Google from over 50 verified reviews. Clients most frequently mention our communication throughout the build, quality of finishes, and on-time delivery.</p>
+            </div>
+            <div className="border-b border-foreground/10 pb-6">
+              <h3 className="font-serif italic text-lg text-primary mb-2">Can I read reviews from my area?</h3>
+              <p className="text-foreground/70">We've completed projects across the Gold Coast — from Broadbeach apartments to Helensvale family homes. Get in touch and we'll connect you with past clients in your suburb.</p>
+            </div>
+          </div>
         </div>
       </section>
 

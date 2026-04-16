@@ -7,7 +7,7 @@ import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
 const pageTitle = "Nerang Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
-  "Expert renovation builders in Nerang, Gold Coast. Kitchen, bathroom and whole-home renovations for established family homes near the hinterland. QBCC licensed local builders.";
+  "Hinterland property renovations in Nerang. Kitchen, bathroom and whole-home upgrades for large-block family homes. Indoor-outdoor living specialists. QBCC licensed.";
 
 const serviceFaqs = [
   {

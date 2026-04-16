@@ -219,6 +219,27 @@ const GetQuote = () => {
                 Get Your Free Renovation Plan
               </motion.h2>
 
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.12 }}
+                className="flex items-center justify-center gap-4 sm:gap-6 mb-8 flex-wrap"
+              >
+                {[
+                  "QBCC Licensed",
+                  "4.9 Google Rating",
+                  "100+ Projects",
+                  "Fixed-Price Quotes",
+                ].map((item, i) => (
+                  <span
+                    key={i}
+                    className="text-xs tracking-wide text-foreground/50 uppercase border border-border rounded-full px-3 py-1"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </motion.div>
+
               <form onSubmit={handleSubmit}>
                 {/* Honeypot */}
                 <div className="hidden" aria-hidden="true">
@@ -414,6 +435,35 @@ const GetQuote = () => {
             From that first conversation, you can decide at your own pace whether to continue into
             the design and planning stages with us.
           </p>
+        </section>
+
+        <section className="max-w-3xl mx-auto px-6 pb-16 md:pb-24">
+          <h2 className="font-serif italic text-2xl md:text-3xl text-primary mb-6">
+            Frequently Asked Questions
+          </h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-foreground font-medium text-base mb-1">
+                Is the consultation really free?
+              </h3>
+              <p className="text-foreground/70 text-sm md:text-base leading-relaxed">
+                Yes. We visit your home, discuss your goals, inspect every surface, and provide
+                a detailed quote — all at no cost with zero obligation.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-foreground font-medium text-base mb-1">
+                How quickly will I hear back?
+              </h3>
+              <p className="text-foreground/70 text-sm md:text-base leading-relaxed">
+                We typically respond within 24 hours on business days. For urgent enquiries,
+                call us directly on{" "}
+                <a href="tel:0413468928" className="underline underline-offset-2 hover:text-primary transition-colors">
+                  0413 468 928
+                </a>.
+              </p>
+            </div>
+          </div>
         </section>
       </main>
 

@@ -48,6 +48,19 @@ const AIDesignIntro = () => {
               </p>
             </div>
 
+            <div className="bg-primary-foreground/5 border border-primary-foreground/15 rounded-2xl p-5 space-y-3">
+              <p className="text-primary-foreground/80 text-sm md:text-base leading-relaxed">
+                Our AI renovation visualiser helps you explore design possibilities for your Gold Coast home.
+                Upload a photo of your current kitchen, bathroom, or living space and see what a transformation
+                could look like — in seconds. This tool generates concept-level visualisations to help you
+                communicate your vision with our team.
+              </p>
+              <p className="text-primary-foreground/70 text-sm leading-relaxed">
+                It's not a construction plan or final design — it's a starting point for the conversation.
+                Results work best with well-lit, clear photos taken straight-on.
+              </p>
+            </div>
+
             <h2 className="text-sm tracking-[0.2em] uppercase text-primary-foreground/90">
               How your AI renovation preview works
             </h2>

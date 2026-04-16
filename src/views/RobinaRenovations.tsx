@@ -171,7 +171,7 @@ export default function RobinaRenovations() {
                   Convert closed-off 90s kitchens into open-plan heart-of-the-home spaces 
                   with islands, breakfast bars, and modern appliances.
                 </p>
-                <Link to="/kitchen-renovations-gold-coast" className="text-label text-primary hover:underline">
+                <Link to="/kitchen-renovations-robina" className="text-label text-primary hover:underline">
                   Learn more →
                 </Link>
               </div>
@@ -195,7 +195,7 @@ export default function RobinaRenovations() {
                   Replace dated 90s bathrooms with modern, spa-like spaces featuring 
                   walk-in showers, modern vanities, and quality finishes.
                 </p>
-                <Link to="/bathroom-renovations-gold-coast" className="text-label text-primary hover:underline">
+                <Link to="/bathroom-renovations-robina" className="text-label text-primary hover:underline">
                   Learn more →
                 </Link>
               </div>

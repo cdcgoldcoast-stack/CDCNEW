@@ -7,7 +7,7 @@ import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
 const pageTitle = "Upper Coomera Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
-  "Family home renovations in Upper Coomera. Kitchen, bathroom and whole-home transformations for growing families. Extending and upgrading homes across Upper Coomera estates on the Gold Coast.";
+  "Home extensions and renovations for growing families in Upper Coomera. Kitchen, bathroom and living space expansions. Stay in the area you love. QBCC licensed.";
 
 const serviceFaqs = [
   {

@@ -171,7 +171,7 @@ export default function PalmBeachRenovations() {
                   Kitchens designed for family life - breakfast bars, ample storage, 
                   durable surfaces, and layouts that keep the cook connected to the family.
                 </p>
-                <Link to="/kitchen-renovations-gold-coast" className="text-label text-primary hover:underline">
+                <Link to="/kitchen-renovations-palm-beach" className="text-label text-primary hover:underline">
                   Learn more →
                 </Link>
               </div>
@@ -192,10 +192,10 @@ export default function PalmBeachRenovations() {
               <div className="p-8">
                 <h3 className="font-serif italic text-xl text-primary mb-3">Family Bathrooms</h3>
                 <p className="text-foreground/70 mb-4">
-                  Practical bathrooms that handle busy mornings - double vanities, 
+                  Practical bathrooms that handle busy mornings - double vanities,
                   bath/shower combos, and storage that keeps clutter at bay.
                 </p>
-                <Link to="/bathroom-renovations-gold-coast" className="text-label text-primary hover:underline">
+                <Link to="/bathroom-renovations-palm-beach" className="text-label text-primary hover:underline">
                   Learn more →
                 </Link>
               </div>

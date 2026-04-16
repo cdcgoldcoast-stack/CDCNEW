@@ -88,6 +88,13 @@ const Gallery = ({ initialItems }: GalleryProps = {}) => {
             </p>
           </div>
 
+          {/* Intro paragraph for SEO */}
+          <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
+            <p className="text-foreground/60 text-base md:text-lg leading-relaxed">
+              Browse our portfolio of completed renovation projects across the Gold Coast. From kitchen and bathroom transformations to whole-home renovations, each project reflects our commitment to quality craftsmanship, premium materials, and design-led planning.
+            </p>
+          </div>
+
           {/* Simple Grid */}
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6 max-w-[1600px] mx-auto animate-pulse">
@@ -141,10 +148,17 @@ const Gallery = ({ initialItems }: GalleryProps = {}) => {
             </>
           )}
 
+          {/* Stats and context section for SEO */}
+          <div className="max-w-3xl mx-auto text-center mt-16 md:mt-24 mb-12 md:mb-16">
+            <p className="text-foreground/60 text-base md:text-lg leading-relaxed">
+              With over 100 completed projects across 20+ Gold Coast suburbs — from Broadbeach apartments to Helensvale family homes — our gallery showcases the range of transformations we deliver. Every project is completed by our in-house team with QBCC licensed trades and premium materials.
+            </p>
+          </div>
+
           <BottomInvitation
             title="Like these Gold Coast renovations?"
             description="Let's talk about bringing your renovation vision to life."
-            className="mt-16 md:mt-24 mb-0"
+            className="mt-0 mb-0"
           />
         </div>
       </main>

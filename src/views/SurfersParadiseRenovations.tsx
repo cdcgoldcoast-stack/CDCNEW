@@ -176,7 +176,7 @@ export default function SurfersParadiseRenovations() {
                   and clever storage solutions that transform compact Surfers Paradise kitchens into
                   stunning entertaining spaces.
                 </p>
-                <Link to="/kitchen-renovations-gold-coast" className="text-label text-primary hover:underline">
+                <Link to="/kitchen-renovations-surfers-paradise" className="text-label text-primary hover:underline">
                   Learn more →
                 </Link>
               </div>
@@ -201,7 +201,7 @@ export default function SurfersParadiseRenovations() {
                   We create spa-like retreats in Surfers Paradise apartments that rival the
                   best hotel bathrooms.
                 </p>
-                <Link to="/bathroom-renovations-gold-coast" className="text-label text-primary hover:underline">
+                <Link to="/bathroom-renovations-surfers-paradise" className="text-label text-primary hover:underline">
                   Learn more →
                 </Link>
               </div>

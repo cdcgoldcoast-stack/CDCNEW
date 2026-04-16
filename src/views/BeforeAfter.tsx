@@ -158,6 +158,29 @@ const BeforeAfter = () => {
         </div>
       </section>
 
+      {/* FAQs */}
+      <section className="py-16 md:py-24 bg-cream">
+        <div className="container-wide max-w-3xl">
+          <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-12 text-center">
+            Before & After Renovation FAQs
+          </h2>
+          <div className="space-y-6">
+            <div className="border-b border-foreground/10 pb-6">
+              <h3 className="font-serif italic text-lg text-primary mb-2">How long does a typical renovation transformation take?</h3>
+              <p className="text-foreground/70">Timelines vary by scope. A kitchen renovation typically takes around 2 weeks, a bathroom approximately 4 weeks, and a whole-home transformation 4–6 months. We lock in your timeline before work begins.</p>
+            </div>
+            <div className="border-b border-foreground/10 pb-6">
+              <h3 className="font-serif italic text-lg text-primary mb-2">Can I see renovation results for my suburb?</h3>
+              <p className="text-foreground/70">We've completed projects across 20+ Gold Coast suburbs — from Broadbeach and Southport to Helensvale and Hope Island. Contact us and we can share examples relevant to your area and property type.</p>
+            </div>
+            <div className="border-b border-foreground/10 pb-6">
+              <h3 className="font-serif italic text-lg text-primary mb-2">What's included in the free consultation?</h3>
+              <p className="text-foreground/70">Every consultation includes a full on-site inspection, discussion of your goals and budget, and a detailed fixed-price quote. There's no obligation and no hidden fees.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <div className="relative z-10">
         <BottomInvitation
           title="Imagine Your Home Transformed"

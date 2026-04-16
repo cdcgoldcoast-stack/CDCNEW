@@ -345,7 +345,8 @@ export default function GoldCoastRenovationsLP() {
                     sizes="(min-width: 1024px) 55vw, 100vw"
                     loading="eager"
                     priority
-                    quality={62}
+                    quality={50}
+                    useSupabaseTransform
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -432,7 +433,8 @@ export default function GoldCoastRenovationsLP() {
                       height={450}
                       sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                       loading="lazy"
-                      quality={60}
+                      quality={45}
+                      useSupabaseTransform
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -475,7 +477,8 @@ export default function GoldCoastRenovationsLP() {
                     height={300}
                     sizes="(min-width: 768px) 33vw, 33vw"
                     loading="lazy"
-                    quality={55}
+                    quality={40}
+                    useSupabaseTransform
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -525,7 +528,8 @@ export default function GoldCoastRenovationsLP() {
                     height={400}
                     sizes="(min-width: 768px) 25vw, 50vw"
                     loading="lazy"
-                    quality={55}
+                    quality={40}
+                    useSupabaseTransform
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   />
                 </div>
@@ -546,7 +550,8 @@ export default function GoldCoastRenovationsLP() {
                     height={525}
                     sizes="(min-width: 768px) 50vw, 100vw"
                     loading="lazy"
-                    quality={60}
+                    quality={40}
+                    useSupabaseTransform
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                   <span className="absolute top-4 left-4 bg-background/90 text-xs uppercase tracking-wider text-foreground px-3 py-1.5">
@@ -561,7 +566,8 @@ export default function GoldCoastRenovationsLP() {
                     height={525}
                     sizes="(min-width: 768px) 50vw, 100vw"
                     loading="lazy"
-                    quality={60}
+                    quality={40}
+                    useSupabaseTransform
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                   <span className="absolute top-4 left-4 bg-primary text-primary-foreground text-xs uppercase tracking-wider px-3 py-1.5">

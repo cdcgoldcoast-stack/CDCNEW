@@ -36,7 +36,6 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-helensvale",
-  noIndex: true,
   keywords: [
     "bathroom renovation Helensvale",
     "Helensvale bathroom renovation",

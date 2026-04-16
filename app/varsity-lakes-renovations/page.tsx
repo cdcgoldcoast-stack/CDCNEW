@@ -7,7 +7,7 @@ import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
 const pageTitle = "Varsity Lakes Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
-  "Renovation builders in Varsity Lakes, Gold Coast. Kitchen, bathroom and whole-home upgrades for modern homes. Premium finishes and open-plan transformations near Bond University.";
+  "Transform 2000s homes in Varsity Lakes with contemporary open-plan designs. Kitchen, bathroom and whole-home renovations with premium finishes. QBCC licensed builders.";
 
 const serviceFaqs = [
   {

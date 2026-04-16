@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { ProjectGalleryClient } from "@/components/route-clients";
 import { fetchGalleryItems } from "@/data/gallery";
-import { generateBreadcrumbSchema } from "@/lib/structured-data";
+import {
+  generateBreadcrumbSchema,
+  generateItemListSchema,
+} from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema, absoluteUrl } from "@/lib/seo";
 
 const pageTitle = "Gold Coast Renovation Gallery | Kitchen & Bathroom";
@@ -39,6 +42,16 @@ export default async function Page() {
       { "@type": "Thing", name: "Gold Coast whole-home renovations" },
     ],
   };
+  const itemListSchema = generateItemListSchema(
+    galleryItems
+      .filter((item) => item.image_url)
+      .map((item, index) => ({
+        name: item.alt_text || `Renovation project ${index + 1}`,
+        url: `/renovation-gallery#${item.id}`,
+        image: item.image_url!,
+        position: index + 1,
+      }))
+  );
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
     { name: "Gold Coast Renovations Gallery", url: "/renovation-gallery" },
@@ -46,7 +59,7 @@ export default async function Page() {
 
   return (
     <>
-      <JsonLd data={[webPageSchema, collectionSchema, breadcrumbSchema]} />
+      <JsonLd data={[webPageSchema, collectionSchema, itemListSchema, breadcrumbSchema]} />
       <section className="sr-only" aria-label="Gallery route summary for search crawlers">
         <p>Gold Coast Renovation Inspiration Gallery.</p>
         <p>

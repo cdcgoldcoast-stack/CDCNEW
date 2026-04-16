@@ -193,15 +193,18 @@ const Footer = () => {
           <div>
             <p className="text-label text-foreground/80 mb-6">Accreditation</p>
             <div className="flex flex-col gap-5">
-              <ResponsiveImage
-                src={qbccLogo}
-                alt="QBCC Licensed"
-                width={1080}
-                height={1080}
-                sizes="56px"
-                loading="lazy"
-                className="h-14 w-auto"
-              />
+              <div>
+                <ResponsiveImage
+                  src={qbccLogo}
+                  alt="QBCC Licensed"
+                  width={1080}
+                  height={1080}
+                  sizes="56px"
+                  loading="lazy"
+                  className="h-14 w-auto"
+                />
+                <p className="text-xs text-foreground/60 mt-1">QBCC Lic. 15155156</p>
+              </div>
               <ResponsiveImage
                 src={masterBuildersLogo}
                 alt="Master Builders"

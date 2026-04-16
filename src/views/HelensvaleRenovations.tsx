@@ -172,7 +172,7 @@ export default function HelensvaleRenovations() {
                   Practical, beautiful kitchens built for busy family life - large islands,
                   ample storage, durable surfaces, and open-plan connections to living areas.
                 </p>
-                <Link to="/kitchen-renovations-gold-coast" className="text-label text-primary hover:underline">
+                <Link to="/kitchen-renovations-helensvale" className="text-label text-primary hover:underline">
                   Learn more →
                 </Link>
               </div>
@@ -196,7 +196,7 @@ export default function HelensvaleRenovations() {
                   Replace tired 90s bathrooms with fresh, modern designs featuring
                   walk-in showers, floating vanities, and quality tiles that last.
                 </p>
-                <Link to="/bathroom-renovations-gold-coast" className="text-label text-primary hover:underline">
+                <Link to="/bathroom-renovations-helensvale" className="text-label text-primary hover:underline">
                   Learn more →
                 </Link>
               </div>

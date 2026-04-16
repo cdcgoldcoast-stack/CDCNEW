@@ -7,7 +7,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: "Burleigh Heads Renovations | Kitchen, Bathroom & Home",
   description:
-    "Renovation builders in Burleigh Heads. Kitchen, bathroom & whole-home renovations. 25+ years experience. QBCC licensed. Local Broadbeach team. Free consultation.",
+    "Coastal home renovations in Burleigh Heads capturing beachside character. Kitchen, bathroom and whole-home transformations. 25+ years on the Gold Coast. QBCC licensed.",
   path: "/burleigh-heads-renovations",
 });
 

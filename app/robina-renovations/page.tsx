@@ -7,7 +7,7 @@ import { SITE_NAME } from "@/config/seo";
 
 const pageTitle = "Robina Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
-  "Renovation builders in Robina. Kitchen, bathroom and whole-home renovations for modern family homes. QBCC licensed. Your trusted Gold Coast renovation builder.";
+  "Modernise 1990s and 2000s homes in Robina with open-plan kitchen, bathroom and whole-home renovations. QBCC licensed builders with fixed-price quotes. Free consultation.";
 
 const serviceFaqs = [
   {

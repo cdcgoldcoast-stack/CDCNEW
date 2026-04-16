@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { TestimonialsClient } from "@/components/route-clients";
-import { generateBreadcrumbSchema } from "@/lib/structured-data";
+import {
+  generateBreadcrumbSchema,
+  generateLocalBusinessSchema,
+} from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
 
 const pageTitle = "Client Testimonials | Gold Coast Renovations";
@@ -27,6 +30,7 @@ export default function Page() {
     name: pageTitle,
     description: pageDescription,
   });
+  const localBusinessSchema = generateLocalBusinessSchema();
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
     { name: "Testimonials", url: "/testimonials" },
@@ -34,7 +38,7 @@ export default function Page() {
 
   return (
     <>
-      <JsonLd data={[webPageSchema, breadcrumbSchema]} />
+      <JsonLd data={[webPageSchema, localBusinessSchema, breadcrumbSchema]} />
       <TestimonialsClient />
     </>
   );

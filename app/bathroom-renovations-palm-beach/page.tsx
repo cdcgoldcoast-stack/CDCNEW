@@ -36,7 +36,6 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-palm-beach",
-  noIndex: true,
   keywords: [
     "bathroom renovation Palm Beach",
     "Palm Beach bathroom renovation",

@@ -65,6 +65,9 @@ const Work = ({ initialProjects }: WorkProps = {}) => {
           <p className="text-foreground/50 text-xs md:text-base">
             Each project tells a story of improved daily living across the Gold Coast.
           </p>
+          <p className="text-foreground/60 text-sm md:text-lg leading-relaxed mt-4 md:mt-6">
+            Since 2000, we've transformed over 100 Gold Coast homes — from single-room refreshes to complete whole-home renovations. Each project below was delivered by our in-house team with transparent pricing, premium materials, and a written workmanship guarantee.
+          </p>
         </div>
 
         {loading ? (
@@ -121,6 +124,12 @@ const Work = ({ initialProjects }: WorkProps = {}) => {
             ))}
           </div>
         )}
+
+        <div className="text-center max-w-2xl mx-auto mt-12 md:mt-20 mb-8 md:mb-12 px-2">
+          <p className="text-foreground/60 text-sm md:text-lg leading-relaxed">
+            Every project begins with a free on-site consultation where we assess your space, discuss your goals, and provide a fixed-price quote. Browse our completed work above and get in touch when you're ready to start planning yours.
+          </p>
+        </div>
 
         <BottomInvitation
           title="Plan Your Next Gold Coast Renovation"

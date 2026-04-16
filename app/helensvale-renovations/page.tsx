@@ -7,7 +7,7 @@ import { SITE_NAME } from "@/config/seo";
 
 const pageTitle = "Helensvale Renovations | Kitchen, Bathroom & Home";
 const pageDescription =
-  "Renovation builders in Helensvale. Kitchen, bathroom and whole-home renovations for established family homes. QBCC licensed. Your trusted Gold Coast renovation builder.";
+  "Open-plan conversions for established Helensvale homes. Kitchen, bathroom and whole-home renovations for 1990s-2000s family properties. QBCC licensed Gold Coast builders.";
 
 const serviceFaqs = [
   {

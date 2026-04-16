@@ -82,7 +82,7 @@ async function readBlogPostFromFile(filePath: string): Promise<BlogPost | null> 
   const slug = path.basename(filePath, ".mdx");
   const stats = calculateReadingTime(body);
   const updatedAt = asString(data.updatedAt);
-  const author = asString(data.author) || undefined;
+  const author = asString(data.author) || "Mark Mayne";
   const image = asString(data.image) || undefined;
 
   return {

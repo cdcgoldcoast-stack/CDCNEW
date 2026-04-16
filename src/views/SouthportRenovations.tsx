@@ -171,7 +171,7 @@ export default function SouthportRenovations() {
                   Modern kitchens designed to complement character homes - shaker cabinets, 
                   traditional profiles, and contemporary functionality.
                 </p>
-                <Link to="/kitchen-renovations-gold-coast" className="text-label text-primary hover:underline">
+                <Link to="/kitchen-renovations-southport" className="text-label text-primary hover:underline">
                   Learn more →
                 </Link>
               </div>
@@ -195,7 +195,7 @@ export default function SouthportRenovations() {
                   Bathrooms that blend traditional style with modern luxury - clawfoot tubs, 
                   subway tiles, and period-appropriate fixtures.
                 </p>
-                <Link to="/bathroom-renovations-gold-coast" className="text-label text-primary hover:underline">
+                <Link to="/bathroom-renovations-southport" className="text-label text-primary hover:underline">
                   Learn more →
                 </Link>
               </div>

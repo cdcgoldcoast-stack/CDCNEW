@@ -270,6 +270,7 @@ export const generateLocalBusinessSchema = () => ({
     "@type": "EducationalOccupationalCredential",
     credentialCategory: "license",
     name: "QBCC Licensed Builder",
+    identifier: "15155156",
     recognizedBy: {
       "@type": "Organization",
       name: "Queensland Building and Construction Commission",

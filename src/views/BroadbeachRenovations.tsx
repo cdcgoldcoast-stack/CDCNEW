@@ -174,7 +174,7 @@ export default function BroadbeachRenovations() {
                   Apartment kitchens designed for maximum functionality. Island benches, 
                   quality appliances, and smart storage that make the most of every square metre.
                 </p>
-                <Link to="/kitchen-renovations-gold-coast" className="text-label text-primary hover:underline">
+                <Link to="/kitchen-renovations-broadbeach" className="text-label text-primary hover:underline">
                   Learn more →
                 </Link>
               </div>
@@ -198,7 +198,7 @@ export default function BroadbeachRenovations() {
                   Spa-like bathrooms with premium fixtures and waterproofing. Transform your 
                   ensuite or main bathroom into a luxury retreat.
                 </p>
-                <Link to="/bathroom-renovations-gold-coast" className="text-label text-primary hover:underline">
+                <Link to="/bathroom-renovations-broadbeach" className="text-label text-primary hover:underline">
                   Learn more →
                 </Link>
               </div>

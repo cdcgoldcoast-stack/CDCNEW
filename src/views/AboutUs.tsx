@@ -66,7 +66,7 @@ const AboutUs = () => {
                 A Strong Team That Takes Pride In Their Work
               </h1>
               <p className="text-foreground/80 text-lg leading-relaxed mb-6">
-                We started Concept Design Construct with the vision of building a strong team where everyone works well together and takes pride in their work.
+                Led by Mark Mayne, Director, we started Concept Design Construct with the vision of building a strong team where everyone works well together and takes pride in their work.
               </p>
               <p className="text-foreground/70 leading-relaxed">
                 Based on the Gold Coast, we specialise in full property renovations and extensions including bathroom renovations, as well as kitchen and laundry renovations. We work with trusted trades and a clear process to deliver high-quality results and a smooth experience from start to finish.
@@ -245,6 +245,7 @@ const AboutUs = () => {
             <div className="text-center">
               <span className="text-4xl md:text-5xl font-serif text-primary block mb-2">QBCC</span>
               <p className="text-sm text-foreground/60">Licensed Builders</p>
+              <p className="text-xs text-foreground/50 mt-1">Licence: 15155156</p>
             </div>
           </div>
         </div>
