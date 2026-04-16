@@ -234,20 +234,20 @@ export default function HelensvaleRenovations() {
         <div className="container-wide">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">25+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Helensvale Projects</p>
+              <div className="text-4xl font-serif text-primary mb-2">90s-00s</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">90s-2000s Home Experts</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Open</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Open-Plan Conversions</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">Family</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Home Specialists</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Family Layout Design</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">25min</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">From Broadbeach</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -274,11 +274,10 @@ export default function HelensvaleRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Refresh Your Helensvale Home?
+            Turn Your Closed-Plan Home Into an Open, Modern Space
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Book a free consultation to discuss your Helensvale renovation. We&apos;ll show you
-            how to bring your established family home into the modern era with smart design.
+            Most Helensvale homes were built with separate rooms and closed-off kitchens that don&apos;t suit how families live today. Book a free consultation and we&apos;ll show you how to open it all up.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

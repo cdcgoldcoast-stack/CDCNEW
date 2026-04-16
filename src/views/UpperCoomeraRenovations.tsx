@@ -253,20 +253,20 @@ export default function UpperCoomeraRenovations() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">Local</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Gold Coast Based</p>
+              <div className="text-4xl font-serif text-primary mb-2">Extensions</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Home Extension Experts</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Family</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Growing Family Designs</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Estates</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Estate-Friendly Builds</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed &amp; Insured</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">25+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Years Experience</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">4.9★</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Client Rating</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -293,12 +293,12 @@ export default function UpperCoomeraRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Transform Your Upper Coomera Home?
+            Stay in the Suburb You Love
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Book a free consultation to talk about your family&apos;s renovation goals.
-            We&apos;ll visit your Upper Coomera home, understand how your family uses the
-            space, and design a renovation that works for years to come.
+            Extending your Upper Coomera home is almost always smarter than selling and
+            starting over. Book a free consultation and we&apos;ll show you how to get the
+            space your family needs without leaving the community you&apos;ve built.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

@@ -251,20 +251,20 @@ export default function VarsityLakesRenovations() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">25+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Years Experience</p>
+              <div className="text-4xl font-serif text-primary mb-2">2000s</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">2000s Home Upgrades</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Modern</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Contemporary Designs</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Open</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Open-Plan Specialists</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed & Insured</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">Fixed</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Price Contracts</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">Local</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Gold Coast Based</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -291,12 +291,12 @@ export default function VarsityLakesRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Upgrade Your Varsity Lakes Home?
+            Well Built, Ready for a Design Refresh
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Your Varsity Lakes home has great potential. Let&apos;s unlock it together with a
-            free consultation where we&apos;ll explore upgrade options, talk finishes, and
-            provide a clear quote.
+            Your Varsity Lakes home has solid bones - it just needs a design upgrade to match
+            how you live today. Book a free consultation and we&apos;ll show you how to swap
+            builder-grade finishes for something that feels custom.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

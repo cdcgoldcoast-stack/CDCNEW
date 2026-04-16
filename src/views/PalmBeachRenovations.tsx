@@ -233,21 +233,20 @@ export default function PalmBeachRenovations() {
         <div className="container-wide">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">20+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Palm Beach Projects</p>
+              <div className="text-4xl font-serif text-primary mb-2">Family-First</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Designs</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">👨‍👩‍👧‍👦</div>
-              <div className="text-4xl font-serif text-primary mb-2">Family</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Focused</p>
+              <div className="text-4xl font-serif text-primary mb-2">Durable</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Coastal Finishes</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Kid-Friendly</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Layouts</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">15min</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">From Broadbeach</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -274,11 +273,12 @@ export default function PalmBeachRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Renovate Your Palm Beach Home?
+            Make Your Beach Home Work for the Whole Family
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Book a free consultation to discuss your Palm Beach renovation. 
-            We&apos;ll create a family-friendly design that suits your lifestyle.
+            Growing families need spaces that keep up — durable finishes the kids
+            won&apos;t destroy, open layouts for supervision, and outdoor flow for sandy feet.
+            Book a free consultation and we&apos;ll design a Palm Beach home your family won&apos;t outgrow.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

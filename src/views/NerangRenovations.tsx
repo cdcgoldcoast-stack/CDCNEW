@@ -250,20 +250,20 @@ export default function NerangRenovations() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">25+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Years Experience</p>
+              <div className="text-4xl font-serif text-primary mb-2">Large</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Large Block Specialists</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Hinterland</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Hinterland Properties</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Flow</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Indoor-Outdoor Experts</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed & Insured</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">Fixed</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Price Contracts</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">Local</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Gold Coast Based</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -290,11 +290,12 @@ export default function NerangRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Renovate Your Nerang Home?
+            Make the Most of Your Block
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Book a free consultation and let&apos;s discuss how to transform your Nerang property.
-            We&apos;ll visit your home, understand your vision, and provide a detailed plan and quote.
+            Nerang&apos;s generous blocks give you room most Gold Coast homeowners can only
+            dream of. Book a free consultation and we&apos;ll help you use that space advantage
+            to create the indoor-outdoor lifestyle your property was made for.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

@@ -233,21 +233,20 @@ export default function SouthportRenovations() {
         <div className="container-wide">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">25+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Southport Projects</p>
+              <div className="text-4xl font-serif text-primary mb-2">Character Home</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Experts</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">🏛️</div>
-              <div className="text-4xl font-serif text-primary mb-2">Heritage</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Home Specialists</p>
+              <div className="text-4xl font-serif text-primary mb-2">Queenslander</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Restoration</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Broadwater</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Properties</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">20min</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">From Broadbeach</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -274,11 +273,12 @@ export default function SouthportRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Renovate Your Southport Home?
+            Preserve the Character, Add the Comfort
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Book a free consultation to discuss your Southport renovation. 
-            We&apos;ll respect your home&apos;s character while creating the modern space you need.
+            Southport&apos;s Queenslanders and character homes deserve a renovation that
+            honours their heritage while giving you a modern kitchen, bathroom, and
+            living spaces. Book a free consultation and we&apos;ll show you how to get both.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

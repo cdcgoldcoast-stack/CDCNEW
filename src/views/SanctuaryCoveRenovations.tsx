@@ -233,20 +233,20 @@ export default function SanctuaryCoveRenovations() {
         <div className="container-wide">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">10+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Sanctuary Cove Projects</p>
+              <div className="text-4xl font-serif text-primary mb-2">Prestige</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Prestige Home Specialists</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">Bespoke</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Design Approach</p>
+              <div className="text-4xl font-serif text-primary mb-2">Marina</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Marina-Front Expertise</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Resort</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Resort-Style Finishes</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">Estate</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Guideline Compliant</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -273,11 +273,10 @@ export default function SanctuaryCoveRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Refine Your Sanctuary Cove Home?
+            A Home That Matches the Sanctuary Cove Lifestyle
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Book a private consultation to discuss your Sanctuary Cove renovation. We&apos;ll
-            create a bespoke plan that elevates your home to match this prestigious address.
+            Marina views, resort surrounds, and a home that should feel like it belongs here - that&apos;s what we deliver. Book a private consultation and let&apos;s create something worthy of Sanctuary Cove.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

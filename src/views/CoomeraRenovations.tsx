@@ -252,20 +252,20 @@ export default function CoomeraRenovations() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">Local</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Gold Coast Based</p>
+              <div className="text-4xl font-serif text-primary mb-2">Builder</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Grade Upgrades</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">New Estate</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Specialists</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Premium</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Finish Experts</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed &amp; Insured</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">25+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Years Experience</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">4.9★</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Client Rating</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -292,12 +292,12 @@ export default function CoomeraRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Upgrade Your Coomera Home?
+            Ready to Make Your Coomera Home Finally Feel Yours?
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Book a free consultation to discuss how we can transform your builder-grade
-            Coomera home. We&apos;ll visit your property, discuss your priorities, and show
-            you what&apos;s possible within your budget.
+            Every home on your street has the same builder-standard kitchen and bathrooms.
+            Let&apos;s replace the cookie-cutter finishes with something that actually
+            reflects your family&apos;s style.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

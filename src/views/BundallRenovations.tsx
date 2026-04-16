@@ -252,20 +252,20 @@ export default function BundallRenovations() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">Local</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Gold Coast Based</p>
+              <div className="text-4xl font-serif text-primary mb-2">Waterfront</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Specialists</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Flood-Smart</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Design</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Canal-Front</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Experience</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed &amp; Insured</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">25+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Years Experience</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">4.9★</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Client Rating</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -292,12 +292,12 @@ export default function BundallRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Modernise Your Bundall Home?
+            Ready to Match Your Home to Bundall&apos;s Waterfront Value?
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Book a free consultation to discuss your Bundall renovation. We&apos;ll visit your
-            home, assess its condition, and create a plan that respects the existing structure
-            while delivering the modern spaces your family deserves.
+            Your Bundall address is already one of the Gold Coast&apos;s best - your interiors
+            should reflect that. Let&apos;s bring your established home up to the standard its
+            riverside position deserves.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

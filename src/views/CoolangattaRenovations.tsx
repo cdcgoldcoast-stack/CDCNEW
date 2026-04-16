@@ -252,20 +252,20 @@ export default function CoolangattaRenovations() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">25+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Years Experience</p>
+              <div className="text-4xl font-serif text-primary mb-2">Southern</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Southern GC Experts</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed & Insured</p>
+              <div className="text-4xl font-serif text-primary mb-2">Salt-Safe</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Salt-Resistant Materials</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">Coastal</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Material Experts</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Coastal Home Design</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">Fixed</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Price Contracts</p>
+              <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -292,11 +292,12 @@ export default function CoolangattaRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Renovate Your Coolangatta Property?
+            Built to Handle the Toughest Coastal Conditions
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Whether it&apos;s a beachfront apartment or a classic Coolangatta home, we&apos;ll
-            help you create something stunning. Book a free on-site consultation to get started.
+            Coolangatta cops more salt air than anywhere else on the Gold Coast, and your
+            renovation needs to be built for it. Book a free consultation and we&apos;ll
+            specify materials that look stunning and last in this environment.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

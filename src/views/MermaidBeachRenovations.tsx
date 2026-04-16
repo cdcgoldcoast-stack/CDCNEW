@@ -232,21 +232,20 @@ export default function MermaidBeachRenovations() {
         <div className="container-wide">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">15+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Mermaid Beach Projects</p>
+              <div className="text-4xl font-serif text-primary mb-2">Salt-Air</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Durable</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">🏖️</div>
               <div className="text-4xl font-serif text-primary mb-2">Coastal</div>
               <p className="text-sm uppercase tracking-wider text-foreground/60">Specialists</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed</p>
+              <div className="text-4xl font-serif text-primary mb-2">Indoor-Outdoor</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Designs</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">10min</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">From Broadbeach</p>
+              <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -273,11 +272,12 @@ export default function MermaidBeachRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Renovate Your Mermaid Beach Home?
+            Protect and Enhance Your Beachside Home
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Book a free consultation to discuss your Mermaid Beach renovation. 
-            We&apos;ll assess your home and provide a detailed quote.
+            Salt air and humidity take a toll on Mermaid Beach homes — the right renovation
+            protects your property while unlocking the coastal lifestyle you moved here for.
+            Book a free consultation to discuss materials and designs built for the beachfront.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

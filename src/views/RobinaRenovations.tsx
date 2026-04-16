@@ -233,21 +233,20 @@ export default function RobinaRenovations() {
         <div className="container-wide">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">30+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Robina Projects</p>
+              <div className="text-4xl font-serif text-primary mb-2">90s Home</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Specialists</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">🏠</div>
-              <div className="text-4xl font-serif text-primary mb-2">90s</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Home Specialists</p>
+              <div className="text-4xl font-serif text-primary mb-2">Open-Plan</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Conversions</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Modern Kitchen</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Experts</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">15min</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">From Broadbeach</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -274,11 +273,12 @@ export default function RobinaRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Modernise Your Robina Home?
+            Turn Your Dated Layout Into Modern Family Living
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Book a free consultation to discuss your Robina renovation. 
-            We&apos;ll show you how to transform your 90s home into modern, open-plan living.
+            Robina&apos;s 90s homes have great bones but closed-off kitchens and cramped
+            bathrooms that don&apos;t suit how families live today. Book a free consultation
+            and we&apos;ll show you how to open it all up.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

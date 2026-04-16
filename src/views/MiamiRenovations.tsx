@@ -233,20 +233,20 @@ export default function MiamiRenovations() {
         <div className="container-wide">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">20+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Miami Projects</p>
+              <div className="text-4xl font-serif text-primary mb-2">Cottage</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Cottage Renovation Experts</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">10min</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">From Broadbeach</p>
+              <div className="text-4xl font-serif text-primary mb-2">Compact</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Compact Block Specialists</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Fibro</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Fibro-to-Modern Transforms</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">Coastal</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Design Specialists</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -273,11 +273,10 @@ export default function MiamiRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Transform Your Miami Beach Home?
+            Make the Most of Your Miami Block
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Book a free consultation to discuss your Miami renovation. We&apos;ll help you
-            turn your beach cottage into the contemporary coastal home you&apos;ve been dreaming of.
+            Compact Miami blocks need smart renovation - clever layouts, built-in storage, and designs that make every square metre count. Book a free consultation and we&apos;ll show you what&apos;s possible with your property.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

@@ -251,20 +251,20 @@ export default function CurrumbinRenovations() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">25+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Years Experience</p>
+              <div className="text-4xl font-serif text-primary mb-2">Beach</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Beachside Family Experts</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Eco</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Eco-Friendly Options</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Coastal</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Coastal-Durable Builds</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed & Insured</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">Family</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Focused Designs</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">Fixed</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Price Contracts</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -291,11 +291,10 @@ export default function CurrumbinRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Renovate Your Currumbin Home?
+            Create Your Perfect Currumbin Beach Home
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Your Currumbin home deserves a renovation that matches the lifestyle. Book a free
-            consultation and let&apos;s plan a transformation built for your family and the coast.
+            Whether it&apos;s a kitchen that handles sandy feet and school lunches or an outdoor area built for year-round entertaining, we design renovations around the Currumbin beach lifestyle. Book a free consultation and let&apos;s talk about your home.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

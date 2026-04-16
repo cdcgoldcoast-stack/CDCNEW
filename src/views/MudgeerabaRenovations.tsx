@@ -251,20 +251,20 @@ export default function MudgeerabaRenovations() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">25+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Years Experience</p>
+              <div className="text-4xl font-serif text-primary mb-2">Acreage</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Acreage Specialists</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Character</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Character Home Restoration</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Rural</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Rural-Edge Design</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed & Insured</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">Design</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Led Approach</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">Fixed</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Price Contracts</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -291,12 +291,12 @@ export default function MudgeerabaRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Renovate Your Mudgeeraba Home?
+            Your Property Deserves This
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Let&apos;s talk about breathing new life into your Mudgeeraba property. Book a free
-            on-site consultation and we&apos;ll share ideas tailored to your home&apos;s character
-            and your family&apos;s needs.
+            A Mudgeeraba acreage property deserves a home that matches the land around it.
+            Book a free consultation and we&apos;ll show you how to bring your interiors up
+            to the standard your setting already delivers.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

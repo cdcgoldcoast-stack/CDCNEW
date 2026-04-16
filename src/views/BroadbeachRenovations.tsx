@@ -245,23 +245,20 @@ export default function BroadbeachRenovations() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">📍</div>
-              <div className="text-4xl font-serif text-primary mb-2">Local</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/80">Gold Coast Team</p>
+              <div className="text-4xl font-serif text-primary mb-2">Body Corp</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Experts</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">🏢</div>
-              <div className="text-4xl font-serif text-primary mb-2">Experienced</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Apartment Specialists</p>
+              <div className="text-4xl font-serif text-primary mb-2">High-Rise</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Approved</p>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">✓</div>
+              <div className="text-4xl font-serif text-primary mb-2">Space</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Maximising</p>
+            </div>
+            <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed & Insured</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">25+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Years Experience</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -288,11 +285,12 @@ export default function BroadbeachRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Renovate Your Broadbeach Property?
+            Transform Your Broadbeach Apartment
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Book a free consultation. Our Gold Coast team will visit your Broadbeach
-            property to talk through your renovation plans in person.
+            Your Broadbeach apartment is a premium asset — a smart renovation maximises both your
+            living space and its value. Book a free consultation and we&apos;ll show you what&apos;s possible
+            within your body corporate requirements.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link

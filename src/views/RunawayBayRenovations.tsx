@@ -251,20 +251,20 @@ export default function RunawayBayRenovations() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">Local</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Gold Coast Based</p>
+              <div className="text-4xl font-serif text-primary mb-2">Canal</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Home Experts</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Indoor-</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Outdoor Living</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl font-serif text-primary mb-2">Water View</div>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">Designs</p>
             </div>
             <div className="text-center">
               <div className="text-4xl font-serif text-primary mb-2">QBCC</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Licensed &amp; Insured</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">25+</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Years Experience</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-serif text-primary mb-2">4.9★</div>
-              <p className="text-sm uppercase tracking-wider text-foreground/60">Client Rating</p>
+              <p className="text-sm uppercase tracking-wider text-foreground/60">#15155156</p>
             </div>
           </div>
         </div>
@@ -291,12 +291,12 @@ export default function RunawayBayRenovations() {
       <section className="py-16 md:py-24">
         <div className="container-wide text-center">
           <h2 className="font-serif text-h2-mobile md:text-h2 text-primary mb-6">
-            Ready to Renovate Your Runaway Bay Home?
+            Ready to Design Around Your Runaway Bay Water Views?
           </h2>
           <p className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Book a free consultation to discuss your canal-front or family home renovation.
-            We&apos;ll visit your Runaway Bay property, understand your goals, and put together
-            a plan that makes the most of your waterside location.
+            Your canal frontage is the best thing about your home - your living spaces should
+            frame it. Let&apos;s open up your home to the water and create the outdoor lifestyle
+            Runaway Bay was made for.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
