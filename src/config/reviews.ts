@@ -1,3 +1,5 @@
+export const GOOGLE_REVIEWS_URL = "https://share.google/1WcObYnrBH3UkL0OO";
+
 export const REVIEW_STATS = {
   ratingValue: "4.9",
   reviewCount: "50",

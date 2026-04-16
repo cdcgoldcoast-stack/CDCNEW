@@ -1,4 +1,4 @@
-import { REVIEW_STATS } from "@/config/reviews";
+import { REVIEW_STATS, GOOGLE_REVIEWS_URL } from "@/config/reviews";
 
 interface GoogleReviewBadgeProps {
   iconSize: string;
@@ -16,7 +16,12 @@ const GoogleReviewBadge = ({
   className = "",
 }: GoogleReviewBadgeProps) => {
   return (
-    <div className={["flex items-center gap-3", className].filter(Boolean).join(" ")}>
+    <a
+      href={GOOGLE_REVIEWS_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={["flex items-center gap-3 hover:opacity-80 transition-opacity", className].filter(Boolean).join(" ")}
+    >
       <svg viewBox="0 0 24 24" className={iconSize} xmlns="http://www.w3.org/2000/svg">
         <path
           d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -48,7 +53,7 @@ const GoogleReviewBadge = ({
           <span className={`${labelSize} text-foreground/80`}>({REVIEW_STATS.reviewCount} reviews)</span>
         </div>
       </div>
-    </div>
+    </a>
   );
 };
 

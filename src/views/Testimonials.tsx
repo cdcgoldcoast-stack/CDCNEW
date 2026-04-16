@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import BottomInvitation from "@/components/BottomInvitation";
 import GoogleReviewBadge from "@/components/GoogleReviewBadge";
+import { GOOGLE_REVIEWS_URL } from "@/config/reviews";
 import { motion } from "framer-motion";
 
 const testimonials = [
@@ -105,7 +106,7 @@ const Testimonials = () => {
       <section className="pb-8 md:pb-12 bg-background relative z-10">
         <div className="container-wide max-w-3xl text-center">
           <p className="text-foreground/70 text-base md:text-lg leading-relaxed">
-            Rated 4.9 out of 5 stars from 50+ verified Google reviews. Our clients consistently highlight our communication, craftsmanship, and transparent pricing.
+            Rated 4.9 out of 5 stars from <a href={GOOGLE_REVIEWS_URL} target="_blank" rel="noopener noreferrer" className="text-primary underline hover:opacity-80 transition-opacity">50+ verified Google reviews</a>. Our clients consistently highlight our communication, craftsmanship, and transparent pricing.
           </p>
         </div>
       </section>

@@ -6,7 +6,7 @@ import {
   SERVICE_AREAS,
   withBrandDescription,
 } from "@/config/seo";
-import { REVIEW_STATS } from "@/config/reviews";
+import { REVIEW_STATS, GOOGLE_REVIEWS_URL } from "@/config/reviews";
 
 export interface FAQItem {
   question: string;
@@ -300,6 +300,7 @@ export const generateLocalBusinessSchema = () => ({
   sameAs: [
     "https://www.instagram.com/conceptdesignconstruct_",
     "https://www.facebook.com/conceptdesignconstruct",
+    GOOGLE_REVIEWS_URL,
   ],
   knowsAbout: [
     "Gold Coast home renovations",
