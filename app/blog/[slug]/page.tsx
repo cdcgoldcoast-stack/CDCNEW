@@ -148,13 +148,13 @@ export default async function BlogPostPage({ params }: PageProps) {
             <div className="mt-16 pt-8 border-t border-border max-w-3xl">
               <div className="flex items-start gap-4">
                 <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="font-serif text-2xl text-primary">CDC</span>
+                  <span className="font-serif text-2xl text-primary">MM</span>
                 </div>
                 <div>
                   <p className="text-label text-foreground/50 mb-1">Written by</p>
                   <p className="font-serif text-h4 text-primary">{post.author || SITE_NAME}</p>
                   <p className="text-foreground/60 text-sm mt-2">
-                    Gold Coast renovation specialists. QBCC licensed builders for kitchens, bathrooms, and whole-home transformations.
+                    Mark Mayne is the founder and director of Concept Design Construct, a QBCC licensed renovation builder based in Broadbeach. With over 25 years in the industry, he leads every project from consultation through handover.
                   </p>
                 </div>
               </div>
