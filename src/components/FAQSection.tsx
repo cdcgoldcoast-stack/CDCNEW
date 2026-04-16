@@ -48,8 +48,8 @@ const FAQSection = () => {
   return (
     <section ref={ref} className="py-12 md:py-20 border-t border-foreground/10 relative z-10 bg-background" id="faq">
       {/* Animated vertical text - Left (desktop only) */}
-      <motion.div 
-        className="hidden lg:flex absolute left-6 xl:left-10 top-1/2 -translate-y-1/2"
+      <motion.div
+        className="hidden 2xl:flex absolute left-6 2xl:left-10 top-1/2 -translate-y-1/2"
         style={{ y: leftTextY }}
       >
         <span 
@@ -61,8 +61,8 @@ const FAQSection = () => {
       </motion.div>
 
       {/* Animated vertical text - Right (desktop only) */}
-      <motion.div 
-        className="hidden lg:flex absolute right-6 xl:right-10 top-1/2 -translate-y-1/2"
+      <motion.div
+        className="hidden 2xl:flex absolute right-6 2xl:right-10 top-1/2 -translate-y-1/2"
         style={{ y: rightTextY }}
       >
         <span 
@@ -128,7 +128,7 @@ const FAQSection = () => {
                   {faq.question}
                 </motion.span>
                 <motion.span
-                  className="text-foreground/40 flex-shrink-0 text-xl leading-none"
+                  className="text-foreground/70 flex-shrink-0 text-xl leading-none"
                   animate={{
                     rotate: openIndex === index ? 45 : 0,
                     scale: openIndex === index ? 1.2 : 1,

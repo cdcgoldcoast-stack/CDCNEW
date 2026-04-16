@@ -189,7 +189,7 @@ const Header = () => {
       </a>
       <div className="max-w-[1440px] mx-auto px-4 md:px-7 lg:px-8 flex items-center justify-between h-[74px] md:h-[100px]">
         {/* Logo */}
-        <Link to="/" className="flex-shrink-0 flex items-center mr-8" aria-label="Concept Design Construct home">
+        <Link to="/" className="flex-shrink-0 flex items-center mr-2 md:mr-8" aria-label="Concept Design Construct home">
           {logoSrc ? (
             <ResponsiveImage
               src={logoSrc}
@@ -207,7 +207,7 @@ const Header = () => {
         </Link>
 
         {/* Desktop Navigation - only shows when viewport is wide enough */}
-        <nav className="hidden min-[1280px]:flex items-center gap-7 2xl:gap-10 whitespace-nowrap">
+        <nav className="hidden min-[1360px]:flex items-center gap-6 2xl:gap-10 whitespace-nowrap">
           {desktopNavLinks.map((item) =>
             item.type === "link" ? (
               <Link
@@ -309,11 +309,11 @@ const Header = () => {
         </nav>
 
         {/* Mobile/Tablet actions */}
-        <div className="min-[1280px]:hidden flex items-center gap-2">
+        <div className="min-[1360px]:hidden flex items-center gap-2 flex-shrink-0">
           {!isHome && (
             <Link
               to="/"
-              className="text-[10px] uppercase tracking-widest text-foreground border border-foreground/30 px-3 py-1 rounded-full"
+              className="text-[10px] uppercase tracking-[0.1em] text-foreground border border-foreground/30 px-2.5 py-1 rounded-full whitespace-nowrap"
             >
               Back To Home
             </Link>
@@ -334,7 +334,7 @@ const Header = () => {
 
       {/* Mobile/Tablet Navigation */}
       {isMenuOpen && (
-        <nav id="mobile-navigation" className="min-[1280px]:hidden absolute top-full left-0 right-0 bg-background border-t border-border/30">
+        <nav id="mobile-navigation" className="min-[1360px]:hidden absolute top-full left-0 right-0 bg-background border-t border-border/30">
           <div className="container-wide py-8 flex flex-col gap-6">
             {mobileNavLinks.map((link) => (
               <Link

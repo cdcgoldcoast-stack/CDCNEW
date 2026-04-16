@@ -211,7 +211,7 @@ export default function NerangRenovations() {
               <div className="aspect-[4/3] overflow-hidden bg-muted">
                 <ResponsiveImage
                   src={nerangImages.living}
-                  alt="Whole home renovation in Nerang"
+                  alt="Whole-home renovation in Nerang"
                   width={600}
                   height={450}
                   sizes="(min-width: 768px) 33vw, 100vw"

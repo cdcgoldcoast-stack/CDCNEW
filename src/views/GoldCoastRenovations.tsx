@@ -571,7 +571,7 @@ export default function GoldCoastRenovations() {
                   sizes="(min-width: 768px) 50vw, 100vw"
                   loading="lazy"
                   quality={60}
-                  className="w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
                 <span className="absolute top-4 left-4 bg-background/90 text-xs uppercase tracking-wider text-foreground px-3 py-1.5">
                   Before
@@ -586,7 +586,7 @@ export default function GoldCoastRenovations() {
                   sizes="(min-width: 768px) 50vw, 100vw"
                   loading="lazy"
                   quality={60}
-                  className="w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
                 <span className="absolute top-4 left-4 bg-primary text-primary-foreground text-xs uppercase tracking-wider px-3 py-1.5">
                   After

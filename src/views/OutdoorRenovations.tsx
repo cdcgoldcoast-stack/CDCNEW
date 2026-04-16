@@ -347,7 +347,7 @@ const OutdoorRenovations = () => {
               <ul className="space-y-3 mb-8">
                 {[
                   { label: "Kitchen Renovations", to: "/kitchen-renovations-gold-coast" },
-                  { label: "Whole Home Renovations", to: "/whole-home-renovations-gold-coast" },
+                  { label: "Whole-Home Renovations", to: "/whole-home-renovations-gold-coast" },
                   { label: "Home Extensions", to: "/home-extensions-gold-coast" },
                 ].map((link) => (
                   <li key={link.label}>

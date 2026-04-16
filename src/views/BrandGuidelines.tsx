@@ -59,7 +59,7 @@ const BrandGuidelines = () => {
               <div>
                 <h3 className="mb-4 not-italic">About Concept Design Construct</h3>
                 <p className="text-muted-foreground mb-6">
-                  Concept Design Construct is a Gold Coast renovation company specializing in creating homes designed around flow, comfort, and everyday living. We offer whole home, kitchen, and bathroom renovations, focusing on enhancing the homeowner's lifestyle through clear systems, reliable communication, and long-term value.
+                  Concept Design Construct is a Gold Coast renovation company specializing in creating homes designed around flow, comfort, and everyday living. We offer whole-home, kitchen, and bathroom renovations, focusing on enhancing the homeowner's lifestyle through clear systems, reliable communication, and long-term value.
                 </p>
               </div>
               

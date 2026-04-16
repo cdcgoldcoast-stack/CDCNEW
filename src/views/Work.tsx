@@ -91,7 +91,7 @@ const Work = ({ initialProjects }: WorkProps = {}) => {
                   width={800}
                   height={1200}
                   sizes="(min-width: 1024px) 32vw, (min-width: 640px) 48vw, 100vw"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading={index < 3 ? "eager" : "lazy"}
                   priority={index < 3}
                   quality={60}

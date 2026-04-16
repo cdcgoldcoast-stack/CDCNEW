@@ -11,7 +11,7 @@ const WhatWeRenovateSplit = () => {
 
   const services = [
     {
-      title: "Whole Home Renovations",
+      title: "Whole-Home Renovations",
       description: "Improve layout, light, storage, and flow so the home feels easier to live in. We take a holistic approach to reshape how your entire space functions. From the moment you walk through the door, every element works together to support your daily routines.",
       tags: ["Layout", "Flow"],
       bgImage: assets["service-bg-whole-home"],

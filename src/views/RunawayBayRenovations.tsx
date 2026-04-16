@@ -211,7 +211,7 @@ export default function RunawayBayRenovations() {
               <div className="aspect-[4/3] overflow-hidden bg-muted">
                 <ResponsiveImage
                   src={images.living}
-                  alt="Whole home renovation in Runaway Bay"
+                  alt="Whole-home renovation in Runaway Bay"
                   width={600}
                   height={450}
                   sizes="(min-width: 768px) 33vw, 100vw"

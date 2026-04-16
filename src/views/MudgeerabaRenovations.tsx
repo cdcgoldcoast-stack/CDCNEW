@@ -212,7 +212,7 @@ export default function MudgeerabaRenovations() {
               <div className="aspect-[4/3] overflow-hidden bg-muted">
                 <ResponsiveImage
                   src={mudgeerabaImages.living}
-                  alt="Whole home renovation in Mudgeeraba"
+                  alt="Whole-home renovation in Mudgeeraba"
                   width={600}
                   height={450}
                   sizes="(min-width: 768px) 33vw, 100vw"

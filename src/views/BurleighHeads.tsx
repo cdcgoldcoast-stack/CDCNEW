@@ -239,7 +239,7 @@ export default function BurleighHeads() {
               <div className="aspect-[4/3] overflow-hidden bg-muted">
                 <ResponsiveImage
                   src={burleighImages.living}
-                  alt="Whole home renovation in Burleigh Heads"
+                  alt="Whole-home renovation in Burleigh Heads"
                   width={600}
                   height={450}
                   sizes="(min-width: 768px) 33vw, 100vw"
@@ -249,7 +249,7 @@ export default function BurleighHeads() {
                 />
               </div>
               <div className="p-8">
-                <h3 className="font-serif italic text-xl text-primary mb-3">Whole Home Renovations</h3>
+                <h3 className="font-serif italic text-xl text-primary mb-3">Whole-Home Renovations</h3>
                 <p className="text-foreground/70 mb-4">
                   Transform your entire home while keeping what makes it Burleigh - the character,
                   the light, the connection to the outdoors.

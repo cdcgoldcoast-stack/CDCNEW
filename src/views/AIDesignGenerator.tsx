@@ -72,19 +72,15 @@ const ChatMessage = ({
   >
     {role === "assistant" && (
       <div className="h-9 w-9 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0 overflow-hidden border border-border">
-        {avatarSrc ? (
-          <img
-            src={avatarSrc}
-            alt="Concept Design Construct assistant avatar"
-            width={36}
-            height={36}
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-contain p-1"
-          />
-        ) : (
-          <span className="text-[11px] font-semibold">CDC</span>
-        )}
+        <img
+          src="/favicon-v2.png"
+          alt="Concept Design Construct assistant avatar"
+          width={72}
+          height={72}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover"
+        />
       </div>
     )}
     <div
@@ -1242,19 +1238,15 @@ const buildPreferenceSentence = (
                 <div className="px-3 sm:px-4 md:px-6 py-3 md:py-4 border-b border-border/40 bg-background flex items-center justify-between shrink-0">
                   <div className="flex items-center gap-3 min-w-0">
                     <div className="h-8 w-8 md:h-9 md:w-9 rounded-full bg-primary/10 text-primary text-xs font-semibold flex items-center justify-center overflow-hidden border border-border shrink-0">
-                      {logoSrc ? (
-                        <img
-                          src={logoSrc}
-                          alt="Concept Design Construct logo mark"
-                          width={36}
-                          height={36}
-                          loading="lazy"
-                          decoding="async"
-                          className="h-full w-full object-contain p-1"
-                        />
-                      ) : (
-                        <span>CDC</span>
-                      )}
+                      <img
+                        src="/favicon-v2.png"
+                        alt="Concept Design Construct logo mark"
+                        width={72}
+                        height={72}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-cover"
+                      />
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-foreground truncate">CDC Renovation Assistant</p>

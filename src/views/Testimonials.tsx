@@ -34,7 +34,7 @@ const testimonials = [
       "Mark was an amazing project manager always one step ahead of the build, completing my project in 6 weeks. Transformed a tired '70s home into a modern beauty.",
     name: "Susan",
     suburb: "Gold Coast",
-    project: "Whole Home Renovation",
+    project: "Whole-Home Renovation",
   },
   {
     quote:

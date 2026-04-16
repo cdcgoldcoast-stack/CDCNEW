@@ -212,7 +212,7 @@ export default function QuoteFormInline({
         </div>
 
         <div className="space-y-4">
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             <Label htmlFor={`fullName-${source}`}>
               Full Name <span className="text-foreground/40">*</span>
             </Label>
@@ -228,8 +228,8 @@ export default function QuoteFormInline({
             )}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="space-y-1.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
               <Label htmlFor={`phone-${source}`}>
                 Phone <span className="text-foreground/40">*</span>
               </Label>
@@ -246,7 +246,7 @@ export default function QuoteFormInline({
               )}
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <Label htmlFor={`email-${source}`}>
                 Email <span className="text-foreground/40">*</span>
               </Label>
@@ -264,7 +264,7 @@ export default function QuoteFormInline({
             </div>
           </div>
 
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             <Label htmlFor={`service-${source}`}>
               What do you need? <span className="text-foreground/40">*</span>
             </Label>
@@ -291,8 +291,8 @@ export default function QuoteFormInline({
             )}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="space-y-1.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
               <Label htmlFor={`budget-${source}`}>Budget range</Label>
               <Select
                 value={formData.budget}
@@ -311,7 +311,7 @@ export default function QuoteFormInline({
               </Select>
             </div>
 
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <Label htmlFor={`timeline-${source}`}>When to start?</Label>
               <Select
                 value={formData.timeline}

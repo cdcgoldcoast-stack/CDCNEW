@@ -207,7 +207,7 @@ export default function BroadbeachRenovations() {
               <div className="aspect-[4/3] overflow-hidden bg-muted">
                 <ResponsiveImage
                   src={broadbeachImages.living}
-                  alt="Whole home renovation in Broadbeach"
+                  alt="Whole-home renovation in Broadbeach"
                   width={600}
                   height={450}
                   sizes="(min-width: 768px) 33vw, 100vw"

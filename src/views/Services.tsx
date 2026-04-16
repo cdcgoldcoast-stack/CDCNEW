@@ -101,7 +101,7 @@ const Services = () => {
                 Gold Coast Renovation Services Built Around How You Live
               </h1>
               <p className="text-foreground/80 text-lg leading-relaxed mb-6">
-                From kitchens and bathrooms to whole home renovations and extensions, we design and build
+                From kitchens and bathrooms to whole-home renovations and extensions, we design and build
                 spaces that improve <strong>flow, comfort, and everyday routines</strong>.
               </p>
               <Link

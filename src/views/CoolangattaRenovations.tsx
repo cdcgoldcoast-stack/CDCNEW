@@ -213,7 +213,7 @@ export default function CoolangattaRenovations() {
               <div className="aspect-[4/3] overflow-hidden bg-muted">
                 <ResponsiveImage
                   src={coolangattaImages.living}
-                  alt="Whole home renovation in Coolangatta"
+                  alt="Whole-home renovation in Coolangatta"
                   width={600}
                   height={450}
                   sizes="(min-width: 768px) 33vw, 100vw"

@@ -238,7 +238,7 @@ const GetQuote = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.15 }}
-                  className="space-y-5"
+                  className="space-y-4"
                 >
                   {/* Name & Email */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -313,7 +313,7 @@ const GetQuote = () => {
                   </div>
 
                   {/* Renovation Type */}
-                  <div className="space-y-3 pt-1">
+                  <div className="space-y-2">
                     <p className="text-sm font-medium text-foreground">
                       What are you looking to renovate? <span className="text-foreground/40">*</span>
                     </p>

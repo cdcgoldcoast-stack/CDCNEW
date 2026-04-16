@@ -63,7 +63,7 @@ export default function Page() {
           For category-specific guidance, visit our{" "}
           <a href="/kitchen-renovations-gold-coast">kitchen renovations Gold Coast</a>,{" "}
           <a href="/bathroom-renovations-gold-coast">bathroom renovations Gold Coast</a>, or{" "}
-          <a href="/whole-home-renovations-gold-coast">whole home renovations Gold Coast</a> pages.
+          <a href="/whole-home-renovations-gold-coast">whole-home renovations Gold Coast</a> pages.
         </p>
       </section>
       <AIDesignGeneratorClient />

@@ -212,7 +212,7 @@ export default function BundallRenovations() {
               <div className="aspect-[4/3] overflow-hidden bg-muted">
                 <ResponsiveImage
                   src={images.living}
-                  alt="Whole home renovation in Bundall"
+                  alt="Whole-home renovation in Bundall"
                   width={600}
                   height={450}
                   sizes="(min-width: 768px) 33vw, 100vw"

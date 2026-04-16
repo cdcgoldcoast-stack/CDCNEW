@@ -172,7 +172,7 @@ const AIChatWidget = () => {
       return "I am interested in a living area renovation";
     }
     if (lowerLast.includes("whole") || lowerLast.includes("entire") || lowerLast.includes("full")) {
-      return "I am interested in a whole home renovation";
+      return "I am interested in a whole-home renovation";
     }
     if (lowerLast.includes("timeline") || lowerLast.includes("when") || lowerLast.includes("how long")) {
       return "I would like to know about timelines for my project";

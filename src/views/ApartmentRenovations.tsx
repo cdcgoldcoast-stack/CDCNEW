@@ -399,7 +399,7 @@ const ApartmentRenovations = () => {
                 {[
                   { label: "Kitchen Renovations", to: "/kitchen-renovations-gold-coast" },
                   { label: "Bathroom Renovations", to: "/bathroom-renovations-gold-coast" },
-                  { label: "Whole Home Renovations", to: "/whole-home-renovations-gold-coast" },
+                  { label: "Whole-Home Renovations", to: "/whole-home-renovations-gold-coast" },
                   { label: "Laundry Renovations", to: "/laundry-renovations-gold-coast" },
                 ].map((link) => (
                   <li key={link.label}>
