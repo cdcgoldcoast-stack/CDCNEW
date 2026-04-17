@@ -1,16 +1,6 @@
--- Add marketer role and align admin-side permissions with role-based access.
-
-DO $$
-BEGIN
-  IF NOT EXISTS (
-    SELECT 1
-    FROM pg_type t
-    JOIN pg_enum e ON t.oid = e.enumtypid
-    WHERE t.typname = 'app_role' AND e.enumlabel = 'marketer'
-  ) THEN
-    ALTER TYPE public.app_role ADD VALUE 'marketer';
-  END IF;
-END $$;
+-- Admin-side permissions aligned to role-based access.
+-- The marketer enum value is added in a companion migration (20260408121400)
+-- so the new value is committed before being referenced below.
 
 -- Keep exactly one role row per user to match app behavior.
 WITH ranked_roles AS (
