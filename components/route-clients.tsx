@@ -169,13 +169,13 @@ const BrandGuidelinesPage = dynamic(() => import("@/views/BrandGuidelines"), {
 });
 
 // Admin pages
-const AdminDashboardPage = dynamic(() => import("@/views/admin/AdminDashboard"), {
-  ssr: false,
-});
 const AdminLeadsPage = dynamic(() => import("@/views/admin/AdminLeads"), {
   ssr: false,
 });
 const AdminReferralsPage = dynamic(() => import("@/views/admin/AdminReferrals"), {
+  ssr: false,
+});
+const AdminBlogPage = dynamic(() => import("@/views/admin/AdminBlog"), {
   ssr: false,
 });
 const AdminGalleryPage = dynamic(() => import("@/views/admin/AdminGallery"), {
@@ -281,15 +281,7 @@ export function AdminIndexClient() {
   );
   return (
     <RequireAdmin>
-      <LazyNavigate to="/admin/dashboard" replace />
-    </RequireAdmin>
-  );
-}
-
-export function AdminDashboardClient() {
-  return (
-    <RequireAdmin>
-      <AdminDashboardPage />
+      <LazyNavigate to="/admin/leads" replace />
     </RequireAdmin>
   );
 }
@@ -314,6 +306,14 @@ export function AdminReferralsClient() {
   return (
     <RequireAdmin>
       <AdminReferralsPage />
+    </RequireAdmin>
+  );
+}
+
+export function AdminBlogClient() {
+  return (
+    <RequireAdmin>
+      <AdminBlogPage />
     </RequireAdmin>
   );
 }

@@ -9,12 +9,12 @@ import {
   Gift,
   LogOut,
   Home,
-  LayoutDashboard,
   Images,
   ImagePlus,
   Replace,
   Settings,
   Users,
+  Newspaper,
 } from "lucide-react";
 
 interface AdminLayoutProps {
@@ -22,10 +22,10 @@ interface AdminLayoutProps {
 }
 
 const navItems = [
-  { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard, adminOnly: false },
   { label: "Leads", href: "/admin/leads", icon: Inbox, adminOnly: false },
   { label: "Referrals", href: "/admin/referrals", icon: Gift, adminOnly: false },
   { label: "Projects", href: "/admin/projects", icon: FolderOpen, adminOnly: false },
+  { label: "Blog", href: "/admin/blog", icon: Newspaper, adminOnly: false },
   { label: "Gallery", href: "/admin/gallery", icon: Images, adminOnly: false },
   { label: "Site Images", href: "/admin/site-images", icon: ImagePlus, adminOnly: false },
   { label: "Image Assets", href: "/admin/image-assets", icon: Replace, adminOnly: false },
@@ -50,9 +50,9 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       <aside className="w-64 border-r border-border bg-card flex flex-col">
         {/* Logo */}
         <div className="p-6 border-b border-border">
-          <Link to="/admin" className="flex items-center gap-2">
-            <LayoutDashboard className="w-5 h-5 text-primary" />
-            <span className="font-serif italic text-xl text-primary">Dashboard</span>
+          <Link to="/admin/leads" className="flex items-center gap-2">
+            <Inbox className="w-5 h-5 text-primary" />
+            <span className="font-serif italic text-xl text-primary">CDC Admin</span>
           </Link>
         </div>
 

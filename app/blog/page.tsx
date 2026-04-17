@@ -13,7 +13,8 @@ const pageTitle = "Gold Coast Renovation Blog";
 const pageDescription =
   "Read practical renovation guides, planning tips, and design insights from the Concept Design Construct team on the Gold Coast.";
 
-export const dynamic = "force-static";
+// Revalidate so admin-created posts appear without a redeploy.
+export const revalidate = 900;
 
 export const metadata: Metadata = buildMetadata({
   title: pageTitle,

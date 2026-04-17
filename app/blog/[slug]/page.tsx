@@ -11,8 +11,11 @@ import { getAllBlogSlugs, getPostBySlug, getAllPublishedPosts, formatBlogDate } 
 import { buildMetadata } from "@/lib/seo";
 import { generateBlogPostingSchema, generateBreadcrumbSchema } from "@/lib/structured-data";
 
-export const dynamic = "force-static";
-export const dynamicParams = false;
+// Allow admin-created posts to render without a rebuild. Slugs known at build
+// time are still statically generated; new slugs are rendered on-demand and
+// cached for 15 minutes via ISR.
+export const dynamicParams = true;
+export const revalidate = 900;
 
 type PageProps = {
   params: {

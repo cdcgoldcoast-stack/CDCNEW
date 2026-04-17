@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_posts: {
+        Row: {
+          author: string
+          body: string
+          created_at: string
+          description: string
+          draft: boolean
+          id: string
+          image: string | null
+          published_at: string
+          slug: string
+          tags: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author?: string
+          body: string
+          created_at?: string
+          description: string
+          draft?: boolean
+          id?: string
+          image?: string | null
+          published_at?: string
+          slug: string
+          tags?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string
+          body?: string
+          created_at?: string
+          description?: string
+          draft?: boolean
+          id?: string
+          image?: string | null
+          published_at?: string
+          slug?: string
+          tags?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       chat_inquiries: {
         Row: {
           additional_notes: string | null
