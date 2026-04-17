@@ -247,6 +247,22 @@ const nextConfig = {
         destination: "/renovation-services",
         permanent: true,
       },
+      // Consolidated admin lead inboxes -> unified /admin/leads
+      {
+        source: "/admin/enquiries",
+        destination: "/admin/leads",
+        permanent: false,
+      },
+      {
+        source: "/admin/chat-inquiries",
+        destination: "/admin/leads",
+        permanent: false,
+      },
+      {
+        source: "/admin/popup-responses",
+        destination: "/admin/leads",
+        permanent: false,
+      },
     ];
   },
   webpack: (config) => {

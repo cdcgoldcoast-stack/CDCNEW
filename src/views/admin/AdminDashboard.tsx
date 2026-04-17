@@ -105,10 +105,10 @@ const AdminDashboard = () => {
   }
 
   const stats = [
-    { label: "New enquiries", value: counts.newEnquiries, href: "/admin/enquiries" },
-    { label: "New chat leads", value: counts.newChatLeads, href: "/admin/chat-inquiries" },
-    { label: "Enquiries this week", value: counts.enquiriesThisWeek, href: "/admin/enquiries" },
-    { label: "Pop-up responses", value: counts.popupResponses, href: "/admin/popup-responses" },
+    { label: "New enquiries", value: counts.newEnquiries, href: "/admin/leads" },
+    { label: "New chat leads", value: counts.newChatLeads, href: "/admin/leads" },
+    { label: "Enquiries this week", value: counts.enquiriesThisWeek, href: "/admin/leads" },
+    { label: "Pop-up responses", value: counts.popupResponses, href: "/admin/leads" },
   ];
 
   return (
@@ -141,7 +141,7 @@ const AdminDashboard = () => {
         <div className="bg-card border border-border rounded-xl p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm font-medium text-foreground">Latest enquiries</h2>
-            <Link to="/admin/enquiries" className="text-xs text-primary hover:underline">
+            <Link to="/admin/leads" className="text-xs text-primary hover:underline">
               View all
             </Link>
           </div>
@@ -193,7 +193,7 @@ const AdminDashboard = () => {
         <div className="bg-card border border-border rounded-xl p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm font-medium text-foreground">Latest chat leads</h2>
-            <Link to="/admin/chat-inquiries" className="text-xs text-primary hover:underline">
+            <Link to="/admin/leads" className="text-xs text-primary hover:underline">
               View all
             </Link>
           </div>

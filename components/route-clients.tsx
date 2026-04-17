@@ -178,6 +178,9 @@ const AdminChatInquiriesPage = dynamic(() => import("@/views/admin/AdminChatInqu
 const AdminEnquiriesPage = dynamic(() => import("@/views/admin/AdminEnquiries"), {
   ssr: false,
 });
+const AdminLeadsPage = dynamic(() => import("@/views/admin/AdminLeads"), {
+  ssr: false,
+});
 const AdminGalleryPage = dynamic(() => import("@/views/admin/AdminGallery"), {
   ssr: false,
 });
@@ -309,6 +312,14 @@ export function AdminEnquiriesClient() {
   return (
     <RequireAdmin>
       <AdminEnquiriesPage />
+    </RequireAdmin>
+  );
+}
+
+export function AdminLeadsClient() {
+  return (
+    <RequireAdmin>
+      <AdminLeadsPage />
     </RequireAdmin>
   );
 }

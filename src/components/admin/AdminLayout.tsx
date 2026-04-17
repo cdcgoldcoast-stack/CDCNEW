@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   FolderOpen,
-  MessageSquare,
-  MessageCircle,
+  Inbox,
   LogOut,
   Home,
   LayoutDashboard,
@@ -14,7 +13,6 @@ import {
   ImagePlus,
   Replace,
   Settings,
-  Gift,
   Users,
 } from "lucide-react";
 
@@ -24,10 +22,8 @@ interface AdminLayoutProps {
 
 const navItems = [
   { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard, adminOnly: false },
+  { label: "Leads", href: "/admin/leads", icon: Inbox, adminOnly: false },
   { label: "Projects", href: "/admin/projects", icon: FolderOpen, adminOnly: false },
-  { label: "Enquiries", href: "/admin/enquiries", icon: MessageSquare, adminOnly: false },
-  { label: "Chat Inquiries", href: "/admin/chat-inquiries", icon: MessageCircle, adminOnly: false },
-  { label: "Pop-up Responses", href: "/admin/popup-responses", icon: Gift, adminOnly: false },
   { label: "Gallery", href: "/admin/gallery", icon: Images, adminOnly: false },
   { label: "Site Images", href: "/admin/site-images", icon: ImagePlus, adminOnly: false },
   { label: "Image Assets", href: "/admin/image-assets", icon: Replace, adminOnly: false },
