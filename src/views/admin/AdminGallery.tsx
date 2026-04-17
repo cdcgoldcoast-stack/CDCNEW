@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { Trash2, Upload, Image, Loader2, Type, Plus, Library, Check, Search } from "lucide-react";
 import SEO from "@/components/SEO";
 import { resolveImageUrl } from "@/lib/gallery-assets";
+import { revalidateAdminPaths } from "@/lib/adminRevalidate";
 
 const BUCKET_NAME = "gallery-images";
 
@@ -153,6 +154,7 @@ const AdminGallery = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-gallery-items"] });
       toast.success("Item deleted");
+      revalidateAdminPaths(["/renovation-gallery"]);
     },
     onError: (error) => {
       toast.error("Failed to delete: " + error.message);
@@ -175,6 +177,7 @@ const AdminGallery = () => {
       queryClient.invalidateQueries({ queryKey: ["admin-gallery-items"] });
       setNewTextContent("");
       toast.success("Text block added");
+      revalidateAdminPaths(["/renovation-gallery"]);
     },
     onError: (error) => {
       toast.error("Failed to add text: " + error.message);
@@ -201,6 +204,7 @@ const AdminGallery = () => {
       setSelectedImages(new Set());
       setShowLibraryDialog(false);
       toast.success("Images added to gallery");
+      revalidateAdminPaths(["/renovation-gallery"]);
     },
     onError: (error) => {
       toast.error("Failed to add images: " + error.message);
@@ -280,9 +284,10 @@ const AdminGallery = () => {
     setIsUploading(false);
     queryClient.invalidateQueries({ queryKey: ["admin-gallery-items"] });
     queryClient.invalidateQueries({ queryKey: ["storage-images-gallery"] });
-    
+
     if (successCount > 0) {
       toast.success(`${successCount} image${successCount > 1 ? 's' : ''} added to gallery`);
+      revalidateAdminPaths(["/renovation-gallery"]);
     }
     if (successCount < imageFiles.length) {
       toast.error(`${imageFiles.length - successCount} image(s) failed to upload`);

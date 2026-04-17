@@ -56,6 +56,7 @@ import SEO from "@/components/SEO";
 import { siteAssets, categoryLabels, resolveImageSrc, type SiteAsset } from "@/data/siteAssets";
 import { useSiteAssets } from "@/hooks/useSiteAssets";
 import { generateSlug } from "@/lib/slug";
+import { revalidateAdminPaths } from "@/lib/adminRevalidate";
 
 const BUCKET_NAME = "gallery-images";
 
@@ -570,6 +571,13 @@ const AdminProjects = () => {
         : "Draft saved! Your project has been saved as a draft.";
       toast.success(message);
 
+      // Rebuild the public project pages so the change appears immediately.
+      const slug = generateSlug(formData.name);
+      await revalidateAdminPaths([
+        "/renovation-projects",
+        `/renovation-projects/${slug}`,
+      ]);
+
       resetForm();
       fetchProjects();
     } catch (error: unknown) {
@@ -583,6 +591,7 @@ const AdminProjects = () => {
 
   const deleteProject = async (projectId: string) => {
     try {
+      const deletedName = projectToDelete?.name ?? "";
       const { error } = await supabase
         .from("projects")
         .delete()
@@ -591,6 +600,11 @@ const AdminProjects = () => {
 
       toast.success("Project deleted");
       setProjectToDelete(null);
+      const deletedSlug = deletedName ? generateSlug(deletedName) : null;
+      await revalidateAdminPaths([
+        "/renovation-projects",
+        ...(deletedSlug ? [`/renovation-projects/${deletedSlug}`] : []),
+      ]);
       fetchProjects();
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : "Failed to delete project";

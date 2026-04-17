@@ -8,6 +8,10 @@ import {
 } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema, absoluteUrl } from "@/lib/seo";
 
+// Gallery is admin-editable via /admin/gallery. ISR + on-demand revalidation
+// from the admin keeps the public page in sync without a redeploy.
+export const revalidate = 60;
+
 const pageTitle = "Gold Coast Renovation Gallery | Kitchen & Bathroom";
 const pageDescription =
   "Explore Gold Coast renovations inspiration with kitchen, bathroom, and living space design examples by Concept Design Construct.";

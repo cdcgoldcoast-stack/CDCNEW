@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import SEO from "@/components/SEO";
 import { generateSlug } from "@/lib/slug";
+import { revalidateAdminPaths } from "@/lib/adminRevalidate";
 
 /* -------------------------------------------------------------------------- */
 /*  Types                                                                     */
@@ -308,6 +309,9 @@ const AdminBlog = () => {
         toast.success("Post created");
       }
 
+      // Rebuild the public pages so the change appears immediately.
+      await revalidateAdminPaths(["/blog", `/blog/${payload.slug}`]);
+
       closeForm();
       fetchAll();
     } catch (error: unknown) {
@@ -326,10 +330,12 @@ const AdminBlog = () => {
   const deletePost = async () => {
     if (!toDelete) return;
     try {
+      const deletedSlug = toDelete.slug;
       const { error } = await supabase.from("blog_posts").delete().eq("id", toDelete.id);
       if (error) throw error;
       toast.success("Post deleted");
       setToDelete(null);
+      await revalidateAdminPaths(["/blog", `/blog/${deletedSlug}`]);
       fetchAll();
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : "Failed to delete post";

@@ -6,6 +6,10 @@ import { fetchProjects } from "@/data/projects";
 import { generateBreadcrumbSchema, generateItemListSchema } from "@/lib/structured-data";
 import { buildMetadata, titleFromSlug, DEFAULT_OG_IMAGE, generateWebPageSchema } from "@/lib/seo";
 
+// Revalidate so admin-created projects appear without a redeploy. Paired with
+// on-demand revalidation triggered from the admin save flow.
+export const revalidate = 60;
+
 const pageTitle = "Gold Coast Renovation Projects | Real Case Studies";
 const pageDescription =
   "Browse Gold Coast renovations case studies with completed kitchen, bathroom, and whole-home transformations across key Gold Coast suburbs.";

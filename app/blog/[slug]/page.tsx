@@ -12,10 +12,11 @@ import { buildMetadata } from "@/lib/seo";
 import { generateBlogPostingSchema, generateBreadcrumbSchema } from "@/lib/structured-data";
 
 // Allow admin-created posts to render without a rebuild. Slugs known at build
-// time are still statically generated; new slugs are rendered on-demand and
-// cached for 15 minutes via ISR.
+// time are still statically generated; new slugs render on-demand. Short
+// revalidate plus on-demand revalidation from the admin save flow keeps
+// content fresh.
 export const dynamicParams = true;
-export const revalidate = 900;
+export const revalidate = 60;
 
 type PageProps = {
   params: {

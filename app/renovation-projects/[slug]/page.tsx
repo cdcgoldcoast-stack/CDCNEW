@@ -9,7 +9,11 @@ import { generateBreadcrumbSchema, generateProjectSchema } from "@/lib/structure
 import { buildMetadata, titleFromSlug, DEFAULT_OG_IMAGE } from "@/lib/seo";
 import { buildProjectMetaDescription, SITE_NAME } from "@/config/seo";
 
-export const revalidate = 900;
+// Allow admin-created project slugs to render on-demand instead of 404-ing
+// until the next full build. Short revalidate + on-demand revalidation from
+// the admin save flow keeps content fresh.
+export const revalidate = 60;
+export const dynamicParams = true;
 
 type PageProps = {
   params: {
