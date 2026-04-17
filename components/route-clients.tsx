@@ -172,13 +172,10 @@ const BrandGuidelinesPage = dynamic(() => import("@/views/BrandGuidelines"), {
 const AdminDashboardPage = dynamic(() => import("@/views/admin/AdminDashboard"), {
   ssr: false,
 });
-const AdminChatInquiriesPage = dynamic(() => import("@/views/admin/AdminChatInquiries"), {
-  ssr: false,
-});
-const AdminEnquiriesPage = dynamic(() => import("@/views/admin/AdminEnquiries"), {
-  ssr: false,
-});
 const AdminLeadsPage = dynamic(() => import("@/views/admin/AdminLeads"), {
+  ssr: false,
+});
+const AdminReferralsPage = dynamic(() => import("@/views/admin/AdminReferrals"), {
   ssr: false,
 });
 const AdminGalleryPage = dynamic(() => import("@/views/admin/AdminGallery"), {
@@ -191,9 +188,6 @@ const AdminProjectsPage = dynamic(() => import("@/views/admin/AdminProjects"), {
   ssr: false,
 });
 const AdminSettingsPage = dynamic(() => import("@/views/admin/AdminSettings"), {
-  ssr: false,
-});
-const AdminPopupResponsesPage = dynamic(() => import("@/views/admin/AdminPopupResponses"), {
   ssr: false,
 });
 const AdminSiteImagesPage = dynamic(() => import("@/views/admin/AdminSiteImages"), {
@@ -308,14 +302,6 @@ export function AdminProjectsClient() {
   );
 }
 
-export function AdminEnquiriesClient() {
-  return (
-    <RequireAdmin>
-      <AdminEnquiriesPage />
-    </RequireAdmin>
-  );
-}
-
 export function AdminLeadsClient() {
   return (
     <RequireAdmin>
@@ -324,10 +310,10 @@ export function AdminLeadsClient() {
   );
 }
 
-export function AdminChatInquiriesClient() {
+export function AdminReferralsClient() {
   return (
     <RequireAdmin>
-      <AdminChatInquiriesPage />
+      <AdminReferralsPage />
     </RequireAdmin>
   );
 }
@@ -360,14 +346,6 @@ export function AdminSettingsClient() {
   return (
     <RequireAdmin>
       <AdminSettingsPage />
-    </RequireAdmin>
-  );
-}
-
-export function AdminPopupResponsesClient() {
-  return (
-    <RequireAdmin>
-      <AdminPopupResponsesPage />
     </RequireAdmin>
   );
 }

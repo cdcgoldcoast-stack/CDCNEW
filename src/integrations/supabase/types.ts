@@ -23,6 +23,7 @@ export type Database = {
           email: string | null
           id: string
           name: string
+          notes: string | null
           phone: string
           status: string
           updated_at: string
@@ -35,6 +36,7 @@ export type Database = {
           email?: string | null
           id?: string
           name: string
+          notes?: string | null
           phone: string
           status?: string
           updated_at?: string
@@ -47,6 +49,7 @@ export type Database = {
           email?: string | null
           id?: string
           name?: string
+          notes?: string | null
           phone?: string
           status?: string
           updated_at?: string
@@ -140,6 +143,36 @@ export type Database = {
         }
         Relationships: []
       }
+      edge_rate_limits: {
+        Row: {
+          client_hash: string
+          created_at: string
+          endpoint: string
+          id: string
+          request_count: number
+          updated_at: string
+          window_start: string
+        }
+        Insert: {
+          client_hash: string
+          created_at?: string
+          endpoint: string
+          id?: string
+          request_count?: number
+          updated_at?: string
+          window_start: string
+        }
+        Update: {
+          client_hash?: string
+          created_at?: string
+          endpoint?: string
+          id?: string
+          request_count?: number
+          updated_at?: string
+          window_start?: string
+        }
+        Relationships: []
+      }
       enquiries: {
         Row: {
           budget: string | null
@@ -147,6 +180,7 @@ export type Database = {
           email: string
           full_name: string
           id: string
+          notes: string | null
           phone: string
           postcode: string | null
           renovations: string[] | null
@@ -163,6 +197,7 @@ export type Database = {
           email: string
           full_name: string
           id?: string
+          notes?: string | null
           phone: string
           postcode?: string | null
           renovations?: string[] | null
@@ -179,6 +214,7 @@ export type Database = {
           email?: string
           full_name?: string
           id?: string
+          notes?: string | null
           phone?: string
           postcode?: string | null
           renovations?: string[] | null
@@ -305,30 +341,99 @@ export type Database = {
           created_at: string
           id: string
           name: string
-          session_id: string | null
           thumbnail_url: string | null
           updated_at: string
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           canvas_data?: Json
           created_at?: string
           id?: string
           name?: string
-          session_id?: string | null
           thumbnail_url?: string | null
           updated_at?: string
-          user_id?: string | null
+          user_id: string
         }
         Update: {
           canvas_data?: Json
           created_at?: string
           id?: string
           name?: string
-          session_id?: string | null
           thumbnail_url?: string | null
           updated_at?: string
-          user_id?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notification_settings: {
+        Row: {
+          created_at: string
+          from_email: string
+          from_name: string
+          id: string
+          notification_emails: string[]
+          review_count: string
+          review_rating: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          from_email?: string
+          from_name?: string
+          id?: string
+          notification_emails?: string[]
+          review_count?: string
+          review_rating?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          from_email?: string
+          from_name?: string
+          id?: string
+          notification_emails?: string[]
+          review_count?: string
+          review_rating?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      popup_responses: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          notes: string | null
+          page_url: string | null
+          phone: string
+          source: string | null
+          status: string
+          updated_at: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          page_url?: string | null
+          phone: string
+          source?: string | null
+          status?: string
+          updated_at?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          page_url?: string | null
+          phone?: string
+          source?: string | null
+          status?: string
+          updated_at?: string | null
+          user_agent?: string | null
         }
         Relationships: []
       }
@@ -472,6 +577,54 @@ export type Database = {
         }
         Relationships: []
       }
+      referrals: {
+        Row: {
+          affiliate_email: string
+          affiliate_name: string
+          affiliate_phone: string
+          created_at: string
+          id: string
+          notes: string | null
+          referral_email: string | null
+          referral_name: string
+          referral_phone: string
+          referral_suburb: string | null
+          source: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          affiliate_email: string
+          affiliate_name: string
+          affiliate_phone: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          referral_email?: string | null
+          referral_name: string
+          referral_phone: string
+          referral_suburb?: string | null
+          source?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          affiliate_email?: string
+          affiliate_name?: string
+          affiliate_phone?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          referral_email?: string | null
+          referral_name?: string
+          referral_phone?: string
+          referral_suburb?: string | null
+          source?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -496,81 +649,21 @@ export type Database = {
       viewed_projects: {
         Row: {
           id: string
-          ip_address: string
           project_id: string
           viewed_at: string
+          visitor_hash: string
         }
         Insert: {
           id?: string
-          ip_address: string
           project_id: string
           viewed_at?: string
+          visitor_hash: string
         }
         Update: {
           id?: string
-          ip_address?: string
           project_id?: string
           viewed_at?: string
-        }
-        Relationships: []
-      }
-      popup_responses: {
-        Row: {
-          id: string
-          name: string
-          phone: string
-          source: string
-          page_url: string | null
-          user_agent: string | null
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          name: string
-          phone: string
-          source?: string
-          page_url?: string | null
-          user_agent?: string | null
-          created_at?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          name?: string
-          phone?: string
-          source?: string
-          page_url?: string | null
-          user_agent?: string | null
-          created_at?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      notification_settings: {
-        Row: {
-          id: string
-          notification_emails: string[]
-          from_email: string
-          from_name: string
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          notification_emails?: string[]
-          from_email?: string
-          from_name?: string
-          created_at?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          notification_emails?: string[]
-          from_email?: string
-          from_name?: string
-          created_at?: string
-          updated_at?: string
+          visitor_hash?: string
         }
         Relationships: []
       }
@@ -579,6 +672,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_access_admin: { Args: never; Returns: boolean }
+      can_manage_marketing: { Args: never; Returns: boolean }
       enforce_rate_limit: {
         Args: {
           p_client_hash: string
@@ -588,10 +683,18 @@ export type Database = {
         }
         Returns: Json
       }
+      has_any_role: {
+        Args: { required_roles: Database["public"]["Enums"]["app_role"][] }
+        Returns: boolean
+      }
+      has_role: {
+        Args: { required_role: Database["public"]["Enums"]["app_role"] }
+        Returns: boolean
+      }
       is_admin: { Args: never; Returns: boolean }
     }
     Enums: {
-      app_role: "admin" | "marketer" | "user"
+      app_role: "admin" | "user" | "marketer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -719,7 +822,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "marketer", "user"],
+      app_role: ["admin", "user", "marketer"],
     },
   },
 } as const

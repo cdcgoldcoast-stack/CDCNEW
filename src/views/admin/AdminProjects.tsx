@@ -41,6 +41,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SEO from "@/components/SEO";
 import { siteAssets, categoryLabels, resolveImageSrc, type SiteAsset } from "@/data/siteAssets";
@@ -79,6 +89,7 @@ const AdminProjects = () => {
 
   const [projects, setProjects] = useState<Project[]>([]);
   const [loadingProjects, setLoadingProjects] = useState(true);
+  const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [generating, setGenerating] = useState(false);
@@ -571,8 +582,6 @@ const AdminProjects = () => {
   };
 
   const deleteProject = async (projectId: string) => {
-    if (!confirm("Are you sure you want to delete this project?")) return;
-
     try {
       const { error } = await supabase
         .from("projects")
@@ -581,6 +590,7 @@ const AdminProjects = () => {
       if (error) throw error;
 
       toast.success("Project deleted");
+      setProjectToDelete(null);
       fetchProjects();
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : "Failed to delete project";
@@ -1120,7 +1130,7 @@ const AdminProjects = () => {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => deleteProject(project.id)}
+                      onClick={() => setProjectToDelete(project)}
                       className="text-destructive hover:text-destructive ml-auto"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -1295,6 +1305,27 @@ const AdminProjects = () => {
             )}
           </DialogContent>
         </Dialog>
+
+        <AlertDialog open={!!projectToDelete} onOpenChange={(open) => !open && setProjectToDelete(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete this project?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This permanently removes &ldquo;{projectToDelete?.name ?? ""}&rdquo; and all its images.
+                This cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => projectToDelete && deleteProject(projectToDelete.id)}
+                className="bg-destructive hover:bg-destructive/90"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </AdminLayout>
     </>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import AdminLayout from "@/components/admin/AdminLayout";
@@ -16,7 +17,18 @@ import {
   Search,
   X,
   FolderOpen,
+  RotateCcw,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import SEO from "@/components/SEO";
 import { siteAssets, categoryLabels, resolveImageSrc, SiteAsset } from "@/data/siteAssets";
 
@@ -56,12 +68,14 @@ const BUCKET_NAME = "gallery-images";
 const AdminImageAssets = () => {
   const { user, isAuthorized, isCheckingAccess } = useAdminPageAccess();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
     new Set(["hero", "logo", "service"])
   );
   const [pickerOpen, setPickerOpen] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState<SiteAsset | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [resetTarget, setResetTarget] = useState<SiteAsset | null>(null);
 
   // Fetch current overrides
   const { data: overrides, isLoading: loadingOverrides } = useQuery({
@@ -125,6 +139,25 @@ const AdminImageAssets = () => {
     },
     onError: (error) => {
       toast.error("Failed to replace image: " + error.message);
+    },
+  });
+
+  // Remove an override — reverts the asset to its bundled default
+  const removeOverrideMutation = useMutation({
+    mutationFn: async (originalPath: string) => {
+      const { error } = await supabase
+        .from("image_overrides")
+        .delete()
+        .eq("original_path", originalPath);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["image-overrides"] });
+      toast.success("Reset to default");
+      setResetTarget(null);
+    },
+    onError: (error) => {
+      toast.error("Failed to reset image: " + error.message);
     },
   });
 
@@ -294,7 +327,7 @@ const AdminImageAssets = () => {
                                 )}
 
                                 {/* Hover actions */}
-                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
+                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 p-2">
                                   <Button
                                     variant="secondary"
                                     size="sm"
@@ -304,6 +337,17 @@ const AdminImageAssets = () => {
                                     <Replace className="w-4 h-4" />
                                     Replace
                                   </Button>
+                                  {override && (
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      className="gap-1 bg-background/95"
+                                      onClick={() => setResetTarget(asset)}
+                                    >
+                                      <RotateCcw className="w-4 h-4" />
+                                      Reset
+                                    </Button>
+                                  )}
                                 </div>
                               </div>
 
@@ -387,7 +431,7 @@ const AdminImageAssets = () => {
                       className="mt-4"
                       onClick={() => {
                         setPickerOpen(false);
-                        window.location.href = "/admin/site-images";
+                        navigate("/admin/site-images");
                       }}
                     >
                       Go to Site Images
@@ -433,6 +477,26 @@ const AdminImageAssets = () => {
             )}
           </DialogContent>
         </Dialog>
+
+        <AlertDialog open={!!resetTarget} onOpenChange={(open) => !open && setResetTarget(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Reset to default?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This removes your custom override for &ldquo;{resetTarget?.label ?? ""}&rdquo; and
+                restores the bundled default image. Your uploaded image stays in Site Images.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => resetTarget && removeOverrideMutation.mutate(resetTarget.path)}
+              >
+                Reset
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </AdminLayout>
     </>
   );

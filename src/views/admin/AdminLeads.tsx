@@ -291,12 +291,10 @@ const AdminLeads = () => {
       if (chatResult.error) throw chatResult.error;
       if (popupResult.error) throw popupResult.error;
 
-      // Cast via unknown because the generated Supabase types don't yet include
-      // the `notes` column added in migration 20260417120000.
       const unified: UnifiedLead[] = [
-        ...(enquiriesResult.data ?? []).map((row) => mapEnquiry(row as unknown as EnquiryRow)),
-        ...(chatResult.data ?? []).map((row) => mapChat(row as unknown as ChatRow)),
-        ...(popupResult.data ?? []).map((row) => mapPopup(row as unknown as PopupRow)),
+        ...(enquiriesResult.data ?? []).map((row) => mapEnquiry(row as EnquiryRow)),
+        ...(chatResult.data ?? []).map((row) => mapChat(row as ChatRow)),
+        ...(popupResult.data ?? []).map((row) => mapPopup(row as PopupRow)),
       ].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 
       setLeads(unified);
@@ -336,8 +334,7 @@ const AdminLeads = () => {
     try {
       const { error } = await supabase
         .from(tableForSource(selectedLead.source))
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .update({ notes: notesDraft } as any)
+        .update({ notes: notesDraft })
         .eq("id", selectedLead.id);
 
       if (error) throw error;

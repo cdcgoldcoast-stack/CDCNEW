@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import {
   FolderOpen,
   Inbox,
+  Gift,
   LogOut,
   Home,
   LayoutDashboard,
@@ -23,6 +24,7 @@ interface AdminLayoutProps {
 const navItems = [
   { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard, adminOnly: false },
   { label: "Leads", href: "/admin/leads", icon: Inbox, adminOnly: false },
+  { label: "Referrals", href: "/admin/referrals", icon: Gift, adminOnly: false },
   { label: "Projects", href: "/admin/projects", icon: FolderOpen, adminOnly: false },
   { label: "Gallery", href: "/admin/gallery", icon: Images, adminOnly: false },
   { label: "Site Images", href: "/admin/site-images", icon: ImagePlus, adminOnly: false },

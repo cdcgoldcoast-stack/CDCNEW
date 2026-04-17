@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Separator } from "@/components/ui/separator";
 import SEO from "@/components/SEO";
 import { toast } from "sonner";
-import { Loader2, Mail, Lock, User, Shield, Bell, Plus, X } from "lucide-react";
+import { Loader2, Mail, Lock, User, Shield, Bell, Plus, X, Star } from "lucide-react";
 
 const AdminSettings = () => {
   const { user, isAuthorized, isCheckingAccess } = useAdminPageAccess({ showForbiddenToast: false });
@@ -34,6 +34,11 @@ const AdminSettings = () => {
   const [notifLoading, setNotifLoading] = useState(false);
   const [notifSettingsId, setNotifSettingsId] = useState<string | null>(null);
 
+  // Public review stats (shown site-wide on Google Review badge)
+  const [reviewRating, setReviewRating] = useState("4.9");
+  const [reviewCount, setReviewCount] = useState("50");
+  const [reviewStatsLoading, setReviewStatsLoading] = useState(false);
+
   // Load profile on first render
   useEffect(() => {
     if (user && !profileLoaded) {
@@ -57,7 +62,7 @@ const AdminSettings = () => {
     if (!isAuthorized) return;
     supabase
       .from("notification_settings")
-      .select("id, from_email, from_name, notification_emails")
+      .select("id, from_email, from_name, notification_emails, review_rating, review_count")
       .limit(1)
       .maybeSingle()
       .then(({ data, error }) => {
@@ -70,6 +75,8 @@ const AdminSettings = () => {
           setNotifFromEmail(data.from_email || "hello@cdconstruct.com.au");
           setNotifFromName(data.from_name || "Concept Design Construct");
           setNotifEmails(Array.isArray(data.notification_emails) ? data.notification_emails : []);
+          if (data.review_rating) setReviewRating(data.review_rating);
+          if (data.review_count) setReviewCount(data.review_count);
         }
       });
   }, [isAuthorized]);
@@ -247,6 +254,54 @@ const AdminSettings = () => {
     }
   };
 
+  const handleSaveReviewStats = async () => {
+    const rating = reviewRating.trim();
+    const count = reviewCount.trim();
+
+    // Basic validation — rating is a number between 0 and 5, count is a positive integer
+    const ratingNum = Number(rating);
+    if (Number.isNaN(ratingNum) || ratingNum < 0 || ratingNum > 5) {
+      toast.error("Rating must be between 0 and 5");
+      return;
+    }
+    if (!/^\d+$/.test(count) || Number(count) < 0) {
+      toast.error("Review count must be a positive whole number");
+      return;
+    }
+
+    setReviewStatsLoading(true);
+    try {
+      const payload = {
+        review_rating: rating,
+        review_count: count,
+        updated_at: new Date().toISOString(),
+      };
+
+      if (notifSettingsId) {
+        const { error } = await supabase
+          .from("notification_settings")
+          .update(payload)
+          .eq("id", notifSettingsId);
+        if (error) throw error;
+      } else {
+        const { data, error } = await supabase
+          .from("notification_settings")
+          .insert(payload)
+          .select("id")
+          .single();
+        if (error) throw error;
+        setNotifSettingsId(data.id);
+      }
+
+      toast.success("Review stats updated");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Failed to save review stats";
+      toast.error(msg);
+    } finally {
+      setReviewStatsLoading(false);
+    }
+  };
+
   return (
     <AdminLayout>
       <SEO title="Admin - Account Settings" noIndex={true} />
@@ -335,6 +390,51 @@ const AdminSettings = () => {
             <Button onClick={handleSaveNotifSettings} disabled={notifLoading}>
               {notifLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
               Save Notification Settings
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Separator />
+
+        {/* Public Review Stats */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Star className="w-5 h-5 text-primary" />
+              <CardTitle className="text-lg">Google Review Badge</CardTitle>
+            </div>
+            <CardDescription>
+              Shown on the site wherever the Google Reviews badge appears. Update as reviews grow.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="reviewRating">Rating (0–5)</Label>
+                <Input
+                  id="reviewRating"
+                  type="text"
+                  inputMode="decimal"
+                  placeholder="4.9"
+                  value={reviewRating}
+                  onChange={(e) => setReviewRating(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="reviewCount">Review count</Label>
+                <Input
+                  id="reviewCount"
+                  type="text"
+                  inputMode="numeric"
+                  placeholder="50"
+                  value={reviewCount}
+                  onChange={(e) => setReviewCount(e.target.value)}
+                />
+              </div>
+            </div>
+            <Button onClick={handleSaveReviewStats} disabled={reviewStatsLoading}>
+              {reviewStatsLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+              Save Review Stats
             </Button>
           </CardContent>
         </Card>
