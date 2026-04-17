@@ -331,9 +331,9 @@ export default function GoldCoastRenovationsLP() {
                   </span>
                   <a
                     href="#quote-form"
-                    className="text-center text-sm text-foreground/70 hover:text-primary transition-colors"
+                    className="text-center text-base md:text-lg font-bold text-primary hover:opacity-80 transition-opacity"
                   >
-                    Can&apos;t talk? <span className="underline">Get a fast callback &rarr;</span>
+                    Can&apos;t talk? <span className="underline">Get a Fast Callback &rarr;</span>
                   </a>
                 </div>
                 <div className="aspect-[4/3] overflow-hidden bg-muted">
