@@ -24,3 +24,10 @@ verify_jwt = false
 
 [functions.search-images]
 verify_jwt = false
+
+# Admin-authenticated endpoints: we verify the JWT and admin role in code
+# via requireAdminUser(). Disabling gateway verify_jwt avoids the
+# UNAUTHORIZED_UNSUPPORTED_TOKEN_ALGORITHM error when the project uses
+# asymmetric (ES256/RS256) JWT signing keys.
+[functions.manage-users]
+verify_jwt = false
