@@ -541,8 +541,8 @@ export default function GoldCoastRenovationsLP() {
               <p className="text-foreground/60 mb-8">
                 See what your renovation could look like. Real project transformations by CD Construct.
               </p>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+              <div className="grid md:grid-cols-2 gap-6 items-start">
+                <div className="relative overflow-hidden bg-muted">
                   <ResponsiveImage
                     src={images.before}
                     alt="Room before renovation"
@@ -552,13 +552,13 @@ export default function GoldCoastRenovationsLP() {
                     loading="lazy"
                     quality={40}
                     useSupabaseTransform
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="w-full h-auto block"
                   />
                   <span className="absolute top-4 left-4 bg-background/90 text-xs uppercase tracking-wider text-foreground px-3 py-1.5">
                     Before
                   </span>
                 </div>
-                <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                <div className="relative overflow-hidden bg-muted">
                   <ResponsiveImage
                     src={images.after}
                     alt="Bathroom renovation after - CD Construct Gold Coast"
@@ -568,7 +568,7 @@ export default function GoldCoastRenovationsLP() {
                     loading="lazy"
                     quality={40}
                     useSupabaseTransform
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="w-full h-auto block"
                   />
                   <span className="absolute top-4 left-4 bg-primary text-primary-foreground text-xs uppercase tracking-wider px-3 py-1.5">
                     After
