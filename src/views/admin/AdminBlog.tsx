@@ -144,12 +144,22 @@ const AdminBlog = () => {
       setDbPosts((dbData as BlogRow[]) ?? []);
 
       // MDX posts — fetched via a small client helper route to avoid bundling
-      // fs APIs. Fall back to empty if the endpoint isn't reachable.
+      // fs APIs. Requires the admin's session token; falls back to empty on
+      // any failure since the DB posts are the primary source of truth.
       try {
-        const res = await fetch("/admin/api/blog-mdx", { cache: "no-store" });
-        if (res.ok) {
-          const json = (await res.json()) as { posts: MdxListItem[] };
-          setMdxPosts(json.posts ?? []);
+        const { data: sessionData } = await supabase.auth.getSession();
+        const token = sessionData.session?.access_token;
+        if (token) {
+          const res = await fetch("/admin/api/blog-mdx", {
+            cache: "no-store",
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (res.ok) {
+            const json = (await res.json()) as { posts: MdxListItem[] };
+            setMdxPosts(json.posts ?? []);
+          } else {
+            setMdxPosts([]);
+          }
         } else {
           setMdxPosts([]);
         }

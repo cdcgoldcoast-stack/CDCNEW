@@ -271,6 +271,26 @@ const Header = () => {
                   }`}
                 >
                   <div
+                    role="menu"
+                    aria-label={`${item.label} navigation`}
+                    onKeyDown={(e) => {
+                      if (e.key === "Escape") {
+                        setOpenDropdown(null);
+                        return;
+                      }
+                      if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+                      e.preventDefault();
+                      const items = Array.from(
+                        e.currentTarget.querySelectorAll<HTMLAnchorElement>('[role="menuitem"]'),
+                      );
+                      if (items.length === 0) return;
+                      const currentIndex = items.indexOf(document.activeElement as HTMLAnchorElement);
+                      const delta = e.key === "ArrowDown" ? 1 : -1;
+                      const nextIndex = currentIndex === -1
+                        ? (delta === 1 ? 0 : items.length - 1)
+                        : (currentIndex + delta + items.length) % items.length;
+                      items[nextIndex].focus();
+                    }}
                     className={`min-w-[220px] border py-2 ${
                       shouldBeTransparent
                         ? "bg-black/80 border-white/20"
@@ -281,9 +301,10 @@ const Header = () => {
                       <Link
                         key={link.href}
                         to={link.href}
+                        role="menuitem"
                         {...getPrefetchHandlers(link.href)}
-                        className={`block px-4 py-2 text-[11px] 2xl:text-xs uppercase tracking-[0.15em] transition-all duration-300 hover:opacity-60 ${
-                          shouldBeTransparent ? "text-white" : "text-foreground"
+                        className={`block px-4 py-2 text-[11px] 2xl:text-xs uppercase tracking-[0.15em] transition-all duration-300 hover:opacity-60 focus:opacity-60 focus:outline focus:outline-1 focus:outline-offset-2 ${
+                          shouldBeTransparent ? "text-white focus:outline-white" : "text-foreground focus:outline-primary"
                         }`}
                         onClick={() => setOpenDropdown(null)}
                       >
@@ -321,7 +342,7 @@ const Header = () => {
           <button
             className="p-2 flex flex-col gap-1.5"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-navigation"
           >

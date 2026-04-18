@@ -1,15 +1,12 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
-import { createClient } from "@supabase/supabase-js";
+import { enforceAdminRateLimit, requireAdminSession } from "@/lib/adminAuth";
 
 // Admin-only endpoint that rebuilds specific public pages on demand. Called
 // from admin views (blog, projects, gallery, etc.) immediately after a save
 // so changes appear on the site within seconds instead of waiting for ISR.
 
 export const dynamic = "force-dynamic";
-
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
-const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 
 // Whitelist of paths an admin is allowed to revalidate. We accept bare paths
 // as well as templated paths for dynamic routes (e.g. `/blog/[slug]`).
@@ -31,48 +28,26 @@ function isPathAllowed(path: string): boolean {
   return ALLOWED_PATH_PATTERNS.some((pattern) => pattern.test(path));
 }
 
-async function requireAdmin(authHeader: string | null): Promise<{ ok: true } | { ok: false; status: number; error: string }> {
-  if (!authHeader) {
-    return { ok: false, status: 401, error: "Missing authorization header" };
-  }
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    return { ok: false, status: 500, error: "Supabase not configured" };
-  }
-
-  // Use the caller's JWT to validate their identity AND check their role via
-  // the existing user_roles RLS policies (admins + marketers can see their
-  // own row; anything else returns no match).
-  const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-    global: { headers: { Authorization: authHeader } },
-  });
-
-  const { data: userData, error: userError } = await client.auth.getUser();
-  if (userError || !userData?.user) {
-    return { ok: false, status: 401, error: "Invalid session" };
-  }
-
-  const { data: roleRow, error: roleError } = await client
-    .from("user_roles")
-    .select("role")
-    .eq("user_id", userData.user.id)
-    .maybeSingle();
-
-  if (roleError) {
-    return { ok: false, status: 403, error: "Role check failed" };
-  }
-
-  const role = roleRow?.role;
-  if (role !== "admin" && role !== "marketer") {
-    return { ok: false, status: 403, error: "Forbidden" };
-  }
-
-  return { ok: true };
-}
-
 export async function POST(req: Request) {
-  const auth = await requireAdmin(req.headers.get("authorization"));
+  const auth = await requireAdminSession(req.headers.get("authorization"));
   if (!auth.ok) {
     return NextResponse.json({ error: auth.error }, { status: auth.status });
+  }
+
+  // Rate limit per authenticated user so a compromised admin session can't
+  // spam revalidations in a loop. 60 per minute is generous for legitimate
+  // admin save flows (each save triggers 1-2 revalidations).
+  const rate = await enforceAdminRateLimit({
+    userId: auth.userId,
+    endpoint: "admin-revalidate",
+    limit: 60,
+    windowSeconds: 60,
+  });
+  if (rate && !rate.allowed) {
+    return NextResponse.json(
+      { error: "Too many revalidations. Please wait and try again.", resetAt: rate.resetAt },
+      { status: 429, headers: { "Retry-After": "60" } }
+    );
   }
 
   let body: { paths?: unknown };

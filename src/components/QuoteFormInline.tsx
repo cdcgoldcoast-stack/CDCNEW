@@ -219,7 +219,7 @@ export default function QuoteFormInline({
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor={`fullName-${source}`}>
-              Full Name <span className="text-foreground/40">*</span>
+              Full Name <span className="text-destructive" aria-hidden="true">*</span>
             </Label>
             <Input
               id={`fullName-${source}`}
@@ -227,16 +227,21 @@ export default function QuoteFormInline({
               onChange={(e) => updateFormData("fullName", e.target.value)}
               placeholder="Your name"
               className={cn(errors.fullName && "border-destructive")}
+              aria-required="true"
+              aria-invalid={!!errors.fullName}
+              aria-describedby={errors.fullName ? `fullName-${source}-error` : undefined}
             />
             {errors.fullName && (
-              <p className="text-destructive text-xs">{errors.fullName}</p>
+              <p id={`fullName-${source}-error`} className="text-destructive text-xs" role="alert">
+                {errors.fullName}
+              </p>
             )}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor={`phone-${source}`}>
-                Phone <span className="text-foreground/40">*</span>
+                Phone <span className="text-destructive" aria-hidden="true">*</span>
               </Label>
               <Input
                 id={`phone-${source}`}
@@ -245,15 +250,20 @@ export default function QuoteFormInline({
                 onChange={(e) => updateFormData("phone", e.target.value)}
                 placeholder="Your phone number"
                 className={cn(errors.phone && "border-destructive")}
+                aria-required="true"
+                aria-invalid={!!errors.phone}
+                aria-describedby={errors.phone ? `phone-${source}-error` : undefined}
               />
               {errors.phone && (
-                <p className="text-destructive text-xs">{errors.phone}</p>
+                <p id={`phone-${source}-error`} className="text-destructive text-xs" role="alert">
+                  {errors.phone}
+                </p>
               )}
             </div>
 
             <div className="space-y-2">
               <Label htmlFor={`email-${source}`}>
-                Email <span className="text-foreground/40">*</span>
+                Email <span className="text-destructive" aria-hidden="true">*</span>
               </Label>
               <Input
                 id={`email-${source}`}
@@ -262,16 +272,21 @@ export default function QuoteFormInline({
                 onChange={(e) => updateFormData("email", e.target.value)}
                 placeholder="your@email.com"
                 className={cn(errors.email && "border-destructive")}
+                aria-required="true"
+                aria-invalid={!!errors.email}
+                aria-describedby={errors.email ? `email-${source}-error` : undefined}
               />
               {errors.email && (
-                <p className="text-destructive text-xs">{errors.email}</p>
+                <p id={`email-${source}-error`} className="text-destructive text-xs" role="alert">
+                  {errors.email}
+                </p>
               )}
             </div>
           </div>
 
           <div className="space-y-2">
             <Label htmlFor={`service-${source}`}>
-              What do you need? <span className="text-foreground/40">*</span>
+              What do you need? <span className="text-destructive" aria-hidden="true">*</span>
             </Label>
             <Select
               value={formData.service}
@@ -280,6 +295,9 @@ export default function QuoteFormInline({
               <SelectTrigger
                 id={`service-${source}`}
                 className={cn("h-11", errors.service && "border-destructive")}
+                aria-required="true"
+                aria-invalid={!!errors.service}
+                aria-describedby={errors.service ? `service-${source}-error` : undefined}
               >
                 <SelectValue placeholder="Select a service" />
               </SelectTrigger>
@@ -292,7 +310,9 @@ export default function QuoteFormInline({
               </SelectContent>
             </Select>
             {errors.service && (
-              <p className="text-destructive text-xs">{errors.service}</p>
+              <p id={`service-${source}-error`} className="text-destructive text-xs" role="alert">
+                {errors.service}
+              </p>
             )}
           </div>
 

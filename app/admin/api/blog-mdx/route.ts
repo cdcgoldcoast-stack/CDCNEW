@@ -1,12 +1,18 @@
 import { NextResponse } from "next/server";
 import { getMdxOnlyBlogPosts } from "@/lib/blog";
+import { requireAdminSession } from "@/lib/adminAuth";
 
 // Admin-only listing of the MDX blog posts living in /content/blog. The Admin UI
 // shows these alongside DB posts so authors can see the full catalogue. MDX posts
 // are read-only from the admin (they're edited via git).
 export const dynamic = "force-dynamic";
 
-export async function GET() {
+export async function GET(req: Request) {
+  const auth = await requireAdminSession(req.headers.get("authorization"));
+  if (!auth.ok) {
+    return NextResponse.json({ error: auth.error }, { status: auth.status });
+  }
+
   try {
     const posts = await getMdxOnlyBlogPosts();
     return NextResponse.json({
