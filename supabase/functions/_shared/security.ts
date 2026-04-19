@@ -239,16 +239,23 @@ export async function requireAnyRole(
 }
 
 export function getClientIP(req: Request): string {
+  // Supabase Functions sit behind Cloudflare, so CF-Connecting-IP is the
+  // only header a client can't spoof (CF rewrites it on ingress). Prefer it.
+  const cfIP = req.headers.get("cf-connecting-ip");
+  if (cfIP) return cfIP.trim();
+
+  // X-Real-IP, when set by a trusted proxy, is similarly authoritative.
+  const realIP = req.headers.get("x-real-ip");
+  if (realIP) return realIP.trim();
+
+  // Fall back to X-Forwarded-For. Use the *rightmost* entry (closest to the
+  // server) — the leftmost can be spoofed by the client prepending addresses
+  // before their real IP reaches the proxy chain.
   const forwardedFor = req.headers.get("x-forwarded-for");
   if (forwardedFor) {
-    return forwardedFor.split(",")[0].trim();
+    const parts = forwardedFor.split(",").map((part) => part.trim()).filter(Boolean);
+    if (parts.length > 0) return parts[parts.length - 1];
   }
-
-  const realIP = req.headers.get("x-real-ip");
-  if (realIP) return realIP;
-
-  const cfIP = req.headers.get("cf-connecting-ip");
-  if (cfIP) return cfIP;
 
   return "unknown";
 }
