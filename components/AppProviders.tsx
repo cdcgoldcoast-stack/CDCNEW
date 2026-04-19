@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // renders nothing, so wrapping the tree in HelmetProvider was dead weight (~15KB).
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
-import { loadGtmScript, trackPageView } from "@/lib/analytics";
+import { trackPageView } from "@/lib/analytics";
 import { initMetaPixel, trackMetaPixelPageView } from "@/lib/metaPixel";
 import { initPostHog, trackPostHogPageView } from "@/lib/posthog";
 
@@ -117,7 +117,9 @@ export default function AppProviders({ children }: AppProvidersProps) {
 
   useEffect(() => {
     if (!allowMarketingScripts) return;
-    loadGtmScript();
+    // GTM itself is loaded via the inline <head> snippet in app/layout.tsx —
+    // loading it here as well caused duplicate container initialization and
+    // double-firing of every GA4 tag. Do not re-add.
     initMetaPixel();
     initPostHog();
   }, [allowMarketingScripts]);
