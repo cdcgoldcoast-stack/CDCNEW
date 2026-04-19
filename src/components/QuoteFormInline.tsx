@@ -145,15 +145,19 @@ export default function QuoteFormInline({
         }).context;
         const status = context?.status;
 
+        let serverMessage: string | null = null;
         if (context?.json) {
           try {
             const body = await context.json();
             console.error("Edge Function response:", { status, body });
-            const msg = (body as { error?: string })?.error;
-            if (msg) throw new Error(msg);
+            serverMessage = (body as { error?: string })?.error ?? null;
           } catch (jsonErr) {
             console.error("Failed to parse error response body:", jsonErr);
           }
+        }
+
+        if (serverMessage) {
+          throw new Error(serverMessage);
         }
 
         if (status === 429) {
