@@ -82,7 +82,12 @@ export function buildCorsHeaders(req: Request): Record<string, string> {
 
 export function rejectDisallowedOrigin(req: Request): Response | null {
   if (isAllowedOrigin(req)) return null;
-  return jsonResponse(req, 403, { error: "Origin not allowed" });
+  const origin = getOrigin(req) || "(no origin header)";
+  return jsonResponse(req, 403, {
+    error: `Submissions from this origin are not permitted. Origin: ${origin}. Contact site admin if this is unexpected.`,
+    code: "origin_not_allowed",
+    origin,
+  });
 }
 
 export function jsonResponse(

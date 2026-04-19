@@ -67,6 +67,7 @@ export default function QuoteFormInline({
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [website, setWebsite] = useState("");
   const [formData, setFormData] = useState({
     fullName: "",
@@ -87,8 +88,21 @@ export default function QuoteFormInline({
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.fullName.trim()) newErrors.fullName = "Name is required";
-    if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
+    const nameTrimmed = formData.fullName.trim();
+    if (!nameTrimmed) {
+      newErrors.fullName = "Name is required";
+    } else if (nameTrimmed.length < 2) {
+      newErrors.fullName = "Please enter your full name";
+    }
+
+    const phoneTrimmed = formData.phone.trim();
+    const phoneDigitCount = (phoneTrimmed.match(/\d/g) || []).length;
+    if (!phoneTrimmed) {
+      newErrors.phone = "Phone number is required";
+    } else if (phoneDigitCount < 4) {
+      newErrors.phone = "Please enter a phone number with at least 4 digits";
+    }
+
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
@@ -105,6 +119,7 @@ export default function QuoteFormInline({
 
     if (!validate()) return;
 
+    setSubmitError(null);
     setSubmitting(true);
 
     try {
@@ -125,14 +140,47 @@ export default function QuoteFormInline({
       });
 
       if (error) {
-        const context = (error as { context?: { json?: () => Promise<unknown> } }).context;
+        const context = (error as {
+          context?: { status?: number; json?: () => Promise<unknown> };
+        }).context;
+        const status = context?.status;
+
         if (context?.json) {
-          const body = await context.json();
-          console.error("Edge Function response:", body);
-          const msg = (body as { error?: string })?.error;
-          if (msg) throw new Error(msg);
+          try {
+            const body = await context.json();
+            console.error("Edge Function response:", { status, body });
+            const msg = (body as { error?: string })?.error;
+            if (msg) throw new Error(msg);
+          } catch (jsonErr) {
+            console.error("Failed to parse error response body:", jsonErr);
+          }
         }
-        throw error;
+
+        if (status === 429) {
+          throw new Error(
+            "You've submitted several enquiries from this network in the last hour. Please call us on 0413 468 928 or try again later.",
+          );
+        }
+        if (status === 403) {
+          throw new Error(
+            "Submissions from this URL are blocked by our server. Please call us on 0413 468 928 — we'll take your details directly.",
+          );
+        }
+        if (typeof status === "number" && status >= 500) {
+          throw new Error(
+            "Our server is having trouble right now. Please call us on 0413 468 928 or try again in a few minutes.",
+          );
+        }
+        if (typeof status === "number" && status >= 400) {
+          throw new Error(
+            "We couldn't process your enquiry. Please check the form and try again.",
+          );
+        }
+
+        const fallbackMessage =
+          (error as { message?: string }).message ||
+          "Couldn't reach our server. Please check your connection or call us on 0413 468 928.";
+        throw new Error(fallbackMessage);
       }
       if (data?.error) throw new Error(data.error);
 
@@ -151,8 +199,12 @@ export default function QuoteFormInline({
       setSubmitted(true);
     } catch (error: unknown) {
       console.error("Error submitting enquiry:", error);
-      const message = error instanceof Error ? error.message : "Something went wrong. Please try again later.";
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Couldn't reach our server. Please check your connection and try again, or call us on 0413 468 928.";
       toast.error(message);
+      setSubmitError(message);
     } finally {
       setSubmitting(false);
     }
@@ -358,6 +410,24 @@ export default function QuoteFormInline({
         </div>
 
         <div className="mt-6 pt-5 border-t border-border flex flex-col gap-3">
+          {submitError && (
+            <div
+              role="alert"
+              className="bg-destructive/10 border border-destructive/30 text-destructive text-sm px-4 py-3"
+            >
+              <p className="font-medium mb-1">We couldn&apos;t submit your enquiry.</p>
+              <p className="text-foreground/70">
+                {submitError} Please try again, or call us directly on{" "}
+                <a
+                  href="tel:0413468928"
+                  className="font-semibold text-destructive underline"
+                >
+                  0413 468 928
+                </a>
+                .
+              </p>
+            </div>
+          )}
           <Button
             type="submit"
             disabled={submitting}

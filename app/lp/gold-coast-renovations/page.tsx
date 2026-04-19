@@ -10,9 +10,9 @@ const GoldCoastRenovationsLP = dynamic(
 );
 
 export const metadata: Metadata = {
-  title: "Gold Coast Renovations | Free Quote | CD Construct",
+  title: "Gold Coast Home Renovations | Trusted & Licensed Local Contractor",
   description:
-    "Get a free renovation quote from QBCC licensed Gold Coast builders. Kitchen, bathroom & whole-home experts. Call 0413 468 928.",
+    "Looking for reliable home renovation services on the Gold Coast? We design & build stunning spaces. Affordable pricing. Book a free consultation today.",
   robots: {
     index: false,
     follow: false,

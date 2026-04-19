@@ -3,6 +3,7 @@
 import ResponsiveImage from "@/components/ResponsiveImage";
 import QuoteFormInline from "@/components/QuoteFormInline";
 import { Check, Phone, ShieldCheck } from "lucide-react";
+import logo from "@/assets/logo.webp";
 
 const faqs = [
   {
@@ -72,10 +73,6 @@ const images = {
     "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/bathroom-upgrade-maudsland-concept-design-construct.webp",
   gallery8:
     "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Elanora-Gold-Coast-Bathroom-Renovations.webp",
-  before:
-    "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Renovaton-before.webp",
-  after:
-    "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/RenovationAI.webp",
 };
 
 const services = [
@@ -270,13 +267,16 @@ const featureStrips = [
 /* -------------------------------------------------------------------------- */
 /*  CTA helpers — only phone calls and form anchors, zero navigation links    */
 /* -------------------------------------------------------------------------- */
-function CallCTA() {
+const CALL_CTA_LABEL = "Call Now — 0413 468 928";
+
+function CallCTA({ size = "md" }: { size?: "md" | "lg" }) {
+  const sizing = size === "lg" ? "px-8 py-4" : "px-8 py-3";
   return (
     <a
       href="tel:0413468928"
-      className="text-label bg-primary text-primary-foreground px-8 py-3 hover:opacity-90 transition-opacity inline-flex items-center justify-center gap-2"
+      className={`text-label bg-primary text-primary-foreground ${sizing} hover:opacity-90 transition-opacity inline-flex items-center justify-center gap-2`}
     >
-      <Phone className="w-4 h-4" /> Call 0413 468 928
+      <Phone className="w-4 h-4" /> {CALL_CTA_LABEL}
     </a>
   );
 }
@@ -292,15 +292,45 @@ function FormCTA() {
   );
 }
 
+function LpTopBar() {
+  return (
+    <div className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border/60">
+      <div className="container-wide flex items-center justify-between h-14 md:h-16">
+        <div className="flex-shrink-0 flex items-center" aria-label="Concept Design Construct">
+          <ResponsiveImage
+            src={typeof logo === "string" ? logo : logo.src}
+            alt="Concept Design Construct"
+            width={701}
+            height={131}
+            sizes="(min-width: 768px) 180px, 140px"
+            loading="eager"
+            fetchPriority="high"
+            className="h-auto w-32 md:w-44"
+          />
+        </div>
+        <a
+          href="tel:0413468928"
+          className="text-label bg-primary text-primary-foreground px-4 md:px-6 py-2 md:py-2.5 hover:opacity-90 transition-opacity inline-flex items-center justify-center gap-2 text-xs md:text-sm"
+        >
+          <Phone className="w-3.5 h-3.5 md:w-4 md:h-4" />
+          <span className="hidden sm:inline">Call Now — 0413 468 928</span>
+          <span className="sm:hidden">0413 468 928</span>
+        </a>
+      </div>
+    </div>
+  );
+}
+
 /* -------------------------------------------------------------------------- */
 /*  Landing page component — NO Header, NO Footer, NO outbound links          */
 /* -------------------------------------------------------------------------- */
 export default function GoldCoastRenovationsLP() {
   return (
     <div className="min-h-screen bg-background">
+      <LpTopBar />
       <main id="main-content">
         {/* 1. Hero with embedded form */}
-        <section className="pt-16 pb-16 md:pt-24 md:pb-24 bg-cream">
+        <section className="pt-12 pb-16 md:pt-16 md:pb-24 bg-cream">
           <div className="container-wide">
             <div className="grid lg:grid-cols-[1fr_440px] gap-12 lg:gap-16 items-start">
               <div>
@@ -320,12 +350,7 @@ export default function GoldCoastRenovationsLP() {
                   Price confirmed before work begins. No hidden fees.
                 </p>
                 <div className="flex flex-col gap-3 mb-8">
-                  <a
-                    href="tel:0413468928"
-                    className="text-label bg-primary text-primary-foreground px-8 py-4 text-center hover:opacity-90 transition-opacity inline-flex items-center justify-center gap-2"
-                  >
-                    <Phone className="w-4 h-4" /> Call Now — 0413 468 928
-                  </a>
+                  <CallCTA size="lg" />
                   <span className="text-center text-xs uppercase tracking-wider text-foreground/50">
                     Obligation Free
                   </span>
@@ -505,7 +530,7 @@ export default function GoldCoastRenovationsLP() {
           </div>
         </section>
 
-        {/* 5. Our Recent Work — Gallery + Before & After */}
+        {/* 5. Our Recent Work — Gallery */}
         <section className="py-16 md:py-24 bg-cream">
           <div className="container-wide">
             <div className="max-w-3xl mb-12">
@@ -534,47 +559,6 @@ export default function GoldCoastRenovationsLP() {
                   />
                 </div>
               ))}
-            </div>
-
-            <div className="mt-16">
-              <h3 className="font-serif italic text-2xl text-primary mb-2">Before & After</h3>
-              <p className="text-foreground/60 mb-8">
-                See what your renovation could look like. Real project transformations by CD Construct.
-              </p>
-              <div className="grid md:grid-cols-2 gap-6 items-start">
-                <div className="relative overflow-hidden bg-muted">
-                  <ResponsiveImage
-                    src={images.before}
-                    alt="Room before renovation"
-                    width={700}
-                    height={525}
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    loading="lazy"
-                    quality={40}
-                    useSupabaseTransform
-                    className="w-full h-auto block"
-                  />
-                  <span className="absolute top-4 left-4 bg-background/90 text-xs uppercase tracking-wider text-foreground px-3 py-1.5">
-                    Before
-                  </span>
-                </div>
-                <div className="relative overflow-hidden bg-muted">
-                  <ResponsiveImage
-                    src={images.after}
-                    alt="Bathroom renovation after - CD Construct Gold Coast"
-                    width={700}
-                    height={525}
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    loading="lazy"
-                    quality={40}
-                    useSupabaseTransform
-                    className="w-full h-auto block"
-                  />
-                  <span className="absolute top-4 left-4 bg-primary text-primary-foreground text-xs uppercase tracking-wider px-3 py-1.5">
-                    After
-                  </span>
-                </div>
-              </div>
             </div>
 
             <div className="flex flex-wrap gap-4 mt-12">
@@ -700,12 +684,7 @@ export default function GoldCoastRenovationsLP() {
               <p className="text-foreground/70 mb-5">
                 Call us directly and we&apos;ll answer immediately — during business hours.
               </p>
-              <a
-                href="tel:0413468928"
-                className="text-label bg-primary text-primary-foreground px-8 py-3 hover:opacity-90 transition-opacity inline-flex items-center justify-center gap-2"
-              >
-                <Phone className="w-4 h-4" /> Call Now — 0413 468 928
-              </a>
+              <CallCTA />
             </div>
           </div>
         </section>

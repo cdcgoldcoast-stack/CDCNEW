@@ -29,8 +29,10 @@ interface EnquiryRequest {
 }
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PHONE_REGEX = /^[0-9+()\-\s]{6,20}$/;
 const POSTCODE_REGEX = /^\d{4}$/;
+// Phone is intentionally permissive — accept any string with at least 4 digits
+// (international, extensions, formatted with spaces/dashes/dots all OK).
+const PHONE_DIGIT_COUNT_MIN = 4;
 
 function sanitizeString(value: unknown, maxLength: number): string {
   if (typeof value !== "string") return "";
@@ -76,7 +78,8 @@ serve(async (req) => {
         req,
         429,
         {
-          error: "Too many quote requests. Please try again later.",
+          error: "You've submitted several enquiries from this network in the last hour. Please call us on 0413 468 928 or try again later.",
+          code: "rate_limited",
           remaining: rateLimit.remaining,
           resetAt: rateLimit.resetAt,
         },
@@ -107,23 +110,44 @@ serve(async (req) => {
     const renovations = normalizeRenovations(body.renovations);
 
     if (fullName.length < 2) {
-      return jsonResponse(req, 400, { error: "Please provide your full name." });
+      return jsonResponse(req, 400, {
+        error: "Please enter your full name (at least 2 characters).",
+        code: "invalid_name",
+        field: "fullName",
+      });
     }
 
     if (!EMAIL_REGEX.test(email)) {
-      return jsonResponse(req, 400, { error: "Please provide a valid email address." });
+      return jsonResponse(req, 400, {
+        error: "Please enter a valid email address (e.g. you@example.com).",
+        code: "invalid_email",
+        field: "email",
+      });
     }
 
-    if (!PHONE_REGEX.test(phone)) {
-      return jsonResponse(req, 400, { error: "Please provide a valid phone number." });
+    const phoneDigitCount = (phone.match(/\d/g) || []).length;
+    if (phoneDigitCount < PHONE_DIGIT_COUNT_MIN) {
+      return jsonResponse(req, 400, {
+        error: "Please enter a phone number with at least 4 digits.",
+        code: "invalid_phone",
+        field: "phone",
+      });
     }
 
     if (postcode && !POSTCODE_REGEX.test(postcode)) {
-      return jsonResponse(req, 400, { error: "Please provide a valid postcode." });
+      return jsonResponse(req, 400, {
+        error: "Please enter a valid 4-digit Australian postcode.",
+        code: "invalid_postcode",
+        field: "postcode",
+      });
     }
 
     if (renovations.length === 0) {
-      return jsonResponse(req, 400, { error: "Please choose at least one renovation type." });
+      return jsonResponse(req, 400, {
+        error: "Please choose at least one renovation type.",
+        code: "missing_renovations",
+        field: "renovations",
+      });
     }
 
     const supabase = createServiceClient();
@@ -146,7 +170,10 @@ serve(async (req) => {
 
     if (error) {
       console.error("save-enquiry insert failed:", error);
-      return jsonResponse(req, 500, { error: "Failed to save enquiry." });
+      return jsonResponse(req, 500, {
+        error: "We couldn't save your enquiry due to a database error. Please call us on 0413 468 928 and we'll take your details directly.",
+        code: "db_insert_failed",
+      });
     }
 
     // Send emails (fire-and-forget — never block the response)
@@ -198,6 +225,9 @@ serve(async (req) => {
     return jsonResponse(req, 200, { success: true, id: data.id });
   } catch (error) {
     console.error("save-enquiry error:", error);
-    return jsonResponse(req, 500, { error: "Internal server error" });
+    return jsonResponse(req, 500, {
+      error: "An unexpected server error occurred. Please call us on 0413 468 928 or try again in a few minutes.",
+      code: "unexpected_error",
+    });
   }
 });

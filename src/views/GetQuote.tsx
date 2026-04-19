@@ -120,7 +120,10 @@ const GetQuote = () => {
       setSubmitted(true);
     } catch (error: unknown) {
       console.error("Error submitting enquiry:", error);
-      const message = error instanceof Error ? error.message : "Something went wrong. Please try again later.";
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Couldn't reach our server. Please check your connection and try again, or call us on 0413 468 928.";
       toast.error(message);
     } finally {
       setSubmitting(false);
