@@ -76,13 +76,21 @@ const nextConfig = {
     ],
   },
   async headers() {
+    // Marketing-tag hosts loaded via GTM (Google Ads conversion + Meta CAPI).
+    // Keep this list narrow — only hosts we've actually seen GTM request.
+    const marketingScriptHosts =
+      "https://www.googletagmanager.com https://connect.facebook.net https://googleads.g.doubleclick.net https://capi-automation.s3.us-east-2.amazonaws.com";
+    const marketingConnectHosts =
+      "https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.google.com https://www.facebook.com";
+
     const scriptSrc = isDevelopment
-      ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://connect.facebook.net https://va.vercel-scripts.com"
-      : "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://va.vercel-scripts.com";
+      ? `script-src 'self' 'unsafe-inline' 'unsafe-eval' ${marketingScriptHosts} https://va.vercel-scripts.com`
+      : `script-src 'self' 'unsafe-inline' ${marketingScriptHosts} https://va.vercel-scripts.com`;
     const cspValue =
       `default-src 'self'; ${scriptSrc}; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; ` +
-      "font-src 'self'; connect-src 'self' https://iqugsxeejieneyksfbza.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://www.facebook.com; " +
-      "frame-ancestors 'none'; base-uri 'self'; form-action 'self';";
+      `font-src 'self'; connect-src 'self' https://iqugsxeejieneyksfbza.supabase.co ${marketingConnectHosts}; ` +
+      "frame-src https://www.googletagmanager.com https://www.facebook.com; " +
+      "frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://www.facebook.com;";
 
     return [
       {

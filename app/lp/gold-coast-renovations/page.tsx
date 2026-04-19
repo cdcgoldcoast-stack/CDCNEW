@@ -1,13 +1,5 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
-
-const HERO_IMAGE =
-  "https://iqugsxeejieneyksfbza.supabase.co/storage/v1/object/public/gallery-images/Living-renovation-Helensvale.webp";
-
-const GoldCoastRenovationsLP = dynamic(
-  () => import("@/views/GoldCoastRenovationsLP"),
-  { loading: () => <div className="min-h-screen bg-background animate-pulse" /> }
-);
+import GoldCoastRenovationsLP from "@/views/GoldCoastRenovationsLP";
 
 export const metadata: Metadata = {
   title: "Gold Coast Home Renovations | Trusted & Licensed Local Contractor",
@@ -25,10 +17,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return (
-    <>
-      <link rel="preload" as="image" href={HERO_IMAGE} fetchPriority="high" />
-      <GoldCoastRenovationsLP />
-    </>
-  );
+  return <GoldCoastRenovationsLP />;
 }

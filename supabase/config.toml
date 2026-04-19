@@ -25,6 +25,14 @@ verify_jwt = false
 [functions.search-images]
 verify_jwt = false
 
+# Public lead-capture endpoints: anonymous form submissions, JWT verify
+# must stay off so the gateway doesn't 401 the publishable-key auth header.
+[functions.save-enquiry]
+verify_jwt = false
+
+[functions.save-referral]
+verify_jwt = false
+
 # Admin-authenticated endpoints: we verify the JWT and admin role in code
 # via requireAdminUser(). Disabling gateway verify_jwt avoids the
 # UNAUTHORIZED_UNSUPPORTED_TOKEN_ALGORITHM error when the project uses
