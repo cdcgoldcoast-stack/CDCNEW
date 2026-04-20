@@ -6,6 +6,9 @@ import type { Project } from "@/data/projects";
 import type { GalleryItemRow } from "@/data/gallery";
 import type { KitchenRenovationsPageContext } from "@/views/KitchenRenovations";
 import type { BathroomRenovationsPageContext } from "@/views/BathroomRenovations";
+// GetQuote is the primary conversion endpoint — import eagerly so the booking
+// form renders without a skeleton pulse during client-side navigation.
+import GetQuotePage from "@/views/GetQuote";
 
 const pageLoader = () => <div className="min-h-screen bg-background animate-pulse" />;
 
@@ -18,9 +21,6 @@ const AboutUsPage = dynamic(() => import("@/views/AboutUs"), {
 const AuthPage = dynamic(() => import("@/views/Auth"), {
   loading: pageLoader,
 });
-const BeforeAfterPage = dynamic(() => import("@/views/BeforeAfter"), {
-  loading: pageLoader,
-});
 const DesignToolsPage = dynamic(() => import("@/views/DesignTools"), {
   loading: pageLoader,
 });
@@ -28,9 +28,6 @@ const FAQPage = dynamic(() => import("@/views/FAQ"), {
   loading: pageLoader,
 });
 const GalleryPage = dynamic(() => import("@/views/Gallery"), {
-  loading: pageLoader,
-});
-const GetQuotePage = dynamic(() => import("@/views/GetQuote"), {
   loading: pageLoader,
 });
 const HowWeWorkPage = dynamic(() => import("@/views/HowWeWork"), {
@@ -491,6 +488,3 @@ export function TestimonialsClient() {
   return <TestimonialsPage />;
 }
 
-export function BeforeAfterClient() {
-  return <BeforeAfterPage />;
-}

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { KitchenRenovationsClient } from "@/components/route-clients";
-import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structured-data";
+import { generateBreadcrumbSchema, generateFAQSchema, generateServiceSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
-import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
 const pageTitle = "Kitchen Renovations Southport | CD Construct";
 const pageDescription =
@@ -36,7 +35,6 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-southport",
-  noIndex: true,
   keywords: [
     "kitchen renovation Southport",
     "Southport kitchen renovation",
@@ -64,19 +62,13 @@ export default function Page() {
 
   const faqSchema = generateFAQSchema(serviceFaqs);
 
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
+  const serviceSchema = generateServiceSchema({
     name: "Kitchen Renovation Southport",
-    provider: {
-      "@type": "HomeAndConstructionBusiness",
-      name: SITE_NAME,
-      alternateName: SITE_ALTERNATE_NAME,
-    },
-    areaServed: { "@type": "Place", name: "Southport, Gold Coast" },
     description: pageDescription,
+    path: "/kitchen-renovations-southport",
     serviceType: "Kitchen Renovation",
-  };
+    areaServed: "Southport, Gold Coast",
+  });
 
   return (
     <>
@@ -108,6 +100,7 @@ export default function Page() {
             ],
             links: [
               { label: "Gold Coast Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+              { label: "Bathroom Renovations Southport", href: "/bathroom-renovations-southport" },
               { label: "Southport Renovations", href: "/southport-renovations" },
             ],
           },

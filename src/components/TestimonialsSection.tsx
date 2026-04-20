@@ -32,7 +32,7 @@ const TestimonialsSection = () => {
           className="text-center mb-12 md:mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
         >
           <p className="text-label text-foreground/80 mb-4 md:mb-6 text-xs md:text-sm">
@@ -50,7 +50,7 @@ const TestimonialsSection = () => {
               className="text-center flex flex-col items-center"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: true, amount: 0.05 }}
               transition={{ duration: 0.6, delay: index * 0.15 }}
             >
               <p className="text-body-text font-serif italic text-base md:text-lg leading-relaxed mb-6">

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { BathroomRenovationsClient } from "@/components/route-clients";
-import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structured-data";
+import { generateBreadcrumbSchema, generateFAQSchema, generateServiceSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
-import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
 const pageTitle = "Bathroom Renovations Palm Beach | CD Construct";
 const pageDescription =
@@ -21,14 +20,14 @@ const serviceFaqs = [
       "Most Palm Beach bathroom renovations take 3-5 weeks from demolition to completion. This includes waterproofing with mandatory curing time, tiling, and fixture installation. Older beachside homes may require additional time for replumbing or structural work, which we identify during our initial assessment.",
   },
   {
-    question: "What bathroom finishes work best in Palm Beach&apos;s coastal environment?",
+    question: "What bathroom finishes work best in Palm Beach's coastal environment?",
     answer:
       "We recommend marine-grade tapware, moisture-resistant vanity materials, porcelain or natural stone tiles, and corrosion-resistant hardware for Palm Beach bathrooms. These materials withstand the salt air and humidity while maintaining their appearance. Our coastal bathroom designs combine durability with a relaxed, beachy aesthetic.",
   },
   {
     question: "Can you create a coastal-style bathroom in my Palm Beach home?",
     answer:
-      "Absolutely. We specialise in coastal bathroom designs that suit Palm Beach&apos;s lifestyle. Think natural stone feature walls, timber-look vanities, soft neutral palettes, and spa-like showers with ocean-inspired tiles. We create designs that bring the outdoors in while being practical for everyday use.",
+      "Absolutely. We specialise in coastal bathroom designs that suit Palm Beach's lifestyle. Think natural stone feature walls, timber-look vanities, soft neutral palettes, and spa-like showers with ocean-inspired tiles. We create designs that bring the outdoors in while being practical for everyday use.",
   },
 ];
 
@@ -36,7 +35,6 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-palm-beach",
-  noIndex: true,
   keywords: [
     "bathroom renovation Palm Beach",
     "Palm Beach bathroom renovation",
@@ -64,19 +62,13 @@ export default function Page() {
 
   const faqSchema = generateFAQSchema(serviceFaqs);
 
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
+  const serviceSchema = generateServiceSchema({
     name: "Bathroom Renovation Palm Beach",
-    provider: {
-      "@type": "HomeAndConstructionBusiness",
-      name: SITE_NAME,
-      alternateName: SITE_ALTERNATE_NAME,
-    },
-    areaServed: { "@type": "Place", name: "Palm Beach, Gold Coast" },
     description: pageDescription,
+    path: "/bathroom-renovations-palm-beach",
     serviceType: "Bathroom Renovation",
-  };
+    areaServed: "Palm Beach, Gold Coast",
+  });
 
   return (
     <>
@@ -108,6 +100,7 @@ export default function Page() {
             ],
             links: [
               { label: "Gold Coast Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
+              { label: "Kitchen Renovations Palm Beach", href: "/kitchen-renovations-palm-beach" },
               { label: "Palm Beach Renovations", href: "/palm-beach-renovations" },
             ],
           },

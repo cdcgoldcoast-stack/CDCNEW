@@ -15,9 +15,6 @@ import { initPostHog, trackPostHogPageView } from "@/lib/posthog";
 const AIChatWidget = dynamic(() => import("@/components/AIChatWidget"), {
   ssr: false,
 });
-const PromoPopup = dynamic(() => import("@/components/PromoPopup"), {
-  ssr: false,
-});
 const SpeedInsights = dynamic(
   () => import("@vercel/speed-insights/react").then((module) => module.SpeedInsights),
   { ssr: false },
@@ -177,7 +174,6 @@ export default function AppProviders({ children }: AppProvidersProps) {
       <TooltipProvider>
         {children}
         {showChatWidget ? <AIChatWidget /> : null}
-        {allowEngagementUi ? <PromoPopup delay={viewportType === "mobile" ? 10 : 7} /> : null}
         <Toaster />
         {allowSpeedInsights ? <SpeedInsights /> : null}
       </TooltipProvider>

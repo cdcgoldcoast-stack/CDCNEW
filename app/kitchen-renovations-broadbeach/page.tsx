@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { KitchenRenovationsClient } from "@/components/route-clients";
-import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structured-data";
+import { generateBreadcrumbSchema, generateFAQSchema, generateServiceSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
-import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
 const pageTitle = "Kitchen Renovations Broadbeach | CD Construct";
 const pageDescription =
@@ -28,7 +27,7 @@ const serviceFaqs = [
   {
     question: "What kitchen styles work best for Broadbeach properties?",
     answer:
-      "Broadbeach properties suit coastal contemporary, modern minimalist, and entertainer&apos;s kitchen designs. For beachside apartments, we recommend light colour palettes, durable surfaces that resist humidity, and layouts that maximise the views. We tailor every design to your space and lifestyle.",
+      "Broadbeach properties suit coastal contemporary, modern minimalist, and entertainer's kitchen designs. For beachside apartments, we recommend light colour palettes, durable surfaces that resist humidity, and layouts that maximise the views. We tailor every design to your space and lifestyle.",
   },
 ];
 
@@ -36,7 +35,6 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-broadbeach",
-  noIndex: true,
   keywords: [
     "kitchen renovation Broadbeach",
     "Broadbeach kitchen renovation",
@@ -64,19 +62,13 @@ export default function Page() {
 
   const faqSchema = generateFAQSchema(serviceFaqs);
 
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
+  const serviceSchema = generateServiceSchema({
     name: "Kitchen Renovation Broadbeach",
-    provider: {
-      "@type": "HomeAndConstructionBusiness",
-      name: SITE_NAME,
-      alternateName: SITE_ALTERNATE_NAME,
-    },
-    areaServed: { "@type": "Place", name: "Broadbeach, Gold Coast" },
     description: pageDescription,
+    path: "/kitchen-renovations-broadbeach",
     serviceType: "Kitchen Renovation",
-  };
+    areaServed: "Broadbeach, Gold Coast",
+  });
 
   return (
     <>
@@ -108,6 +100,7 @@ export default function Page() {
             ],
             links: [
               { label: "Gold Coast Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+              { label: "Bathroom Renovations Broadbeach", href: "/bathroom-renovations-broadbeach" },
               { label: "Broadbeach Renovations", href: "/broadbeach-renovations" },
             ],
           },

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { BathroomRenovationsClient } from "@/components/route-clients";
-import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structured-data";
+import { generateBreadcrumbSchema, generateFAQSchema, generateServiceSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
-import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
 const pageTitle = "Bathroom Renovations Robina | CD Construct";
 const pageDescription =
@@ -18,7 +17,7 @@ const serviceFaqs = [
   {
     question: "How long does a bathroom renovation take in Robina?",
     answer:
-      "Most Robina bathroom renovations take 3-5 weeks from demolition to completion. This includes waterproofing with mandatory curing time, tiling, and fixture installation. If you&apos;re renovating multiple bathrooms, we can stage the work to ensure you always have a functioning bathroom available.",
+      "Most Robina bathroom renovations take 3-5 weeks from demolition to completion. This includes waterproofing with mandatory curing time, tiling, and fixture installation. If you're renovating multiple bathrooms, we can stage the work to ensure you always have a functioning bathroom available.",
   },
   {
     question: "Can you renovate multiple bathrooms in my Robina home at once?",
@@ -28,7 +27,7 @@ const serviceFaqs = [
   {
     question: "What bathroom features are popular in Robina homes?",
     answer:
-      "Robina homeowners often choose spacious walk-in showers, freestanding baths, double vanities, and underfloor heating. Family bathrooms benefit from durable, low-maintenance finishes and ample storage. We design bathrooms that suit your family&apos;s needs and complement your home&apos;s style.",
+      "Robina homeowners often choose spacious walk-in showers, freestanding baths, double vanities, and underfloor heating. Family bathrooms benefit from durable, low-maintenance finishes and ample storage. We design bathrooms that suit your family's needs and complement your home's style.",
   },
 ];
 
@@ -36,7 +35,6 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-robina",
-  noIndex: true,
   keywords: [
     "bathroom renovation Robina",
     "Robina bathroom renovation",
@@ -64,19 +62,13 @@ export default function Page() {
 
   const faqSchema = generateFAQSchema(serviceFaqs);
 
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
+  const serviceSchema = generateServiceSchema({
     name: "Bathroom Renovation Robina",
-    provider: {
-      "@type": "HomeAndConstructionBusiness",
-      name: SITE_NAME,
-      alternateName: SITE_ALTERNATE_NAME,
-    },
-    areaServed: { "@type": "Place", name: "Robina, Gold Coast" },
     description: pageDescription,
+    path: "/bathroom-renovations-robina",
     serviceType: "Bathroom Renovation",
-  };
+    areaServed: "Robina, Gold Coast",
+  });
 
   return (
     <>
@@ -108,6 +100,7 @@ export default function Page() {
             ],
             links: [
               { label: "Gold Coast Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
+              { label: "Kitchen Renovations Robina", href: "/kitchen-renovations-robina" },
               { label: "Robina Renovations", href: "/robina-renovations" },
             ],
           },

@@ -26,7 +26,19 @@ const staticRoutes: Array<{
   { path: "/outdoor-renovations-gold-coast", changeFrequency: "weekly", priority: 0.8 },
   { path: "/apartment-renovations-gold-coast", changeFrequency: "weekly", priority: 0.8 },
   { path: "/home-extensions-gold-coast", changeFrequency: "weekly", priority: 0.8 },
-  // Service + location hybrid pages — noIndex (95% duplicate of parent service pages, only FAQs differ)
+  // Service + suburb pages — indexable, suburb-specific FAQs, pricing, local context
+  { path: "/kitchen-renovations-broadbeach", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/kitchen-renovations-helensvale", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/kitchen-renovations-palm-beach", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/kitchen-renovations-robina", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/kitchen-renovations-southport", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/kitchen-renovations-surfers-paradise", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/bathroom-renovations-broadbeach", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/bathroom-renovations-helensvale", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/bathroom-renovations-palm-beach", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/bathroom-renovations-robina", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/bathroom-renovations-southport", changeFrequency: "monthly", priority: 0.7 },
+  { path: "/bathroom-renovations-surfers-paradise", changeFrequency: "monthly", priority: 0.7 },
   // Location pages
   // /gold-coast-renovations moved to /lp/gold-coast-renovations (noindex, excluded from sitemap)
   { path: "/broadbeach-renovations", changeFrequency: "weekly", priority: 0.7 },
@@ -72,7 +84,6 @@ const staticRoutes: Array<{
   { path: "/faq", changeFrequency: "monthly", priority: 0.7 },
   { path: "/why-cdc", changeFrequency: "monthly", priority: 0.7 },
   { path: "/testimonials", changeFrequency: "monthly", priority: 0.6 },
-  { path: "/before-after", changeFrequency: "monthly", priority: 0.6 },
   { path: "/referral-program", changeFrequency: "monthly", priority: 0.5 },
   { path: "/blog", changeFrequency: "weekly", priority: 0.75 },
   { path: "/privacy-policy", changeFrequency: "yearly", priority: 0.3 },

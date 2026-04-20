@@ -25,13 +25,15 @@ const OUTPUT_PATH = path.join(ARTIFACTS_DIR, "next-cutover-audit.json");
 const PRIVATE_ROUTES = [
   "/auth",
   "/admin",
+  "/admin/blog",
   "/admin/projects",
-  "/admin/enquiries",
-  "/admin/chat-inquiries",
+  "/admin/leads",
   "/admin/gallery",
   "/admin/site-images",
   "/admin/image-assets",
+  "/admin/referrals",
   "/admin/settings",
+  "/admin/users",
   "/brand-guidelines",
 ];
 

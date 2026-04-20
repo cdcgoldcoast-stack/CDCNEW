@@ -35,7 +35,6 @@ const Footer = () => {
     { label: "Renovation Blog", href: "/blog" },
     { label: "Our Projects", href: "/renovation-projects" },
     { label: "Gallery", href: "/renovation-gallery" },
-    { label: "Before & After", href: "/before-after" },
     { label: "Life Stages", href: "/renovation-life-stages" },
     { label: "Referral Program", href: "/referral-program" },
   ];
@@ -214,6 +213,7 @@ const Footer = () => {
                 loading="lazy"
                 className="h-14 w-auto"
               />
+              <p className="text-xs text-foreground/60">ABN 88 624 756 476</p>
             </div>
           </div>
         </div>

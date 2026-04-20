@@ -9,6 +9,9 @@ import { useSiteAssets } from "@/hooks/useSiteAssets";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { Phone, Check, ArrowRight, Home } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumb";
+import TrustStrip from "@/components/TrustStrip";
+import MobileStickyCTA from "@/components/MobileStickyCTA";
+import TestimonialsSection from "@/components/TestimonialsSection";
 
 const features = [
   "Complete home design & planning",
@@ -154,6 +157,8 @@ const WholeHomeRenovations = () => {
           </div>
         </div>
       </section>
+
+      <TrustStrip />
 
       {/* Renovation Types with Images */}
       <section className="py-16 md:py-24 bg-background relative z-10">
@@ -371,6 +376,8 @@ const WholeHomeRenovations = () => {
         </div>
       </section>
 
+      <TestimonialsSection />
+
       {/* CTA Section */}
       <section className="py-16 md:py-24 bg-primary text-primary-foreground relative z-10">
         <div className="container-wide text-center max-w-3xl">
@@ -402,6 +409,7 @@ const WholeHomeRenovations = () => {
 
       </main>
       <Footer />
+      <MobileStickyCTA />
     </div>
   );
 };

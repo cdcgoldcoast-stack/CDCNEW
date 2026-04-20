@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { BathroomRenovationsClient } from "@/components/route-clients";
-import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structured-data";
+import { generateBreadcrumbSchema, generateFAQSchema, generateServiceSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
-import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
 const pageTitle = "Bathroom Renovations Helensvale | CD Construct";
 const pageDescription =
-  "Bathroom renovations in Helensvale by CD Construct. Family bathrooms, luxury ensuites and kids&apos; bathrooms with expert waterproofing and quality finishes. QBCC licensed Gold Coast builders.";
+  "Bathroom renovations in Helensvale by CD Construct. Family bathrooms, luxury ensuites and kids' bathrooms with expert waterproofing and quality finishes. QBCC licensed Gold Coast builders.";
 
 const serviceFaqs = [
   {
@@ -23,7 +22,7 @@ const serviceFaqs = [
   {
     question: "What bathroom features do Helensvale families choose?",
     answer:
-      "Helensvale families often choose double vanities in master ensuites, durable low-maintenance finishes for kids&apos; bathrooms, freestanding baths, spacious walk-in showers, and underfloor heating for winter comfort. We design bathrooms that balance style with practicality for busy family life.",
+      "Helensvale families often choose double vanities in master ensuites, durable low-maintenance finishes for kids' bathrooms, freestanding baths, spacious walk-in showers, and underfloor heating for winter comfort. We design bathrooms that balance style with practicality for busy family life.",
   },
   {
     question: "Can you create a luxury master ensuite in my Helensvale home?",
@@ -36,7 +35,6 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/bathroom-renovations-helensvale",
-  noIndex: true,
   keywords: [
     "bathroom renovation Helensvale",
     "Helensvale bathroom renovation",
@@ -64,19 +62,13 @@ export default function Page() {
 
   const faqSchema = generateFAQSchema(serviceFaqs);
 
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
+  const serviceSchema = generateServiceSchema({
     name: "Bathroom Renovation Helensvale",
-    provider: {
-      "@type": "HomeAndConstructionBusiness",
-      name: SITE_NAME,
-      alternateName: SITE_ALTERNATE_NAME,
-    },
-    areaServed: { "@type": "Place", name: "Helensvale, Gold Coast" },
     description: pageDescription,
+    path: "/bathroom-renovations-helensvale",
     serviceType: "Bathroom Renovation",
-  };
+    areaServed: "Helensvale, Gold Coast",
+  });
 
   return (
     <>
@@ -108,6 +100,7 @@ export default function Page() {
             ],
             links: [
               { label: "Gold Coast Bathroom Renovations", href: "/bathroom-renovations-gold-coast" },
+              { label: "Kitchen Renovations Helensvale", href: "/kitchen-renovations-helensvale" },
               { label: "Helensvale Renovations", href: "/helensvale-renovations" },
             ],
           },

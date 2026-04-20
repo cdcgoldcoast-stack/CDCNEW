@@ -78,7 +78,7 @@ const FAQSection = () => {
           className="text-center mb-10 md:mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
         >
           <motion.p 
@@ -102,7 +102,7 @@ const FAQSection = () => {
               className="border-t border-foreground/20 last:border-b relative overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: true, amount: 0.05 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               {/* Animated highlight bar on open */}

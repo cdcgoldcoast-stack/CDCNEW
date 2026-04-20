@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { KitchenRenovationsClient } from "@/components/route-clients";
-import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structured-data";
+import { generateBreadcrumbSchema, generateFAQSchema, generateServiceSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
-import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
 const pageTitle = "Kitchen Renovations Palm Beach | CD Construct";
 const pageDescription =
@@ -23,12 +22,12 @@ const serviceFaqs = [
   {
     question: "What kitchen styles suit Palm Beach homes?",
     answer:
-      "Palm Beach homes suit coastal contemporary, Hamptons, and relaxed modern kitchen styles. We recommend durable, salt-air resistant finishes, light colour palettes that reflect natural light, and indoor-outdoor flow designs that connect to alfresco entertaining areas. Each kitchen is designed to complement Palm Beach&apos;s coastal lifestyle.",
+      "Palm Beach homes suit coastal contemporary, Hamptons, and relaxed modern kitchen styles. We recommend durable, salt-air resistant finishes, light colour palettes that reflect natural light, and indoor-outdoor flow designs that connect to alfresco entertaining areas. Each kitchen is designed to complement Palm Beach's coastal lifestyle.",
   },
   {
-    question: "Do you use materials suited to Palm Beach&apos;s coastal environment?",
+    question: "Do you use materials suited to Palm Beach's coastal environment?",
     answer:
-      "Yes, we select materials that withstand Palm Beach&apos;s coastal conditions. This includes marine-grade hardware, moisture-resistant cabinetry, engineered stone benchtops, and finishes that resist salt air corrosion. Our material selections ensure your kitchen looks great and performs well for years to come.",
+      "Yes, we select materials that withstand Palm Beach's coastal conditions. This includes marine-grade hardware, moisture-resistant cabinetry, engineered stone benchtops, and finishes that resist salt air corrosion. Our material selections ensure your kitchen looks great and performs well for years to come.",
   },
 ];
 
@@ -36,7 +35,6 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-palm-beach",
-  noIndex: true,
   keywords: [
     "kitchen renovation Palm Beach",
     "Palm Beach kitchen renovation",
@@ -64,19 +62,13 @@ export default function Page() {
 
   const faqSchema = generateFAQSchema(serviceFaqs);
 
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
+  const serviceSchema = generateServiceSchema({
     name: "Kitchen Renovation Palm Beach",
-    provider: {
-      "@type": "HomeAndConstructionBusiness",
-      name: SITE_NAME,
-      alternateName: SITE_ALTERNATE_NAME,
-    },
-    areaServed: { "@type": "Place", name: "Palm Beach, Gold Coast" },
     description: pageDescription,
+    path: "/kitchen-renovations-palm-beach",
     serviceType: "Kitchen Renovation",
-  };
+    areaServed: "Palm Beach, Gold Coast",
+  });
 
   return (
     <>
@@ -108,6 +100,7 @@ export default function Page() {
             ],
             links: [
               { label: "Gold Coast Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+              { label: "Bathroom Renovations Palm Beach", href: "/bathroom-renovations-palm-beach" },
               { label: "Palm Beach Renovations", href: "/palm-beach-renovations" },
             ],
           },

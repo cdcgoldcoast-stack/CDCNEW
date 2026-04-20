@@ -1,34 +1,33 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { KitchenRenovationsClient } from "@/components/route-clients";
-import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structured-data";
+import { generateBreadcrumbSchema, generateFAQSchema, generateServiceSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
-import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
 const pageTitle = "Kitchen Renovations Helensvale | CD Construct";
 const pageDescription =
-  "Kitchen renovations in Helensvale by CD Construct. Modern family kitchen remodels with island benches, butler&apos;s pantries and open-plan layouts for Helensvale homes. QBCC licensed.";
+  "Kitchen renovations in Helensvale by CD Construct. Modern family kitchen remodels with island benches, butler's pantries and open-plan layouts for Helensvale homes. QBCC licensed.";
 
 const serviceFaqs = [
   {
     question: "How much does a kitchen renovation cost in Helensvale?",
     answer:
-      "Kitchen renovation costs in Helensvale typically range from $40,000-$65,000 for a mid-range family kitchen and $65,000-$110,000+ for premium kitchens with stone benchtops, custom cabinetry, and butler&apos;s pantry additions. Helensvale&apos;s larger homes often allow for generous kitchen designs. We provide fixed-price quotes after consultation.",
+      "Kitchen renovation costs in Helensvale typically range from $40,000-$65,000 for a mid-range family kitchen and $65,000-$110,000+ for premium kitchens with stone benchtops, custom cabinetry, and butler's pantry additions. Helensvale's larger homes often allow for generous kitchen designs. We provide fixed-price quotes after consultation.",
   },
   {
     question: "How long does a kitchen renovation take in Helensvale?",
     answer:
-      "Most Helensvale kitchen renovations take 5-8 weeks from demolition to handover. Larger kitchens with island benches, butler&apos;s pantries, or structural modifications may take longer. We provide a detailed timeline during the design phase so you can plan around the renovation.",
+      "Most Helensvale kitchen renovations take 5-8 weeks from demolition to handover. Larger kitchens with island benches, butler's pantries, or structural modifications may take longer. We provide a detailed timeline during the design phase so you can plan around the renovation.",
   },
   {
     question: "What kitchen designs are popular in Helensvale?",
     answer:
-      "Helensvale families often choose large island kitchens with seating, butler&apos;s pantries for hidden storage, and open-plan layouts that connect to outdoor entertaining areas. Hamptons, modern contemporary, and transitional styles are all popular in the area. We tailor every design to your home and lifestyle.",
+      "Helensvale families often choose large island kitchens with seating, butler's pantries for hidden storage, and open-plan layouts that connect to outdoor entertaining areas. Hamptons, modern contemporary, and transitional styles are all popular in the area. We tailor every design to your home and lifestyle.",
   },
   {
-    question: "Can you add a butler&apos;s pantry to my Helensvale kitchen?",
+    question: "Can you add a butler's pantry to my Helensvale kitchen?",
     answer:
-      "Yes, butler&apos;s pantry additions are one of our most popular upgrades in Helensvale. We can convert adjacent spaces, extend the kitchen footprint, or reconfigure the existing layout to accommodate a walk-in pantry. This adds valuable storage and keeps your main kitchen clutter-free for entertaining.",
+      "Yes, butler's pantry additions are one of our most popular upgrades in Helensvale. We can convert adjacent spaces, extend the kitchen footprint, or reconfigure the existing layout to accommodate a walk-in pantry. This adds valuable storage and keeps your main kitchen clutter-free for entertaining.",
   },
 ];
 
@@ -36,7 +35,6 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-helensvale",
-  noIndex: true,
   keywords: [
     "kitchen renovation Helensvale",
     "Helensvale kitchen renovation",
@@ -64,19 +62,13 @@ export default function Page() {
 
   const faqSchema = generateFAQSchema(serviceFaqs);
 
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
+  const serviceSchema = generateServiceSchema({
     name: "Kitchen Renovation Helensvale",
-    provider: {
-      "@type": "HomeAndConstructionBusiness",
-      name: SITE_NAME,
-      alternateName: SITE_ALTERNATE_NAME,
-    },
-    areaServed: { "@type": "Place", name: "Helensvale, Gold Coast" },
     description: pageDescription,
+    path: "/kitchen-renovations-helensvale",
     serviceType: "Kitchen Renovation",
-  };
+    areaServed: "Helensvale, Gold Coast",
+  });
 
   return (
     <>
@@ -108,6 +100,7 @@ export default function Page() {
             ],
             links: [
               { label: "Gold Coast Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+              { label: "Bathroom Renovations Helensvale", href: "/bathroom-renovations-helensvale" },
               { label: "Helensvale Renovations", href: "/helensvale-renovations" },
             ],
           },

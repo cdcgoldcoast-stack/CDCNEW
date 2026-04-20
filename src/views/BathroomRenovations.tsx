@@ -8,6 +8,9 @@ import { useSiteAssets } from "@/hooks/useSiteAssets";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { Phone, Check, ArrowRight, Shield } from "lucide-react";
 import Breadcrumb from "@/components/Breadcrumb";
+import TrustStrip from "@/components/TrustStrip";
+import MobileStickyCTA from "@/components/MobileStickyCTA";
+import TestimonialsSection from "@/components/TestimonialsSection";
 
 type BreadcrumbItem = {
   label: string;
@@ -206,6 +209,8 @@ const BathroomRenovations = ({
           </div>
         </div>
       </section>
+
+      <TrustStrip />
 
       {localFocus ? (
         <section className="py-16 md:py-20 bg-background relative z-10">
@@ -463,6 +468,8 @@ const BathroomRenovations = ({
         </div>
       </section>
 
+      <TestimonialsSection />
+
       {/* CTA Section */}
       <section className="py-16 md:py-24 bg-primary text-primary-foreground relative z-10">
         <div className="container-wide text-center max-w-3xl">
@@ -494,6 +501,7 @@ const BathroomRenovations = ({
 
       </main>
       <Footer />
+      <MobileStickyCTA />
     </div>
   );
 };

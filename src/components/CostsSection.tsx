@@ -48,7 +48,7 @@ const CostsSection = () => {
           className="text-center max-w-3xl mx-auto mb-8 md:mb-12"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7 }}
         >
           <motion.p 
@@ -78,10 +78,7 @@ const CostsSection = () => {
       }} whileInView={{
         opacity: 1,
         y: 0
-      }} viewport={{
-        once: true,
-        margin: "-50px"
-      }} transition={{
+      }} viewport={{ once: true, amount: 0.05 }} transition={{
         duration: 0.5,
         delay: 0.3
       }}>
@@ -95,10 +92,7 @@ const CostsSection = () => {
       }} whileInView={{
         opacity: 1,
         y: 0
-      }} viewport={{
-        once: true,
-        margin: "-50px"
-      }} transition={{
+      }} viewport={{ once: true, amount: 0.05 }} transition={{
         duration: 0.6,
         delay: 0.4
       }}>
@@ -143,10 +137,7 @@ const CostsSection = () => {
         }} whileInView={{
           opacity: 1,
           y: 0
-        }} viewport={{
-          once: true,
-          margin: "-100px"
-        }} transition={{
+        }} viewport={{ once: true, amount: 0.1 }} transition={{
           duration: 0.5
         }}>
             Invitation
@@ -158,10 +149,7 @@ const CostsSection = () => {
         }} whileInView={{
           opacity: 1,
           y: 0
-        }} viewport={{
-          once: true,
-          margin: "-100px"
-        }} transition={{
+        }} viewport={{ once: true, amount: 0.1 }} transition={{
           duration: 0.6,
           delay: 0.1
         }}>
@@ -194,10 +182,7 @@ const CostsSection = () => {
           opacity: 0
         }} whileInView={{
           opacity: 1
-        }} viewport={{
-          once: true,
-          margin: "-100px"
-        }} transition={{
+        }} viewport={{ once: true, amount: 0.1 }} transition={{
           duration: 0.5,
           delay: 0.3
         }}>

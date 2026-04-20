@@ -250,12 +250,6 @@ export const SITELINK_TARGETS: SitelinkTarget[] = [
     description: withBrandDescription("Answers to common Gold Coast renovation questions on costs, timelines, and process."),
     includeInFooter: true,
   },
-  {
-    path: "/before-after",
-    label: "Before & After",
-    description: withBrandDescription("See real before and after renovation transformations from Gold Coast homes."),
-    includeInFooter: true,
-  },
   // New service pages
   {
     path: "/laundry-renovations-gold-coast",

@@ -160,7 +160,7 @@ const ServiceSection = ({ service, index, isReversed, totalServices, isLast }: S
           className="max-w-lg w-full"
           initial={{ opacity: 0, x: isReversed ? -30 : 30 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.6 }}
         >
           {/* Label - only on first card */}

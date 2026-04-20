@@ -6,6 +6,9 @@ import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { Phone, Check, ArrowRight, Building2, Shield, Volume2, Maximize2 } from "lucide-react";
+import TrustStrip from "@/components/TrustStrip";
+import MobileStickyCTA from "@/components/MobileStickyCTA";
+import TestimonialsSection from "@/components/TestimonialsSection";
 
 const features = [
   "Body corporate approval management",
@@ -154,6 +157,8 @@ const ApartmentRenovations = () => {
           </div>
         </div>
       </section>
+
+      <TrustStrip />
 
       {/* Why Choose Us for Apartments */}
       <section className="py-16 md:py-24 bg-background relative z-10">
@@ -448,6 +453,8 @@ const ApartmentRenovations = () => {
       </section>
 
       {/* CTA Section */}
+      <TestimonialsSection />
+
       <section className="py-16 md:py-24 bg-primary text-primary-foreground relative z-10">
         <div className="container-wide text-center max-w-3xl">
           <h2 className="font-serif text-h2-mobile md:text-h2 mb-6">
@@ -479,6 +486,7 @@ const ApartmentRenovations = () => {
 
       </main>
       <Footer />
+      <MobileStickyCTA />
     </div>
   );
 };

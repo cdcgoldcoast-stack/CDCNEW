@@ -50,12 +50,17 @@ const Hero = () => {
               A smooth renovation journey. A better-working home. Hassle-free.
             </p>
 
-            <GoogleReviewBadge
-              iconSize="w-7 h-7 md:w-8 md:h-8"
-              starSize="w-3.5 h-3.5 md:w-4 md:h-4"
-              labelSize="text-xs md:text-sm"
-              starGap="gap-0.5 md:gap-1"
-            />
+            <div className="flex flex-col gap-3">
+              <p className="text-[11px] md:text-xs uppercase tracking-widest text-foreground/60">
+                QBCC Lic. 15155156 &middot; Building since 2000 &middot; 25+ years on the Gold Coast
+              </p>
+              <GoogleReviewBadge
+                iconSize="w-7 h-7 md:w-8 md:h-8"
+                starSize="w-3.5 h-3.5 md:w-4 md:h-4"
+                labelSize="text-xs md:text-sm"
+                starGap="gap-0.5 md:gap-1"
+              />
+            </div>
 
             <a
               href="/book-renovation-consultation"

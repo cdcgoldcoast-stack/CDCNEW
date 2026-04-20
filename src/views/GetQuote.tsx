@@ -202,9 +202,8 @@ const GetQuote = () => {
         {submitted ? (
           <motion.div
             key="success"
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
             className="min-h-[calc(100vh-10rem)] flex items-center justify-center py-16"
           >
             <div className="w-full max-w-2xl mx-auto px-6 text-center">
@@ -248,34 +247,27 @@ const GetQuote = () => {
           </motion.div>
         ) : (
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
             className="min-h-[calc(100vh-10rem)] flex items-center justify-center py-16"
           >
             <div className="w-full max-w-xl mx-auto px-6">
               <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
+                initial={false}
                 className="text-center text-foreground/50 text-sm tracking-widest uppercase mb-3"
               >
                 Gold Coast Local Builder
               </motion.p>
 
               <motion.h2
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
+                initial={false}
                 className="text-center text-foreground text-2xl lg:text-3xl font-display mb-8"
               >
                 Get Your Free Renovation Plan
               </motion.h2>
 
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3, delay: 0.12 }}
+                initial={false}
                 className="flex items-center justify-center gap-4 sm:gap-6 mb-8 flex-wrap"
               >
                 {[
@@ -309,9 +301,7 @@ const GetQuote = () => {
                 </div>
 
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.15 }}
+                  initial={false}
                   className="space-y-4"
                 >
                   {/* Name & Email */}

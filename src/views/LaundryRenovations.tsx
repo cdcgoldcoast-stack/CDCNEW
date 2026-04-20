@@ -6,6 +6,9 @@ import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { Phone, Check, ArrowRight, Droplets, Boxes, Shirt } from "lucide-react";
+import TrustStrip from "@/components/TrustStrip";
+import MobileStickyCTA from "@/components/MobileStickyCTA";
+import TestimonialsSection from "@/components/TestimonialsSection";
 
 const features = [
   "Custom laundry cabinetry & joinery",
@@ -153,6 +156,8 @@ const LaundryRenovations = () => {
           </div>
         </div>
       </section>
+
+      <TrustStrip />
 
       {/* What We Offer Section */}
       <section className="py-16 md:py-24 bg-background relative z-10">
@@ -393,6 +398,8 @@ const LaundryRenovations = () => {
         </div>
       </section>
 
+      <TestimonialsSection />
+
       {/* CTA Section */}
       <section className="py-16 md:py-24 bg-primary text-primary-foreground relative z-10">
         <div className="container-wide text-center max-w-3xl">
@@ -425,6 +432,7 @@ const LaundryRenovations = () => {
 
       </main>
       <Footer />
+      <MobileStickyCTA />
     </div>
   );
 };

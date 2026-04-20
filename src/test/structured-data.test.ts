@@ -5,6 +5,7 @@ import {
   generateBreadcrumbSchema,
   generateItemListSchema,
   generateLocalBusinessSchema,
+  generateServiceSchema,
 } from "@/lib/structured-data";
 import { PRODUCTION_DOMAIN, SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
@@ -129,5 +130,52 @@ describe("generateLocalBusinessSchema", () => {
     expect(schema.areaServed).toBeDefined();
     expect(schema.openingHoursSpecification).toBeDefined();
     expect(schema.hasOfferCatalog).toBeDefined();
+  });
+
+  it("lists every primary service in the offer catalog with absolute URLs", () => {
+    const schema = generateLocalBusinessSchema();
+    const offers = schema.hasOfferCatalog.itemListElement;
+    expect(offers.length).toBeGreaterThanOrEqual(7);
+    offers.forEach((offer) => {
+      expect(offer["@type"]).toBe("Offer");
+      expect(offer.itemOffered["@type"]).toBe("Service");
+      expect(offer.itemOffered.url).toMatch(new RegExp(`^${PRODUCTION_DOMAIN}/`));
+    });
+  });
+});
+
+describe("generateServiceSchema", () => {
+  it("produces a Service node that references the LocalBusiness by @id", () => {
+    const schema = generateServiceSchema({
+      name: "Bathroom Renovation Robina",
+      description: "Bathroom renovations in Robina.",
+      path: "/bathroom-renovations-robina",
+      serviceType: "Bathroom Renovation",
+      areaServed: "Robina, Gold Coast",
+    });
+
+    expect(schema["@context"]).toBe("https://schema.org");
+    expect(schema["@type"]).toBe("Service");
+    expect(schema["@id"]).toBe(`${PRODUCTION_DOMAIN}/bathroom-renovations-robina#service`);
+    expect(schema.url).toBe(`${PRODUCTION_DOMAIN}/bathroom-renovations-robina`);
+    expect(schema.name).toBe("Bathroom Renovation Robina");
+    expect(schema.serviceType).toBe("Bathroom Renovation");
+    expect(schema.provider["@id"]).toBe(`${PRODUCTION_DOMAIN}#organization`);
+    expect(schema.areaServed["@type"]).toBe("Place");
+    expect(schema.areaServed.name).toBe("Robina, Gold Coast");
+  });
+
+  it("honours areaType override for City-scoped services", () => {
+    const schema = generateServiceSchema({
+      name: "Kitchen Renovation Gold Coast",
+      description: "Kitchen renovations across the Gold Coast.",
+      path: "/kitchen-renovations-gold-coast",
+      serviceType: "Kitchen Renovation",
+      areaServed: "Gold Coast",
+      areaType: "City",
+    });
+
+    expect(schema.areaServed["@type"]).toBe("City");
+    expect(schema.areaServed.name).toBe("Gold Coast");
   });
 });

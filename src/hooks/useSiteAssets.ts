@@ -10,12 +10,14 @@ interface UseSiteAssetsOptions {
  * Hook that returns all site assets with any database overrides applied.
  * Use this in components to get resolved image URLs that respect admin replacements.
  *
- * By default, while override data is loading this returns empty strings for
- * override-managed assets to avoid image replacement flashes.
+ * While override data is loading we default to serving the static import URL
+ * (staticFirst = true) so images render immediately. Any admin override
+ * swaps in once the fetch resolves. Callers that specifically want to hide
+ * the image until overrides land can opt out with { staticFirst: false }.
  */
 export function useSiteAssets(options: UseSiteAssetsOptions = {}) {
   const { data: overrides, isLoading, isError } = useImageOverrides();
-  const staticFirst = options.staticFirst ?? false;
+  const staticFirst = options.staticFirst ?? true;
 
   // Ready means we've finished loading (success or error)
   const ready = !isLoading;

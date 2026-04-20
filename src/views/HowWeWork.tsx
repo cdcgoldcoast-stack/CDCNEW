@@ -12,43 +12,43 @@ const steps = [
     number: "01",
     title: "Understand your home and your day",
     description:
-      "We learn how you live, what feels difficult, and what you want to feel different at home.",
+      "We start with an on-site visit to your Gold Coast home. Mark measures the space, looks at the existing plumbing, electrical, and structure, and sits down with you to understand how you actually use the rooms. We ask what works today, what doesn't, and what you want this renovation to change about how you live. No sales pitch — just a conversation about your home.",
   },
   {
     number: "02",
     title: "Planning with you",
     description:
-      "We turn your needs into clear priorities, a practical scope, and a direction that suits your lifestyle now and later.",
+      "We turn what you told us into a written scope. Must-haves, nice-to-haves, and the things we'd recommend against. You get a one-page priority list before any design work starts, so the direction is agreed before money or time goes into details. This is where we usually also flag whether your project will need a council DA, a building approval, or body corporate sign-off.",
   },
   {
     number: "03",
     title: "Design and selections",
     description:
-      "We guide design and choices for finishes and fixtures in a way that feels simple, not overwhelming.",
+      "Our designer walks you through layout options, cabinetry, benchtops, tapware, tiles, lighting, and appliances. You see 3D renders before anything is ordered. We curate the selections so you're choosing between three strong options, not drowning in a showroom. Every selection is costed in real time, so you never fall in love with a finish that breaks the budget.",
   },
   {
     number: "04",
-    title: "Quote and timeline",
+    title: "Fixed-price quote and timeline",
     description:
-      "You receive a clear quote and a realistic outline of timing, so you know what you are committing to before anything begins.",
+      "You receive a written, itemised, QBCC-compliant contract with a fixed price and a realistic timeline. Deposits stay within QBCC limits (5% for contracts over $20,000). Progress payments are tied to real milestones you can verify. You know the total cost, the start date, the handover date, and exactly what's included before you sign anything.",
   },
   {
     number: "05",
     title: "Confirm decisions before we start",
     description:
-      "We lock in the key decisions early, so the build feels calmer and avoids unnecessary changes mid project.",
+      "Before demolition begins, every selection is locked in and every long-lead item is ordered. Stone, tapware, tiles, and appliances all arrive on site before the trades that need them. Locking decisions early is the single biggest reason our builds finish on time, because 90% of cost and schedule overruns come from mid-build indecision.",
   },
   {
     number: "06",
     title: "Build and communication",
     description:
-      "Work begins with a clear plan. You know what is happening, what is next, and where things stand throughout.",
+      "Work starts on the agreed date. You get a weekly update from Mark by text or email — what happened this week, what's next, what needs a decision from you. Trades are sequenced tightly so the site moves every day. Waterproofing is flood-tested on bathrooms. Electrical and plumbing are signed off by licensed trades with their own compliance certificates.",
   },
   {
     number: "07",
     title: "Handover and settling in",
     description:
-      "We complete the project carefully and walk you through everything, so your home feels easy to live in from the first week.",
+      "At handover we walk you through every drawer, tap, and switch. You get the QBCC compliance paperwork, every trade certificate, appliance manuals, and the 10-year waterproofing warranty on wet areas. 30 days later we check in, and 12 months later we check in again, because a good renovation should feel just as right in year one as it did on day one.",
   },
 ];
 
@@ -145,7 +145,7 @@ const HowWeWork = () => {
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, amount: 0.1 }}
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"
           >
             {steps.map((step) => (
@@ -187,7 +187,7 @@ const HowWeWork = () => {
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
+            viewport={{ once: true, amount: 0.05 }}
             className="grid md:grid-cols-2 gap-8 md:gap-10 max-w-4xl mx-auto"
           >
             {differentiators.map((item) => (

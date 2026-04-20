@@ -68,8 +68,11 @@ const AboutUs = () => {
               <p className="text-foreground/80 text-lg leading-relaxed mb-6">
                 Led by Mark Mayne, Director, we started Concept Design Construct with the vision of building a strong team where everyone works well together and takes pride in their work.
               </p>
-              <p className="text-foreground/70 leading-relaxed">
+              <p className="text-foreground/70 leading-relaxed mb-6">
                 Based on the Gold Coast, we specialise in full property renovations and extensions including bathroom renovations, as well as kitchen and laundry renovations. We work with trusted trades and a clear process to deliver high-quality results and a smooth experience from start to finish.
+              </p>
+              <p className="text-foreground/70 leading-relaxed">
+                Mark has been a QBCC-licensed builder since 2000, which means 25+ years of Gold Coast-specific experience with everything from character Queenslanders in Southport to high-rise apartments in Surfers Paradise and Broadbeach. That local knowledge changes decisions every day on site — which council overlays matter, how to work around body corporate hours in a tower, and which suburbs have substrate quirks that an out-of-town builder would miss.
               </p>
             </div>
             <div className="aspect-[4/5] overflow-hidden">
@@ -229,6 +232,7 @@ const AboutUs = () => {
               <span className="text-4xl md:text-5xl font-serif text-primary block mb-2">QBCC</span>
               <p className="text-sm text-foreground/60">Licensed Builders</p>
               <p className="text-xs text-foreground/50 mt-1">Licence: 15155156</p>
+              <p className="text-xs text-foreground/50 mt-1">ABN 88 624 756 476</p>
             </div>
           </div>
         </div>
@@ -248,6 +252,13 @@ const AboutUs = () => {
               </p>
               <p>
                 That's not how we work. We're upfront about costs, clear about timelines, and easy to get hold of when you have questions.
+              </p>
+              <p>
+                Every project is delivered under our QBCC builder's licence (15155156), with the Queensland Home Warranty Scheme premium paid on your behalf and a fixed-price written contract before work begins. Deposits stay within the QBCC limits (5% for contracts over $20,000). Wet areas carry a 10-year waterproofing warranty, exceeding the statutory six-and-a-half-year structural warranty required in Queensland. You can{" "}
+                <Link to="/blog/qbcc-licensing-explained-gold-coast-homeowners" className="text-primary underline">
+                  read more about what QBCC licensing actually protects
+                </Link>{" "}
+                on our blog.
               </p>
               <p className="text-foreground font-medium">
                 The goal is simple: deliver high-quality results and make the whole process feel straightforward.

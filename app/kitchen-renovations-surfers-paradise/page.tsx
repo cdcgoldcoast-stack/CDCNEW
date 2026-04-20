@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { KitchenRenovationsClient } from "@/components/route-clients";
-import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structured-data";
+import { generateBreadcrumbSchema, generateFAQSchema, generateServiceSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
-import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
 const pageTitle = "Kitchen Renovations Surfers Paradise | CD Construct";
 const pageDescription =
@@ -28,7 +27,7 @@ const serviceFaqs = [
   {
     question: "What kitchen designs suit Surfers Paradise apartments?",
     answer:
-      "Surfers Paradise apartments suit modern, sleek kitchen designs that maximise natural light and ocean views. We recommend handleless cabinetry, integrated appliances, stone or engineered benchtops, and layouts that create an open flow between kitchen and living areas. Each design is tailored to your apartment&apos;s floor plan.",
+      "Surfers Paradise apartments suit modern, sleek kitchen designs that maximise natural light and ocean views. We recommend handleless cabinetry, integrated appliances, stone or engineered benchtops, and layouts that create an open flow between kitchen and living areas. Each design is tailored to your apartment's floor plan.",
   },
 ];
 
@@ -36,7 +35,6 @@ export const metadata: Metadata = buildMetadata({
   title: pageTitle,
   description: pageDescription,
   path: "/kitchen-renovations-surfers-paradise",
-  noIndex: true,
   keywords: [
     "kitchen renovation Surfers Paradise",
     "Surfers Paradise kitchen renovation",
@@ -64,19 +62,13 @@ export default function Page() {
 
   const faqSchema = generateFAQSchema(serviceFaqs);
 
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
+  const serviceSchema = generateServiceSchema({
     name: "Kitchen Renovation Surfers Paradise",
-    provider: {
-      "@type": "HomeAndConstructionBusiness",
-      name: SITE_NAME,
-      alternateName: SITE_ALTERNATE_NAME,
-    },
-    areaServed: { "@type": "Place", name: "Surfers Paradise, Gold Coast" },
     description: pageDescription,
+    path: "/kitchen-renovations-surfers-paradise",
     serviceType: "Kitchen Renovation",
-  };
+    areaServed: "Surfers Paradise, Gold Coast",
+  });
 
   return (
     <>
@@ -108,6 +100,7 @@ export default function Page() {
             ],
             links: [
               { label: "Gold Coast Kitchen Renovations", href: "/kitchen-renovations-gold-coast" },
+              { label: "Bathroom Renovations Surfers Paradise", href: "/bathroom-renovations-surfers-paradise" },
               { label: "Surfers Paradise Renovations", href: "/surfers-paradise-renovations" },
             ],
           },

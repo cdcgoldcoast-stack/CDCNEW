@@ -230,6 +230,13 @@ const nextConfig = {
         permanent: true,
       },
       {
+        // Before & After page removed — we don't hold paired before/after
+        // imagery for completed projects, so the URL now 301s to the gallery.
+        source: "/before-after",
+        destination: "/renovation-gallery",
+        permanent: true,
+      },
+      {
         source: "/design-tools/ai-generator/intro",
         destination: "/renovation-ai-generator/intro",
         permanent: true,

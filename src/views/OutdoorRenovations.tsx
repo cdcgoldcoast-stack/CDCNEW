@@ -6,6 +6,9 @@ import SEO from "@/components/SEO";
 import { Link } from "react-router-dom";
 import ResponsiveImage from "@/components/ResponsiveImage";
 import { Phone, Check, ArrowRight, Sun, UtensilsCrossed, TreePine, Fence } from "lucide-react";
+import TrustStrip from "@/components/TrustStrip";
+import MobileStickyCTA from "@/components/MobileStickyCTA";
+import TestimonialsSection from "@/components/TestimonialsSection";
 
 const features = [
   "Timber & composite deck construction",
@@ -153,6 +156,8 @@ const OutdoorRenovations = () => {
           </div>
         </div>
       </section>
+
+      <TrustStrip />
 
       {/* Services Section */}
       <section className="py-16 md:py-24 bg-background relative z-10">
@@ -396,6 +401,8 @@ const OutdoorRenovations = () => {
       </section>
 
       {/* CTA Section */}
+      <TestimonialsSection />
+
       <section className="py-16 md:py-24 bg-primary text-primary-foreground relative z-10">
         <div className="container-wide text-center max-w-3xl">
           <h2 className="font-serif text-h2-mobile md:text-h2 mb-6">
@@ -427,6 +434,7 @@ const OutdoorRenovations = () => {
 
       </main>
       <Footer />
+      <MobileStickyCTA />
     </div>
   );
 };

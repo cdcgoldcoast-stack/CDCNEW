@@ -282,6 +282,19 @@ export const generateLocalBusinessSchema = () => ({
   image: `${PRODUCTION_DOMAIN}/og-image.jpg`,
   email: BUSINESS_INFO.email,
   telephone: BUSINESS_INFO.phone,
+  taxID: "88 624 756 476",
+  identifier: [
+    {
+      "@type": "PropertyValue",
+      propertyID: "ABN",
+      value: "88 624 756 476",
+    },
+    {
+      "@type": "PropertyValue",
+      propertyID: "QBCC License",
+      value: "15155156",
+    },
+  ],
   memberOf: [
     { "@type": "Organization", name: "Master Builders Queensland" },
     { "@type": "Organization", name: "Queensland Building and Construction Commission (QBCC)" },
@@ -373,6 +386,7 @@ export const generateLocalBusinessSchema = () => ({
         itemOffered: {
           "@type": "Service",
           name: "Kitchen Renovation Gold Coast",
+          url: `${PRODUCTION_DOMAIN}/kitchen-renovations-gold-coast`,
         },
       },
       {
@@ -380,6 +394,7 @@ export const generateLocalBusinessSchema = () => ({
         itemOffered: {
           "@type": "Service",
           name: "Bathroom Renovation Gold Coast",
+          url: `${PRODUCTION_DOMAIN}/bathroom-renovations-gold-coast`,
         },
       },
       {
@@ -387,8 +402,80 @@ export const generateLocalBusinessSchema = () => ({
         itemOffered: {
           "@type": "Service",
           name: "Whole Home Renovation Gold Coast",
+          url: `${PRODUCTION_DOMAIN}/whole-home-renovations-gold-coast`,
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Laundry Renovation Gold Coast",
+          url: `${PRODUCTION_DOMAIN}/laundry-renovations-gold-coast`,
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Outdoor Renovation Gold Coast",
+          url: `${PRODUCTION_DOMAIN}/outdoor-renovations-gold-coast`,
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Apartment Renovation Gold Coast",
+          url: `${PRODUCTION_DOMAIN}/apartment-renovations-gold-coast`,
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Home Extensions Gold Coast",
+          url: `${PRODUCTION_DOMAIN}/home-extensions-gold-coast`,
         },
       },
     ],
   },
 });
+
+/**
+ * Generate Service structured data for a service page. The provider is a
+ * reference to the global LocalBusiness node (by @id) so Google can merge the
+ * Service into the full business graph (address, rating, credentials, etc.).
+ */
+export interface ServiceSchemaInput {
+  name: string;
+  description: string;
+  path: string;
+  serviceType: string;
+  areaServed: string;
+  areaType?: "City" | "Place" | "AdministrativeArea";
+}
+
+export const generateServiceSchema = ({
+  name,
+  description,
+  path,
+  serviceType,
+  areaServed,
+  areaType = "Place",
+}: ServiceSchemaInput) => {
+  const pageUrl = `${PRODUCTION_DOMAIN}${path}`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${pageUrl}#service`,
+    name,
+    description,
+    serviceType,
+    url: pageUrl,
+    provider: { "@id": ORGANIZATION_ID },
+    areaServed: {
+      "@type": areaType,
+      name: areaServed,
+    },
+  };
+};

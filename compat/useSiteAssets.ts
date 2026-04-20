@@ -150,7 +150,12 @@ const fetchImageOverrides = async (): Promise<ImageOverride[]> => {
 };
 
 export function useSiteAssets(options: UseSiteAssetsOptions = {}) {
-  const { staticFirst = false, deferRemoteOverrides = false } = options;
+  // staticFirst defaults to true: during the initial image_overrides fetch we
+  // serve the known-good URL from defaultOverrideByPath instead of "", which
+  // was rendering empty <img src=""> on gallery, service, and suburb pages.
+  // Callers can opt out with { staticFirst: false } if they specifically want
+  // to defer display until overrides resolve.
+  const { staticFirst = true, deferRemoteOverrides = false } = options;
   const [overrides, setOverrides] = useState<ImageOverride[] | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(hasSupabaseCredentials);
   const [isError, setIsError] = useState(false);

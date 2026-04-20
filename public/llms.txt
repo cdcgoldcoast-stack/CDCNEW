@@ -1,5 +1,5 @@
 # www.cdconstruct.com.au AI Content Index
-Generated: 2026-04-16T11:44:01.572Z
+Generated: 2026-04-20T02:08:19.298Z
 
 ## Business
 Name: Concept Design Construct
@@ -13,40 +13,40 @@ Contact email: info@cdconstruct.com.au
 Consultation URL: https://www.cdconstruct.com.au/book-renovation-consultation
 
 ## Core Public Pages
-- https://www.cdconstruct.com.au | Gold Coast Renovations | Kitchen, Bathroom & Home | CD...
-- https://www.cdconstruct.com.au/about-us | About Our Gold Coast Renovation Team | Since 2000
-- https://www.cdconstruct.com.au/blog | Gold Coast Renovation Blog | Concept Design Construct
-- https://www.cdconstruct.com.au/renovation-projects | Gold Coast Renovation Projects | Real Case Studies
-- https://www.cdconstruct.com.au/renovation-services | Gold Coast Renovation Services | Kitchen & Bathroom
-- https://www.cdconstruct.com.au/kitchen-renovations-gold-coast | Gold Coast Kitchen Renovations | CD Construct
-- https://www.cdconstruct.com.au/bathroom-renovations-gold-coast | Gold Coast Bathroom Renovations | CD Construct
-- https://www.cdconstruct.com.au/whole-home-renovations-gold-coast | Gold Coast Whole-Home Renovations | CD Construct
-- https://www.cdconstruct.com.au/book-renovation-consultation | Gold Coast Renovations Quote | Book Your Consultation
-- https://www.cdconstruct.com.au/renovation-gallery | Gold Coast Renovation Gallery | Kitchen & Bathroom
+- https://www.cdconstruct.com.au | Homepage
+- https://www.cdconstruct.com.au/about-us | About Us
+- https://www.cdconstruct.com.au/blog | Blog
+- https://www.cdconstruct.com.au/renovation-projects | Renovation Projects
+- https://www.cdconstruct.com.au/renovation-services | Renovation Services
+- https://www.cdconstruct.com.au/kitchen-renovations-gold-coast | Kitchen Renovations Gold Coast
+- https://www.cdconstruct.com.au/bathroom-renovations-gold-coast | Bathroom Renovations Gold Coast
+- https://www.cdconstruct.com.au/whole-home-renovations-gold-coast | Whole Home Renovations Gold Coast
+- https://www.cdconstruct.com.au/book-renovation-consultation | Book Renovation Consultation
+- https://www.cdconstruct.com.au/renovation-gallery | Renovation Gallery
 
 ## Local Service Area Pages
-- https://www.cdconstruct.com.au/broadbeach-renovations | Broadbeach Renovations | Kitchen, Bathroom & Home
-- https://www.cdconstruct.com.au/mermaid-beach-renovations | Mermaid Beach Renovations | Kitchen, Bathroom & Home
-- https://www.cdconstruct.com.au/palm-beach-renovations | Palm Beach Renovations | Kitchen, Bathroom & Home
-- https://www.cdconstruct.com.au/robina-renovations | Robina Renovations | Kitchen, Bathroom & Home
-- https://www.cdconstruct.com.au/southport-renovations | Southport Renovations | Kitchen, Bathroom & Home
-- https://www.cdconstruct.com.au/burleigh-heads-renovations | Burleigh Heads Renovations | Kitchen, Bathroom & Home
+- https://www.cdconstruct.com.au/broadbeach-renovations | Broadbeach Renovations
+- https://www.cdconstruct.com.au/mermaid-beach-renovations | Mermaid Beach Renovations
+- https://www.cdconstruct.com.au/palm-beach-renovations | Palm Beach Renovations
+- https://www.cdconstruct.com.au/robina-renovations | Robina Renovations
+- https://www.cdconstruct.com.au/southport-renovations | Southport Renovations
+- https://www.cdconstruct.com.au/burleigh-heads-renovations | Burleigh Heads Renovations
 
 ## Renovation Guides
-- https://www.cdconstruct.com.au/blog/apartment-renovation-body-corporate-guide-gold-coast | Apartment Renovation Rules on the Gold Coast: Body...
-- https://www.cdconstruct.com.au/blog/bathroom-renovation-cost-gold-coast | How Much Does a Bathroom Renovation Cost on the Gold Coast?
-- https://www.cdconstruct.com.au/blog/bathroom-renovation-timeline-what-to-expect | How Long Does a Bathroom Renovation Really Take?
-- https://www.cdconstruct.com.au/blog/coastal-interior-design-gold-coast | Coastal Interior Design on the Gold Coast: Beyond the...
-- https://www.cdconstruct.com.au/blog/deck-patio-renovation-gold-coast | Deck and Patio Renovations on the Gold Coast:...
-- https://www.cdconstruct.com.au/blog/energy-efficient-renovation-gold-coast | Energy-Efficient Home Renovations on the Gold Coast
+- https://www.cdconstruct.com.au/blog/apartment-renovation-body-corporate-guide-gold-coast | Blog / Apartment Renovation Body Corporate Guide Gold Coast
+- https://www.cdconstruct.com.au/blog/bathroom-renovation-cost-gold-coast | Blog / Bathroom Renovation Cost Gold Coast
+- https://www.cdconstruct.com.au/blog/bathroom-renovation-timeline-what-to-expect | Blog / Bathroom Renovation Timeline What To Expect
+- https://www.cdconstruct.com.au/blog/bathroom-waterproofing-standards-as3740-gold-coast | Blog / Bathroom Waterproofing Standards As3740 Gold Coast
+- https://www.cdconstruct.com.au/blog/coastal-interior-design-gold-coast | Blog / Coastal Interior Design Gold Coast
+- https://www.cdconstruct.com.au/blog/deck-patio-renovation-gold-coast | Blog / Deck Patio Renovation Gold Coast
 
 ## Project Detail Pages
-- https://www.cdconstruct.com.au/renovation-projects/everyday-ease | Everyday Ease | whole home Renovations in Burleigh Heads
-- https://www.cdconstruct.com.au/renovation-projects/family-hub | Family Hub | whole home Renovations in Helensvale
-- https://www.cdconstruct.com.au/renovation-projects/light-and-flow-house | Light & Flow House | whole home Renovations in Robina
-- https://www.cdconstruct.com.au/renovation-projects/seamless-bathroom | Seamless Bathroom | bathroom Renovations in Hope Island
-- https://www.cdconstruct.com.au/renovation-projects/stone-and-light | Stone & Light | bathroom Renovations in Broadbeach
-- https://www.cdconstruct.com.au/renovation-projects/terrazzo-retreat | Terrazzo Retreat | bathroom Renovations in Broadbeach
-- https://www.cdconstruct.com.au/renovation-projects/the-calm-edit | The Calm Edit | whole home Renovations in Palm Beach
-- https://www.cdconstruct.com.au/renovation-projects/the-elanora-residence | The Elanora Residence | whole home Renovations in Elanora
-- https://www.cdconstruct.com.au/renovation-projects/warm-minimal-bathroom | Warm Minimal Bathroom | bathroom Renovations in Surfers...
+- https://www.cdconstruct.com.au/renovation-projects/everyday-ease | Renovation Projects / Everyday Ease
+- https://www.cdconstruct.com.au/renovation-projects/family-hub | Renovation Projects / Family Hub
+- https://www.cdconstruct.com.au/renovation-projects/light-and-flow-house | Renovation Projects / Light And Flow House
+- https://www.cdconstruct.com.au/renovation-projects/seamless-bathroom | Renovation Projects / Seamless Bathroom
+- https://www.cdconstruct.com.au/renovation-projects/stone-and-light | Renovation Projects / Stone And Light
+- https://www.cdconstruct.com.au/renovation-projects/terrazzo-retreat | Renovation Projects / Terrazzo Retreat
+- https://www.cdconstruct.com.au/renovation-projects/the-calm-edit | Renovation Projects / The Calm Edit
+- https://www.cdconstruct.com.au/renovation-projects/the-elanora-residence | Renovation Projects / The Elanora Residence
+- https://www.cdconstruct.com.au/renovation-projects/warm-minimal-bathroom | Renovation Projects / Warm Minimal Bathroom

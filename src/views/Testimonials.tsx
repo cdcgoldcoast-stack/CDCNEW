@@ -121,7 +121,7 @@ const Testimonials = () => {
                 className="bg-cream/50 p-6 md:p-8 flex flex-col"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
+                viewport={{ once: true, amount: 0.05 }}
                 transition={{ duration: 0.6, delay: index * 0.08 }}
               >
                 <p className="text-body-text font-serif italic text-base leading-relaxed mb-6 flex-grow">

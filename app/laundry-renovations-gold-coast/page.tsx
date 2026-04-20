@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { LaundryRenovationsClient } from "@/components/route-clients";
-import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/structured-data";
+import { generateBreadcrumbSchema, generateFAQSchema, generateServiceSchema } from "@/lib/structured-data";
 import { buildMetadata, generateWebPageSchema } from "@/lib/seo";
-import { SITE_NAME, SITE_ALTERNATE_NAME } from "@/config/seo";
 
 const pageTitle = "Gold Coast Laundry Renovations | CD Construct";
 const pageDescription =
@@ -73,23 +72,14 @@ export default function Page() {
 
   const faqSchema = generateFAQSchema(serviceFaqs);
 
-  // Service schema for rich snippets
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
+  const serviceSchema = generateServiceSchema({
     name: "Laundry Renovation Gold Coast",
-    provider: {
-      "@type": "HomeAndConstructionBusiness",
-      name: SITE_NAME,
-      alternateName: SITE_ALTERNATE_NAME,
-    },
-    areaServed: {
-      "@type": "City",
-      name: "Gold Coast",
-    },
     description: pageDescription,
+    path: "/laundry-renovations-gold-coast",
     serviceType: "Laundry Renovation",
-  };
+    areaServed: "Gold Coast",
+    areaType: "City",
+  });
 
   return (
     <>

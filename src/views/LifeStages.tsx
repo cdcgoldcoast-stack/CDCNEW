@@ -266,7 +266,7 @@ const LifeStagesPage = () => {
               className={`relative h-[50vh] md:h-auto overflow-hidden ${index % 2 === 1 ? 'md:order-2' : ''}`}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.8 }}
             >
               <motion.img
@@ -288,7 +288,7 @@ const LifeStagesPage = () => {
               className={`flex flex-col justify-center p-8 md:p-16 lg:p-24 ${index % 2 === 1 ? 'md:order-1' : ''}`}
               initial={{ opacity: 0, x: index % 2 === 0 ? 40 : -40 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
               <span className="text-label text-foreground/50 mb-3">{stage.subtitle}</span>
