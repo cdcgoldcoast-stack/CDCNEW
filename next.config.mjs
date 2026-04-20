@@ -76,12 +76,13 @@ const nextConfig = {
     ],
   },
   async headers() {
-    // Marketing-tag hosts loaded via GTM (Google Ads conversion + Meta CAPI).
-    // Keep this list narrow — only hosts we've actually seen GTM request.
+    // Marketing-tag hosts loaded via GTM (GA4, Google Ads conversion, Meta CAPI).
+    // Covers Google's officially documented CSP domains for GTM + GA4 + Google Ads
+    // so Tag Assistant stops flagging script-src / connect-src gaps.
     const marketingScriptHosts =
-      "https://www.googletagmanager.com https://connect.facebook.net https://googleads.g.doubleclick.net https://capi-automation.s3.us-east-2.amazonaws.com";
+      "https://www.googletagmanager.com https://www.googleadservices.com https://connect.facebook.net https://googleads.g.doubleclick.net https://capi-automation.s3.us-east-2.amazonaws.com";
     const marketingConnectHosts =
-      "https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.google.com https://www.facebook.com";
+      "https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://*.g.doubleclick.net https://www.googletagmanager.com https://www.googleadservices.com https://www.google.com https://www.google.com.au https://www.facebook.com";
 
     const scriptSrc = isDevelopment
       ? `script-src 'self' 'unsafe-inline' 'unsafe-eval' ${marketingScriptHosts} https://va.vercel-scripts.com`
